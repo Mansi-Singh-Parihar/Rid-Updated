@@ -380,7 +380,7 @@ QuizData.questions.push(
   topicId: 'py_lambda',
   question: 'Create a lambda that implements a simple calculator.',
   mathSolution: 'Use dictionary mapping operations to lambdas.',
-  codeSolution: 'calculator = {\n    "add": lambda x, y: x + y,\n    "sub": lambda x, y: x - y,\n    "mul": lambda x, y: x * y,\n    "div": lambda x, y: x / y if y != 0 else "Error"\n}\nprint(calculator["add"](5, 3))  # Output: 8\nprint(calculator["div"](10, 2)) # Output: 5.0',
+  codeSolution: 'calculator = {\n    "add": lambda x, y: x + y,\n    "sub": lambda x, y: x - y,\n    "mul": lambda x, y: x * y,\n    "div": lambda x, y: x / y if y != 0 else "Cannot divide by zero"\n}\n\nprint(calculator["add"](5, 3))\nprint(calculator["sub"](10, 4))\nprint(calculator["mul"](6, 2))\nprint(calculator["div"](10, 2))\nprint(calculator["div"](10, 0))',
   hint: 'Store lambdas in dictionary for dynamic dispatch.'
 },
 {

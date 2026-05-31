@@ -642,6 +642,69 @@ if (goLiveOption) {
                 card.style.display = (q === "" || card.innerText.toLowerCase().includes(q)) ? "" : "none";
             });
         }
+        // ================= SEARCH BAR CONNECT =================
+
+const desktopSearchInput =
+    document.getElementById("desktopSearchInput");
+
+const desktopSearchBtn =
+    document.getElementById("desktopSearchBtn");
+
+// 🔍 SEARCH FUNCTION
+function updateSearch() {
+
+    const query =
+        desktopSearchInput.value.trim();
+
+    executeSearch(query);
+
+}
+
+// 🔍 BUTTON CLICK
+if (desktopSearchBtn) {
+
+    desktopSearchBtn.addEventListener(
+        "click",
+        updateSearch
+    );
+
+}
+
+// ⌨️ ENTER PRESS
+if (desktopSearchInput) {
+
+    desktopSearchInput.addEventListener(
+        "keypress",
+        (e) => {
+
+            if (e.key === "Enter") {
+
+                updateSearch();
+
+            }
+
+        }
+    );
+
+}
+
+// 🔥 LIVE SEARCH
+if (desktopSearchInput) {
+
+    desktopSearchInput.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                this.value.trim();
+
+            // realtime search
+            executeSearch(query);
+
+        }
+    );
+
+}
     </script>
 
 </body>

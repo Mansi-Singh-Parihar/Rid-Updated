@@ -3,9 +3,9 @@ QuizData.questions.push(
   id: 'py_io_1',
   topicId: 'py_input_output',
   question: 'Write a program that takes user\'s name as input and prints a greeting message.',
-  mathSolution: 'Use input() to get user input and print() to display output.',
+  mathSolution: 'Use input() to get user input and print() with formatted string to display output.',
   codeSolution: 'name = input("Enter your name: ")\nprint(f"Hello, {name}! Welcome to Python programming.")',
-  hint: 'input() always returns a string. Use f-strings for formatted output.'
+  hint: 'Use f-strings (prefix with f) to insert variables inside strings.'
 },
 {
   id: 'py_io_2',
@@ -56,12 +56,13 @@ QuizData.questions.push(
   hint: 'Check for empty string to break the input loop.'
 },
 {
+ 
   id: 'py_io_8',
   topicId: 'py_input_output',
   question: 'Take a character as input and print its ASCII value.',
-  mathSolution: 'Use ord() function to get ASCII value of character.',
-  codeSolution: 'char = input("Enter a character: ")\nif len(char) == 1:\n    ascii_value = ord(char)\n    print(f"ASCII value of {char} is {ascii_value}")\nelse:\n    print("Please enter only one character")',
-  hint: 'ord() returns integer representing Unicode code point.'
+  mathSolution: 'Use ord() function to convert a single character into its ASCII (Unicode code point) value.',
+  codeSolution: 'char = input("Enter a character: ")\n\nif len(char) == 1:\n    ascii_value = ord(char)\n    print(f"ASCII value of {char} is {ascii_value}")\nelse:\n    print("Error: Please enter only one character")',
+  hint: 'ord() returns the Unicode (ASCII for basic characters) value of a character.'
 },
 {
   id: 'py_io_9',
@@ -219,9 +220,9 @@ QuizData.questions.push(
   id: 'py_io_28',
   topicId: 'py_input_output',
   question: 'Take a string and remove duplicate characters.',
-  mathSolution: 'Use a set to track seen characters, maintain order.',
-  codeSolution: 'text = input("Enter a string: ")\nseen = set()\nresult = []\nfor char in text:\n    if char not in seen:\n        seen.add(char)\n        result.append(char)\nprint(f"String with duplicates removed: {"".join(result)}")',
-  hint: 'Set tracks seen characters, list maintains order.'
+  mathSolution: 'Use a set to track seen characters and a list to maintain order of first occurrences.',
+  codeSolution: 'text = input("Enter a string: ")\n\nif not text:\n    print("Error: Empty string")\nelse:\n    seen = set()\n    result = []\n\n    for char in text:\n        if char not in seen:\n            seen.add(char)\n            result.append(char)\n\n    print("String with duplicates removed:", "".join(result))',
+  hint: 'Use a set to track already seen characters while preserving order using a list.'
 },
 {
   id: 'py_io_29',

@@ -4,7 +4,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a for loop that prints numbers 0 to 4.",
     mathSolution: "Loop runs 5 times starting from 0 until i < 5.",
-    codeSolution: "for(int i = 0; i < 5; i++) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 0; i < 5; i++) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Initialize i = 0, condition i < 5, increment i++.",
   },
   {
@@ -12,8 +12,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a for loop that prints numbers 1 to 10.",
     mathSolution: "Loop starts from 1 and runs while i <= 10.",
-    codeSolution:
-      "for(int i = 1; i <= 10; i++) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 10; i++) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Start from 1 and use condition i <= 10.",
   },
   {
@@ -21,8 +20,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print even numbers from 2 to 10.",
     mathSolution: "Start from 2 and increment by 2 until 10.",
-    codeSolution:
-      "for(int i = 2; i <= 10; i += 2) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 2; i <= 10; i += 2) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use i += 2 for even numbers.",
   },
   {
@@ -30,8 +28,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers from 10 to 1.",
     mathSolution: "Start from 10 and decrement until i >= 1.",
-    codeSolution:
-      "for(int i = 10; i >= 1; i--) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 10; i >= 1; i--) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use i-- to decrease the value.",
   },
   {
@@ -39,8 +36,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a while loop that prints numbers 1 to 5.",
     mathSolution: "Initialize i = 1 and increment until i <= 5.",
-    codeSolution:
-      "int i = 1;\nwhile(i <= 5) {\n    System.out.println(i);\n    i++;\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int i = 1;\n        while(i <= 5) {\n            System.out.println(i);\n            i++;\n        }\n    }\n}',
     hint: "Don’t forget to increment inside the loop.",
   },
   {
@@ -48,8 +44,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a do-while loop that prints numbers 1 to 5.",
     mathSolution: "Loop executes at least once and runs while i <= 5.",
-    codeSolution:
-      "int i = 1;\ndo {\n    System.out.println(i);\n    i++;\n} while(i <= 5);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int i = 1;\n        do {\n            System.out.println(i);\n            i++;\n        } while(i <= 5);\n    }\n}',
     hint: "do-while runs at least once.",
   },
   {
@@ -57,8 +52,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to calculate sum of numbers from 1 to 5.",
     mathSolution: "Sum = 1 + 2 + 3 + 4 + 5.",
-    codeSolution:
-      "int sum = 0;\nfor(int i = 1; i <= 5; i++) {\n    sum += i;\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for(int i = 1; i <= 5; i++) {\n            sum += i;\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Use a variable sum and add i each time.",
   },
   {
@@ -66,18 +60,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print multiplication table of 5.",
     mathSolution: "Multiply 5 with numbers from 1 to 10.",
-    codeSolution:
-      'for(int i = 1; i <= 10; i++) {\n    System.out.println("5 x " + i + " = " + (5 * i));\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 10; i++) {\n            System.out.println("5 x " + i + " = " + (5 * i));\n        }\n    }\n}',
     hint: "Use 5 * i inside loop.",
   },
   {
     id: "java_loop_9",
     topicId: "java_loop",
-    question:
-      "Write a loop to count numbers from 1 to 10 that are divisible by 2.",
+    question: "Write a loop to count numbers from 1 to 10 that are divisible by 2.",
     mathSolution: "Check i % 2 == 0 condition.",
-    codeSolution:
-      "int count = 0;\nfor(int i = 1; i <= 10; i++) {\n    if(i % 2 == 0) {\n        count++;\n    }\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        for(int i = 1; i <= 10; i++) {\n            if(i % 2 == 0) {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Use modulus operator %.",
   },
   {
@@ -85,8 +76,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a nested loop to print a 3x3 star pattern.",
     mathSolution: "Outer loop runs 3 times, inner loop runs 3 times.",
-    codeSolution:
-      'for(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= 3; j++) {\n        System.out.print("* ");\n    }\n    System.out.println();\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 3; i++) {\n            for(int j = 1; j <= 3; j++) {\n                System.out.print("* ");\n            }\n            System.out.println();\n        }\n    }\n}',
     hint: "Use two loops: one inside another.",
   },
   {
@@ -94,8 +84,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print odd numbers from 1 to 15.",
     mathSolution: "Start from 1 and increment by 2 until 15.",
-    codeSolution:
-      "for(int i = 1; i <= 15; i += 2) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 15; i += 2) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Odd numbers increase by 2.",
   },
   {
@@ -103,8 +92,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers from 5 to 50 in steps of 5.",
     mathSolution: "Start from 5 and increment by 5 until 50.",
-    codeSolution:
-      "for(int i = 5; i <= 50; i += 5) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 5; i <= 50; i += 5) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use i += 5.",
   },
   {
@@ -112,8 +100,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to calculate factorial of 5.",
     mathSolution: "Factorial = 5 × 4 × 3 × 2 × 1.",
-    codeSolution:
-      "int fact = 1;\nfor(int i = 1; i <= 5; i++) {\n    fact *= i;\n}\nSystem.out.println(fact);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int fact = 1;\n        for(int i = 1; i <= 5; i++) {\n            fact *= i;\n        }\n        System.out.println(fact);\n    }\n}',
     hint: "Use multiplication inside loop.",
   },
   {
@@ -121,8 +108,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to reverse numbers from 20 to 10.",
     mathSolution: "Start from 20 and decrement until 10.",
-    codeSolution:
-      "for(int i = 20; i >= 10; i--) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 20; i >= 10; i--) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use i--.",
   },
   {
@@ -130,8 +116,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print squares of numbers from 1 to 5.",
     mathSolution: "Square = i * i.",
-    codeSolution:
-      "for(int i = 1; i <= 5; i++) {\n    System.out.println(i * i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 5; i++) {\n            System.out.println(i * i);\n        }\n    }\n}',
     hint: "Multiply number by itself.",
   },
   {
@@ -139,8 +124,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print cubes of numbers from 1 to 5.",
     mathSolution: "Cube = i * i * i.",
-    codeSolution:
-      "for(int i = 1; i <= 5; i++) {\n    System.out.println(i * i * i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 5; i++) {\n            System.out.println(i * i * i);\n        }\n    }\n}',
     hint: "Multiply number three times.",
   },
   {
@@ -148,8 +132,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find sum of even numbers from 1 to 10.",
     mathSolution: "Add numbers divisible by 2.",
-    codeSolution:
-      "int sum = 0;\nfor(int i = 1; i <= 10; i++) {\n    if(i % 2 == 0) {\n        sum += i;\n    }\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for(int i = 1; i <= 10; i++) {\n            if(i % 2 == 0) {\n                sum += i;\n            }\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Use if condition with % 2.",
   },
   {
@@ -157,8 +140,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to count odd numbers from 1 to 20.",
     mathSolution: "Check i % 2 != 0.",
-    codeSolution:
-      "int count = 0;\nfor(int i = 1; i <= 20; i++) {\n    if(i % 2 != 0) {\n        count++;\n    }\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int count = 0;\n        for(int i = 1; i <= 20; i++) {\n            if(i % 2 != 0) {\n                count++;\n            }\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Odd numbers give remainder 1.",
   },
   {
@@ -166,8 +148,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print first 10 natural numbers in one line.",
     mathSolution: "Print numbers 1 to 10 using print.",
-    codeSolution:
-      'for(int i = 1; i <= 10; i++) {\n    System.out.print(i + " ");\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 10; i++) {\n            System.out.print(i + " ");\n        }\n    }\n}',
     hint: "Use print instead of println.",
   },
   {
@@ -175,8 +156,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers divisible by 3 between 1 and 30.",
     mathSolution: "Check i % 3 == 0.",
-    codeSolution:
-      "for(int i = 1; i <= 30; i++) {\n    if(i % 3 == 0) {\n        System.out.println(i);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 30; i++) {\n            if(i % 3 == 0) {\n                System.out.println(i);\n            }\n        }\n    }\n}',
     hint: "Use modulus operator with 3.",
   },
   {
@@ -184,8 +164,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to calculate sum of odd numbers from 1 to 20.",
     mathSolution: "Add numbers where i % 2 != 0.",
-    codeSolution:
-      "int sum = 0;\nfor(int i = 1; i <= 20; i++) {\n    if(i % 2 != 0) {\n        sum += i;\n    }\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for(int i = 1; i <= 20; i++) {\n            if(i % 2 != 0) {\n                sum += i;\n            }\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Use condition for odd numbers.",
   },
   {
@@ -193,8 +172,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers from 1 to 100 divisible by 5.",
     mathSolution: "Check i % 5 == 0.",
-    codeSolution:
-      "for(int i = 1; i <= 100; i++) {\n    if(i % 5 == 0) {\n        System.out.println(i);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 100; i++) {\n            if(i % 5 == 0) {\n                System.out.println(i);\n            }\n        }\n    }\n}',
     hint: "Use modulus with 5.",
   },
   {
@@ -202,8 +180,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find product of numbers from 1 to 4.",
     mathSolution: "Multiply numbers 1×2×3×4.",
-    codeSolution:
-      "int product = 1;\nfor(int i = 1; i <= 4; i++) {\n    product *= i;\n}\nSystem.out.println(product);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int product = 1;\n        for(int i = 1; i <= 4; i++) {\n            product *= i;\n        }\n        System.out.println(product);\n    }\n}',
     hint: "Use multiplication assignment.",
   },
   {
@@ -211,8 +188,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers from 50 to 60.",
     mathSolution: "Start from 50 and increment to 60.",
-    codeSolution:
-      "for(int i = 50; i <= 60; i++) {\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 50; i <= 60; i++) {\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Initialize from 50.",
   },
   {
@@ -220,8 +196,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print ASCII values of characters A to E.",
     mathSolution: "Characters increment automatically.",
-    codeSolution:
-      "for(char ch = 'A'; ch <= 'E'; ch++) {\n    System.out.println(ch + \" : \" + (int)ch);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(char ch = \'A\'; ch <= \'E\'; ch++) {\n            System.out.println(ch + " : " + (int)ch);\n        }\n    }\n}',
     hint: "Use char type in loop.",
   },
   {
@@ -229,8 +204,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print reverse of a number 123.",
     mathSolution: "Extract last digit using % and divide by 10.",
-    codeSolution:
-      "int num = 123, rev = 0;\nwhile(num != 0) {\n    int digit = num % 10;\n    rev = rev * 10 + digit;\n    num /= 10;\n}\nSystem.out.println(rev);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 123, rev = 0;\n        while(num != 0) {\n            int digit = num % 10;\n            rev = rev * 10 + digit;\n            num /= 10;\n        }\n        System.out.println(rev);\n    }\n}',
     hint: "Use modulus and division.",
   },
   {
@@ -238,8 +212,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to count digits in number 4567.",
     mathSolution: "Divide number by 10 repeatedly.",
-    codeSolution:
-      "int num = 4567, count = 0;\nwhile(num != 0) {\n    num /= 10;\n    count++;\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 4567, count = 0;\n        while(num != 0) {\n            num /= 10;\n            count++;\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Divide by 10 until 0.",
   },
   {
@@ -247,8 +220,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to check if number 7 is prime.",
     mathSolution: "Check divisibility from 2 to n-1.",
-    codeSolution:
-      "int num = 7;\nboolean isPrime = true;\nfor(int i = 2; i < num; i++) {\n    if(num % i == 0) {\n        isPrime = false;\n        break;\n    }\n}\nSystem.out.println(isPrime);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 7;\n        boolean isPrime = true;\n        for(int i = 2; i < num; i++) {\n            if(num % i == 0) {\n                isPrime = false;\n                break;\n            }\n        }\n        System.out.println(isPrime);\n    }\n}',
     hint: "Use boolean flag.",
   },
   {
@@ -256,8 +228,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print prime numbers from 1 to 20.",
     mathSolution: "Check each number for prime condition.",
-    codeSolution:
-      "for(int num = 2; num <= 20; num++) {\n    boolean isPrime = true;\n    for(int i = 2; i < num; i++) {\n        if(num % i == 0) {\n            isPrime = false;\n            break;\n        }\n    }\n    if(isPrime) {\n        System.out.println(num);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int num = 2; num <= 20; num++) {\n            boolean isPrime = true;\n            for(int i = 2; i < num; i++) {\n                if(num % i == 0) {\n                    isPrime = false;\n                    break;\n                }\n            }\n            if(isPrime) {\n                System.out.println(num);\n            }\n        }\n    }\n}',
     hint: "Use nested loop.",
   },
   {
@@ -265,18 +236,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print Fibonacci series up to 10 terms.",
     mathSolution: "Next term = sum of previous two.",
-    codeSolution:
-      'int a = 0, b = 1;\nfor(int i = 1; i <= 10; i++) {\n    System.out.print(a + " ");\n    int next = a + b;\n    a = b;\n    b = next;\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int a = 0, b = 1;\n        for(int i = 1; i <= 10; i++) {\n            System.out.print(a + " ");\n            int next = a + b;\n            a = b;\n            b = next;\n        }\n    }\n}',
     hint: "Update values inside loop.",
   },
   {
     id: "java_loop_31",
     topicId: "java_loop",
-    question:
-      "Write a nested loop to print a right triangle pattern of stars (3 rows).",
+    question: "Write a nested loop to print a right triangle pattern of stars (3 rows).",
     mathSolution: "Outer loop for rows, inner for stars.",
-    codeSolution:
-      'for(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= i; j++) {\n        System.out.print("* ");\n    }\n    System.out.println();\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 3; i++) {\n            for(int j = 1; j <= i; j++) {\n                System.out.print("* ");\n            }\n            System.out.println();\n        }\n    }\n}',
     hint: "Inner loop depends on i.",
   },
   {
@@ -284,8 +252,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find largest number among 1 to 10.",
     mathSolution: "Keep updating max.",
-    codeSolution:
-      "int max = 0;\nfor(int i = 1; i <= 10; i++) {\n    if(i > max) {\n        max = i;\n    }\n}\nSystem.out.println(max);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int max = 0;\n        for(int i = 1; i <= 10; i++) {\n            if(i > max) {\n                max = i;\n            }\n        }\n        System.out.println(max);\n    }\n}',
     hint: "Use comparison.",
   },
   {
@@ -293,18 +260,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to calculate sum of digits of number 123.",
     mathSolution: "Extract each digit and add.",
-    codeSolution:
-      "int num = 123, sum = 0;\nwhile(num != 0) {\n    sum += num % 10;\n    num /= 10;\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 123, sum = 0;\n        while(num != 0) {\n            sum += num % 10;\n            num /= 10;\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Use % 10.",
   },
   {
     id: "java_loop_34",
     topicId: "java_loop",
-    question:
-      "Write a loop to print numbers between 1 to 50 that are divisible by both 3 and 5.",
+    question: "Write a loop to print numbers between 1 to 50 that are divisible by both 3 and 5.",
     mathSolution: "Check i % 3 == 0 and i % 5 == 0.",
-    codeSolution:
-      "for(int i = 1; i <= 50; i++) {\n    if(i % 3 == 0 && i % 5 == 0) {\n        System.out.println(i);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 50; i++) {\n            if(i % 3 == 0 && i % 5 == 0) {\n                System.out.println(i);\n            }\n        }\n    }\n}',
     hint: "Use logical AND.",
   },
   {
@@ -312,8 +276,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to check if 121 is palindrome.",
     mathSolution: "Reverse number and compare.",
-    codeSolution:
-      "int num = 121, original = num, rev = 0;\nwhile(num != 0) {\n    rev = rev * 10 + num % 10;\n    num /= 10;\n}\nSystem.out.println(original == rev);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 121, original = num, rev = 0;\n        while(num != 0) {\n            rev = rev * 10 + num % 10;\n            num /= 10;\n        }\n        System.out.println(original == rev);\n    }\n}',
     hint: "Compare original and reverse.",
   },
   {
@@ -321,8 +284,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print table of 7.",
     mathSolution: "Multiply 7 with numbers 1 to 10.",
-    codeSolution:
-      'for(int i = 1; i <= 10; i++) {\n    System.out.println("7 x " + i + " = " + (7 * i));\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 10; i++) {\n            System.out.println("7 x " + i + " = " + (7 * i));\n        }\n    }\n}',
     hint: "Use 7 * i.",
   },
   {
@@ -330,18 +292,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find average of numbers from 1 to 10.",
     mathSolution: "Average = sum / count.",
-    codeSolution:
-      "int sum = 0;\nfor(int i = 1; i <= 10; i++) {\n    sum += i;\n}\nSystem.out.println(sum / 10);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for(int i = 1; i <= 10; i++) {\n            sum += i;\n        }\n        System.out.println(sum / 10);\n    }\n}',
     hint: "First calculate sum.",
   },
   {
     id: "java_loop_38",
     topicId: "java_loop",
-    question:
-      "Write a loop to print numbers from 1 to 20 skipping multiples of 4.",
+    question: "Write a loop to print numbers from 1 to 20 skipping multiples of 4.",
     mathSolution: "Skip numbers where i % 4 == 0.",
-    codeSolution:
-      "for(int i = 1; i <= 20; i++) {\n    if(i % 4 == 0) continue;\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 20; i++) {\n            if(i % 4 == 0) continue;\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use continue statement.",
   },
   {
@@ -349,8 +308,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers until 5 using break.",
     mathSolution: "Stop loop when i == 5.",
-    codeSolution:
-      "for(int i = 1; i <= 10; i++) {\n    if(i == 5) break;\n    System.out.println(i);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 10; i++) {\n            if(i == 5) break;\n            System.out.println(i);\n        }\n    }\n}',
     hint: "Use break statement.",
   },
   {
@@ -358,8 +316,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a nested loop to print a 4x4 number pattern.",
     mathSolution: "Outer loop rows, inner loop columns.",
-    codeSolution:
-      'for(int i = 1; i <= 4; i++) {\n    for(int j = 1; j <= 4; j++) {\n        System.out.print(j + " ");\n    }\n    System.out.println();\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 4; i++) {\n            for(int j = 1; j <= 4; j++) {\n                System.out.print(j + " ");\n            }\n            System.out.println();\n        }\n    }\n}',
     hint: "Use two loops.",
   },
   {
@@ -367,8 +324,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find smallest number from 1 to 10.",
     mathSolution: "Keep updating minimum.",
-    codeSolution:
-      "int min = 1;\nfor(int i = 1; i <= 10; i++) {\n    if(i < min) {\n        min = i;\n    }\n}\nSystem.out.println(min);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int min = 1;\n        for(int i = 1; i <= 10; i++) {\n            if(i < min) {\n                min = i;\n            }\n        }\n        System.out.println(min);\n    }\n}',
     hint: "Use comparison operator.",
   },
   {
@@ -376,8 +332,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print numbers divisible by 7 between 1 and 70.",
     mathSolution: "Check i % 7 == 0.",
-    codeSolution:
-      "for(int i = 1; i <= 70; i++) {\n    if(i % 7 == 0) {\n        System.out.println(i);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 70; i++) {\n            if(i % 7 == 0) {\n                System.out.println(i);\n            }\n        }\n    }\n}',
     hint: "Use modulus 7.",
   },
   {
@@ -385,8 +340,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print factorial of numbers from 1 to 5.",
     mathSolution: "Calculate factorial for each number.",
-    codeSolution:
-      'for(int n = 1; n <= 5; n++) {\n    int fact = 1;\n    for(int i = 1; i <= n; i++) {\n        fact *= i;\n    }\n    System.out.println("Factorial of " + n + " = " + fact);\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int n = 1; n <= 5; n++) {\n            int fact = 1;\n            for(int i = 1; i <= n; i++) {\n                fact *= i;\n            }\n            System.out.println("Factorial of " + n + " = " + fact);\n        }\n    }\n}',
     hint: "Use nested loop.",
   },
   {
@@ -394,18 +348,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to check Armstrong number 153.",
     mathSolution: "Sum of cubes of digits equals number.",
-    codeSolution:
-      "int num = 153, original = num, sum = 0;\nwhile(num != 0) {\n    int digit = num % 10;\n    sum += digit * digit * digit;\n    num /= 10;\n}\nSystem.out.println(original == sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 153, original = num, sum = 0;\n        while(num != 0) {\n            int digit = num % 10;\n            sum += digit * digit * digit;\n            num /= 10;\n        }\n        System.out.println(original == sum);\n    }\n}',
     hint: "Cube each digit.",
   },
   {
     id: "java_loop_45",
     topicId: "java_loop",
-    question:
-      "Write a loop to print numbers from 1 to 10 in reverse order using while.",
+    question: "Write a loop to print numbers from 1 to 10 in reverse order using while.",
     mathSolution: "Start from 10 and decrement.",
-    codeSolution:
-      "int i = 10;\nwhile(i >= 1) {\n    System.out.println(i);\n    i--;\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int i = 10;\n        while(i >= 1) {\n            System.out.println(i);\n            i--;\n        }\n    }\n}',
     hint: "Use while loop.",
   },
   {
@@ -413,8 +364,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print multiplication tables from 1 to 3.",
     mathSolution: "Nested loop for tables.",
-    codeSolution:
-      'for(int n = 1; n <= 3; n++) {\n    for(int i = 1; i <= 10; i++) {\n        System.out.println(n + " x " + i + " = " + (n * i));\n    }\n    System.out.println();\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int n = 1; n <= 3; n++) {\n            for(int i = 1; i <= 10; i++) {\n                System.out.println(n + " x " + i + " = " + (n * i));\n            }\n            System.out.println();\n        }\n    }\n}',
     hint: "Use two loops.",
   },
   {
@@ -422,8 +372,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find sum of squares from 1 to 5.",
     mathSolution: "Add i*i.",
-    codeSolution:
-      "int sum = 0;\nfor(int i = 1; i <= 5; i++) {\n    sum += i * i;\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for(int i = 1; i <= 5; i++) {\n            sum += i * i;\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Square inside loop.",
   },
   {
@@ -431,8 +380,7 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to print pattern of numbers (1, 22, 333).",
     mathSolution: "Print i number i times.",
-    codeSolution:
-      "for(int i = 1; i <= 3; i++) {\n    for(int j = 1; j <= i; j++) {\n        System.out.print(i);\n    }\n    System.out.println();\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 3; i++) {\n            for(int j = 1; j <= i; j++) {\n                System.out.print(i);\n            }\n            System.out.println();\n        }\n    }\n}',
     hint: "Nested loop.",
   },
   {
@@ -440,18 +388,15 @@ QuizData.questions.push(
     topicId: "java_loop",
     question: "Write a loop to find power of 2^5.",
     mathSolution: "Multiply 2 five times.",
-    codeSolution:
-      "int result = 1;\nfor(int i = 1; i <= 5; i++) {\n    result *= 2;\n}\nSystem.out.println(result);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int result = 1;\n        for(int i = 1; i <= 5; i++) {\n            result *= 2;\n        }\n        System.out.println(result);\n    }\n}',
     hint: "Use multiplication in loop.",
   },
   {
     id: "java_loop_50",
     topicId: "java_loop",
-    question:
-      'Write a loop to print numbers from 1 to 20 replacing multiples of 3 with "Fizz".',
+    question: "Write a loop to print numbers from 1 to 20 replacing multiples of 3 with \"Fizz\".",
     mathSolution: "Check if divisible by 3.",
-    codeSolution:
-      'for(int i = 1; i <= 20; i++) {\n    if(i % 3 == 0) {\n        System.out.println("Fizz");\n    } else {\n        System.out.println(i);\n    }\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for(int i = 1; i <= 20; i++) {\n            if(i % 3 == 0) {\n                System.out.println("Fizz");\n            } else {\n                System.out.println(i);\n            }\n        }\n    }\n}',
     hint: "Use if-else condition.",
   },
 );

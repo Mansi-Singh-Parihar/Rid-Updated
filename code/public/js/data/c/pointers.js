@@ -1,881 +1,411 @@
 QuizData.questions.push(
-  // ========== BASIC POINTER CONCEPTS (QUESTIONS 1-5) ==========
+  // ========== BASIC POINTER CONCEPTS (1-10) ==========
   {
     id: 'c_ptr_1',
     topicId: 'c_pointers',
-    question: 'Declare an integer pointer variable.',
-    mathSolution: 'Pointer that can store address of int',
-    codeSolution: 'int *ptr;',
-    hint: 'Use * to declare pointer'
+    question: 'Write a program to declare an integer pointer and store address of a variable.',
+    mathSolution: 'Pointer stores address of variable',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 10;\n    int *ptr = &x;\n    printf("Value of x: %d\\n", x);\n    printf("Address of x: %p\\n", (void*)ptr);\n    return 0;\n}',
+    hint: 'Use & to get address, * to declare pointer'
   },
   {
     id: 'c_ptr_2',
     topicId: 'c_pointers',
-    question: 'Store address of variable x in pointer ptr.',
-    mathSolution: 'ptr points to x',
-    codeSolution: 'int x = 10; int *ptr = &x;',
-    hint: 'Use & operator to get address'
+    question: 'Write a program to print value using pointer dereferencing.',
+    mathSolution: 'Dereference pointer to get value',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 25;\n    int *ptr = &x;\n    printf("Value using pointer: %d\\n", *ptr);\n    return 0;\n}',
+    hint: 'Use * operator to dereference'
   },
   {
     id: 'c_ptr_3',
     topicId: 'c_pointers',
-    question: 'Print the value of variable using pointer.',
-    mathSolution: 'Dereference pointer to get value',
-    codeSolution: 'printf("%d", *ptr);',
-    hint: 'Use * operator to dereference'
+    question: 'Write a program to change value of variable using pointer.',
+    mathSolution: 'Modify value through pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 10;\n    int *ptr = &x;\n    printf("Before: %d\\n", x);\n    *ptr = 20;\n    printf("After: %d\\n", x);\n    return 0;\n}',
+    hint: 'Assign to dereferenced pointer'
   },
   {
     id: 'c_ptr_4',
     topicId: 'c_pointers',
-    question: 'Print the address stored in pointer.',
+    question: 'Write a program to print address stored in pointer.',
     mathSolution: 'Display pointer value (address)',
-    codeSolution: 'printf("%p", (void*)ptr);',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 42;\n    int *ptr = &x;\n    printf("Pointer address: %p\\n", (void*)ptr);\n    return 0;\n}',
     hint: 'Use %p format specifier'
   },
   {
     id: 'c_ptr_5',
     topicId: 'c_pointers',
-    question: 'Change value of variable using pointer.',
-    mathSolution: '*ptr = 20 sets x to 20',
-    codeSolution: '*ptr = 20;',
-    hint: 'Assign to dereferenced pointer'
+    question: 'Write a program to demonstrate pointer arithmetic (increment).',
+    mathSolution: 'ptr++ moves to next integer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {10, 20, 30, 40, 50};\n    int *ptr = arr;\n    printf("First element: %d\\n", *ptr);\n    ptr++;\n    printf("Second element: %d\\n", *ptr);\n    return 0;\n}',
+    hint: 'Pointer arithmetic depends on type size'
   },
-
-  // ========== POINTER ARITHMETIC (QUESTIONS 6-10) ==========
   {
     id: 'c_ptr_6',
     topicId: 'c_pointers',
-    question: 'Increment pointer to point to next integer.',
-    mathSolution: 'ptr++ moves by sizeof(int) bytes',
-    codeSolution: 'ptr++;',
-    hint: 'Pointer arithmetic depends on type'
+    question: 'Write a program to access array elements using pointer.',
+    mathSolution: '*(arr+i) equals arr[i]',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {5, 10, 15, 20, 25};\n    int *ptr = arr;\n    for(int i = 0; i < 5; i++) {\n        printf("arr[%d] = %d\\n", i, *(ptr + i));\n    }\n    return 0;\n}',
+    hint: 'Add offset to base address'
   },
   {
     id: 'c_ptr_7',
     topicId: 'c_pointers',
-    question: 'Find difference between two pointers.',
-    mathSolution: 'Number of elements between them',
-    codeSolution: 'int diff = ptr2 - ptr1;',
-    hint: 'Returns element count, not bytes'
+    question: 'Write a program to traverse array using pointer.',
+    mathSolution: 'Increment pointer until end',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {1, 2, 3, 4, 5};\n    int *ptr;\n    printf("Array elements: ");\n    for(ptr = arr; ptr < arr + 5; ptr++) {\n        printf("%d ", *ptr);\n    }\n    return 0;\n}',
+    hint: 'Use pointer as loop variable'
   },
   {
     id: 'c_ptr_8',
     topicId: 'c_pointers',
-    question: 'Compare two pointers for equality.',
-    mathSolution: 'Check if they point to same location',
-    codeSolution: 'if(ptr1 == ptr2) { }',
-    hint: 'Compare addresses directly'
+    question: 'Write a program to find sum of array using pointer.',
+    mathSolution: 'Add all elements via pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {10, 20, 30, 40, 50};\n    int sum = 0;\n    int *ptr;\n    for(ptr = arr; ptr < arr + 5; ptr++) {\n        sum += *ptr;\n    }\n    printf("Sum = %d\\n", sum);\n    return 0;\n}',
+    hint: 'Accumulate values through pointer'
   },
   {
     id: 'c_ptr_9',
     topicId: 'c_pointers',
-    question: 'Access array element using pointer arithmetic.',
-    mathSolution: '*(arr+i) equals arr[i]',
-    codeSolution: 'int value = *(arr + i);',
-    hint: 'Add offset to base address'
+    question: 'Write a program to find largest element using pointer.',
+    mathSolution: 'Compare elements using pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {23, 45, 12, 67, 34};\n    int max = *arr;\n    int *ptr;\n    for(ptr = arr + 1; ptr < arr + 5; ptr++) {\n        if(*ptr > max) max = *ptr;\n    }\n    printf("Largest = %d\\n", max);\n    return 0;\n}',
+    hint: 'Assume first as max, then compare'
   },
   {
     id: 'c_ptr_10',
     topicId: 'c_pointers',
-    question: 'Traverse array using pointer.',
-    mathSolution: 'Print all elements via pointer',
-    codeSolution: 'for(int *p=arr; p<arr+n; p++) printf("%d ", *p);',
-    hint: 'Increment pointer until end'
+    question: 'Write a program to copy array using pointers.',
+    mathSolution: 'Copy elements using pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int src[] = {1, 2, 3, 4, 5};\n    int dest[5];\n    int *s = src, *d = dest;\n    for(int i = 0; i < 5; i++) {\n        *d++ = *s++;\n    }\n    printf("Copied array: ");\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", dest[i]);\n    }\n    return 0;\n}',
+    hint: 'Use two pointers - source and destination'
   },
 
-  // ========== POINTERS AND ARRAYS (QUESTIONS 11-15) ==========
+  // ========== POINTERS AND STRINGS (11-20) ==========
   {
     id: 'c_ptr_11',
     topicId: 'c_pointers',
-    question: 'Find size of pointer vs size of array.',
-    mathSolution: 'sizeof(arr) vs sizeof(ptr)',
-    codeSolution: 'printf("%lu %lu", sizeof(arr), sizeof(ptr));',
-    hint: 'Array size = total bytes, pointer size = fixed'
+    question: 'Write a program to declare pointer to string and print it.',
+    mathSolution: 'Pointer to string literal',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *str = "Hello World";\n    printf("%s\\n", str);\n    return 0;\n}',
+    hint: 'String literal is array of chars'
   },
   {
     id: 'c_ptr_12',
     topicId: 'c_pointers',
-    question: 'Create pointer to first element of array.',
-    mathSolution: 'ptr = arr or ptr = &arr[0]',
-    codeSolution: 'int *ptr = arr; // or &arr[0]',
-    hint: 'Array name decays to pointer'
+    question: 'Write a program to print string character by character using pointer.',
+    mathSolution: 'Traverse char by char until null',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *str = "Hello";\n    char *ptr = str;\n    while(*ptr != \'\\0\') {\n        printf("%c ", *ptr);\n        ptr++;\n    }\n    return 0;\n}',
+    hint: 'Stop at null terminator'
   },
   {
     id: 'c_ptr_13',
     topicId: 'c_pointers',
-    question: 'Create pointer to array of 5 integers.',
-    mathSolution: 'Pointer to entire array, not just first element',
-    codeSolution: 'int (*ptr)[5] = &arr;',
-    hint: 'Parentheses needed: (*ptr)[size]'
+    question: 'Write a program to find string length using pointer.',
+    mathSolution: 'Count chars until null',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *str = "Hello";\n    char *ptr = str;\n    int len = 0;\n    while(*ptr != \'\\0\') {\n        len++;\n        ptr++;\n    }\n    printf("Length = %d\\n", len);\n    return 0;\n}',
+    hint: 'Increment pointer and count'
   },
   {
     id: 'c_ptr_14',
     topicId: 'c_pointers',
-    question: 'Access element using pointer to array.',
-    mathSolution: '(*ptr)[i] gives arr[i]',
-    codeSolution: 'int val = (*ptr)[i];',
-    hint: 'Dereference then index'
+    question: 'Write a program to copy string using pointers.',
+    mathSolution: 'Copy char by char until null',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char src[] = "Hello";\n    char dest[20];\n    char *s = src;\n    char *d = dest;\n    while(*s != \'\\0\') {\n        *d = *s;\n        s++;\n        d++;\n    }\n    *d = \'\\0\';\n    printf("Copied: %s\\n", dest);\n    return 0;\n}',
+    hint: 'Dereference and assign, then increment'
   },
   {
     id: 'c_ptr_15',
     topicId: 'c_pointers',
-    question: 'Find sum of array using pointer.',
-    mathSolution: 'Add all elements via pointer',
-    codeSolution: 'int sum=0; for(int *p=arr; p<arr+n; p++) sum += *p;',
-    hint: 'Use pointer as loop variable'
+    question: 'Write a program to reverse string using pointers.',
+    mathSolution: 'Swap characters from ends',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello";\n    int len = strlen(str);\n    char *start = str;\n    char *end = str + len - 1;\n    while(start < end) {\n        char temp = *start;\n        *start = *end;\n        *end = temp;\n        start++;\n        end--;\n    }\n    printf("Reversed: %s\\n", str);\n    return 0;\n}',
+    hint: 'Two pointers moving inward'
   },
-
-  // ========== POINTERS AND STRINGS (QUESTIONS 16-20) ==========
   {
     id: 'c_ptr_16',
     topicId: 'c_pointers',
-    question: 'Declare pointer to string literal.',
-    mathSolution: 'Pointer to constant string',
-    codeSolution: 'char *str = "Hello";',
-    hint: 'String literal is array of chars'
+    question: 'Write a program to convert string to uppercase using pointers.',
+    mathSolution: 'Use pointer to modify string',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "hello";\n    char *ptr = str;\n    while(*ptr) {\n        *ptr = toupper(*ptr);\n        ptr++;\n    }\n    printf("Uppercase: %s\\n", str);\n    return 0;\n}',
+    hint: 'Dereference pointer to modify characters'
   },
   {
     id: 'c_ptr_17',
     topicId: 'c_pointers',
-    question: 'Print string using pointer.',
-    mathSolution: 'Traverse char by char',
-    codeSolution: 'for(char *p=str; *p!=\'\\0\'; p++) printf("%c", *p);',
-    hint: 'Stop at null terminator'
+    question: 'Write a program to count vowels in string using pointers.',
+    mathSolution: 'Check each character for vowels',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello World";\n    char *ptr = str;\n    int count = 0;\n    while(*ptr) {\n        char ch = tolower(*ptr);\n        if(ch == \'a\' || ch == \'e\' || ch == \'i\' || ch == \'o\' || ch == \'u\')\n            count++;\n        ptr++;\n    }\n    printf("Vowels = %d\\n", count);\n    return 0;\n}',
+    hint: 'Use pointer to traverse string'
   },
   {
     id: 'c_ptr_18',
     topicId: 'c_pointers',
-    question: 'Find string length using pointer.',
-    mathSolution: 'Count chars until null',
-    codeSolution: 'int len=0; char *p=str; while(*p++) len++;',
-    hint: 'Increment pointer and count'
+    question: 'Write a program to check if string is palindrome using pointers.',
+    mathSolution: 'Compare from both ends',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "madam";\n    int len = strlen(str);\n    char *start = str;\n    char *end = str + len - 1;\n    int is_palindrome = 1;\n    while(start < end) {\n        if(*start != *end) {\n            is_palindrome = 0;\n            break;\n        }\n        start++;\n        end--;\n    }\n    if(is_palindrome) printf("%s is palindrome\\n", str);\n    else printf("%s is not palindrome\\n", str);\n    return 0;\n}',
+    hint: 'Compare characters from both ends'
   },
   {
     id: 'c_ptr_19',
     topicId: 'c_pointers',
-    question: 'Copy string using pointers.',
-    mathSolution: 'Copy src to dest char by char',
-    codeSolution: 'char *src="Hello", dest[20], *d=dest; while(*src) *d++ = *src++; *d=\'\\0\';',
-    hint: 'Dereference and assign, then increment'
+    question: 'Write a program to concatenate strings using pointers.',
+    mathSolution: 'Find end of first, then copy second',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[20] = "Hello ";\n    char str2[] = "World";\n    char *ptr = str1;\n    char *src = str2;\n    while(*ptr) ptr++;\n    while((*ptr++ = *src++));\n    printf("Concatenated: %s\\n", str1);\n    return 0;\n}',
+    hint: 'Move pointer to end of first string'
   },
   {
     id: 'c_ptr_20',
     topicId: 'c_pointers',
-    question: 'Reverse string using pointers.',
-    mathSolution: 'Swap characters from ends',
-    codeSolution: 'char *start=str, *end=str+len-1; while(start<end) { char temp=*start; *start++=*end; *end--=temp; }',
-    hint: 'Two pointers moving inward'
+    question: 'Write a program to compare strings using pointers.',
+    mathSolution: 'Compare character by character',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[] = "Hello";\n    char str2[] = "Hello";\n    char *s1 = str1;\n    char *s2 = str2;\n    int equal = 1;\n    while(*s1 || *s2) {\n        if(*s1 != *s2) {\n            equal = 0;\n            break;\n        }\n        s1++;\n        s2++;\n    }\n    if(equal) printf("Strings are equal\\n");\n    else printf("Strings are not equal\\n");\n    return 0;\n}',
+    hint: 'Compare character by character using pointers'
   },
 
-  // ========== POINTER TO POINTER (QUESTIONS 21-25) ==========
+  // ========== POINTER TO POINTER (21-30) ==========
   {
     id: 'c_ptr_21',
     topicId: 'c_pointers',
-    question: 'Declare pointer to pointer (double pointer).',
-    mathSolution: 'Pointer that stores address of another pointer',
-    codeSolution: 'int **pptr;',
-    hint: 'Use two asterisks'
+    question: 'Write a program to demonstrate double pointer (pointer to pointer).',
+    mathSolution: 'Double pointer stores address of another pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 10;\n    int *ptr = &x;\n    int **pptr = &ptr;\n    printf("Value of x: %d\\n", x);\n    printf("Using ptr: %d\\n", *ptr);\n    printf("Using pptr: %d\\n", **pptr);\n    return 0;\n}',
+    hint: 'Use two asterisks for double pointer'
   },
   {
     id: 'c_ptr_22',
     topicId: 'c_pointers',
-    question: 'Assign address of pointer to double pointer.',
-    mathSolution: 'pptr = &ptr',
-    codeSolution: 'int x=10, *ptr=&x, **pptr=&ptr;',
-    hint: '& on pointer gives address of pointer'
+    question: 'Write a program to modify value using double pointer.',
+    mathSolution: 'Change value through double pointer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 10;\n    int *ptr = &x;\n    int **pptr = &ptr;\n    printf("Before: %d\\n", x);\n    **pptr = 50;\n    printf("After: %d\\n", x);\n    return 0;\n}',
+    hint: 'Dereference twice to access value'
   },
   {
     id: 'c_ptr_23',
     topicId: 'c_pointers',
-    question: 'Access value using double pointer.',
-    mathSolution: '**pptr gives value of x',
-    codeSolution: 'int val = **pptr;',
-    hint: 'Dereference twice'
+    question: 'Write a program to swap two numbers using pointers.',
+    mathSolution: 'Exchange values via pointers',
+    codeSolution: '#include <stdio.h>\n\nvoid swap(int *a, int *b) {\n    int temp = *a;\n    *a = *b;\n    *b = temp;\n}\n\nint main() {\n    int x = 10, y = 20;\n    printf("Before: x=%d, y=%d\\n", x, y);\n    swap(&x, &y);\n    printf("After: x=%d, y=%d\\n", x, y);\n    return 0;\n}',
+    hint: 'Pass addresses to function'
   },
   {
     id: 'c_ptr_24',
     topicId: 'c_pointers',
-    question: 'Create 2D array using pointer to pointer.',
-    mathSolution: 'Allocate rows and columns dynamically',
-    codeSolution: 'int **mat = malloc(rows * sizeof(int*)); for(i=0;i<rows;i++) mat[i]=malloc(cols*sizeof(int));',
-    hint: 'First allocate rows, then each row'
+    question: 'Write a program to increment variable using pointer in function.',
+    mathSolution: 'Modify original variable',
+    codeSolution: '#include <stdio.h>\n\nvoid increment(int *p) {\n    (*p)++;\n}\n\nint main() {\n    int x = 5;\n    printf("Before: %d\\n", x);\n    increment(&x);\n    printf("After: %d\\n", x);\n    return 0;\n}',
+    hint: 'Function receives address'
   },
   {
     id: 'c_ptr_25',
     topicId: 'c_pointers',
-    question: 'Access element in dynamically allocated 2D array.',
-    mathSolution: 'mat[i][j] or *(*(mat+i)+j)',
-    codeSolution: 'int val = mat[row][col];',
-    hint: 'Use double indexing'
+    question: 'Write a program to return pointer from function.',
+    mathSolution: 'Function returns address',
+    codeSolution: '#include <stdio.h>\n\nint* findMax(int *arr, int n) {\n    int *max = arr;\n    for(int i = 1; i < n; i++) {\n        if(arr[i] > *max) max = &arr[i];\n    }\n    return max;\n}\n\nint main() {\n    int arr[] = {23, 45, 12, 67, 34};\n    int *maxPtr = findMax(arr, 5);\n    printf("Maximum value: %d\\n", *maxPtr);\n    return 0;\n}',
+    hint: 'Return address of element'
   },
-
-  // ========== FUNCTION POINTERS (QUESTIONS 26-30) ==========
   {
     id: 'c_ptr_26',
     topicId: 'c_pointers',
-    question: 'Declare pointer to function taking two ints and returning int.',
-    mathSolution: 'Function pointer declaration',
-    codeSolution: 'int (*funcPtr)(int, int);',
-    hint: 'Syntax: return_type (*name)(parameters)'
+    question: 'Write a program to create array of pointers to integers.',
+    mathSolution: 'Array storing addresses',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a = 10, b = 20, c = 30;\n    int *ptrs[] = {&a, &b, &c};\n    for(int i = 0; i < 3; i++) {\n        printf("Value %d: %d\\n", i, *ptrs[i]);\n    }\n    return 0;\n}',
+    hint: 'Each element holds address'
   },
   {
     id: 'c_ptr_27',
     topicId: 'c_pointers',
-    question: 'Assign function address to function pointer.',
-    mathSolution: 'funcPtr = add; (add is function)',
-    codeSolution: 'int add(int a,int b){return a+b;} funcPtr = add;',
-    hint: 'Function name decays to pointer'
+    question: 'Write a program to create array of strings using pointer array.',
+    mathSolution: 'Array of char pointers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *fruits[] = {"Apple", "Banana", "Orange"};\n    for(int i = 0; i < 3; i++) {\n        printf("%s\\n", fruits[i]);\n    }\n    return 0;\n}',
+    hint: 'Each points to string literal'
   },
   {
     id: 'c_ptr_28',
     topicId: 'c_pointers',
-    question: 'Call function using function pointer.',
-    mathSolution: 'Use pointer like function name',
-    codeSolution: 'int result = funcPtr(5, 3);',
-    hint: 'Can use (*funcPtr) or just funcPtr'
+    question: 'Write a program to demonstrate NULL pointer.',
+    mathSolution: 'Pointer that points to nothing',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int *ptr = NULL;\n    if(ptr == NULL) {\n        printf("Pointer is NULL\\n");\n    }\n    return 0;\n}',
+    hint: 'NULL pointer points to nothing'
   },
   {
     id: 'c_ptr_29',
     topicId: 'c_pointers',
-    question: 'Create array of function pointers.',
-    mathSolution: 'Multiple functions in array',
-    codeSolution: 'int (*ops[])(int,int) = {add, sub, mul, div};',
-    hint: 'Array of function pointers'
+    question: 'Write a program to demonstrate void pointer.',
+    mathSolution: 'Generic pointer that can hold any address',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 42;\n    float y = 3.14;\n    void *ptr;\n    ptr = &x;\n    printf("Integer value: %d\\n", *(int*)ptr);\n    ptr = &y;\n    printf("Float value: %.2f\\n", *(float*)ptr);\n    return 0;\n}',
+    hint: 'Cast before dereferencing'
   },
   {
     id: 'c_ptr_30',
     topicId: 'c_pointers',
-    question: 'Pass function pointer as parameter.',
-    mathSolution: 'Callback function',
-    codeSolution: 'void process(int *arr, int n, int (*func)(int)) { for(i=0;i<n;i++) arr[i]=func(arr[i]); }',
-    hint: 'Function pointer parameter'
+    question: 'Write a program to demonstrate const pointer.',
+    mathSolution: 'Pointer cannot change where it points',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 10, y = 20;\n    int *const ptr = &x;\n    *ptr = 15;\n    printf("x = %d\\n", x);\n    // ptr = &y; // ERROR - pointer is constant\n    return 0;\n}',
+    hint: 'int* const means pointer is constant'
   },
 
-  // ========== NULL POINTERS (QUESTIONS 31-33) ==========
+  // ========== DYNAMIC MEMORY ALLOCATION (31-40) ==========
   {
     id: 'c_ptr_31',
     topicId: 'c_pointers',
-    question: 'Initialize pointer to NULL.',
-    mathSolution: 'Pointer points to nothing',
-    codeSolution: 'int *ptr = NULL;',
-    hint: 'NULL is standard macro'
+    question: 'Write a program to allocate memory for one integer using malloc.',
+    mathSolution: 'Dynamic memory allocation',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    if(ptr != NULL) {\n        *ptr = 42;\n        printf("Value: %d\\n", *ptr);\n        free(ptr);\n    }\n    return 0;\n}',
+    hint: 'malloc returns void*, cast to needed type'
   },
   {
     id: 'c_ptr_32',
     topicId: 'c_pointers',
-    question: 'Check if pointer is NULL before dereferencing.',
-    mathSolution: 'Safety check to avoid crash',
-    codeSolution: 'if(ptr != NULL) { *ptr = 10; }',
-    hint: 'Always check for NULL'
+    question: 'Write a program to dynamically allocate array using malloc.',
+    mathSolution: 'Array on heap',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 5;\n    int *arr = (int*)malloc(n * sizeof(int));\n    if(arr != NULL) {\n        for(int i = 0; i < n; i++) {\n            arr[i] = (i + 1) * 10;\n        }\n        for(int i = 0; i < n; i++) {\n            printf("%d ", arr[i]);\n        }\n        free(arr);\n    }\n    return 0;\n}',
+    hint: 'Multiply by number of elements'
   },
   {
     id: 'c_ptr_33',
     topicId: 'c_pointers',
-    question: 'Use NULL pointer in conditional.',
-    mathSolution: 'NULL evaluates to false',
-    codeSolution: 'if(!ptr) { printf("Pointer is NULL"); }',
-    hint: '!ptr true when ptr is NULL'
+    question: 'Write a program to allocate and initialize to zero using calloc.',
+    mathSolution: 'Zero-initialized memory',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 5;\n    int *arr = (int*)calloc(n, sizeof(int));\n    if(arr != NULL) {\n        for(int i = 0; i < n; i++) {\n            printf("%d ", arr[i]);\n        }\n        free(arr);\n    }\n    return 0;\n}',
+    hint: 'calloc takes count and size'
   },
-
-  // ========== VOID POINTERS (QUESTIONS 34-37) ==========
   {
     id: 'c_ptr_34',
     topicId: 'c_pointers',
-    question: 'Declare a void pointer (generic pointer).',
-    mathSolution: 'Can point to any data type',
-    codeSolution: 'void *ptr;',
-    hint: 'void* can hold any address'
+    question: 'Write a program to resize memory using realloc.',
+    mathSolution: 'Change size of memory block',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *arr = (int*)malloc(3 * sizeof(int));\n    arr[0] = 10; arr[1] = 20; arr[2] = 30;\n    arr = (int*)realloc(arr, 5 * sizeof(int));\n    arr[3] = 40; arr[4] = 50;\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", arr[i]);\n    }\n    free(arr);\n    return 0;\n}',
+    hint: 'May move to new location'
   },
   {
     id: 'c_ptr_35',
     topicId: 'c_pointers',
-    question: 'Assign int address to void pointer.',
-    mathSolution: 'No cast needed implicitly',
-    codeSolution: 'int x=10; void *ptr = &x;',
-    hint: 'void* is compatible with any pointer'
+    question: 'Write a program to free dynamically allocated memory.',
+    mathSolution: 'Prevent memory leak',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    *ptr = 100;\n    printf("Value: %d\\n", *ptr);\n    free(ptr);\n    printf("Memory freed\\n");\n    return 0;\n}',
+    hint: 'Always free what you malloc'
   },
   {
     id: 'c_ptr_36',
     topicId: 'c_pointers',
-    question: 'Dereference void pointer after casting.',
-    mathSolution: 'Must cast before dereferencing',
-    codeSolution: 'int val = *(int*)ptr;',
-    hint: 'Cast to appropriate type first'
+    question: 'Write a program to demonstrate dangling pointer.',
+    mathSolution: 'Pointer to freed memory',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int *ptr = (int*)malloc(sizeof(int));\n    *ptr = 42;\n    free(ptr);\n    ptr = NULL;\n    printf("Pointer set to NULL after free\\n");\n    return 0;\n}',
+    hint: 'Set to NULL after free'
   },
   {
     id: 'c_ptr_37',
     topicId: 'c_pointers',
-    question: 'Use void pointer in generic swap function.',
-    mathSolution: 'Swap any type of data',
-    codeSolution: 'void swap(void *a, void *b, int size) { char temp[size]; memcpy(temp,a,size); memcpy(a,b,size); memcpy(b,temp,size); }',
-    hint: 'Work with bytes'
+    question: 'Write a program to create 2D array using pointer to pointer.',
+    mathSolution: 'Dynamic matrix allocation',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int rows = 3, cols = 3;\n    int **mat = (int**)malloc(rows * sizeof(int*));\n    for(int i = 0; i < rows; i++) {\n        mat[i] = (int*)malloc(cols * sizeof(int));\n    }\n    for(int i = 0; i < rows; i++) {\n        for(int j = 0; j < cols; j++) {\n            mat[i][j] = i * cols + j + 1;\n        }\n    }\n    for(int i = 0; i < rows; i++) {\n        for(int j = 0; j < cols; j++) {\n            printf("%d ", mat[i][j]);\n        }\n        printf("\\n");\n        free(mat[i]);\n    }\n    free(mat);\n    return 0;\n}',
+    hint: 'First allocate rows, then each row'
   },
-
-  // ========== CONSTANT POINTERS (QUESTIONS 38-40) ==========
   {
     id: 'c_ptr_38',
     topicId: 'c_pointers',
-    question: 'Declare pointer to constant data.',
-    mathSolution: 'Cannot change data via pointer',
-    codeSolution: 'const int *ptr = &x;',
-    hint: 'const int* means data is const'
+    question: 'Write a program to calculate sum using pointer to function.',
+    mathSolution: 'Function pointer callback',
+    codeSolution: '#include <stdio.h>\n\nint add(int a, int b) {\n    return a + b;\n}\n\nint main() {\n    int (*funcPtr)(int, int) = add;\n    int result = funcPtr(10, 20);\n    printf("Sum = %d\\n", result);\n    return 0;\n}',
+    hint: 'Function name decays to pointer'
   },
   {
     id: 'c_ptr_39',
     topicId: 'c_pointers',
-    question: 'Declare constant pointer (pointer itself const).',
-    mathSolution: 'Cannot change where pointer points',
-    codeSolution: 'int *const ptr = &x;',
-    hint: 'int* const means pointer is const'
+    question: 'Write a program to create array of function pointers.',
+    mathSolution: 'Multiple functions in array',
+    codeSolution: '#include <stdio.h>\n\nint add(int a, int b) { return a + b; }\nint sub(int a, int b) { return a - b; }\nint mul(int a, int b) { return a * b; }\n\nint main() {\n    int (*ops[])(int, int) = {add, sub, mul};\n    int a = 10, b = 5;\n    printf("Add: %d\\n", ops[0](a, b));\n    printf("Sub: %d\\n", ops[1](a, b));\n    printf("Mul: %d\\n", ops[2](a, b));\n    return 0;\n}',
+    hint: 'Array of function pointers'
   },
   {
     id: 'c_ptr_40',
     topicId: 'c_pointers',
-    question: 'Declare constant pointer to constant data.',
-    mathSolution: 'Neither pointer nor data can change',
-    codeSolution: 'const int *const ptr = &x;',
-    hint: 'Both const'
+    question: 'Write a program to pass function pointer as parameter.',
+    mathSolution: 'Callback function',
+    codeSolution: '#include <stdio.h>\n\nvoid process(int *arr, int n, int (*func)(int)) {\n    for(int i = 0; i < n; i++) {\n        arr[i] = func(arr[i]);\n    }\n}\n\nint square(int x) {\n    return x * x;\n}\n\nint main() {\n    int arr[] = {1, 2, 3, 4, 5};\n    process(arr, 5, square);\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", arr[i]);\n    }\n    return 0;\n}',
+    hint: 'Function pointer as parameter'
   },
 
-  // ========== DYNAMIC MEMORY ALLOCATION (QUESTIONS 41-45) ==========
+  // ========== POINTERS TO STRUCTURES (41-50) ==========
   {
     id: 'c_ptr_41',
     topicId: 'c_pointers',
-    question: 'Allocate memory for one integer using malloc.',
-    mathSolution: 'Dynamic memory allocation',
-    codeSolution: 'int *ptr = (int*)malloc(sizeof(int));',
-    hint: 'malloc returns void*, cast to needed type'
+    question: 'Write a program to declare pointer to structure.',
+    mathSolution: 'Pointer to struct variable',
+    codeSolution: '#include <stdio.h>\n\nstruct Student {\n    char name[50];\n    int age;\n};\n\nint main() {\n    struct Student s1 = {"John", 20};\n    struct Student *ptr = &s1;\n    printf("Name: %s, Age: %d\\n", ptr->name, ptr->age);\n    return 0;\n}',
+    hint: 'Use arrow operator ->'
   },
   {
     id: 'c_ptr_42',
     topicId: 'c_pointers',
-    question: 'Allocate array of n integers using malloc.',
-    mathSolution: 'Array on heap',
-    codeSolution: 'int *arr = (int*)malloc(n * sizeof(int));',
-    hint: 'Multiply by number of elements'
+    question: 'Write a program to allocate structure dynamically.',
+    mathSolution: 'Create struct on heap',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nstruct Student {\n    char name[50];\n    int age;\n};\n\nint main() {\n    struct Student *s = (struct Student*)malloc(sizeof(struct Student));\n    if(s != NULL) {\n        strcpy(s->name, "Alice");\n        s->age = 22;\n        printf("Name: %s, Age: %d\\n", s->name, s->age);\n        free(s);\n    }\n    return 0;\n}',
+    hint: 'sizeof(struct) includes all members'
   },
   {
     id: 'c_ptr_43',
     topicId: 'c_pointers',
-    question: 'Allocate and initialize to zero using calloc.',
-    mathSolution: 'Zero-initialized memory',
-    codeSolution: 'int *arr = (int*)calloc(n, sizeof(int));',
-    hint: 'calloc takes count and size'
+    question: 'Write a program to create linked list node using pointer.',
+    mathSolution: 'Self-referential structure',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node *next;\n};\n\nint main() {\n    struct Node *head = NULL;\n    struct Node *first = (struct Node*)malloc(sizeof(struct Node));\n    first->data = 10;\n    first->next = NULL;\n    head = first;\n    printf("Node data: %d\\n", head->data);\n    free(first);\n    return 0;\n}',
+    hint: 'Node has data and next pointer'
   },
   {
     id: 'c_ptr_44',
     topicId: 'c_pointers',
-    question: 'Resize previously allocated memory using realloc.',
-    mathSolution: 'Change size of memory block',
-    codeSolution: 'arr = (int*)realloc(arr, newSize * sizeof(int));',
-    hint: 'May move to new location'
+    question: 'Write a program to traverse linked list using pointers.',
+    mathSolution: 'Move through list via next pointers',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node *next;\n};\n\nint main() {\n    struct Node *head = NULL;\n    struct Node *second = NULL;\n    struct Node *third = NULL;\n    head = (struct Node*)malloc(sizeof(struct Node));\n    second = (struct Node*)malloc(sizeof(struct Node));\n    third = (struct Node*)malloc(sizeof(struct Node));\n    head->data = 10; head->next = second;\n    second->data = 20; second->next = third;\n    third->data = 30; third->next = NULL;\n    struct Node *curr = head;\n    while(curr != NULL) {\n        printf("%d ", curr->data);\n        curr = curr->next;\n    }\n    free(head); free(second); free(third);\n    return 0;\n}',
+    hint: 'Follow next until NULL'
   },
   {
     id: 'c_ptr_45',
     topicId: 'c_pointers',
-    question: 'Free dynamically allocated memory.',
-    mathSolution: 'Prevent memory leak',
-    codeSolution: 'free(ptr);',
-    hint: 'Always free what you malloc'
+    question: 'Write a program to count nodes in linked list using pointer.',
+    mathSolution: 'Traverse and count',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nstruct Node {\n    int data;\n    struct Node *next;\n};\n\nint main() {\n    struct Node *head = NULL;\n    struct Node *n1 = (struct Node*)malloc(sizeof(struct Node));\n    struct Node *n2 = (struct Node*)malloc(sizeof(struct Node));\n    n1->data = 10; n1->next = n2;\n    n2->data = 20; n2->next = NULL;\n    head = n1;\n    int count = 0;\n    struct Node *curr = head;\n    while(curr != NULL) {\n        count++;\n        curr = curr->next;\n    }\n    printf("Number of nodes: %d\\n", count);\n    free(n1); free(n2);\n    return 0;\n}',
+    hint: 'Count as you traverse'
   },
-
-  // ========== POINTER TO STRUCTURES (QUESTIONS 46-50) ==========
   {
     id: 'c_ptr_46',
     topicId: 'c_pointers',
-    question: 'Declare pointer to structure.',
-    mathSolution: 'Pointer to struct variable',
-    codeSolution: 'struct Student *ptr;',
-    hint: 'Use struct tag with *'
+    question: 'Write a program to modify structure member using pointer.',
+    mathSolution: 'Use arrow operator to modify',
+    codeSolution: '#include <stdio.h>\n\nstruct Point {\n    int x;\n    int y;\n};\n\nint main() {\n    struct Point p = {5, 10};\n    struct Point *ptr = &p;\n    printf("Before: x=%d, y=%d\\n", p.x, p.y);\n    ptr->x = 15;\n    ptr->y = 20;\n    printf("After: x=%d, y=%d\\n", p.x, p.y);\n    return 0;\n}',
+    hint: 'ptr->member = value'
   },
   {
     id: 'c_ptr_47',
     topicId: 'c_pointers',
-    question: 'Access structure members using pointer.',
-    mathSolution: 'Use arrow operator ->',
-    codeSolution: 'ptr->age = 20;',
-    hint: 'ptr->member equivalent to (*ptr).member'
+    question: 'Write a program to check system endianness using pointer.',
+    mathSolution: 'Test first byte of integer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int x = 1;\n    char *c = (char*)&x;\n    if(*c) {\n        printf("Little Endian\\n");\n    } else {\n        printf("Big Endian\\n");\n    }\n    return 0;\n}',
+    hint: 'First byte tells endianness'
   },
   {
     id: 'c_ptr_48',
     topicId: 'c_pointers',
-    question: 'Allocate structure dynamically.',
-    mathSolution: 'Create struct on heap',
-    codeSolution: 'struct Student *s = (struct Student*)malloc(sizeof(struct Student));',
-    hint: 'sizeof(struct) includes all members'
+    question: 'Write a program to find size of pointer.',
+    mathSolution: 'Pointers have fixed size',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int *intPtr;\n    char *charPtr;\n    float *floatPtr;\n    printf("Size of int pointer: %zu bytes\\n", sizeof(intPtr));\n    printf("Size of char pointer: %zu bytes\\n", sizeof(charPtr));\n    printf("Size of float pointer: %zu bytes\\n", sizeof(floatPtr));\n    return 0;\n}',
+    hint: 'All pointers have same size'
   },
   {
     id: 'c_ptr_49',
     topicId: 'c_pointers',
-    question: 'Create linked list node using pointer.',
-    mathSolution: 'Node with data and next pointer',
-    codeSolution: 'struct Node { int data; struct Node *next; }; struct Node *head = NULL;',
-    hint: 'Self-referential structure'
+    question: 'Write a program to demonstrate pointer to array vs array of pointers.',
+    mathSolution: 'Distinguish between types',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[5] = {1,2,3,4,5};\n    int (*ptrToArr)[5] = &arr;\n    int *arrOfPtrs[5];\n    for(int i = 0; i < 5; i++) {\n        arrOfPtrs[i] = &arr[i];\n    }\n    printf("Pointer to array: first element %d\\n", (*ptrToArr)[0]);\n    printf("Array of pointers: first element %d\\n", *arrOfPtrs[0]);\n    return 0;\n}',
+    hint: 'int (*p)[5] vs int *p[5]'
   },
   {
     id: 'c_ptr_50',
     topicId: 'c_pointers',
-    question: 'Traverse linked list using pointers.',
-    mathSolution: 'Move through list via next pointers',
-    codeSolution: 'for(struct Node *curr=head; curr!=NULL; curr=curr->next) printf("%d ",curr->data);',
-    hint: 'Follow next until NULL'
-  },
-
-  // ========== POINTERS AND FUNCTIONS (QUESTIONS 51-55) ==========
-  {
-    id: 'c_ptr_51',
-    topicId: 'c_pointers',
-    question: 'Pass pointer to function to modify original variable.',
-    mathSolution: 'Call by reference simulation',
-    codeSolution: 'void increment(int *p) { (*p)++; } increment(&x);',
-    hint: 'Function receives address'
-  },
-  {
-    id: 'c_ptr_52',
-    topicId: 'c_pointers',
-    question: 'Return pointer from function.',
-    mathSolution: 'Function returns address',
-    codeSolution: 'int* findMax(int *arr, int n) { return &arr[index]; }',
-    hint: 'Return address, not local variable'
-  },
-  {
-    id: 'c_ptr_53',
-    topicId: 'c_pointers',
-    question: 'Return dynamically allocated array from function.',
-    mathSolution: 'Create array in function and return',
-    codeSolution: 'int* createArray(int n) { int *arr=malloc(n*sizeof(int)); return arr; }',
-    hint: 'Memory on heap survives function return'
-  },
-  {
-    id: 'c_ptr_54',
-    topicId: 'c_pointers',
-    question: 'Swap two numbers using pointers.',
-    mathSolution: 'Exchange values via pointers',
-    codeSolution: 'void swap(int *a, int *b) { int temp=*a; *a=*b; *b=temp; }',
-    hint: 'Work with addresses'
-  },
-  {
-    id: 'c_ptr_55',
-    topicId: 'c_pointers',
-    question: 'Pass array to function using pointer.',
-    mathSolution: 'Array decays to pointer',
-    codeSolution: 'void process(int *arr, int n) { }',
-    hint: 'Pass base address and size'
-  },
-
-  // ========== POINTER ARRAYS (QUESTIONS 56-59) ==========
-  {
-    id: 'c_ptr_56',
-    topicId: 'c_pointers',
-    question: 'Create array of pointers to integers.',
-    mathSolution: 'Each element holds address',
-    codeSolution: 'int *ptrArr[10];',
-    hint: 'Array of int*'
-  },
-  {
-    id: 'c_ptr_57',
-    topicId: 'c_pointers',
-    question: 'Store addresses of variables in pointer array.',
-    mathSolution: 'Pointers to different variables',
-    codeSolution: 'int a,b,c; int *ptrs[] = {&a, &b, &c};',
-    hint: 'Initialize with addresses'
-  },
-  {
-    id: 'c_ptr_58',
-    topicId: 'c_pointers',
-    question: 'Create array of strings using pointer array.',
-    mathSolution: 'Array of char pointers',
-    codeSolution: 'char *fruits[] = {"Apple", "Banana", "Orange"};',
-    hint: 'Each points to string literal'
-  },
-  {
-    id: 'c_ptr_59',
-    topicId: 'c_pointers',
-    question: 'Sort array of strings using pointer array.',
-    mathSolution: 'Rearrange pointers, not strings',
-    codeSolution: 'for(i=0;i<n-1;i++) for(j=i+1;j<n;j++) if(strcmp(arr[i],arr[j])>0) swap(&arr[i],&arr[j]);',
-    hint: 'Swap pointers, not actual strings'
-  },
-
-  // ========== WILD AND DANGLING POINTERS (QUESTIONS 60-62) ==========
-  {
-    id: 'c_ptr_60',
-    topicId: 'c_pointers',
-    question: 'Identify wild pointer (uninitialized pointer).',
-    mathSolution: 'Pointer with garbage address',
-    codeSolution: 'int *ptr; // wild pointer - don\'t use',
-    hint: 'Always initialize pointers'
-  },
-  {
-    id: 'c_ptr_61',
-    topicId: 'c_pointers',
-    question: 'Create dangling pointer (freed memory).',
-    mathSolution: 'Pointer to freed memory',
-    codeSolution: 'int *ptr = malloc(sizeof(int)); free(ptr); // ptr now dangling',
-    hint: 'Set to NULL after free'
-  },
-  {
-    id: 'c_ptr_62',
-    topicId: 'c_pointers',
-    question: 'Avoid dangling pointer by setting to NULL.',
-    mathSolution: 'Safe practice after free',
-    codeSolution: 'free(ptr); ptr = NULL;',
-    hint: 'NULL pointer is safe to use'
-  },
-
-  // ========== POINTER ALIGNMENT (QUESTIONS 63-64) ==========
-  {
-    id: 'c_ptr_63',
-    topicId: 'c_pointers',
-    question: 'Explain near pointer concept (historical).',
-    mathSolution: '16-bit offset within segment',
-    codeSolution: '// near pointer - 16-bit offset',
-    hint: 'Used in segmented memory models'
-  },
-  {
-    id: 'c_ptr_64',
-    topicId: 'c_pointers',
-    question: 'Check if pointer is aligned to specific boundary.',
-    mathSolution: 'Address divisible by alignment',
-    codeSolution: 'if(((uintptr_t)ptr % alignment) == 0) { }',
-    hint: 'Cast to uintptr_t for arithmetic'
-  },
-
-  // ========== POINTER TO CONST VS CONST POINTER (QUESTIONS 65-67) ==========
-  {
-    id: 'c_ptr_65',
-    topicId: 'c_pointers',
-    question: 'Modify data through pointer to const - error.',
-    mathSolution: 'Cannot modify const data',
-    codeSolution: 'const int *p = &x; *p = 10; // ERROR',
-    hint: 'Read-only location'
-  },
-  {
-    id: 'c_ptr_66',
-    topicId: 'c_pointers',
-    question: 'Modify const pointer itself - error.',
-    mathSolution: 'Cannot change pointer value',
-    codeSolution: 'int *const p = &x; p = &y; // ERROR',
-    hint: 'Pointer itself is const'
-  },
-  {
-    id: 'c_ptr_67',
-    topicId: 'c_pointers',
-    question: 'Distinguish pointer to array vs array of pointers.',
-    mathSolution: 'int (*p)[5] vs int *p[5]',
-    codeSolution: 'int (*p)[5]; // pointer to array of 5 ints\nint *p[5]; // array of 5 int pointers',
-    hint: 'Parentheses matter'
-  },
-
-  // ========== FUNCTION RETURNING POINTER (QUESTIONS 68-69) ==========
-  {
-    id: 'c_ptr_68',
-    topicId: 'c_pointers',
-    question: 'Write function returning pointer to first even number.',
-    mathSolution: 'Search and return address',
-    codeSolution: 'int* findEven(int *arr, int n) { for(int i=0;i<n;i++) if(arr[i]%2==0) return &arr[i]; return NULL; }',
-    hint: 'Return address or NULL'
-  },
-  {
-    id: 'c_ptr_69',
-    topicId: 'c_pointers',
-    question: 'Distinguish pointer to function vs function returning pointer.',
-    mathSolution: 'int (*f)() vs int* f()',
-    codeSolution: 'int (*f)(); // pointer to function\nint* f(); // function returning int*',
-    hint: 'Parentheses around *f'
-  },
-
-  // ========== COMPLEX POINTER DECLARATIONS (QUESTIONS 70-71) ==========
-  {
-    id: 'c_ptr_70',
-    topicId: 'c_pointers',
-    question: 'Declare pointer to array of 10 function pointers.',
-    mathSolution: 'Complex declaration',
-    codeSolution: 'int (*(*ptr)[10])(int, int);',
-    hint: 'Work from inside out'
-  },
-  {
-    id: 'c_ptr_71',
-    topicId: 'c_pointers',
-    question: 'Declare function returning pointer to array of 5 ints.',
-    mathSolution: 'Function returning array pointer',
-    codeSolution: 'int (*func())[5];',
-    hint: 'Return type is pointer to array'
-  },
-
-  // ========== POINTER ARITHMETIC WITH DIFFERENT TYPES (QUESTIONS 72-73) ==========
-  {
-    id: 'c_ptr_72',
-    topicId: 'c_pointers',
-    question: 'Increment char pointer vs int pointer.',
-    mathSolution: 'char* moves 1 byte, int* moves 4 bytes',
-    codeSolution: 'char *cp; cp++; // +1 byte\nint *ip; ip++; // +4 bytes',
-    hint: 'Pointer arithmetic scales by type size'
-  },
-  {
-    id: 'c_ptr_73',
-    topicId: 'c_pointers',
-    question: 'Subtract two pointers to find array length.',
-    mathSolution: 'Difference gives element count',
-    codeSolution: 'int len = end_ptr - start_ptr;',
-    hint: 'Works within same array'
-  },
-
-  // ========== POINTER AND CONST CORRECTNESS (QUESTIONS 74-75) ==========
-  {
-    id: 'c_ptr_74',
-    topicId: 'c_pointers',
-    question: 'Pass const pointer to function expecting non-const.',
-    mathSolution: 'Compiler warning/error',
-    codeSolution: 'void func(int *p); const int *cp; func(cp); // warning',
-    hint: 'Discards const qualifier'
-  },
-  {
-    id: 'c_ptr_75',
-    topicId: 'c_pointers',
-    question: 'Use restrict keyword with pointer (C99).',
-    mathSolution: 'No aliasing optimization',
-    codeSolution: 'void func(int *restrict p, int *restrict q) { }',
-    hint: 'Promise no overlap'
-  },
-
-  // ========== POINTER I/O (QUESTIONS 76-77) ==========
-  {
-    id: 'c_ptr_76',
-    topicId: 'c_pointers',
-    question: 'Read integer into dynamically allocated memory.',
-    mathSolution: 'Use pointer with scanf',
-    codeSolution: 'int *p = malloc(sizeof(int)); scanf("%d", p);',
-    hint: 'p already holds address'
-  },
-  {
-    id: 'c_ptr_77',
-    topicId: 'c_pointers',
-    question: 'Print string using pointer with puts.',
-    mathSolution: 'Pass pointer to puts',
-    codeSolution: 'char *str = "Hello"; puts(str);',
-    hint: 'puts expects char*'
-  },
-
-  // ========== POINTER TO POINTER APPLICATIONS (QUESTIONS 78-79) ==========
-  {
-    id: 'c_ptr_78',
-    topicId: 'c_pointers',
-    question: 'Modify pointer in function using pointer to pointer.',
-    mathSolution: 'Change where pointer points',
-    codeSolution: 'void allocate(int **p, int size) { *p = malloc(size); } int *ptr; allocate(&ptr, 10);',
-    hint: 'Pass address of pointer'
-  },
-  {
-    id: 'c_ptr_79',
-    topicId: 'c_pointers',
-    question: 'Implement 2D array using pointer to pointer.',
-    mathSolution: 'Dynamic matrix',
-    codeSolution: 'int **mat = malloc(rows * sizeof(int*)); for(i=0;i<rows;i++) mat[i]=malloc(cols*sizeof(int));',
-    hint: 'Allocate rows first'
-  },
-
-  // ========== POINTER AND MEMORY LAYOUT (QUESTIONS 80-81) ==========
-  {
-    id: 'c_ptr_80',
-    topicId: 'c_pointers',
-    question: 'Find offset of structure member using pointer.',
-    mathSolution: 'Use offsetof macro or pointer difference',
-    codeSolution: 'int offset = (char*)&s.member - (char*)&s;',
-    hint: 'Cast to char* for byte offset'
-  },
-  {
-    id: 'c_ptr_81',
-    topicId: 'c_pointers',
-    question: 'Check system endianness using pointer.',
-    mathSolution: 'Test if little or big endian',
-    codeSolution: 'int x=1; char *c=(char*)&x; if(*c) printf("Little endian"); else printf("Big endian");',
-    hint: 'First byte tells the story'
-  },
-
-  // ========== POINTER AND UNIONS (QUESTION 82) ==========
-  {
-    id: 'c_ptr_82',
-    topicId: 'c_pointers',
-    question: 'Access union members via pointer.',
-    mathSolution: 'Same as struct, but memory shared',
-    codeSolution: 'union Data *p; p->i = 10;',
-    hint: 'Arrow operator works'
-  },
-
-  // ========== POINTER CASTING (QUESTIONS 83-84) ==========
-  {
-    id: 'c_ptr_83',
-    topicId: 'c_pointers',
-    question: 'Cast int pointer to char pointer to examine bytes.',
-    mathSolution: 'View individual bytes of int',
-    codeSolution: 'int x=0x12345678; char *c = (char*)&x; for(i=0;i<4;i++) printf("%x ", c[i]);',
-    hint: 'See byte representation'
-  },
-  {
-    id: 'c_ptr_84',
-    topicId: 'c_pointers',
-    question: 'Cast void pointer to appropriate type.',
-    mathSolution: 'Generic to specific',
-    codeSolution: 'void *vp = &x; int *ip = (int*)vp;',
-    hint: 'Explicit cast recommended'
-  },
-
-  // ========== POINTER AND VOLATILE (QUESTION 85) ==========
-  {
-    id: 'c_ptr_85',
-    topicId: 'c_pointers',
-    question: 'Use volatile with pointer for hardware registers.',
-    mathSolution: 'Prevent compiler optimization',
-    codeSolution: 'volatile int *reg = (int*)0x4000;',
-    hint: 'Volatile means value may change externally'
-  },
-
-  // ========== SMART POINTER SIMULATION (QUESTION 86) ==========
-  {
-    id: 'c_ptr_86',
-    topicId: 'c_pointers',
-    question: 'Create simple smart pointer using struct.',
-    mathSolution: 'Auto-free on scope exit',
-    codeSolution: 'typedef struct { int *ptr; } SmartPtr; SmartPtr createPtr() { SmartPtr sp = {malloc(sizeof(int))}; return sp; }',
-    hint: 'Simulate with cleanup function'
-  },
-
-  // ========== POINTER ARITHMETIC LIMITATIONS (QUESTION 87) ==========
-  {
-    id: 'c_ptr_87',
-    topicId: 'c_pointers',
-    question: 'Add two pointers - why illegal?',
-    mathSolution: 'Adding addresses meaningless',
-    codeSolution: 'int *p, *q; p+q; // ILLEGAL',
-    hint: 'Only subtraction allowed'
-  },
-
-  // ========== POINTER AND MULTIDIMENSIONAL ARRAYS (QUESTIONS 88-89) ==========
-  {
-    id: 'c_ptr_88',
-    topicId: 'c_pointers',
-    question: 'Access 2D array element using pointer.',
-    mathSolution: '*(*(arr+i)+j) or *(arr[i]+j)',
-    codeSolution: 'int val = *(*(arr + row) + col);',
-    hint: 'arr[i][j] equivalent'
-  },
-  {
-    id: 'c_ptr_89',
-    topicId: 'c_pointers',
-    question: 'Create pointer to 2D array row.',
-    mathSolution: 'Pointer to entire row',
-    codeSolution: 'int (*rowPtr)[cols] = &arr[row];',
-    hint: 'Row pointer type'
-  },
-
-  // ========== FUNCTION POINTER CALLBACKS (QUESTION 90) ==========
-  {
-    id: 'c_ptr_90',
-    topicId: 'c_pointers',
-    question: 'Implement qsort-style comparator using function pointer.',
-    mathSolution: 'Generic sorting callback',
-    codeSolution: 'int compare(const void *a, const void *b) { return *(int*)a - *(int*)b; } qsort(arr, n, sizeof(int), compare);',
-    hint: 'Cast void* to appropriate type'
-  },
-
-  // ========== POINTER TO POINTER FOR LINKED LIST (QUESTION 91) ==========
-  {
-    id: 'c_ptr_91',
-    topicId: 'c_pointers',
-    question: 'Use pointer to pointer to modify head of linked list.',
-    mathSolution: 'Update head in function',
-    codeSolution: 'void insertAtHead(struct Node **head, int data) { struct Node *new = createNode(data); new->next = *head; *head = new; }',
-    hint: 'Pass &head to modify head'
-  },
-
-  // ========== POINTER AND CONST IN PARAMETERS (QUESTION 92) ==========
-  {
-    id: 'c_ptr_92',
-    topicId: 'c_pointers',
-    question: 'Use const pointer parameter to promise no modification.',
-    mathSolution: 'Read-only access',
-    codeSolution: 'void printArray(const int *arr, int n) { for(i=0;i<n;i++) printf("%d", arr[i]); }',
-    hint: 'Data pointed cannot be modified'
-  },
-
-  // ========== POINTER ARITHMETIC WITH VOID* (QUESTION 93) ==========
-  {
-    id: 'c_ptr_93',
-    topicId: 'c_pointers',
-    question: 'Perform arithmetic on void pointer - compiler extension.',
-    mathSolution: 'GCC treats as char*',
-    codeSolution: 'void *vp; vp++; // GCC extension, increments by 1',
-    hint: 'Not standard C, cast first'
-  },
-
-  // ========== POINTER AND ALIGNMENT (QUESTION 94) ==========
-  {
-    id: 'c_ptr_94',
-    topicId: 'c_pointers',
-    question: 'Use aligned_alloc for aligned memory.',
-    mathSolution: 'Allocate aligned memory',
-    codeSolution: 'int *ptr = aligned_alloc(16, 1024);',
-    hint: 'Useful for SIMD instructions'
-  },
-
-  // ========== POINTER TO INCOMPLETE TYPE (QUESTION 95) ==========
-  {
-    id: 'c_ptr_95',
-    topicId: 'c_pointers',
-    question: 'Declare pointer to incomplete structure type.',
-    mathSolution: 'Forward declaration',
-    codeSolution: 'struct Node; struct Node *head;',
-    hint: 'Useful for opaque pointers'
-  },
-
-  // ========== FUNCTION POINTER WITH DIFFERENT SIGNATURES (QUESTION 96) ==========
-  {
-    id: 'c_ptr_96',
-    topicId: 'c_pointers',
-    question: 'Cast function pointer to different signature.',
-    mathSolution: 'Force cast, but risky',
-    codeSolution: 'int (*add)(int,int); void (*p)(void) = (void(*)())add;',
-    hint: 'Undefined behavior if called wrong'
-  },
-
-  // ========== POINTER AND SETJMP/LONGJMP (QUESTION 97) ==========
-  {
-    id: 'c_ptr_97',
-    topicId: 'c_pointers',
-    question: 'Use pointer with setjmp/longjmp for non-local goto.',
-    mathSolution: 'Save context in jmp_buf',
-    codeSolution: 'jmp_buf env; if(setjmp(env)) { /* error */ } else { longjmp(env, 1); }',
-    hint: 'Jump across function calls'
-  },
-
-  // ========== POINTER AND VARIABLE ARGUMENTS (QUESTION 98) ==========
-  {
-    id: 'c_ptr_98',
-    topicId: 'c_pointers',
-    question: 'Use va_list pointer for variable arguments.',
-    mathSolution: 'Traverse argument list',
-    codeSolution: 'void func(int count, ...) { va_list args; va_start(args,count); for(i=0;i<count;i++) { int val = va_arg(args,int); } va_end(args); }',
-    hint: 'va_list is pointer type'
-  },
-
-  // ========== POINTER TO FUNCTION WITH VARIABLE ARGUMENTS (QUESTION 99) ==========
-  {
-    id: 'c_ptr_99',
-    topicId: 'c_pointers',
-    question: 'Declare pointer to function with variable arguments.',
-    mathSolution: 'Function pointer for printf-like functions',
-    codeSolution: 'int (*printf_ptr)(const char*, ...) = printf;',
-    hint: 'Ellipsis in function pointer'
-  },
-
-  // ========== POINTER TO POINTER TO FUNCTION (QUESTION 100) ==========
-  {
-    id: 'c_ptr_100',
-    topicId: 'c_pointers',
-    question: 'Declare pointer to pointer to function.',
-    mathSolution: 'Double pointer to function',
-    codeSolution: 'int (**funcPtrPtr)(int, int);',
-    hint: 'Two levels of indirection'
+    question: 'Write a program to demonstrate pointer arithmetic on different types.',
+    mathSolution: 'Pointer increment moves by type size',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[] = {10, 20, 30};\n    char str[] = "ABC";\n    int *intPtr = arr;\n    char *charPtr = str;\n    printf("Before increment - intPtr: %p, charPtr: %p\\n", (void*)intPtr, (void*)charPtr);\n    intPtr++;\n    charPtr++;\n    printf("After increment - intPtr: %p, charPtr: %p\\n", (void*)intPtr, (void*)charPtr);\n    return 0;\n}',
+    hint: 'int* moves by 4 bytes, char* by 1 byte'
   }
 );

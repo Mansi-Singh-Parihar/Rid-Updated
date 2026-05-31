@@ -1,11 +1,10 @@
 QuizData.questions.push(
-  // METHODS - EASY TO MEDIUM (50 Questions)
   {
     id: "method_1",
     topicId: "java_method",
     question: "How do you define a simple method that prints Hello?",
     mathSolution: "Method with no parameters and no return value",
-    codeSolution: 'void sayHello() {\n    System.out.println("Hello");\n}',
+    codeSolution: 'public class Main {\n    static void sayHello() {\n        System.out.println("Hello");\n    }\n    public static void main(String[] args) {\n        sayHello();\n    }\n}',
     hint: "Use void return type",
   },
   {
@@ -13,7 +12,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns sum of two integers.",
     mathSolution: "Add two numbers and return result",
-    codeSolution: "int add(int a, int b) {\n    return a + b;\n}",
+    codeSolution: 'public class Main {\n    static int add(int a, int b) {\n        return a + b;\n    }\n    public static void main(String[] args) {\n        System.out.println(add(5, 10));\n    }\n}',
     hint: "Use return keyword with int type",
   },
   {
@@ -21,8 +20,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you call a method named display()?",
     mathSolution: "Invoke method using object or directly if static",
-    codeSolution:
-      "// If instance method\nobj.display();\n// If static method\nClassName.display();",
+    codeSolution: 'public class Main {\n    static void display() {\n        System.out.println("Display called");\n    }\n    public static void main(String[] args) {\n        display();\n    }\n}',
     hint: "Use dot operator to call",
   },
   {
@@ -30,8 +28,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that takes String parameter and prints it.",
     mathSolution: "Method with one parameter",
-    codeSolution:
-      "void printMessage(String msg) {\n    System.out.println(msg);\n}",
+    codeSolution: 'public class Main {\n    static void printMessage(String msg) {\n        System.out.println(msg);\n    }\n    public static void main(String[] args) {\n        printMessage("Hello from method");\n    }\n}',
     hint: "Parameters go inside parentheses",
   },
   {
@@ -39,7 +36,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method that returns the square of a number.",
     mathSolution: "Multiply number by itself",
-    codeSolution: "int square(int num) {\n    return num * num;\n}",
+    codeSolution: 'public class Main {\n    static int square(int num) {\n        return num * num;\n    }\n    public static void main(String[] args) {\n        System.out.println(square(6));\n    }\n}',
     hint: "Return num * num",
   },
   {
@@ -47,7 +44,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method to check if a number is even.",
     mathSolution: "Return true if number % 2 == 0",
-    codeSolution: "boolean isEven(int num) {\n    return num % 2 == 0;\n}",
+    codeSolution: 'public class Main {\n    static boolean isEven(int num) {\n        return num % 2 == 0;\n    }\n    public static void main(String[] args) {\n        System.out.println(isEven(7));\n    }\n}',
     hint: "Return boolean value",
   },
   {
@@ -55,8 +52,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a static method?",
     mathSolution: "Method that belongs to class, not object",
-    codeSolution:
-      'static void staticMethod() {\n    System.out.println("Static method");\n}',
+    codeSolution: 'public class Main {\n    static void staticMethod() {\n        System.out.println("Static method");\n    }\n    public static void main(String[] args) {\n        staticMethod();\n    }\n}',
     hint: "Use static keyword",
   },
   {
@@ -64,7 +60,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the maximum of two numbers.",
     mathSolution: "Compare two numbers and return larger",
-    codeSolution: "int max(int a, int b) {\n    return (a > b) ? a : b;\n}",
+    codeSolution: 'public class Main {\n    static int max(int a, int b) {\n        return (a > b) ? a : b;\n    }\n    public static void main(String[] args) {\n        System.out.println(max(15, 9));\n    }\n}',
     hint: "Use ternary operator or if-else",
   },
   {
@@ -72,8 +68,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method with multiple parameters.",
     mathSolution: "Method accepting three parameters",
-    codeSolution:
-      "double calculateAverage(int a, int b, int c) {\n    return (a + b + c) / 3.0;\n}",
+    codeSolution: 'public class Main {\n    static double calculateAverage(int a, int b, int c) {\n        return (a + b + c) / 3.0;\n    }\n    public static void main(String[] args) {\n        System.out.println(calculateAverage(10, 20, 30));\n    }\n}',
     hint: "Separate parameters with commas",
   },
   {
@@ -81,8 +76,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns nothing (void).",
     mathSolution: "Method with no return value",
-    codeSolution:
-      'void showMessage() {\n    System.out.println("Hello World");\n}',
+    codeSolution: 'public class Main {\n    static void showMessage() {\n        System.out.println("Hello World");\n    }\n    public static void main(String[] args) {\n        showMessage();\n    }\n}',
     hint: "void means no return",
   },
   {
@@ -90,8 +84,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "What is method overloading? Show example.",
     mathSolution: "Multiple methods with same name, different parameters",
-    codeSolution:
-      "int add(int a, int b) { return a+b; }\nint add(int a, int b, int c) { return a+b+c; }\ndouble add(double a, double b) { return a+b; }",
+    codeSolution: 'public class Main {\n    static int add(int a, int b) { return a+b; }\n    static int add(int a, int b, int c) { return a+b+c; }\n    static double add(double a, double b) { return a+b; }\n    public static void main(String[] args) {\n        System.out.println(add(2,3));\n        System.out.println(add(2,3,4));\n        System.out.println(add(2.5,3.5));\n    }\n}',
     hint: "Same name, different parameter list",
   },
   {
@@ -99,8 +92,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a recursive method for factorial.",
     mathSolution: "n! = n * (n-1)!",
-    codeSolution:
-      "int factorial(int n) {\n    if (n <= 1) return 1;\n    return n * factorial(n - 1);\n}",
+    codeSolution: 'public class Main {\n    static int factorial(int n) {\n        if (n <= 1) return 1;\n        return n * factorial(n - 1);\n    }\n    public static void main(String[] args) {\n        System.out.println(factorial(5));\n    }\n}',
     hint: "Method calls itself",
   },
   {
@@ -108,8 +100,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method that returns a String.",
     mathSolution: "Method with String return type",
-    codeSolution:
-      'String greet(String name) {\n    return "Hello, " + name;\n}',
+    codeSolution: 'public class Main {\n    static String greet(String name) {\n        return "Hello, " + name;\n    }\n    public static void main(String[] args) {\n        System.out.println(greet("Alice"));\n    }\n}',
     hint: "Return concatenated string",
   },
   {
@@ -117,8 +108,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that takes an array and returns sum.",
     mathSolution: "Add all elements of array",
-    codeSolution:
-      "int arraySum(int[] arr) {\n    int sum = 0;\n    for(int num : arr) sum += num;\n    return sum;\n}",
+    codeSolution: 'public class Main {\n    static int arraySum(int[] arr) {\n        int sum = 0;\n        for(int num : arr) sum += num;\n        return sum;\n    }\n    public static void main(String[] args) {\n        int[] arr = {1,2,3,4,5};\n        System.out.println(arraySum(arr));\n    }\n}',
     hint: "Use enhanced for loop",
   },
   {
@@ -126,8 +116,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you pass command line arguments to main method?",
     mathSolution: "args parameter in main method",
-    codeSolution:
-      'public static void main(String[] args) {\n    System.out.println("First arg: " + args[0]);\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        if(args.length > 0) {\n            System.out.println("First arg: " + args[0]);\n        } else {\n            System.out.println("No arguments passed");\n        }\n    }\n}',
     hint: "args array contains command line arguments",
   },
   {
@@ -135,7 +124,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the length of a string.",
     mathSolution: "Count characters in string",
-    codeSolution: "int getLength(String str) {\n    return str.length();\n}",
+    codeSolution: 'public class Main {\n    static int getLength(String str) {\n        return str.length();\n    }\n    public static void main(String[] args) {\n        System.out.println(getLength("Hello"));\n    }\n}',
     hint: "Use length() method",
   },
   {
@@ -143,8 +132,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to reverse a string.",
     mathSolution: "Reverse character order",
-    codeSolution:
-      "String reverse(String str) {\n    return new StringBuilder(str).reverse().toString();\n}",
+    codeSolution: 'public class Main {\n    static String reverse(String str) {\n        return new StringBuilder(str).reverse().toString();\n    }\n    public static void main(String[] args) {\n        System.out.println(reverse("Java"));\n    }\n}',
     hint: "Use StringBuilder.reverse()",
   },
   {
@@ -152,8 +140,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that checks if a character is vowel.",
     mathSolution: "Check if char is a, e, i, o, u",
-    codeSolution:
-      "boolean isVowel(char c) {\n    c = Character.toLowerCase(c);\n    return c=='a'||c=='e'||c=='i'||c=='o'||c=='u';\n}",
+    codeSolution: 'public class Main {\n    static boolean isVowel(char c) {\n        c = Character.toLowerCase(c);\n        return c==\'a\'||c==\'e\'||c==\'i\'||c==\'o\'||c==\'u\';\n    }\n    public static void main(String[] args) {\n        System.out.println(isVowel(\'e\'));\n        System.out.println(isVowel(\'b\'));\n    }\n}',
     hint: "Convert to lowercase first",
   },
   {
@@ -161,8 +148,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a method that throws an exception?",
     mathSolution: "Use throws keyword",
-    codeSolution:
-      'void validateAge(int age) throws IllegalArgumentException {\n    if(age < 0) throw new IllegalArgumentException("Invalid age");\n}',
+    codeSolution: 'public class Main {\n    static void validateAge(int age) throws IllegalArgumentException {\n        if(age < 0) throw new IllegalArgumentException("Invalid age");\n        System.out.println("Valid age: " + age);\n    }\n    public static void main(String[] args) {\n        try {\n            validateAge(25);\n            validateAge(-5);\n        } catch(IllegalArgumentException e) {\n            System.out.println(e.getMessage());\n        }\n    }\n}',
     hint: "throws in declaration, throw to throw",
   },
   {
@@ -170,8 +156,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method with varargs (variable arguments).",
     mathSolution: "Method that accepts variable number of arguments",
-    codeSolution:
-      "int sum(int... numbers) {\n    int total = 0;\n    for(int n : numbers) total += n;\n    return total;\n}",
+    codeSolution: 'public class Main {\n    static int sum(int... numbers) {\n        int total = 0;\n        for(int n : numbers) total += n;\n        return total;\n    }\n    public static void main(String[] args) {\n        System.out.println(sum(1,2,3));\n        System.out.println(sum(10,20,30,40));\n    }\n}',
     hint: "Use ... after type",
   },
   {
@@ -179,8 +164,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method that returns the smallest element in array.",
     mathSolution: "Find minimum value in array",
-    codeSolution:
-      "int findMin(int[] arr) {\n    int min = arr[0];\n    for(int n : arr) if(n < min) min = n;\n    return min;\n}",
+    codeSolution: 'public class Main {\n    static int findMin(int[] arr) {\n        int min = arr[0];\n        for(int n : arr) if(n < min) min = n;\n        return min;\n    }\n    public static void main(String[] args) {\n        int[] arr = {12, 34, 5, 7, 9};\n        System.out.println(findMin(arr));\n    }\n}',
     hint: "Initialize min with first element",
   },
   {
@@ -188,8 +172,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method to calculate power of a number.",
     mathSolution: "base^exponent",
-    codeSolution:
-      "double power(double base, int exp) {\n    return Math.pow(base, exp);\n}",
+    codeSolution: 'public class Main {\n    static double power(double base, int exp) {\n        return Math.pow(base, exp);\n    }\n    public static void main(String[] args) {\n        System.out.println(power(2, 3));\n    }\n}',
     hint: "Use Math.pow() or loop",
   },
   {
@@ -197,8 +180,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a private method?",
     mathSolution: "Method accessible only within same class",
-    codeSolution:
-      'private void helperMethod() {\n    System.out.println("Private method");\n}',
+    codeSolution: 'public class Main {\n    private static void helperMethod() {\n        System.out.println("Private method called");\n    }\n    public static void main(String[] args) {\n        helperMethod();\n    }\n}',
     hint: "Use private access modifier",
   },
   {
@@ -206,8 +188,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns a boolean array of even status.",
     mathSolution: "Check each number if even",
-    codeSolution:
-      "boolean[] checkEven(int[] arr) {\n    boolean[] result = new boolean[arr.length];\n    for(int i=0; i<arr.length; i++) {\n        result[i] = arr[i] % 2 == 0;\n    }\n    return result;\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static boolean[] checkEven(int[] arr) {\n        boolean[] result = new boolean[arr.length];\n        for(int i=0; i<arr.length; i++) {\n            result[i] = (arr[i] % 2 == 0);\n        }\n        return result;\n    }\n    public static void main(String[] args) {\n        int[] arr = {1,2,3,4,5};\n        System.out.println(Arrays.toString(checkEven(arr)));\n    }\n}',
     hint: "Return array of boolean",
   },
   {
@@ -215,8 +196,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to check if a string is palindrome.",
     mathSolution: "String equals its reverse",
-    codeSolution:
-      "boolean isPalindrome(String str) {\n    String rev = new StringBuilder(str).reverse().toString();\n    return str.equals(rev);\n}",
+    codeSolution: 'public class Main {\n    static boolean isPalindrome(String str) {\n        String rev = new StringBuilder(str).reverse().toString();\n        return str.equals(rev);\n    }\n    public static void main(String[] args) {\n        System.out.println(isPalindrome("madam"));\n        System.out.println(isPalindrome("hello"));\n    }\n}',
     hint: "Compare with reverse",
   },
   {
@@ -224,8 +204,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that uses default parameters?",
     mathSolution: "Method overloading simulates default parameters",
-    codeSolution:
-      'void greet() { greet("Guest"); }\nvoid greet(String name) {\n    System.out.println("Hello, " + name);\n}',
+    codeSolution: 'public class Main {\n    static void greet() { greet("Guest"); }\n    static void greet(String name) {\n        System.out.println("Hello, " + name);\n    }\n    public static void main(String[] args) {\n        greet();\n        greet("John");\n    }\n}',
     hint: "Overload to provide defaults",
   },
   {
@@ -233,7 +212,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a synchronized method?",
     mathSolution: "Method that can be accessed by one thread at a time",
-    codeSolution: "synchronized void increment() {\n    count++;\n}",
+    codeSolution: 'public class Main {\n    private static int count = 0;\n    static synchronized void increment() {\n        count++;\n    }\n    public static void main(String[] args) {\n        increment();\n        System.out.println("Count: " + count);\n    }\n}',
     hint: "Use synchronized keyword",
   },
   {
@@ -241,8 +220,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the GCD of two numbers.",
     mathSolution: "Greatest Common Divisor",
-    codeSolution:
-      "int gcd(int a, int b) {\n    while(b != 0) {\n        int temp = b;\n        b = a % b;\n        a = temp;\n    }\n    return a;\n}",
+    codeSolution: 'public class Main {\n    static int gcd(int a, int b) {\n        while(b != 0) {\n            int temp = b;\n            b = a % b;\n            a = temp;\n        }\n        return a;\n    }\n    public static void main(String[] args) {\n        System.out.println(gcd(48, 18));\n    }\n}',
     hint: "Use Euclidean algorithm",
   },
   {
@@ -250,8 +228,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to count words in a sentence.",
     mathSolution: "Split by spaces and count",
-    codeSolution:
-      'int countWords(String sentence) {\n    if(sentence == null || sentence.isEmpty()) return 0;\n    return sentence.trim().split("\\\\s+").length;\n}',
+    codeSolution: 'public class Main {\n    static int countWords(String sentence) {\n        if(sentence == null || sentence.isEmpty()) return 0;\n        return sentence.trim().split("\\\\s+").length;\n    }\n    public static void main(String[] args) {\n        System.out.println(countWords("Hello world from Java"));\n    }\n}',
     hint: "Use split() with regex",
   },
   {
@@ -259,8 +236,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns Fibonacci number.",
     mathSolution: "F(n) = F(n-1) + F(n-2)",
-    codeSolution:
-      "int fibonacci(int n) {\n    if(n <= 1) return n;\n    return fibonacci(n-1) + fibonacci(n-2);\n}",
+    codeSolution: 'public class Main {\n    static int fibonacci(int n) {\n        if(n <= 1) return n;\n        return fibonacci(n-1) + fibonacci(n-2);\n    }\n    public static void main(String[] args) {\n        System.out.println(fibonacci(7)); // 13\n    }\n}',
     hint: "Base cases: 0,1",
   },
   {
@@ -268,8 +244,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a generic method?",
     mathSolution: "Method that works with any type",
-    codeSolution:
-      "<T> void printArray(T[] arr) {\n    for(T item : arr) {\n        System.out.println(item);\n    }\n}",
+    codeSolution: 'public class Main {\n    static <T> void printArray(T[] arr) {\n        for(T item : arr) {\n            System.out.print(item + " ");\n        }\n        System.out.println();\n    }\n    public static void main(String[] args) {\n        Integer[] ints = {1,2,3};\n        String[] strs = {"A","B","C"};\n        printArray(ints);\n        printArray(strs);\n    }\n}',
     hint: "Use type parameter before return type",
   },
   {
@@ -277,8 +252,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that swaps two integers using array.",
     mathSolution: "Swap values in array",
-    codeSolution:
-      "void swap(int[] arr, int i, int j) {\n    int temp = arr[i];\n    arr[i] = arr[j];\n    arr[j] = temp;\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static void swap(int[] arr, int i, int j) {\n        int temp = arr[i];\n        arr[i] = arr[j];\n        arr[j] = temp;\n    }\n    public static void main(String[] args) {\n        int[] arr = {5, 10};\n        System.out.println("Before: " + Arrays.toString(arr));\n        swap(arr, 0, 1);\n        System.out.println("After: " + Arrays.toString(arr));\n    }\n}',
     hint: "Java passes by value - use array",
   },
   {
@@ -286,8 +260,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to check if a number is prime.",
     mathSolution: "Check divisibility up to sqrt(n)",
-    codeSolution:
-      "boolean isPrime(int n) {\n    if(n <= 1) return false;\n    for(int i=2; i<=Math.sqrt(n); i++) {\n        if(n % i == 0) return false;\n    }\n    return true;\n}",
+    codeSolution: 'public class Main {\n    static boolean isPrime(int n) {\n        if(n <= 1) return false;\n        for(int i=2; i<=Math.sqrt(n); i++) {\n            if(n % i == 0) return false;\n        }\n        return true;\n    }\n    public static void main(String[] args) {\n        System.out.println(isPrime(17));\n        System.out.println(isPrime(15));\n    }\n}',
     hint: "Check only up to square root",
   },
   {
@@ -295,8 +268,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the average of array.",
     mathSolution: "Sum divided by count",
-    codeSolution:
-      "double average(int[] arr) {\n    if(arr.length == 0) return 0;\n    int sum = 0;\n    for(int n : arr) sum += n;\n    return (double)sum / arr.length;\n}",
+    codeSolution: 'public class Main {\n    static double average(int[] arr) {\n        if(arr.length == 0) return 0;\n        int sum = 0;\n        for(int n : arr) sum += n;\n        return (double)sum / arr.length;\n    }\n    public static void main(String[] args) {\n        int[] arr = {10,20,30,40,50};\n        System.out.println(average(arr));\n    }\n}',
     hint: "Cast to double for decimal result",
   },
   {
@@ -304,8 +276,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a final method?",
     mathSolution: "Method that cannot be overridden",
-    codeSolution:
-      'final void cannotOverride() {\n    System.out.println("Final method");\n}',
+    codeSolution: 'public class Main {\n    static final void cannotOverride() {\n        System.out.println("Final method");\n    }\n    public static void main(String[] args) {\n        cannotOverride();\n    }\n}',
     hint: "Use final keyword",
   },
   {
@@ -313,8 +284,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the second largest number.",
     mathSolution: "Find first and second largest",
-    codeSolution:
-      "int secondLargest(int[] arr) {\n    int first = Integer.MIN_VALUE;\n    int second = Integer.MIN_VALUE;\n    for(int n : arr) {\n        if(n > first) {\n            second = first;\n            first = n;\n        } else if(n > second && n != first) {\n            second = n;\n        }\n    }\n    return second;\n}",
+    codeSolution: 'public class Main {\n    static int secondLargest(int[] arr) {\n        int first = Integer.MIN_VALUE;\n        int second = Integer.MIN_VALUE;\n        for(int n : arr) {\n            if(n > first) {\n                second = first;\n                first = n;\n            } else if(n > second && n != first) {\n                second = n;\n            }\n        }\n        return second;\n    }\n    public static void main(String[] args) {\n        int[] arr = {12, 35, 1, 10, 34, 1};\n        System.out.println(secondLargest(arr)); // 34\n    }\n}',
     hint: "Track two largest values",
   },
   {
@@ -322,8 +292,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to merge two arrays.",
     mathSolution: "Combine two arrays into one",
-    codeSolution:
-      "int[] mergeArrays(int[] a, int[] b) {\n    int[] result = new int[a.length + b.length];\n    System.arraycopy(a, 0, result, 0, a.length);\n    System.arraycopy(b, 0, result, a.length, b.length);\n    return result;\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static int[] mergeArrays(int[] a, int[] b) {\n        int[] result = new int[a.length + b.length];\n        System.arraycopy(a, 0, result, 0, a.length);\n        System.arraycopy(b, 0, result, a.length, b.length);\n        return result;\n    }\n    public static void main(String[] args) {\n        int[] a = {1,3,5};\n        int[] b = {2,4,6};\n        System.out.println(Arrays.toString(mergeArrays(a, b)));\n    }\n}',
     hint: "Use arraycopy or loops",
   },
   {
@@ -331,26 +300,23 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the frequency of a character.",
     mathSolution: "Count occurrences of char in string",
-    codeSolution:
-      "int charFrequency(String str, char ch) {\n    int count = 0;\n    for(char c : str.toCharArray()) {\n        if(c == ch) count++;\n    }\n    return count;\n}",
+    codeSolution: 'public class Main {\n    static int charFrequency(String str, char ch) {\n        int count = 0;\n        for(char c : str.toCharArray()) {\n            if(c == ch) count++;\n        }\n        return count;\n    }\n    public static void main(String[] args) {\n        System.out.println(charFrequency("Hello World", \'l\')); // 3\n    }\n}',
     hint: "Loop through characters",
   },
   {
-    id: "method_39",
-    topicId: "java_method",
-    question: "How do you create a native method?",
-    mathSolution: "Method implemented in another language (like C)",
-    codeSolution:
-      'public native void nativeMethod();\n// Load library: static { System.loadLibrary("mylib"); }',
-    hint: "Use native keyword",
-  },
+  id: "method_39",
+  topicId: "java_method",
+  question: "How do you create a native method?",
+  mathSolution: "Method implemented in another language (like C)",
+  codeSolution: 'public class Main {\n    public static native void nativeMethod();\n    public static void main(String[] args) {\n        System.out.println("Native method declared but not called.");\n    }\n}',
+  hint: "Use native keyword and load library in real projects",
+},
   {
     id: "method_40",
     topicId: "java_method",
     question: "Write a method that returns the factorial using iteration.",
     mathSolution: "Multiply numbers from 1 to n",
-    codeSolution:
-      "int factorialIterative(int n) {\n    int result = 1;\n    for(int i=2; i<=n; i++) {\n        result *= i;\n    }\n    return result;\n}",
+    codeSolution: 'public class Main {\n    static int factorialIterative(int n) {\n        int result = 1;\n        for(int i=2; i<=n; i++) {\n            result *= i;\n        }\n        return result;\n    }\n    public static void main(String[] args) {\n        System.out.println(factorialIterative(5)); // 120\n    }\n}',
     hint: "Loop from 2 to n",
   },
   {
@@ -358,8 +324,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to remove duplicates from array.",
     mathSolution: "Return array with unique elements",
-    codeSolution:
-      "int[] removeDuplicates(int[] arr) {\n    return Arrays.stream(arr).distinct().toArray();\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static int[] removeDuplicates(int[] arr) {\n        return Arrays.stream(arr).distinct().toArray();\n    }\n    public static void main(String[] args) {\n        int[] arr = {1,2,2,3,4,4,5};\n        System.out.println(Arrays.toString(removeDuplicates(arr)));\n    }\n}',
     hint: "Use stream distinct()",
   },
   {
@@ -367,8 +332,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the sum of digits.",
     mathSolution: "Add each digit of number",
-    codeSolution:
-      "int sumOfDigits(int n) {\n    n = Math.abs(n);\n    int sum = 0;\n    while(n > 0) {\n        sum += n % 10;\n        n /= 10;\n    }\n    return sum;\n}",
+    codeSolution: 'public class Main {\n    static int sumOfDigits(int n) {\n        n = Math.abs(n);\n        int sum = 0;\n        while(n > 0) {\n            sum += n % 10;\n            n /= 10;\n        }\n        return sum;\n    }\n    public static void main(String[] args) {\n        System.out.println(sumOfDigits(1234)); // 10\n    }\n}',
     hint: "Use modulus and division",
   },
   {
@@ -376,8 +340,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a method with strictfp keyword?",
     mathSolution: "Ensures consistent floating point behavior",
-    codeSolution:
-      "strictfp void calculate() {\n    double result = 1.0 / 3.0;\n}",
+    codeSolution: 'public class Main {\n    strictfp static void calculate() {\n        double result = 1.0 / 3.0;\n        System.out.println(result);\n    }\n    public static void main(String[] args) {\n        calculate();\n    }\n}',
     hint: "Use strictfp for platform independence",
   },
   {
@@ -385,8 +348,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that checks if arrays are equal.",
     mathSolution: "Compare each element",
-    codeSolution:
-      "boolean arraysEqual(int[] a, int[] b) {\n    return Arrays.equals(a, b);\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static boolean arraysEqual(int[] a, int[] b) {\n        return Arrays.equals(a, b);\n    }\n    public static void main(String[] args) {\n        int[] a = {1,2,3};\n        int[] b = {1,2,3};\n        System.out.println(arraysEqual(a, b));\n    }\n}',
     hint: "Use Arrays.equals()",
   },
   {
@@ -394,8 +356,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Create a method to capitalize first letter of each word.",
     mathSolution: "Split, capitalize first, join",
-    codeSolution:
-      'String capitalizeWords(String sentence) {\n    return Arrays.stream(sentence.split("\\\\s+"))\n        .map(word -> word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase())\n        .collect(Collectors.joining(" "));\n}',
+    codeSolution: 'import java.util.Arrays;\nimport java.util.stream.Collectors;\npublic class Main {\n    static String capitalizeWords(String sentence) {\n        return Arrays.stream(sentence.split("\\\\s+"))\n            .map(word -> word.substring(0,1).toUpperCase() + word.substring(1).toLowerCase())\n            .collect(Collectors.joining(" "));\n    }\n    public static void main(String[] args) {\n        System.out.println(capitalizeWords("hello world from java"));\n    }\n}',
     hint: "Use streams or StringBuilder",
   },
   {
@@ -403,8 +364,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the LCM of two numbers.",
     mathSolution: "LCM = a * b / GCD(a,b)",
-    codeSolution:
-      "int lcm(int a, int b) {\n    return (a * b) / gcd(a, b);\n}\nint gcd(int a, int b) {\n    while(b != 0) {\n        int temp = b;\n        b = a % b;\n        a = temp;\n    }\n    return a;\n}",
+    codeSolution: 'public class Main {\n    static int gcd(int a, int b) {\n        while(b != 0) {\n            int temp = b;\n            b = a % b;\n            a = temp;\n        }\n        return a;\n    }\n    static int lcm(int a, int b) {\n        return (a * b) / gcd(a, b);\n    }\n    public static void main(String[] args) {\n        System.out.println(lcm(12, 18)); // 36\n    }\n}',
     hint: "Use GCD to calculate LCM",
   },
   {
@@ -412,8 +372,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "How do you create a method that returns multiple values?",
     mathSolution: "Return array or custom object",
-    codeSolution:
-      "int[] getMinMax(int[] arr) {\n    int min = arr[0], max = arr[0];\n    for(int n : arr) {\n        min = Math.min(min, n);\n        max = Math.max(max, n);\n    }\n    return new int[]{min, max};\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static int[] getMinMax(int[] arr) {\n        int min = arr[0], max = arr[0];\n        for(int n : arr) {\n            min = Math.min(min, n);\n            max = Math.max(max, n);\n        }\n        return new int[]{min, max};\n    }\n    public static void main(String[] args) {\n        int[] arr = {5,2,8,1,9};\n        System.out.println(Arrays.toString(getMinMax(arr)));\n    }\n}',
     hint: "Return array or collection",
   },
   {
@@ -421,17 +380,15 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method to check if a string contains only digits.",
     mathSolution: "Check each character if digit",
-    codeSolution:
-      'boolean isNumeric(String str) {\n    return str.matches("\\\\d+");\n}',
-    hint: "Use regex \\d+",
+    codeSolution: 'public class Main {\n    static boolean isNumeric(String str) {\n        return str.matches("\\\\d+");\n    }\n    public static void main(String[] args) {\n        System.out.println(isNumeric("12345"));\n        System.out.println(isNumeric("12A45"));\n    }\n}',
+    hint: "Use regex \\\\d+",
   },
   {
     id: "method_49",
     topicId: "java_method",
     question: "Create a method to rotate array left by k positions.",
     mathSolution: "Move elements left by k positions",
-    codeSolution:
-      "void rotateLeft(int[] arr, int k) {\n    k = k % arr.length;\n    reverse(arr, 0, k-1);\n    reverse(arr, k, arr.length-1);\n    reverse(arr, 0, arr.length-1);\n}\nvoid reverse(int[] arr, int start, int end) {\n    while(start < end) {\n        int temp = arr[start];\n        arr[start] = arr[end];\n        arr[end] = temp;\n        start++; end--;\n    }\n}",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    static void reverse(int[] arr, int start, int end) {\n        while(start < end) {\n            int temp = arr[start];\n            arr[start] = arr[end];\n            arr[end] = temp;\n            start++; end--;\n        }\n    }\n    static void rotateLeft(int[] arr, int k) {\n        k = k % arr.length;\n        reverse(arr, 0, k-1);\n        reverse(arr, k, arr.length-1);\n        reverse(arr, 0, arr.length-1);\n    }\n    public static void main(String[] args) {\n        int[] arr = {1,2,3,4,5};\n        rotateLeft(arr, 2);\n        System.out.println(Arrays.toString(arr)); // [3,4,5,1,2]\n    }\n}',
     hint: "Use reversal algorithm",
   },
   {
@@ -439,8 +396,7 @@ QuizData.questions.push(
     topicId: "java_method",
     question: "Write a method that returns the most frequent element.",
     mathSolution: "Find element with highest frequency",
-    codeSolution:
-      "int mostFrequent(int[] arr) {\n    Map<Integer, Long> freq = Arrays.stream(arr)\n        .boxed()\n        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));\n    return Collections.max(freq.entrySet(), Map.Entry.comparingByValue()).getKey();\n}",
+    codeSolution: 'import java.util.*;\nimport java.util.function.Function;\nimport java.util.stream.Collectors;\npublic class Main {\n    static int mostFrequent(int[] arr) {\n        Map<Integer, Long> freq = Arrays.stream(arr)\n            .boxed()\n            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));\n        return Collections.max(freq.entrySet(), Map.Entry.comparingByValue()).getKey();\n    }\n    public static void main(String[] args) {\n        int[] arr = {1,3,2,3,4,3,2,3};\n        System.out.println(mostFrequent(arr)); // 3\n    }\n}',
     hint: "Use frequency map",
   },
 );

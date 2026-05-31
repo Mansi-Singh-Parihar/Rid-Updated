@@ -239,109 +239,105 @@
                 let currentSearchQuery = "";
 
                 function filterVideos() {
-                    const cards = Array.from(document.querySelectorAll(".video-card"));
-                    const grid = document.querySelector(".video-grid");
-                    const infoDiv = document.getElementById("searchResultInfo");
 
-                    const q = currentSearchQuery.trim().toLowerCase();
+    const grid = document.querySelector(".video-grid");
+    const infoDiv = document.getElementById("searchResultInfo");
 
-                    function getMatchScore(text, query) {
-                        text = text.toLowerCase();
-                        let score = 0;
+    // 🔥 ORIGINAL ALL CARDS
+    const cards = Array.from(
+        grid.querySelectorAll(".video-card")
+    );
 
-                        if (text.includes(query)) score += 100;
+    const q =
+        currentSearchQuery
+            .trim()
+            .toLowerCase();
 
-                        const words = text.split(" ");
-                        words.forEach(word => {
-                            if (word.startsWith(query)) score += 50;
-                            if (word.includes(query)) score += 20;
-                        });
+    function getMatchScore(text, query) {
 
-                        let matchCount = 0;
-                        for (let char of query) {
-                            if (text.includes(char)) matchCount++;
-                        }
-                        score += matchCount * 2;
+        text = text.toLowerCase();
 
-                        return score;
-                    }
+        let score = 0;
 
-                    let results = cards.map(card => {
-                        const title = (card.getAttribute("data-test-name") || "").toLowerCase();
-                        const teacher = (card.getAttribute("data-teacher") || "").toLowerCase();
-                        const subject = (card.getAttribute("data-subject") || "").toLowerCase();
+        if (text.includes(query)) {
+            score += 100;
+        }
 
-                        const fullText = `${title} ${teacher} ${subject}`;
+        const words = text.split(" ");
 
-                        // 🔥 CHIP FILTER
-                        let matchesChip = false;
+        words.forEach(word => {
 
-                        if (currentChipFilter === "all") {
-                            matchesChip = true;
-                        } else {
-                            const chipKeywords = {
-                                ssc: ["ssc", "cgl", "chsl", "mts"],
-                                banking: ["bank", "ibps", "sbi"],
-                                railway: ["railway", "rrb"],
-                                upsc: ["upsc", "ias"],
-                                neet: ["neet", "biology"],
-                                jee: ["jee", "iit"],
-                                state: ["psc"],
-                                police: ["police", "defence"],
-                                teaching: ["ctet", "tet"],
-                                computer: ["computer"],
-                                mock: ["mock"],
-                                previous: ["previous"],
-                                class10: ["class 10"],
-                                class12: ["class 12"],
-                                entrance: ["entrance"],
-                                competitive: ["competitive"]
-                            };
+            if (word.startsWith(query)) {
+                score += 50;
+            }
 
-                            const keywords = chipKeywords[currentChipFilter] || [currentChipFilter];
-                            matchesChip = keywords.some(kw => fullText.includes(kw));
-                        }
+            if (word.includes(query)) {
+                score += 20;
+            }
 
-                        // 🔥 SEARCH SCORE
-                        let score = q === "" ? 1 : getMatchScore(fullText, q);
+        });
 
-                        return { card, score, matchesChip };
-                    });
+        return score;
+    }
 
-                    // 🔥 FILTER + SORT
-                    results = results.filter(item => item.matchesChip && item.score > 0);
-                    results.sort((a, b) => b.score - a.score);
+    // 🔥 SEARCH EMPTY = SHOW ALL
+    if (q === "") {
 
-                    // 🔥 RENDER
-                    grid.innerHTML = "";
+        cards.forEach(card => {
 
-                    if (results.length === 0) {
-                        // fallback → show all
-                        cards.forEach(card => {
-                            card.style.display = "block";
-                            grid.appendChild(card);
-                        });
+            card.style.display = "block";
 
-                        // ❌ RESULT TEXT REMOVE
-                        if (infoDiv) {
-                            infoDiv.style.display = "none";
-                        }
+        });
 
-                        return;
-                    }
+        if (infoDiv) {
+            infoDiv.style.display = "none";
+        }
 
-                    // show sorted results
-                    results.forEach(item => {
-                        item.card.style.display = "block";
-                        grid.appendChild(item.card);
-                    });
+        return;
+    }
 
-                    // ❌ REMOVE RESULT COUNT TEXT
-                    if (infoDiv) {
-                        infoDiv.style.display = "none";
-                    }
-                }
+    // 🔥 FILTER
+    cards.forEach(card => {
 
+        const title =
+            (card.getAttribute("data-test-name") || "")
+                .toLowerCase();
+
+        const teacher =
+            (card.getAttribute("data-teacher") || "")
+                .toLowerCase();
+
+        const subject =
+            (card.getAttribute("data-subject") || "")
+                .toLowerCase();
+
+        const fullText =
+            `${title} ${teacher} ${subject}`;
+
+        const score =
+            getMatchScore(fullText, q);
+
+        // 🔥 MATCH
+        if (score > 0) {
+
+            card.style.display = "block";
+
+        }
+
+        // ❌ NO MATCH
+        else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    if (infoDiv) {
+        infoDiv.style.display = "none";
+    }
+
+}
                 // Attach chip click events (delegation because chips may be moved)
                 // 🔥 ONLY ONE EVENT SYSTEM
 
@@ -377,18 +373,56 @@
                 const desktopSearchInput = document.getElementById("desktopSearchInput");
                 const desktopSearchBtn = document.getElementById("desktopSearchBtn");
                 function updateSearch() {
-                    currentSearchQuery = desktopSearchInput.value;
-                    filterVideos();
-                }
+
+    currentSearchQuery =
+        desktopSearchInput.value.trim();
+
+    filterVideos();
+
+}
                 if (desktopSearchBtn) desktopSearchBtn.addEventListener("click", updateSearch);
                 if (desktopSearchInput) desktopSearchInput.addEventListener("keypress", (e) => {
                     if (e.key === "Enter") updateSearch();
                 });
 
                 // Initial filter after content is moved
-                setTimeout(() => filterVideos(), 150);
+                setTimeout(() => {
 
+    // 🔥 search input empty hai to sab dikhao
+    if (desktopSearchInput && desktopSearchInput.value.trim() === "") {
 
+        currentSearchQuery = "";
+
+    }
+
+    filterVideos();
+
+}, 150);
+
+// 🔥 LIVE RESET
+if (desktopSearchInput) {
+
+    desktopSearchInput.addEventListener("input", function () {
+
+        // agar search empty
+        if (this.value.trim() === "") {
+
+            currentSearchQuery = "";
+
+            // URL clean
+            window.history.replaceState(
+                {},
+                "",
+                window.location.pathname
+            );
+
+            // sab cards wapas
+            filterVideos();
+        }
+
+    });
+
+}
 
                 // follow and comment js code 
 

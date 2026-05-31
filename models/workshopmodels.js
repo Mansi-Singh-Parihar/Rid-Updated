@@ -10,17 +10,13 @@ const workshopSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  dob: {
-    type: Date,
-    required: true
-  },
   phone: {
     type: String,
     required: true
   },
   certificateType: {
     type: String,
-    enum: ['workshop', 'training'],
+    enum: ['workshop', 'Participate'],
     required: true
   },
   duration: {
@@ -41,10 +37,7 @@ const workshopSchema = new mongoose.Schema({
     enum: ['PENDING', 'VERIFIED', 'REJECTED'],
     default: 'PENDING'
   },
-  certificatePath: {
-    type: String,
-    default: ""
-  },
+ 
   verifiedAt: {
     type: Date
   },
@@ -55,7 +48,6 @@ const workshopSchema = new mongoose.Schema({
 });
 
 // Create index for faster queries
-workshopSchema.index({ appId: 1 });
 workshopSchema.index({ email: 1 });
 workshopSchema.index({ status: 1 });
 

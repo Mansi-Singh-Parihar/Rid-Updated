@@ -1247,12 +1247,9 @@
 
                         try {
 
-                            const res = await fetch(
-                                `/follow/${targetId}`,
-                                {
-                                    method: "POST"
-                                }
-                            );
+                            const res = await fetch(`/api/follow/${targetId}`, {
+    method: "POST"
+})
 
                             const data = await res.json();
 
@@ -1375,6 +1372,106 @@ function closeNotLivePopup(){
     document
     .getElementById("notLivePopup")
     .classList.remove("active");
+
+}
+
+// ================= PROFILE PAGE SEARCH =================
+
+const desktopSearchInput =
+    document.getElementById("desktopSearchInput");
+
+const desktopSearchBtn =
+    document.getElementById("desktopSearchBtn");
+
+// 🔍 SEARCH FUNCTION
+function executeProfileSearch(query) {
+
+    const cards =
+        document.querySelectorAll(".test-card");
+
+    const q =
+        query.toLowerCase().trim();
+
+    cards.forEach(card => {
+
+        const text =
+            card.innerText.toLowerCase();
+
+        // 🔥 SHOW ALL
+        if (q === "") {
+
+            card.style.display = "block";
+            return;
+
+        }
+
+        // 🔥 MATCH
+        if (text.includes(q)) {
+
+            card.style.display = "block";
+
+        }
+
+        // ❌ NO MATCH
+        else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+// 🔍 UPDATE SEARCH
+function updateProfileSearch() {
+
+    const query =
+        desktopSearchInput.value.trim();
+
+    executeProfileSearch(query);
+
+}
+
+// 🔘 BUTTON CLICK
+if (desktopSearchBtn) {
+
+    desktopSearchBtn.addEventListener(
+        "click",
+        updateProfileSearch
+    );
+
+}
+
+// ⌨️ ENTER PRESS
+if (desktopSearchInput) {
+
+    desktopSearchInput.addEventListener(
+        "keypress",
+        (e) => {
+
+            if (e.key === "Enter") {
+
+                updateProfileSearch();
+
+            }
+
+        }
+    );
+
+}
+
+// 🔥 LIVE SEARCH
+if (desktopSearchInput) {
+
+    desktopSearchInput.addEventListener(
+        "input",
+        function () {
+
+            executeProfileSearch(this.value);
+
+        }
+    );
 
 }
         </script>

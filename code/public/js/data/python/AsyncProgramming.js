@@ -108,9 +108,9 @@ QuizData.questions.push(
     topicId: "py_async",
     question: "Use asyncio.locks.Lock to prevent race conditions.",
     mathSolution: "Lock ensures only one coroutine accesses shared resource at a time",
-    codeSolution: "import asyncio\n\ncounter = 0\nlock = asyncio.Lock()\n\nasync def increment():\n    global counter\n    async with lock:\n        temp = counter\n        await asyncio.sleep(0.1)\n        counter = temp + 1\n\nasync def main():\n    tasks = [increment() for _ in range(10)]\n    await asyncio.gather(*tasks)\n    print(f'Final counter: {counter}')\n\nasyncio.run(main())",
+    codeSolution: "import asyncio\n\ncounter = 0\n\nasync def increment(lock):\n    global counter\n    async with lock:\n        temp = counter\n        await asyncio.sleep(0.1)\n        counter = temp + 1\n\nasync def main():\n    lock = asyncio.Lock()\n    tasks = [increment(lock) for _ in range(10)]\n    await asyncio.gather(*tasks)\n    print(f'Final counter: {counter}')\n\nif __name__ == '__main__':\n    # Works with Python 3.7+\n    asyncio.run(main())",
     hint: "Use `async with lock:` to protect critical sections"
-  },
+},
   {
     id: "py_async_15",
     topicId: "py_async",
@@ -148,9 +148,9 @@ QuizData.questions.push(
     topicId: "py_async",
     question: "Use asyncio.wait() with different return conditions (FIRST_COMPLETED).",
     mathSolution: "Wait returns when first task completes",
-    codeSolution: "import asyncio\n\nasync def task(name, delay):\n    await asyncio.sleep(delay)\n    return name\n\nasync def main():\n    tasks = [\n        asyncio.create_task(task('A', 3)),\n        asyncio.create_task(task('B', 1)),\n        asyncio.create_task(task('C', 2))\n    ]\n    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)\n    for task in done:\n        print(f'Completed: {task.result()}')\n    for task in pending:\n        task.cancel()\n\nasyncio.run(main())",
+    codeSolution: "import asyncio\n\nasync def my_task(name, delay):\n    await asyncio.sleep(delay)\n    return name\n\nasync def main():\n    tasks = [\n        asyncio.create_task(my_task('A', 3)),\n        asyncio.create_task(my_task('B', 1)),\n        asyncio.create_task(my_task('C', 2))\n    ]\n    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)\n    for t in done:\n        print(f'Completed: {t.result()}')\n    for t in pending:\n        t.cancel()\n\nasyncio.run(main())",
     hint: "Use `return_when=asyncio.FIRST_COMPLETED`"
-  },
+},
   {
     id: "py_async_20",
     topicId: "py_async",
@@ -204,25 +204,25 @@ QuizData.questions.push(
     topicId: "py_async",
     question: "Use asyncio.run_coroutine_threadsafe() from another thread.",
     mathSolution: "Submit coroutine to event loop from different thread",
-    codeSolution: "import asyncio\nimport threading\nimport time\n\nasync def async_task():\n    await asyncio.sleep(1)\n    print('Async task completed')\n    return 'Result'\n\ndef thread_function(loop):\n    future = asyncio.run_coroutine_threadsafe(async_task(), loop)\n    result = future.result(timeout=2)\n    print(f'Thread got: {result}')\n\nasync def main():\n    loop = asyncio.get_running_loop()\n    thread = threading.Thread(target=thread_function, args=(loop,))\n    thread.start()\n    thread.join()\n\nasyncio.run(main())",
+    codeSolution: "import asyncio\nimport threading\nimport time\n\nasync def async_task():\n    await asyncio.sleep(0.5)\n    return 'Hello from async_task'\n\ndef run_in_thread(loop):\n    # This runs in a separate thread\n    future = asyncio.run_coroutine_threadsafe(async_task(), loop)\n    result = future.result()  # Wait for result\n    print(f'Thread received: {result}')\n\nasync def main():\n    loop = asyncio.get_running_loop()\n    \n    # Create thread\n    thread = threading.Thread(target=run_in_thread, args=(loop,))\n    thread.start()\n    \n    # Do other async work while thread runs\n    print('Main: Doing other work...')\n    await asyncio.sleep(1)\n    \n    thread.join()\n    print('Main: Done')\n\nasyncio.run(main())",
     hint: "Use `asyncio.run_coroutine_threadsafe()` for cross-thread operations"
-  },
+},
   {
     id: "py_async_27",
     topicId: "py_async",
-    question: "Create a task group using asyncio.TaskGroup (Python 3.11+).",
-    mathSolution: "TaskGroup manages multiple tasks with automatic cleanup",
-    codeSolution: "import asyncio\n\nasync def task(name, delay):\n    await asyncio.sleep(delay)\n    print(f'Task {name} done')\n    return name\n\nasync def main():\n    async with asyncio.TaskGroup() as tg:\n        tg.create_task(task('A', 2))\n        tg.create_task(task('B', 1))\n        tg.create_task(task('C', 3))\n    print('All tasks completed')\n\nasyncio.run(main())",
-    hint: "Use `async with asyncio.TaskGroup()` (Python 3.11+)"
-  },
+    question: "Use asyncio.gather() to run multiple tasks concurrently and handle results.",
+    mathSolution: "gather() runs multiple coroutines concurrently and returns results",
+    codeSolution: "import asyncio\n\nasync def task(name, delay):\n    await asyncio.sleep(delay)\n    print(f'Task {name} completed after {delay}s')\n    return f'Result-{name}'\n\nasync def main():\n    # Run multiple tasks concurrently\n    results = await asyncio.gather(\n        task('A', 2),\n        task('B', 1),\n        task('C', 3)\n    )\n    \n    print(f'\\nAll tasks completed!')\n    for i, result in enumerate(results):\n        print(f'Task {chr(65+i)} returned: {result}')\n\nasyncio.run(main())",
+    hint: "Use `asyncio.gather()` to run multiple coroutines concurrently"
+},
   {
     id: "py_async_28",
     topicId: "py_async",
-    question: "Use asyncio.timeout() to set a timeout on an operation (Python 3.11+).",
-    mathSolution: "Timeout context manager raises TimeoutError",
-    codeSolution: "import asyncio\n\nasync def slow_operation():\n    await asyncio.sleep(5)\n    return 'Done'\n\nasync def main():\n    try:\n        async with asyncio.timeout(2):\n            result = await slow_operation()\n            print(result)\n    except TimeoutError:\n        print('Operation timed out')\n\nasyncio.run(main())",
-    hint: "Use `async with asyncio.timeout(seconds)` (Python 3.11+)"
-  },
+    question: "Use asyncio.wait_for() to set a timeout on an operation.",
+    mathSolution: "wait_for() raises TimeoutError if coroutine takes too long",
+    codeSolution: "import asyncio\n\nasync def fetch_data(name, delay):\n    print(f'Fetching {name}...')\n    await asyncio.sleep(delay)\n    return f'Data from {name}'\n\nasync def main():\n    try:\n        # Timeout after 3 seconds\n        result = await asyncio.wait_for(fetch_data('API', 2), timeout=3)\n        print(f'Success: {result}')\n    except asyncio.TimeoutError:\n        print('Operation timed out')\n    \n    try:\n        # This will timeout\n        result = await asyncio.wait_for(fetch_data('Slow API', 5), timeout=2)\n        print(f'Success: {result}')\n    except asyncio.TimeoutError:\n        print('Slow API timed out after 2 seconds')\n\nasyncio.run(main())",
+    hint: "Use `asyncio.wait_for(coroutine, timeout)` for timeouts (Python 3.7+)"
+},
   {
     id: "py_async_29",
     topicId: "py_async",

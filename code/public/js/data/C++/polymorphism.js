@@ -1,232 +1,402 @@
 QuizData.questions.push(
-  {
-    id: "cpp_polymorphism_1",
-    topicId: "cpp_polymorphism",
-    question: "What is polymorphism in C++? Explain with example.",
-    mathSolution: "Polymorphism concept",
-    codeSolution:
-      "Polymorphism means 'many forms' - the ability of objects to take multiple forms.\n\nExample:\nA 'draw()' function can draw different shapes - circle, rectangle, triangle - each with its own implementation.",
-    hint: "Polymorphism = same interface, different implementations. Many forms.",
-  },
-  {
-    id: "cpp_polymorphism_2",
-    topicId: "cpp_polymorphism",
-    question: "What are the two types of polymorphism in C++?",
-    mathSolution: "Types of polymorphism",
-    codeSolution:
-      "1. Compile-time polymorphism (Static binding/Early binding):\n   - Function overloading\n   - Operator overloading\n\n2. Runtime polymorphism (Dynamic binding/Late binding):\n   - Virtual functions\n   - Function overriding",
-    hint: "Compile-time: function/operator overloading. Runtime: virtual functions.",
-  },
-  {
-    id: "cpp_polymorphism_3",
-    topicId: "cpp_polymorphism",
-    question: "What is compile-time polymorphism? Give example.",
-    mathSolution: "Compile-time polymorphism",
-    codeSolution:
-      "#include <iostream>\nusing namespace std;\n\nclass Calculator {\npublic:\n    // Function overloading - compile-time polymorphism\n    int add(int a, int b) { return a + b; }\n    double add(double a, double b) { return a + b; }\n    int add(int a, int b, int c) { return a + b + c; }\n};\n\nint main() {\n    Calculator calc;\n    cout << calc.add(5, 10) << endl;      // int version\n    cout << calc.add(3.5, 2.7) << endl;   // double version\n    cout << calc.add(1, 2, 3) << endl;    // 3-param version\n    return 0;\n}",
-    hint: "Compile-time polymorphism is achieved through function overloading and operator overloading. Decision made at compile time.",
-  },
-  {
-    id: "cpp_polymorphism_4",
-    topicId: "cpp_polymorphism",
-    question: "What is runtime polymorphism? Give example.",
-    mathSolution: "Runtime polymorphism",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Shape {\npublic:\n    virtual void draw() { cout << "Drawing Shape" << endl; }\n};\n\nclass Circle : public Shape {\npublic:\n    void draw() override { cout << "Drawing Circle" << endl; }\n};\n\nclass Rectangle : public Shape {\npublic:\n    void draw() override { cout << "Drawing Rectangle" << endl; }\n};\n\nint main() {\n    Shape* shape;\n    Circle c;\n    Rectangle r;\n    \n    shape = &c;\n    shape->draw();  // Output: Drawing Circle\n    \n    shape = &r;\n    shape->draw();  // Output: Drawing Rectangle\n    \n    return 0;\n}',
-    hint: "Runtime polymorphism achieved through virtual functions. Function call resolved at runtime based on object type.",
-  },
-  {
-    id: "cpp_polymorphism_5",
-    topicId: "cpp_polymorphism",
-    question: "What is a virtual function? Why is it used?",
-    mathSolution: "Virtual function concept",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void show() {  // Virtual function\n        cout << "Base class show" << endl;\n    }\n    \n    void display() {  // Non-virtual function\n        cout << "Base class display" << endl;\n    }\n};\n\nclass Derived : public Base {\npublic:\n    void show() override {\n        cout << "Derived class show" << endl;\n    }\n    \n    void display() {\n        cout << "Derived class display" << endl;\n    }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    ptr->show();     // Calls Derived::show (virtual)\n    ptr->display();  // Calls Base::display (non-virtual)\n    delete ptr;\n    return 0;\n}',
-    hint: "Virtual functions enable runtime polymorphism. They ensure that the function of the actual object type is called, not the pointer type.",
-  },
-  {
-    id: "cpp_polymorphism_6",
-    topicId: "cpp_polymorphism",
-    question: "What is function overloading? Give example.",
-    mathSolution: "Function overloading",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Print {\npublic:\n    void display(int i) {\n        cout << "Integer: " << i << endl;\n    }\n    \n    void display(double d) {\n        cout << "Double: " << d << endl;\n    }\n    \n    void display(string s) {\n        cout << "String: " << s << endl;\n    }\n};\n\nint main() {\n    Print p;\n    p.display(5);\n    p.display(3.14);\n    p.display("Hello");\n    return 0;\n}',
-    hint: "Function overloading: multiple functions with same name but different parameters (type, number, or order).",
-  },
-  {
-    id: "cpp_polymorphism_7",
-    topicId: "cpp_polymorphism",
-    question: "What is operator overloading? Give example.",
-    mathSolution: "Operator overloading",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Complex {\nprivate:\n    int real, imag;\npublic:\n    Complex(int r = 0, int i = 0) : real(r), imag(i) {}\n    \n    // Overloading + operator\n    Complex operator+(const Complex& c) {\n        return Complex(real + c.real, imag + c.imag);\n    }\n    \n    void display() {\n        cout << real << " + " << imag << "i" << endl;\n    }\n};\n\nint main() {\n    Complex c1(3, 4), c2(1, 2);\n    Complex c3 = c1 + c2;  // Using overloaded operator\n    c3.display();\n    return 0;\n}',
-    hint: "Operator overloading gives special meaning to operators for user-defined types.",
-  },
-  {
-    id: "cpp_polymorphism_8",
-    topicId: "cpp_polymorphism",
-    question:
-      "What is the difference between function overloading and function overriding?",
-    mathSolution: "Overloading vs Overriding",
-    codeSolution:
-      "Overloading:\n- Same class\n- Different parameters\n- Compile-time polymorphism\n- May have different return types\n\nOverriding:\n- Different classes (base/derived)\n- Same parameters\n- Runtime polymorphism\n- Same return type (or covariant)\n\nExample:\nclass Base {\n    virtual void show(int x) { }  // To be overridden\n    void display(int x) { }        // To be overloaded\n};\n\nclass Derived : public Base {\n    void show(int x) override { }  // Overriding\n    void display(int x, int y) { } // Overloading (different class)",
-    hint: "Overloading = same name different params in same class. Overriding = redefining virtual function in derived class.",
-  },
-  {
-    id: "cpp_polymorphism_9",
-    topicId: "cpp_polymorphism",
-    question:
-      "What is a pure virtual function? How does it relate to polymorphism?",
-    mathSolution: "Pure virtual function",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Shape {  // Abstract class\npublic:\n    // Pure virtual function\n    virtual void draw() = 0;\n    \n    virtual double area() = 0;\n    \n    void info() {\n        cout << "This is a shape" << endl;\n    }\n};\n\nclass Circle : public Shape {\nprivate:\n    double radius;\npublic:\n    Circle(double r) : radius(r) {}\n    \n    void draw() override {\n        cout << "Drawing Circle" << endl;\n    }\n    \n    double area() override {\n        return 3.14159 * radius * radius;\n    }\n};\n\nint main() {\n    // Shape s;  // Error: cannot instantiate abstract class\n    Circle c(5);\n    Shape* ptr = &c;\n    ptr->draw();  // Polymorphic call\n    cout << "Area: " << ptr->area() << endl;\n    return 0;\n}',
-    hint: "Pure virtual function (=0) makes class abstract. Derived classes must override it. Enforces polymorphic behavior.",
-  },
-  {
-    id: "cpp_polymorphism_10",
-    topicId: "cpp_polymorphism",
-    question: "What is an abstract class? Why is it used?",
-    mathSolution: "Abstract class",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Abstract class\nclass Animal {\npublic:\n    virtual void sound() = 0;  // Pure virtual\n    virtual void move() = 0;    // Pure virtual\n    \n    void eat() {  // Concrete method\n        cout << "Eating..." << endl;\n    }\n};\n\nclass Dog : public Animal {\npublic:\n    void sound() override {\n        cout << "Dog barks" << endl;\n    }\n    \n    void move() override {\n        cout << "Dog runs" << endl;\n    }\n};\n\nint main() {\n    // Animal a;  // Error: cannot instantiate abstract class\n    Dog d;\n    Animal* ptr = &d;\n    ptr->sound();\n    ptr->move();\n    ptr->eat();\n    return 0;\n}',
-    hint: "Abstract class has at least one pure virtual function. Cannot be instantiated, used as interface/blueprint for derived classes.",
-  },
-  {
-    id: "cpp_polymorphism_11",
-    topicId: "cpp_polymorphism",
-    question:
-      "What is the difference between virtual and pure virtual function?",
-    mathSolution: "Virtual vs Pure Virtual",
-    codeSolution:
-      "Virtual function:\n- Has implementation in base class\n- Can be overridden (optional)\n- Base class can be instantiated\n\nPure virtual function:\n- No implementation in base class (=0)\n- Must be overridden in derived class\n- Base class becomes abstract\n\nclass Base {\npublic:\n    virtual void func1() { }      // Virtual\n    virtual void func2() = 0;     // Pure virtual\n};",
-    hint: "Virtual has body, pure virtual doesn't and makes class abstract.",
-  },
-  {
-    id: "cpp_polymorphism_12",
-    topicId: "cpp_polymorphism",
-    question: "What is early binding and late binding?",
-    mathSolution: "Early vs Late binding",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    void nonVirtual() {  // Early binding\n        cout << "Base non-virtual" << endl;\n    }\n    \n    virtual void isVirtual() {  // Late binding\n        cout << "Base virtual" << endl;\n    }\n};\n\nclass Derived : public Base {\npublic:\n    void nonVirtual() {\n        cout << "Derived non-virtual" << endl;\n    }\n    \n    void isVirtual() override {\n        cout << "Derived virtual" << endl;\n    }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    \n    // Early binding (compile time) - based on pointer type\n    ptr->nonVirtual();  // Calls Base::nonVirtual\n    \n    // Late binding (runtime) - based on object type\n    ptr->isVirtual();   // Calls Derived::isVirtual\n    \n    delete ptr;\n    return 0;\n}',
-    hint: "Early binding = compile time (non-virtual). Late binding = runtime (virtual functions) based on actual object.",
-  },
-  {
-    id: "cpp_polymorphism_13",
-    topicId: "cpp_polymorphism",
-    question: "What is the virtual table (vtable) and vptr?",
-    mathSolution: "Virtual table concept",
-    codeSolution:
-      "When a class has virtual functions, compiler creates:\n\n1. vtable (virtual table): A static table containing function pointers to virtual functions\n2. vptr (virtual pointer): A hidden pointer in each object pointing to the class's vtable\n\nclass Base {\n    virtual void func1() { }\n    virtual void func2() { }\n};\n\nclass Derived : public Base {\n    void func1() override { }\n};\n\n// Base vtable: [Base::func1, Base::func2]\n// Derived vtable: [Derived::func1, Base::func2]\n// Each object has vptr pointing to its class's vtable",
-    hint: "vtable stores function pointers for virtual functions. vptr in each object points to vtable. Enables runtime polymorphism.",
-  },
-  {
-    id: "cpp_polymorphism_14",
-    topicId: "cpp_polymorphism",
-    question: "Can constructors be virtual? Why or why not?",
-    mathSolution: "Virtual constructors",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    // Constructor cannot be virtual\n    Base() { cout << "Base constructor" << endl; }\n    \n    // Destructor can and should be virtual\n    virtual ~Base() { cout << "Base destructor" << endl; }\n};\n\nclass Derived : public Base {\npublic:\n    Derived() { cout << "Derived constructor" << endl; }\n    ~Derived() { cout << "Derived destructor" << endl; }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    delete ptr;  // Both destructors called (virtual)\n    return 0;\n}',
-    hint: "Constructors cannot be virtual because when constructor is called, object doesn't exist yet to have vptr. Destructors should be virtual.",
-  },
-  {
-    id: "cpp_polymorphism_15",
-    topicId: "cpp_polymorphism",
-    question: "What is a virtual destructor? Why is it needed?",
-    mathSolution: "Virtual destructor",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    Base() { cout << "Base constructor" << endl; }\n    \n    // Non-virtual destructor - problem!\n    ~Base() { cout << "Base destructor" << endl; }\n};\n\nclass Derived : public Base {\nprivate:\n    int* data;\npublic:\n    Derived() { \n        data = new int[100];\n        cout << "Derived constructor - allocated memory" << endl; \n    }\n    \n    ~Derived() { \n        delete[] data;\n        cout << "Derived destructor - freed memory" << endl; \n    }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    delete ptr;  // Only Base destructor called! Memory leak!\n    return 0;\n}\n\n// Fix: Make destructor virtual\nclass Base {\npublic:\n    virtual ~Base() { }  // Virtual destructor\n};',
-    hint: "Virtual destructor ensures derived class destructor is called when deleting through base pointer, preventing memory leaks.",
-  },
-  {
-    id: "cpp_polymorphism_16",
-    topicId: "cpp_polymorphism",
-    question: "What is the 'override' keyword? (C++11)",
-    mathSolution: "Override keyword",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void show() { cout << "Base show" << endl; }\n    virtual void display(int x) { cout << "Base display: " << x << endl; }\n    void info() { cout << "Base info" << endl; }\n};\n\nclass Derived : public Base {\npublic:\n    // Correct override - compiler checks\n    void show() override { cout << "Derived show" << endl; }\n    \n    // Error: doesn\'t override anything (different parameters)\n    // void display() override { }  // Compilation error\n    \n    // Error: info is not virtual\n    // void info() override { }  // Compilation error\n    \n    // Correct override\n    void display(int x) override { cout << "Derived display: " << x << endl; }\n};\n\nint main() {\n    Derived d;\n    Base* ptr = &d;\n    ptr->show();     // Derived::show\n    ptr->display(5); // Derived::display\n    return 0;\n}',
-    hint: "override keyword explicitly marks overriding of virtual function. Compiler checks for correctness (signature match, base function virtual).",
-  },
-  {
-    id: "cpp_polymorphism_17",
-    topicId: "cpp_polymorphism",
-    question: "What is the 'final' keyword? (C++11)",
-    mathSolution: "Final keyword",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void show() { cout << "Base show" << endl; }\n    virtual void display() final { cout << "Base display - cannot override" << endl; }  // Cannot override\n};\n\nclass Derived : public Base {\npublic:\n    void show() override { cout << "Derived show" << endl; }  // OK\n    \n    // Error: cannot override final function\n    // void display() override { }  // Compilation error\n};\n\n// Final class - cannot be inherited\nclass FinalClass final {\npublic:\n    void func() { }\n};\n\n// Error: cannot inherit from final class\n// class Child : public FinalClass { };  // Compilation error\n\nint main() {\n    Derived d;\n    d.show();\n    return 0;\n}',
-    hint: "final on virtual function prevents further overriding. final on class prevents inheritance.",
-  },
-  {
-    id: "cpp_polymorphism_18",
-    topicId: "cpp_polymorphism",
-    question: "What is function hiding? How is it different from overriding?",
-    mathSolution: "Function hiding",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    void func() { cout << "Base func()" << endl; }           // Non-virtual\n    virtual void show() { cout << "Base show()" << endl; }   // Virtual\n};\n\nclass Derived : public Base {\npublic:\n    // Hiding - redefines non-virtual function\n    void func() { cout << "Derived func()" << endl; }\n    \n    // Overriding - redefines virtual function\n    void show() override { cout << "Derived show()" << endl; }\n};\n\nint main() {\n    Derived d;\n    Base* ptr = &d;\n    \n    // ptr->func();  // Calls Base::func (not polymorphic)\n    d.func();        // Calls Derived::func\n    \n    ptr->show();     // Calls Derived::show (polymorphic)\n    \n    // To call hidden base function\n    d.Base::func();  // Explicitly call Base version\n    \n    return 0;\n}',
-    hint: "Hiding: redefining non-virtual function in derived class (based on pointer type). Overriding: redefining virtual function (based on object type).",
-  },
-  {
-    id: "cpp_polymorphism_19",
-    topicId: "cpp_polymorphism",
-    question: "Can we overload virtual functions?",
-    mathSolution: "Overloading virtual functions",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void func() { cout << "Base func()" << endl; }\n    virtual void func(int x) { cout << "Base func(int): " << x << endl; }\n};\n\nclass Derived : public Base {\npublic:\n    // Override one version\n    void func() override { cout << "Derived func()" << endl; }\n    \n    // The other version is also available (if not overridden)\n    // But if we want to override both, we need to override all overloads\n};\n\nclass Derived2 : public Base {\npublic:\n    // Override both overloads\n    void func() override { cout << "Derived2 func()" << endl; }\n    void func(int x) override { cout << "Derived2 func(int): " << x << endl; }\n};\n\nint main() {\n    Derived d;\n    d.func();      // Derived::func\n    d.func(10);    // Base::func(int) (not overridden)\n    \n    Derived2 d2;\n    d2.func();     // Derived2::func\n    d2.func(20);   // Derived2::func(int)\n    \n    return 0;\n}',
-    hint: "Virtual functions can be overloaded. Derived class can override any or all overloads. Use 'using' to bring all overloads into scope.",
-  },
-  {
-    id: "cpp_polymorphism_20",
-    topicId: "cpp_polymorphism",
-    question: "What is the concept of covariance in virtual functions?",
-    mathSolution: "Covariant return types",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual Base* clone() const {\n        cout << "Base clone" << endl;\n        return new Base(*this);\n    }\n    \n    virtual ~Base() {}\n};\n\nclass Derived : public Base {\npublic:\n    // Covariant return type - returns Derived* instead of Base*\n    Derived* clone() const override {\n        cout << "Derived clone" << endl;\n        return new Derived(*this);\n    }\n};\n\nint main() {\n    Base* b1 = new Derived();\n    Base* b2 = b1->clone();  // Returns Derived*, but stored as Base*\n    \n    delete b1;\n    delete b2;\n    return 0;\n}',
-    hint: "Covariance allows overriding function to return a more specific type (derived class pointer/reference) than base class function.",
-  },
-  {
-    id: "cpp_polymorphism_21",
-    topicId: "cpp_polymorphism",
-    question: "What is the difference between static and dynamic polymorphism?",
-    mathSolution: "Static vs Dynamic polymorphism",
-    codeSolution:
-      "Static Polymorphism (Compile-time):\n- Achieved through function/operator overloading, templates\n- Faster (no runtime overhead)\n- Decision at compile time\n\nDynamic Polymorphism (Runtime):\n- Achieved through virtual functions\n- Slower (vtable lookup overhead)\n- Decision at runtime\n- More flexible\n\n// Static polymorphism - templates\ntemplate <typename T>\nT add(T a, T b) { return a + b; }\n\n// Dynamic polymorphism - virtual functions\nclass Shape {\n    virtual void draw() = 0;\n};",
-    hint: "Static = compile-time (overloading, templates). Dynamic = runtime (virtual functions).",
-  },
-  {
-    id: "cpp_polymorphism_22",
-    topicId: "cpp_polymorphism",
-    question:
-      "What is RTTI (Runtime Type Information)? How is it related to polymorphism?",
-    mathSolution: "RTTI concept",
-    codeSolution:
-      '#include <iostream>\n#include <typeinfo>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual ~Base() {}\n};\n\nclass Derived : public Base {};\n\nint main() {\n    Base* b1 = new Base();\n    Base* b2 = new Derived();\n    \n    // typeid operator (requires at least one virtual function)\n    cout << "b1 type: " << typeid(*b1).name() << endl;\n    cout << "b2 type: " << typeid(*b2).name() << endl;\n    \n    // dynamic_cast for safe downcasting\n    Derived* d = dynamic_cast<Derived*>(b2);\n    if(d) {\n        cout << "Successfully cast to Derived" << endl;\n    }\n    \n    d = dynamic_cast<Derived*>(b1);\n    if(!d) {\n        cout << "Cannot cast Base to Derived" << endl;\n    }\n    \n    delete b1;\n    delete b2;\n    return 0;\n}',
-    hint: "RTTI provides runtime type information for polymorphic classes. Features: typeid operator and dynamic_cast.",
-  },
-  {
-    id: "cpp_polymorphism_23",
-    topicId: "cpp_polymorphism",
-    question: "What is dynamic_cast? When is it used?",
-    mathSolution: "dynamic_cast",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual ~Base() {}\n};\n\nclass Derived1 : public Base {\npublic:\n    void show1() { cout << "Derived1 function" << endl; }\n};\n\nclass Derived2 : public Base {\npublic:\n    void show2() { cout << "Derived2 function" << endl; }\n};\n\nvoid process(Base* ptr) {\n    // Safe downcasting with dynamic_cast\n    Derived1* d1 = dynamic_cast<Derived1*>(ptr);\n    if(d1) {\n        cout << "It\'s Derived1: ";\n        d1->show1();\n    }\n    \n    Derived2* d2 = dynamic_cast<Derived2*>(ptr);\n    if(d2) {\n        cout << "It\'s Derived2: ";\n        d2->show2();\n    }\n}\n\nint main() {\n    Base* b1 = new Derived1();\n    Base* b2 = new Derived2();\n    \n    process(b1);\n    process(b2);\n    \n    delete b1;\n    delete b2;\n    return 0;\n}',
-    hint: "dynamic_cast performs safe downcasting in polymorphic hierarchies. Returns nullptr if cast fails. Requires at least one virtual function.",
-  },
-  {
-    id: "cpp_polymorphism_24",
-    topicId: "cpp_polymorphism",
-    question: "What is the difference between early binding and late binding?",
-    mathSolution: "Early vs Late binding",
-    codeSolution:
-      "Early Binding (Static Binding):\n- Happens at compile time\n- Function address fixed\n- Faster execution\n- Used for non-virtual functions, overloaded functions\n\nLate Binding (Dynamic Binding):\n- Happens at runtime\n- Function address determined at runtime via vtable\n- Slight overhead\n- Used for virtual functions\n\nExample:\nclass Base {\n    void f1() { }           // Early binding\n    virtual void f2() { }    // Late binding\n};",
-    hint: "Early binding = compile time (non-virtual). Late binding = runtime (virtual functions).",
-  },
-  {
-    id: "cpp_polymorphism_25",
-    topicId: "cpp_polymorphism",
-    question:
-      "Write a complete program demonstrating polymorphism with virtual functions, abstract classes, and dynamic_cast.",
-    mathSolution: "Complete polymorphism example",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\n// Abstract base class\nclass Shape {\nprotected:\n    string color;\npublic:\n    Shape(string c) : color(c) {}\n    virtual ~Shape() {}\n    \n    // Pure virtual functions\n    virtual double area() const = 0;\n    virtual void draw() const = 0;\n    \n    // Virtual function with default implementation\n    virtual void info() const {\n        cout << "This is a " << color << " shape" << endl;\n    }\n    \n    // Non-virtual function\n    string getColor() const { return color; }\n};\n\n// Derived class 1\nclass Circle : public Shape {\nprivate:\n    double radius;\npublic:\n    Circle(string c, double r) : Shape(c), radius(r) {}\n    \n    double area() const override {\n        return 3.14159 * radius * radius;\n    }\n    \n    void draw() const override {\n        cout << "Drawing a " << color << " circle with radius " << radius << endl;\n    }\n    \n    // Circle-specific function\n    double getRadius() const { return radius; }\n};\n\n// Derived class 2\nclass Rectangle : public Shape {\nprivate:\n    double length, width;\npublic:\n    Rectangle(string c, double l, double w) : Shape(c), length(l), width(w) {}\n    \n    double area() const override {\n        return length * width;\n    }\n    \n    void draw() const override {\n        cout << "Drawing a " << color << " rectangle " << length << "x" << width << endl;\n    }\n    \n    // Rectangle-specific function\n    void resize(double factor) {\n        length *= factor;\n        width *= factor;\n    }\n};\n\n// Derived class 3\nclass Triangle : public Shape {\nprivate:\n    double base, height;\npublic:\n    Triangle(string c, double b, double h) : Shape(c), base(b), height(h) {}\n    \n    double area() const override {\n        return 0.5 * base * height;\n    }\n    \n    void draw() const override {\n        cout << "Drawing a " << color << " triangle" << endl;\n    }\n    \n    void info() const override {\n        cout << "This is a " << color << " triangle with base " << base << " and height " << height << endl;\n    }\n};\n\n// Function demonstrating polymorphism\nvoid displayShapeInfo(const Shape& s) {\n    s.draw();\n    cout << "Area: " << s.area() << endl;\n    s.info();\n    cout << "-------------------" << endl;\n}\n\nint main() {\n    cout << "=== Polymorphism Demo ===\\n" << endl;\n    \n    // Creating objects\n    Circle circle("red", 5.0);\n    Rectangle rect("blue", 4.0, 6.0);\n    Triangle tri("green", 3.0, 4.0);\n    \n    // Polymorphism with references\n    cout << "Using references:" << endl;\n    displayShapeInfo(circle);\n    displayShapeInfo(rect);\n    displayShapeInfo(tri);\n    \n    // Polymorphism with pointers\n    cout << "\\nUsing pointers in container:" << endl;\n    vector<Shape*> shapes;\n    shapes.push_back(new Circle("yellow", 2.5));\n    shapes.push_back(new Rectangle("purple", 3.0, 5.0));\n    shapes.push_back(new Triangle("orange", 4.0, 3.0));\n    \n    for(Shape* shape : shapes) {\n        shape->draw();\n        cout << "Area: " << shape->area() << endl;\n        \n        // dynamic_cast example\n        Circle* c = dynamic_cast<Circle*>(shape);\n        if(c) {\n            cout << "  This is a circle with radius: " << c->getRadius() << endl;\n        }\n        \n        Rectangle* r = dynamic_cast<Rectangle*>(shape);\n        if(r) {\n            cout << "  This is a rectangle" << endl;\n        }\n        \n        cout << "-------------------" << endl;\n    }\n    \n    // Cleanup\n    for(Shape* shape : shapes) {\n        delete shape;\n    }\n    \n    cout << "\\n=== Polymorphism concepts demonstrated ===" << endl;\n    cout << "1. Abstract class (Shape with pure virtual functions)" << endl;\n    cout << "2. Virtual functions (draw(), area(), info())" << endl;\n    cout << "3. Polymorphic behavior (same interface, different implementations)" << endl;\n    cout << "4. Dynamic binding (virtual function calls resolved at runtime)" << endl;\n    cout << "5. dynamic_cast for type-safe downcasting" << endl;\n    \n    return 0;\n}',
-    hint: "This demonstrates: abstract classes, pure virtual functions, virtual functions, polymorphism with references/pointers, and dynamic_cast.",
-  },
+{
+  id: 'cpp_polymorphism_1',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate compile-time polymorphism using function overloading.',
+  mathSolution: 'Function overloading allows multiple functions with same name but different parameters.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nvoid display(int x) {\n    cout << "Integer: " << x << endl;\n}\n\nvoid display(double x) {\n    cout << "Double: " << x << endl;\n}\n\nvoid display(string x) {\n    cout << "String: " << x << endl;\n}\n\nint main() {\n    display(10);\n    display(3.14);\n    display("Hello");\n    return 0;\n}',
+  hint: 'Function overloading is resolved at compile time based on arguments.'
+},
+{
+  id: 'cpp_polymorphism_2',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate compile-time polymorphism using operator overloading.',
+  mathSolution: 'Operator overloading allows custom types to use operators.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Complex {\nprivate:\n    double real, imag;\n    \npublic:\n    Complex(double r = 0, double i = 0) : real(r), imag(i) {}\n    \n    Complex operator+(const Complex& other) {\n        return Complex(real + other.real, imag + other.imag);\n    }\n    \n    Complex operator-(const Complex& other) {\n        return Complex(real - other.real, imag - other.imag);\n    }\n    \n    void display() {\n        cout << real << " + " << imag << "i" << endl;\n    }\n};\n\nint main() {\n    Complex c1(3, 4), c2(1, 2);\n    Complex c3 = c1 + c2;\n    Complex c4 = c1 - c2;\n    \n    c3.display();\n    c4.display();\n    \n    return 0;\n}',
+  hint: 'Operator overloading allows intuitive syntax for user-defined types.'
+},
+{
+  id: 'cpp_polymorphism_3',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate compile-time polymorphism using templates.',
+  mathSolution: 'Templates allow generic code that works with any data type.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\ntemplate<typename T>\nT max(T a, T b) {\n    return (a > b) ? a : b;\n}\n\ntemplate<typename T>\nclass Stack {\nprivate:\n    static const int MAX = 100;\n    T arr[MAX];\n    int top;\n    \npublic:\n    Stack() : top(-1) {}\n    void push(T val) { if (top < MAX - 1) arr[++top] = val; }\n    T pop() { if (top >= 0) return arr[top--]; return T(); }\n};\n\nint main() {\n    cout << max(5, 3) << endl;\n    cout << max(5.5, 3.2) << endl;\n    \n    Stack<int> intStack;\n    intStack.push(10);\n    \n    Stack<string> stringStack;\n    stringStack.push("Hello");\n    \n    return 0;\n}',
+  hint: 'Templates provide polymorphism at compile time.'
+},
+{
+  id: 'cpp_polymorphism_4',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate runtime polymorphism using virtual functions.',
+  mathSolution: 'Virtual functions allow overriding and dynamic dispatch at runtime.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Animal {\npublic:\n    virtual void speak() {\n        cout << "Animal speaks" << endl;\n    }\n    \n    virtual ~Animal() {}\n};\n\nclass Dog : public Animal {\npublic:\n    void speak() override {\n        cout << "Dog barks: Woof!" << endl;\n    }\n};\n\nclass Cat : public Animal {\npublic:\n    void speak() override {\n        cout << "Cat meows: Meow!" << endl;\n    }\n};\n\nint main() {\n    Animal* animals[] = {new Dog(), new Cat(), new Dog()};\n    \n    for (Animal* a : animals) {\n        a->speak();\n        delete a;\n    }\n    \n    return 0;\n}',
+  hint: 'Virtual functions enable polymorphic behavior in inheritance hierarchies.'
+},
+{
+  id: 'cpp_polymorphism_5',
+  topicId: 'cpp_polymorphism',
+  question: 'Use override specifier to ensure correct overriding.',
+  mathSolution: 'override keyword catches signature mismatches at compile time.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void func1() { cout << "Base func1" << endl; }\n    virtual void func2(int x) { cout << "Base func2: " << x << endl; }\n    virtual void func3() const { cout << "Base func3" << endl; }\n};\n\nclass Derived : public Base {\npublic:\n    void func1() override {\n        cout << "Derived func1" << endl;\n    }\n    \n    void func2(int x) override {\n        cout << "Derived func2: " << x * 2 << endl;\n    }\n    \n    // void func3() override { }  // Error: signature mismatch (missing const)\n    \n    void func3() const override {\n        cout << "Derived func3" << endl;\n    }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    ptr->func1();\n    ptr->func2(5);\n    ptr->func3();\n    delete ptr;\n    \n    return 0;\n}',
+  hint: 'override helps catch errors when base class virtual function signatures change.'
+},
+{
+  id: 'cpp_polymorphism_6',
+  topicId: 'cpp_polymorphism',
+  question: 'Use final specifier to prevent further overriding.',
+  mathSolution: 'final prevents derived classes from overriding virtual functions.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void process() {\n        cout << "Base process" << endl;\n    }\n    \n    virtual void finalize() final {\n        cout << "Base finalize - cannot be overridden" << endl;\n    }\n};\n\nclass Derived : public Base {\npublic:\n    void process() override {\n        cout << "Derived process" << endl;\n    }\n    \n    // void finalize() override { }  // Error: final function cannot be overridden\n};\n\nclass FinalClass final : public Derived {\npublic:\n    void process() override {\n        cout << "FinalClass process" << endl;\n    }\n};\n\n// class Further : public FinalClass { };  // Error: FinalClass is final\n\nint main() {\n    FinalClass obj;\n    obj.process();\n    obj.finalize();\n    \n    return 0;\n}',
+  hint: 'final provides strong guarantees in class hierarchies.'
+},
+{
+  id: 'cpp_polymorphism_7',
+  topicId: 'cpp_polymorphism',
+  question: 'Use virtual destructors for proper cleanup in polymorphism.',
+  mathSolution: 'Virtual destructors ensure derived destructors are called when deleting base pointers.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    Base() { cout << "Base constructor" << endl; }\n    virtual ~Base() { cout << "Base destructor" << endl; }\n};\n\nclass Derived : public Base {\nprivate:\n    int* data;\n    \npublic:\n    Derived() {\n        data = new int[100];\n        cout << "Derived constructor, allocated memory" << endl;\n    }\n    \n    ~Derived() {\n        delete[] data;\n        cout << "Derived destructor, freed memory" << endl;\n    }\n};\n\nclass NonVirtual {\npublic:\n    ~NonVirtual() { cout << "NonVirtual destructor" << endl; }\n};\n\nclass Leaky : public NonVirtual {\nprivate:\n    int* leak;\n    \npublic:\n    Leaky() { leak = new int[100]; cout << "Leaky constructor" << endl; }\n    ~Leaky() { delete[] leak; cout << "Leaky destructor" << endl; }\n};\n\nint main() {\n    cout << "With virtual destructor:\\n";\n    Base* ptr = new Derived();\n    delete ptr;\n    \n    cout << "\\nWithout virtual destructor:\\n";\n    NonVirtual* leaky = new Leaky();\n    delete leaky;  // Memory leak!\n    \n    return 0;\n}',
+  hint: 'Always make destructors virtual in polymorphic base classes.'
+},
+{
+  id: 'cpp_polymorphism_8',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate pure virtual functions (abstract classes).',
+  mathSolution: 'Pure virtual functions make classes abstract, cannot instantiate.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Shape {\npublic:\n    virtual double area() = 0;\n    virtual double perimeter() = 0;\n    virtual void draw() = 0;\n    virtual ~Shape() {}\n};\n\nclass Circle : public Shape {\nprivate:\n    double radius;\n    \npublic:\n    Circle(double r) : radius(r) {}\n    \n    double area() override {\n        return 3.14159 * radius * radius;\n    }\n    \n    double perimeter() override {\n        return 2 * 3.14159 * radius;\n    }\n    \n    void draw() override {\n        cout << "Drawing circle" << endl;\n    }\n};\n\nclass Rectangle : public Shape {\nprivate:\n    double width, height;\n    \npublic:\n    Rectangle(double w, double h) : width(w), height(h) {}\n    \n    double area() override {\n        return width * height;\n    }\n    \n    double perimeter() override {\n        return 2 * (width + height);\n    }\n    \n    void draw() override {\n        cout << "Drawing rectangle" << endl;\n    }\n};\n\nint main() {\n    // Shape s;  // Error: cannot instantiate abstract class\n    \n    Shape* shapes[] = {new Circle(5), new Rectangle(4, 6)};\n    \n    for (Shape* s : shapes) {\n        cout << "Area: " << s->area() << endl;\n        cout << "Perimeter: " << s->perimeter() << endl;\n        s->draw();\n        delete s;\n    }\n    \n    return 0;\n}',
+  hint: 'Pure virtual functions define interfaces that derived classes must implement.'
+},
+{
+  id: 'cpp_polymorphism_9',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate virtual function call in constructors and destructors.',
+  mathSolution: 'Virtual functions in constructor/destructor call current class version, not derived.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    Base() {\n        cout << "Base constructor" << endl;\n        display();  // Calls Base::display\n    }\n    \n    virtual void display() {\n        cout << "Base display" << endl;\n    }\n    \n    virtual ~Base() {\n        cout << "Base destructor" << endl;\n        display();  // Calls Base::display\n    }\n};\n\nclass Derived : public Base {\npublic:\n    Derived() {\n        cout << "Derived constructor" << endl;\n    }\n    \n    void display() override {\n        cout << "Derived display" << endl;\n    }\n    \n    ~Derived() {\n        cout << "Derived destructor" << endl;\n    }\n};\n\nint main() {\n    Derived d;\n    return 0;\n}',
+  hint: 'Virtual functions do not work polymorphically in constructors and destructors.'
+},
+{
+  id: 'cpp_polymorphism_10',
+  topicId: 'cpp_polymorphism',
+  question: 'Use dynamic_cast for safe downcasting.',
+  mathSolution: 'dynamic_cast safely converts base pointer to derived pointer.',
+  codeSolution: '#include <iostream>\n#include <typeinfo>\nusing namespace std;\n\nclass Animal {\npublic:\n    virtual void sound() { cout << "Animal sound" << endl; }\n    virtual ~Animal() {}\n};\n\nclass Dog : public Animal {\npublic:\n    void sound() override { cout << "Woof!" << endl; }\n    void fetch() { cout << "Dog fetches ball" << endl; }\n};\n\nclass Cat : public Animal {\npublic:\n    void sound() override { cout << "Meow!" << endl; }\n    void climb() { cout << "Cat climbs tree" << endl; }\n};\n\nint main() {\n    Animal* animals[] = {new Dog(), new Cat(), new Dog()};\n    \n    for (Animal* a : animals) {\n        a->sound();\n        \n        if (Dog* dog = dynamic_cast<Dog*>(a)) {\n            dog->fetch();\n        }\n        \n        if (Cat* cat = dynamic_cast<Cat*>(a)) {\n            cat->climb();\n        }\n        \n        delete a;\n    }\n    \n    // Reference downcasting\n    Dog d;\n    Animal& animalRef = d;\n    \n    try {\n        Dog& dogRef = dynamic_cast<Dog&>(animalRef);\n        dogRef.fetch();\n    } catch (const bad_cast& e) {\n        cout << "Bad cast: " << e.what() << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'dynamic_cast requires at least one virtual function in base class.'
+},
+{
+  "id": "cpp_polymorphism_11",
+  "topicId": "cpp_polymorphism",
+  "question": "Use typeid for runtime type identification.",
+  "mathSolution": "typeid returns type_info for polymorphic objects at runtime.",
+  "codeSolution": "#include <iostream>\n#include <typeinfo>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void func() {}\n    virtual ~Base() {}\n};\n\nclass Derived1 : public Base {};\nclass Derived2 : public Base {};\n\nvoid printType(Base* ptr) {\n    cout << \"Type: \" << typeid(*ptr).name() << endl;\n    \n    if (typeid(*ptr) == typeid(Derived1)) {\n        cout << \"  It's a Derived1 object\" << endl;\n    } else if (typeid(*ptr) == typeid(Derived2)) {\n        cout << \"  It's a Derived2 object\" << endl;\n    } else {\n        cout << \"  It's a Base object\" << endl;\n    }\n}\n\nint main() {\n    Base* b1 = new Base();\n    Base* d1 = new Derived1();\n    Base* d2 = new Derived2();\n    \n    printType(b1);\n    printType(d1);\n    printType(d2);\n    \n    // Compare types\n    if (typeid(*d1) == typeid(*d2)) {\n        cout << \"Same type\" << endl;\n    } else {\n        cout << \"Different types\" << endl;\n    }\n    \n    delete b1;\n    delete d1;\n    delete d2;\n    \n    return 0;\n}",
+  "hint": "typeid works with polymorphic types to get dynamic type information."
+},
+{
+  "id": "cpp_polymorphism_12",
+  "topicId": "cpp_polymorphism",
+  "question": "Demonstrate virtual function with default arguments.",
+  "mathSolution": "Default arguments are statically bound, not dynamically with virtual functions.",
+  "codeSolution": "#include <iostream>\nusing namespace std;\n\nclass Base {\npublic:\n    virtual void show(int x = 10) {\n        cout << \"Base show: \" << x << endl;\n    }\n    virtual ~Base() {}\n};\n\nclass Derived : public Base {\npublic:\n    void show(int x = 20) override {\n        cout << \"Derived show: \" << x << endl;\n    }\n};\n\nint main() {\n    Base* b = new Derived();\n    b->show();  // Uses Base's default argument (10) but Derived's function body\n    \n    Derived* d = new Derived();\n    d->show();  // Uses Derived's default argument (20)\n    \n    delete b;\n    delete d;\n    \n    return 0;\n}",
+  "hint": "Default arguments are resolved at compile time based on static type, not dynamic type."
+},
+{
+  id: 'cpp_polymorphism_13',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate virtual functions in multiple inheritance.',
+  mathSolution: 'Virtual functions work correctly in multiple inheritance hierarchies.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Clickable {\npublic:\n    virtual void onClick() = 0;\n    virtual ~Clickable() {}\n};\n\nclass Button : public Drawable, public Clickable {\nprivate:\n    string label;\n    \npublic:\n    Button(string lbl) : label(lbl) {}\n    \n    void draw() override {\n        cout << "Drawing button: " << label << endl;\n    }\n    \n    void onClick() override {\n        cout << "Button clicked: " << label << endl;\n    }\n};\n\nint main() {\n    Drawable* d = new Button("OK");\n    Clickable* c = new Button("Cancel");\n    \n    d->draw();\n    c->onClick();\n    \n    delete d;\n    delete c;\n    \n    return 0;\n}',
+  hint: 'Virtual functions work consistently across multiple inheritance hierarchies.'
+},
+{
+  id: 'cpp_polymorphism_14',
+  topicId: 'cpp_polymorphism',
+  question: 'Use virtual inheritance to solve diamond problem.',
+  mathSolution: 'Virtual inheritance ensures single instance of grandparent class.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Animal {\nprotected:\n    string name;\n    \npublic:\n    Animal() { cout << "Animal constructor" << endl; }\n    virtual void speak() { cout << "Animal speaks" << endl; }\n};\n\nclass Mammal : virtual public Animal {\npublic:\n    Mammal() { cout << "Mammal constructor" << endl; }\n};\n\nclass Bird : virtual public Animal {\npublic:\n    Bird() { cout << "Bird constructor" << endl; }\n};\n\nclass Bat : public Mammal, public Bird {\npublic:\n    Bat() { cout << "Bat constructor" << endl; }\n    \n    void speak() override {\n        cout << "Bat squeaks" << endl;\n    }\n};\n\nint main() {\n    Bat bat;\n    bat.speak();  // No ambiguity\n    \n    return 0;\n}',
+  hint: 'Virtual inheritance solves diamond problem by sharing a single base instance.'
+},
+{
+  id: 'cpp_polymorphism_15',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate CRTP (Curiously Recurring Template Pattern) for static polymorphism.',
+  mathSolution: 'CRTP provides compile-time polymorphism without virtual functions.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\ntemplate<typename Derived>\nclass Shape {\npublic:\n    void draw() {\n        static_cast<Derived*>(this)->drawImpl();\n    }\n    \n    double area() {\n        return static_cast<Derived*>(this)->areaImpl();\n    }\n};\n\nclass Circle : public Shape<Circle> {\nprivate:\n    double radius;\n    \npublic:\n    Circle(double r) : radius(r) {}\n    \n    void drawImpl() {\n        cout << "Drawing circle with radius " << radius << endl;\n    }\n    \n    double areaImpl() {\n        return 3.14159 * radius * radius;\n    }\n};\n\nclass Rectangle : public Shape<Rectangle> {\nprivate:\n    double width, height;\n    \npublic:\n    Rectangle(double w, double h) : width(w), height(h) {}\n    \n    void drawImpl() {\n        cout << "Drawing rectangle " << width << "x" << height << endl;\n    }\n    \n    double areaImpl() {\n        return width * height;\n    }\n};\n\ntemplate<typename T>\nvoid render(Shape<T>& shape) {\n    shape.draw();\n    cout << "Area: " << shape.area() << endl;\n}\n\nint main() {\n    Circle c(5);\n    Rectangle r(4, 6);\n    \n    render(c);\n    render(r);\n    \n    return 0;\n}',
+  hint: 'CRTP achieves compile-time polymorphism without virtual function overhead.'
+},
+{
+  id: 'cpp_polymorphism_16',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic lambda with auto parameters (C++14).',
+  mathSolution: 'Lambda with auto parameters can work with polymorphic types.',
+  codeSolution: '#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() const = 0;\n    virtual ~Drawable() {}\n};\n\nclass Circle : public Drawable {\npublic:\n    void draw() const override { cout << "○"; }\n};\n\nclass Square : public Drawable {\npublic:\n    void draw() const override { cout << "□"; }\n};\n\nint main() {\n    vector<Drawable*> shapes = {new Circle(), new Square(), new Circle()};\n    \n    // Polymorphic lambda\n    auto drawAll = [](const vector<Drawable*>& items) {\n        for (auto item : items) {\n            item->draw();\n            cout << " ";\n        }\n        cout << endl;\n    };\n    \n    drawAll(shapes);\n    \n    // Lambda with auto parameter\n    auto process = [](auto&& arg) {\n        arg->draw();\n    };\n    \n    for (auto s : shapes) process(s);\n    cout << endl;\n    \n    for (auto s : shapes) delete s;\n    \n    return 0;\n}',
+  hint: 'Lambda with auto parameters can work with polymorphic types like templates.'
+},
+{
+  id: 'cpp_polymorphism_17',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with std::variant and std::visit.',
+  mathSolution: 'std::variant and std::visit provide type-safe polymorphic behavior.',
+  codeSolution: '#include <iostream>\n#include <variant>\n#include <vector>\nusing namespace std;\n\nstruct Circle {\n    double radius;\n    void draw() const { cout << "○"; }\n};\n\nstruct Square {\n    double side;\n    void draw() const { cout << "□"; }\n};\n\nstruct Triangle {\n    double base;\n    void draw() const { cout << "▲"; }\n};\n\nint main() {\n    vector<variant<Circle, Square, Triangle>> shapes;\n    shapes.push_back(Circle{5});\n    shapes.push_back(Square{4});\n    shapes.push_back(Triangle{3});\n    shapes.push_back(Circle{2});\n    \n    auto drawer = [](const auto& shape) { shape.draw(); };\n    \n    for (const auto& shape : shapes) {\n        visit(drawer, shape);\n        cout << " ";\n    }\n    cout << endl;\n    \n    // Area calculation\n    auto areaCalc = [](const auto& shape) -> double {\n        if constexpr (is_same_v<decay_t<decltype(shape)>, Circle>) {\n            return 3.14159 * shape.radius * shape.radius;\n        } else if constexpr (is_same_v<decay_t<decltype(shape)>, Square>) {\n            return shape.side * shape.side;\n        } else {\n            return 0.5 * shape.base * shape.base;\n        }\n    };\n    \n    for (const auto& shape : shapes) {\n        cout << "Area: " << visit(areaCalc, shape) << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'std::variant with std::visit provides compile-time polymorphic behavior.'
+},
+{
+  id: 'cpp_polymorphism_18',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with std::any and type erasure.',
+  mathSolution: 'std::any provides type-erased storage for any type.',
+  codeSolution: '#include <iostream>\n#include <any>\n#include <vector>\n#include <string>\n#include <typeinfo>\nusing namespace std;\n\nclass DrawableConcept {\npublic:\n    virtual void draw() const = 0;\n    virtual ~DrawableConcept() {}\n};\n\ntemplate<typename T>\nclass DrawableModel : public DrawableConcept {\nprivate:\n    T object;\n    \npublic:\n    DrawableModel(const T& obj) : object(obj) {}\n    \n    void draw() const override {\n        object.draw();\n    }\n};\n\nclass Drawable {\nprivate:\n    unique_ptr<DrawableConcept> pimpl;\n    \npublic:\n    template<typename T>\n    Drawable(T obj) : pimpl(make_unique<DrawableModel<T>>(obj)) {}\n    \n    void draw() const { pimpl->draw(); }\n};\n\nstruct Circle {\n    void draw() const { cout << "○"; }\n};\n\nstruct Square {\n    void draw() const { cout << "□"; }\n};\n\nint main() {\n    vector<Drawable> shapes;\n    shapes.push_back(Circle{});\n    shapes.push_back(Square{});\n    shapes.push_back(Circle{});\n    \n    for (const auto& shape : shapes) {\n        shape.draw();\n        cout << " ";\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Type erasure patterns provide runtime polymorphism without inheritance.'
+},
+{
+  id: 'cpp_polymorphism_19',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with function pointers and std::function.',
+  mathSolution: 'std::function provides polymorphic callable objects.',
+  codeSolution: '#include <iostream>\n#include <functional>\n#include <vector>\nusing namespace std;\n\nint add(int a, int b) { return a + b; }\n\nstruct Multiplier {\n    int factor;\n    int operator()(int x) const { return x * factor; }\n};\n\nint main() {\n    vector<function<int(int, int)>> operations;\n    operations.push_back(add);\n    operations.push_back([](int a, int b) { return a - b; });\n    operations.push_back(multiplies<int>());\n    \n    int x = 10, y = 5;\n    for (const auto& op : operations) {\n        cout << op(x, y) << " ";\n    }\n    cout << endl;\n    \n    // Polymorphic transformation\n    vector<function<int(int)>> transformers;\n    transformers.push_back([](int x) { return x * 2; });\n    transformers.push_back([](int x) { return x * x; });\n    transformers.push_back([](int x) { return x + 10; });\n    \n    int value = 5;\n    for (const auto& t : transformers) {\n        cout << t(value) << " ";\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'std::function provides runtime polymorphism for callable objects.'
+},
+{
+  id: 'cpp_polymorphism_20',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphism in exception handling.',
+  mathSolution: 'Exceptions can be caught polymorphically using base class references.',
+  codeSolution: '#include <iostream>\n#include <stdexcept>\n#include <vector>\nusing namespace std;\n\nclass MyException : public exception {\npublic:\n    const char* what() const noexcept override {\n        return "My custom exception";\n    }\n};\n\nclass SpecificError : public MyException {\npublic:\n    const char* what() const noexcept override {\n        return "Specific error occurred";\n    }\n};\n\nvoid riskyFunction(int code) {\n    if (code == 1) {\n        throw runtime_error("Runtime error");\n    } else if (code == 2) {\n        throw logic_error("Logic error");\n    } else if (code == 3) {\n        throw MyException();\n    } else if (code == 4) {\n        throw SpecificError();\n    }\n}\n\nint main() {\n    vector<int> testCodes = {1, 2, 3, 4};\n    \n    for (int code : testCodes) {\n        try {\n            riskyFunction(code);\n        } catch (const SpecificError& e) {\n            cout << "SpecificError caught: " << e.what() << endl;\n        } catch (const MyException& e) {\n            cout << "MyException caught: " << e.what() << endl;\n        } catch (const logic_error& e) {\n            cout << "Logic error: " << e.what() << endl;\n        } catch (const runtime_error& e) {\n            cout << "Runtime error: " << e.what() << endl;\n        } catch (const exception& e) {\n            cout << "Generic exception: " << e.what() << endl;\n        }\n    }\n    \n    return 0;\n}',
+  hint: 'Exception handlers can catch polymorphic exception types.'
+},
+{
+  "id": "cpp_polymorphism_21",
+  "topicId": "cpp_polymorphism",
+  "question": "Use polymorphism with factory pattern.",
+  "mathSolution": "Factory creates polymorphic objects based on input parameters.",
+  "codeSolution": "#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Product {\npublic:\n    virtual void use() = 0;\n    virtual ~Product() {}\n};\n\nclass ConcreteProductA : public Product {\npublic:\n    void use() override { cout << \"Using Product A\" << endl; }\n};\n\nclass ConcreteProductB : public Product {\npublic:\n    void use() override { cout << \"Using Product B\" << endl; }\n};\n\nclass Factory {\npublic:\n    static unique_ptr<Product> create(char type) {\n        switch(type) {\n            case 'A': return make_unique<ConcreteProductA>();\n            case 'B': return make_unique<ConcreteProductB>();\n            default: return nullptr;\n        }\n    }\n};\n\nint main() {\n    auto productA = Factory::create('A');\n    auto productB = Factory::create('B');\n    \n    if (productA) productA->use();\n    if (productB) productB->use();\n    \n    return 0;\n}",
+  "hint": "Factory pattern uses polymorphism to create objects of derived types."
+},
+{
+  id: 'cpp_polymorphism_22',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic observer pattern (event handling).',
+  mathSolution: 'Observers derived from abstract base class can be notified polymorphically.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Observer {\npublic:\n    virtual void update(const string& message) = 0;\n    virtual ~Observer() {}\n};\n\nclass Subject {\nprivate:\n    vector<Observer*> observers;\n    \npublic:\n    void attach(Observer* obs) { observers.push_back(obs); }\n    \n    void notify(const string& message) {\n        for (Observer* obs : observers) {\n            obs->update(message);\n        }\n    }\n};\n\nclass Logger : public Observer {\npublic:\n    void update(const string& message) override {\n        cout << "[LOG] " << message << endl;\n    }\n};\n\nclass UIUpdater : public Observer {\npublic:\n    void update(const string& message) override {\n        cout << "[UI] Refreshing with: " << message << endl;\n    }\n};\n\nclass EmailNotifier : public Observer {\npublic:\n    void update(const string& message) override {\n        cout << "[EMAIL] Sending: " << message << endl;\n    }\n};\n\nint main() {\n    Subject subject;\n    Logger logger;\n    UIUpdater ui;\n    EmailNotifier email;\n    \n    subject.attach(&logger);\n    subject.attach(&ui);\n    subject.attach(&email);\n    \n    subject.notify("Data has been updated!");\n    \n    return 0;\n}',
+  hint: 'Observer pattern uses polymorphism to notify multiple observers.'
+},
+{
+  id: 'cpp_polymorphism_23',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic command pattern.',
+  mathSolution: 'Commands derived from abstract base class can be executed polymorphically.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Command {\npublic:\n    virtual void execute() = 0;\n    virtual void undo() = 0;\n    virtual ~Command() {}\n};\n\nclass Light {\npublic:\n    void on() { cout << "Light is ON" << endl; }\n    void off() { cout << "Light is OFF" << endl; }\n};\n\nclass LightOnCommand : public Command {\nprivate:\n    Light* light;\n    \npublic:\n    LightOnCommand(Light* l) : light(l) {}\n    \n    void execute() override { light->on(); }\n    void undo() override { light->off(); }\n};\n\nclass LightOffCommand : public Command {\nprivate:\n    Light* light;\n    \npublic:\n    LightOffCommand(Light* l) : light(l) {}\n    \n    void execute() override { light->off(); }\n    void undo() override { light->on(); }\n};\n\nclass RemoteControl {\nprivate:\n    vector<unique_ptr<Command>> history;\n    \npublic:\n    void press(unique_ptr<Command> cmd) {\n        cmd->execute();\n        history.push_back(move(cmd));\n    }\n    \n    void undo() {\n        if (!history.empty()) {\n            history.back()->undo();\n            history.pop_back();\n        }\n    }\n};\n\nint main() {\n    Light livingRoom;\n    RemoteControl remote;\n    \n    remote.press(make_unique<LightOnCommand>(&livingRoom));\n    remote.press(make_unique<LightOffCommand>(&livingRoom));\n    remote.undo();\n    \n    return 0;\n}',
+  hint: 'Command pattern uses polymorphism to encapsulate requests.'
+},
+{
+  id: 'cpp_polymorphism_24',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with strategy pattern.',
+  mathSolution: 'Strategy pattern encapsulates algorithms in polymorphic classes.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass PaymentStrategy {\npublic:\n    virtual void pay(double amount) = 0;\n    virtual ~PaymentStrategy() {}\n};\n\nclass CreditCardPayment : public PaymentStrategy {\nprivate:\n    string cardNumber;\n    \npublic:\n    CreditCardPayment(const string& card) : cardNumber(card) {}\n    \n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using Credit Card " << cardNumber << endl;\n    }\n};\n\nclass PayPalPayment : public PaymentStrategy {\nprivate:\n    string email;\n    \npublic:\n    PayPalPayment(const string& email) : email(email) {}\n    \n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using PayPal account " << email << endl;\n    }\n};\n\nclass CryptoPayment : public PaymentStrategy {\nprivate:\n    string walletAddress;\n    \npublic:\n    CryptoPayment(const string& wallet) : walletAddress(wallet) {}\n    \n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using Crypto wallet " << walletAddress << endl;\n    }\n};\n\nclass ShoppingCart {\nprivate:\n    unique_ptr<PaymentStrategy> strategy;\n    double total;\n    \npublic:\n    ShoppingCart() : total(0) {}\n    \n    void addItem(double price) { total += price; }\n    \n    void setPaymentStrategy(unique_ptr<PaymentStrategy> s) {\n        strategy = move(s);\n    }\n    \n    void checkout() {\n        if (strategy) {\n            strategy->pay(total);\n        } else {\n            cout << "No payment method selected" << endl;\n        }\n    }\n};\n\nint main() {\n    ShoppingCart cart;\n    cart.addItem(100);\n    cart.addItem(50);\n    \n    cart.setPaymentStrategy(make_unique<CreditCardPayment>("1234-5678-9012-3456"));\n    cart.checkout();\n    \n    cart.setPaymentStrategy(make_unique<PayPalPayment>("user@example.com"));\n    cart.checkout();\n    \n    return 0;\n}',
+  hint: 'Strategy pattern uses polymorphism to swap algorithms at runtime.'
+},
+{
+  id: 'cpp_polymorphism_25',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic state pattern.',
+  mathSolution: 'State pattern uses polymorphism to change object behavior based on state.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass State {\npublic:\n    virtual void handle() = 0;\n    virtual ~State() {}\n};\n\nclass StateA : public State {\npublic:\n    void handle() override {\n        cout << "Handling in State A" << endl;\n    }\n};\n\nclass StateB : public State {\npublic:\n    void handle() override {\n        cout << "Handling in State B" << endl;\n    }\n};\n\nclass Context {\nprivate:\n    unique_ptr<State> state;\n    \npublic:\n    void setState(unique_ptr<State> s) {\n        state = move(s);\n    }\n    \n    void request() {\n        if (state) {\n            state->handle();\n        }\n    }\n};\n\nint main() {\n    Context context;\n    \n    context.setState(make_unique<StateA>());\n    context.request();\n    \n    context.setState(make_unique<StateB>());\n    context.request();\n    \n    return 0;\n}',
+  hint: 'State pattern uses polymorphism to represent different states.'
+},
+{
+  id: 'cpp_polymorphism_26',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic iterator pattern.',
+  mathSolution: 'Iterators can be polymorphic for different container types.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Iterator {\npublic:\n    virtual void next() = 0;\n    virtual bool done() const = 0;\n    virtual int current() const = 0;\n    virtual ~Iterator() {}\n};\n\ntemplate<typename T>\nclass VectorIterator : public Iterator {\nprivate:\n    const vector<T>& vec;\n    size_t index;\n    \npublic:\n    VectorIterator(const vector<T>& v) : vec(v), index(0) {}\n    \n    void next() override { index++; }\n    bool done() const override { return index >= vec.size(); }\n    int current() const override { return vec[index]; }\n};\n\nclass Container {\nprivate:\n    vector<int> data;\n    \npublic:\n    void add(int val) { data.push_back(val); }\n    \n    unique_ptr<Iterator> createIterator() const {\n        return make_unique<VectorIterator<int>>(data);\n    }\n};\n\nint main() {\n    Container c;\n    c.add(10);\n    c.add(20);\n    c.add(30);\n    \n    auto it = c.createIterator();\n    while (!it->done()) {\n        cout << it->current() << " ";\n        it->next();\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Polymorphic iterators enable iteration over various container types.'
+},
+{
+  id: 'cpp_polymorphism_27',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphism with smart pointers.',
+  mathSolution: 'Smart pointers work correctly with polymorphic types.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\nusing namespace std;\n\nclass Shape {\npublic:\n    virtual void draw() const = 0;\n    virtual ~Shape() {}\n};\n\nclass Circle : public Shape {\npublic:\n    void draw() const override { cout << "Circle "; }\n};\n\nclass Square : public Shape {\npublic:\n    void draw() const override { cout << "Square "; }\n};\n\nclass Triangle : public Shape {\npublic:\n    void draw() const override { cout << "Triangle "; }\n};\n\nint main() {\n    vector<unique_ptr<Shape>> shapes;\n    shapes.push_back(make_unique<Circle>());\n    shapes.push_back(make_unique<Square>());\n    shapes.push_back(make_unique<Triangle>());\n    shapes.push_back(make_unique<Circle>());\n    \n    for (const auto& shape : shapes) {\n        shape->draw();\n    }\n    cout << endl;\n    \n    // shared_ptr works too\n    vector<shared_ptr<Shape>> sharedShapes;\n    sharedShapes.push_back(make_shared<Circle>());\n    sharedShapes.push_back(make_shared<Square>());\n    \n    return 0;\n}',
+  hint: 'Smart pointers manage polymorphic objects correctly with virtual destructors.'
+},
+{
+  id: 'cpp_polymorphism_28',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with std::variant and std::monostate.',
+  mathSolution: 'std::variant with std::visit provides compile-time polymorphism.',
+  codeSolution: '#include <iostream>\n#include <variant>\n#include <vector>\nusing namespace std;\n\nstruct Circle {\n    double radius;\n    string toString() const { return "Circle(r=" + to_string(radius) + ")"; }\n};\n\nstruct Rectangle {\n    double width, height;\n    string toString() const { return "Rect(" + to_string(width) + "x" + to_string(height) + ")"; }\n};\n\nstruct Triangle {\n    double base, height;\n    string toString() const { return "Tri(b=" + to_string(base) + ",h=" + to_string(height) + ")"; }\n};\n\nusing Shape = variant<Circle, Rectangle, Triangle>;\n\nint main() {\n    vector<Shape> shapes;\n    shapes.push_back(Circle{5});\n    shapes.push_back(Rectangle{4, 6});\n    shapes.push_back(Triangle{3, 4});\n    shapes.push_back(Circle{2});\n    \n    auto toString = [](const auto& shape) { return shape.toString(); };\n    \n    for (const auto& shape : shapes) {\n        cout << visit(toString, shape) << endl;\n    }\n    \n    // Area calculation using constexpr if\n    auto area = [](const auto& shape) -> double {\n        using T = decay_t<decltype(shape)>;\n        if constexpr (is_same_v<T, Circle>) {\n            return 3.14159 * shape.radius * shape.radius;\n        } else if constexpr (is_same_v<T, Rectangle>) {\n            return shape.width * shape.height;\n        } else {\n            return 0.5 * shape.base * shape.height;\n        }\n    };\n    \n    cout << "\\nAreas:" << endl;\n    for (const auto& shape : shapes) {\n        cout << visit(area, shape) << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'std::variant provides compile-time polymorphic behavior without virtual functions.'
+},
+{
+  id: 'cpp_polymorphism_29',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic visitor pattern with std::variant.',
+  mathSolution: 'Visitor pattern can be implemented using std::visit and overloaded lambdas.',
+  codeSolution: '#include <iostream>\n#include <variant>\n#include <vector>\nusing namespace std;\n\nstruct Square {\n    double side;\n};\n\nstruct Circle {\n    double radius;\n};\n\nstruct Triangle {\n    double base, height;\n};\n\nusing Shape = variant<Square, Circle, Triangle>;\n\ntemplate<typename... Ts>\nstruct Overloaded : Ts... { using Ts::operator()...; };\n\ntemplate<typename... Ts>\nOverloaded(Ts...) -> Overloaded<Ts...>;\n\nint main() {\n    vector<Shape> shapes;\n    shapes.push_back(Square{5});\n    shapes.push_back(Circle{3});\n    shapes.push_back(Triangle{4, 3});\n    \n    auto areaVisitor = Overloaded{\n        [](const Square& s) { return s.side * s.side; },\n        [](const Circle& c) { return 3.14159 * c.radius * c.radius; },\n        [](const Triangle& t) { return 0.5 * t.base * t.height; }\n    };\n    \n    auto drawVisitor = Overloaded{\n        [](const Square&) { cout << "□"; },\n        [](const Circle&) { cout << "○"; },\n        [](const Triangle&) { cout << "▲"; }\n    };\n    \n    for (const auto& shape : shapes) {\n        visit(drawVisitor, shape);\n        cout << " => Area: " << visit(areaVisitor, shape) << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'std::visit with overloaded lambdas implements visitor pattern.'
+},
+{
+  id: 'cpp_polymorphism_30',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic chain of responsibility pattern.',
+  mathSolution: 'Handlers form a chain to process requests polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Handler {\nprotected:\n    unique_ptr<Handler> next;\n    \npublic:\n    void setNext(unique_ptr<Handler> h) { next = move(h); }\n    \n    virtual void handleRequest(int level) {\n        if (next) next->handleRequest(level);\n    }\n    \n    virtual ~Handler() {}\n};\n\nclass ConcreteHandler1 : public Handler {\npublic:\n    void handleRequest(int level) override {\n        if (level <= 10) {\n            cout << \"Handler1 processed request level \" << level << endl;\n        } else {\n            Handler::handleRequest(level);\n        }\n    }\n};\n\nclass ConcreteHandler2 : public Handler {\npublic:\n    void handleRequest(int level) override {\n        if (level <= 20) {\n            cout << \"Handler2 processed request level \" << level << endl;\n        } else {\n            Handler::handleRequest(level);\n        }\n    }\n};\n\nclass ConcreteHandler3 : public Handler {\npublic:\n    void handleRequest(int level) override {\n        if (level <= 30) {\n            cout << \"Handler3 processed request level \" << level << endl;\n        } else {\n            cout << \"Request level \" << level << \" cannot be processed\" << endl;\n        }\n    }\n};\n\nint main() {\n    auto h1 = make_unique<ConcreteHandler1>();\n    auto h2 = make_unique<ConcreteHandler2>();\n    auto h3 = make_unique<ConcreteHandler3>();\n    \n    h1->setNext(move(h2));\n    h1->setNext(move(h3));\n    \n    h1->handleRequest(5);\n    h1->handleRequest(15);\n    h1->handleRequest(25);\n    h1->handleRequest(35);\n    \n    return 0;\n}',
+  hint: 'Chain of responsibility uses polymorphism to delegate request handling.'
+},
+{
+  id: 'cpp_polymorphism_31',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with std::function for callbacks.',
+  mathSolution: 'std::function provides polymorphic callable objects.',
+  codeSolution: '#include <iostream>\n#include <functional>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Button {\nprivate:\n    vector<function<void()>> clickHandlers;\n    \npublic:\n    void addClickListener(function<void()> handler) {\n        clickHandlers.push_back(handler);\n    }\n    \n    void click() {\n        for (const auto& handler : clickHandlers) {\n            handler();\n        }\n    }\n};\n\nclass Logger {\npublic:\n    void log() { cout << \"Button clicked - logging event\" << endl; }\n    static void staticLog() { cout << \"Static log handler\" << endl; }\n};\n\nint main() {\n    Button btn;\n    \n    // Lambda\n    btn.addClickListener([]() { cout << \"Lambda handler 1\" << endl; });\n    \n    // Another lambda\n    btn.addClickListener([]() { cout << \"Lambda handler 2\" << endl; });\n    \n    // Member function with capture\n    Logger logger;\n    btn.addClickListener([&logger]() { logger.log(); });\n    \n    // Static function\n    btn.addClickListener(Logger::staticLog);\n    \n    // Function pointer\n    auto freeFunction = []() { cout << \"Free function handler\" << endl; };\n    btn.addClickListener(freeFunction);\n    \n    btn.click();\n    \n    return 0;\n}',
+  hint: 'std::function stores any callable object polymorphically.'
+},
+{
+  id: 'cpp_polymorphism_32',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic decorator pattern.',
+  mathSolution: 'Decorator pattern wraps objects to add behavior polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Coffee {\npublic:\n    virtual double cost() const = 0;\n    virtual string description() const = 0;\n    virtual ~Coffee() {}\n};\n\nclass SimpleCoffee : public Coffee {\npublic:\n    double cost() const override { return 5.0; }\n    string description() const override { return \"Simple coffee\"; }\n};\n\nclass CoffeeDecorator : public Coffee {\nprotected:\n    unique_ptr<Coffee> coffee;\n    \npublic:\n    CoffeeDecorator(unique_ptr<Coffee> c) : coffee(move(c)) {}\n};\n\nclass MilkDecorator : public CoffeeDecorator {\npublic:\n    MilkDecorator(unique_ptr<Coffee> c) : CoffeeDecorator(move(c)) {}\n    \n    double cost() const override { return coffee->cost() + 2.0; }\n    string description() const override { return coffee->description() + \", milk\"; }\n};\n\nclass SugarDecorator : public CoffeeDecorator {\npublic:\n    SugarDecorator(unique_ptr<Coffee> c) : CoffeeDecorator(move(c)) {}\n    \n    double cost() const override { return coffee->cost() + 1.0; }\n    string description() const override { return coffee->description() + \", sugar\"; }\n};\n\nclass WhippedCreamDecorator : public CoffeeDecorator {\npublic:\n    WhippedCreamDecorator(unique_ptr<Coffee> c) : CoffeeDecorator(move(c)) {}\n    \n    double cost() const override { return coffee->cost() + 3.0; }\n    string description() const override { return coffee->description() + \", whipped cream\"; }\n};\n\nint main() {\n    auto coffee = make_unique<SimpleCoffee>();\n    coffee = make_unique<MilkDecorator>(move(coffee));\n    coffee = make_unique<SugarDecorator>(move(coffee));\n    coffee = make_unique<WhippedCreamDecorator>(move(coffee));\n    \n    cout << \"Order: \" << coffee->description() << endl;\n    cout << \"Cost: $\" << coffee->cost() << endl;\n    \n    return 0;\n}',
+  hint: 'Decorator pattern uses polymorphism to add responsibilities at runtime.'
+},
+{
+  id: 'cpp_polymorphism_33',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with adapter pattern.',
+  mathSolution: 'Adapter pattern converts interfaces using polymorphic wrappers.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass OldLogger {\npublic:\n    void logMessage(const string& msg) {\n        cout << "[OLD] " << msg << endl;\n    }\n};\n\nclass NewLogger {\npublic:\n    virtual void log(const string& level, const string& msg) = 0;\n    virtual ~NewLogger() {}\n};\n\nclass LoggerAdapter : public NewLogger {\nprivate:\n    unique_ptr<OldLogger> oldLogger;\n    \npublic:\n    LoggerAdapter() : oldLogger(make_unique<OldLogger>()) {}\n    \n    void log(const string& level, const string& msg) override {\n        string formatted = "[" + level + "] " + msg;\n        oldLogger->logMessage(formatted);\n    }\n};\n\nclass Application {\nprivate:\n    unique_ptr<NewLogger> logger;\n    \npublic:\n    Application(unique_ptr<NewLogger> l) : logger(move(l)) {}\n    \n    void run() {\n        logger->log("INFO", "Application started");\n        logger->log("DEBUG", "Processing data");\n        logger->log("ERROR", "Something went wrong");\n    }\n};\n\nint main() {\n    auto adapter = make_unique<LoggerAdapter>();\n    Application app(move(adapter));\n    app.run();\n    \n    return 0;\n}',
+  hint: 'Adapter pattern uses polymorphism to bridge incompatible interfaces.'
+},
+{
+  id: 'cpp_polymorphism_34',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic proxy pattern.',
+  mathSolution: 'Proxy pattern controls access to objects using polymorphic interface.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Image {\npublic:\n    virtual void display() = 0;\n    virtual ~Image() {}\n};\n\nclass RealImage : public Image {\nprivate:\n    string filename;\n    \n    void loadFromDisk() {\n        cout << \"Loading image: \" << filename << endl;\n    }\n    \npublic:\n    RealImage(const string& file) : filename(file) {\n        loadFromDisk();\n    }\n    \n    void display() override {\n        cout << \"Displaying image: \" << filename << endl;\n    }\n};\n\nclass ImageProxy : public Image {\nprivate:\n    string filename;\n    unique_ptr<RealImage> realImage;\n    \npublic:\n    ImageProxy(const string& file) : filename(file) {}\n    \n    void display() override {\n        if (!realImage) {\n            realImage = make_unique<RealImage>(filename);\n        }\n        realImage->display();\n    }\n};\n\nint main() {\n    ImageProxy proxy(\"photo.jpg\");\n    \n    cout << \"Proxy created, image not loaded yet\" << endl;\n    cout << \"First display request:\" << endl;\n    proxy.display();\n    \n    cout << \"\\nSecond display request:\" << endl;\n    proxy.display();\n    \n    return 0;\n}',
+  hint: 'Proxy pattern uses polymorphism for lazy initialization and access control.'
+},
+{
+  id: 'cpp_polymorphism_35',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic composite pattern.',
+  mathSolution: 'Composite pattern treats individual objects and compositions uniformly.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Graphic {\npublic:\n    virtual void draw() const = 0;\n    virtual ~Graphic() {}\n};\n\nclass Circle : public Graphic {\npublic:\n    void draw() const override { cout << \"O \"; }\n};\n\nclass Square : public Graphic {\npublic:\n    void draw() const override { cout << \"□ \"; }\n};\n\nclass CompositeGraphic : public Graphic {\nprivate:\n    vector<unique_ptr<Graphic>> children;\n    \npublic:\n    void add(unique_ptr<Graphic> graphic) {\n        children.push_back(move(graphic));\n    }\n    \n    void draw() const override {\n        for (const auto& child : children) {\n            child->draw();\n        }\n    }\n};\n\nint main() {\n    auto circle1 = make_unique<Circle>();\n    auto circle2 = make_unique<Circle>();\n    auto square1 = make_unique<Square>();\n    \n    auto composite1 = make_unique<CompositeGraphic>();\n    composite1->add(move(circle1));\n    composite1->add(move(square1));\n    \n    auto composite2 = make_unique<CompositeGraphic>();\n    composite2->add(move(circle2));\n    composite2->add(move(composite1));\n    \n    cout << \"Drawing composite2: \";\n    composite2->draw();\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Composite pattern uses polymorphism to create tree structures of objects.'
+},
+{
+  "id": "cpp_polymorphism_36",
+  "topicId": "cpp_polymorphism",
+  "question": "Use polymorphic flyweight pattern.",
+  "mathSolution": "Flyweight pattern shares common state among many objects.",
+  "codeSolution": "#include <iostream>\n#include <unordered_map>\n#include <memory>\n#include <string>\nusing namespace std;\n\nclass Character {\npublic:\n    virtual void display(int x, int y) const = 0;\n    virtual ~Character() {}\n};\n\nclass ConcreteCharacter : public Character {\nprivate:\n    char symbol;\n    string font;\n    int size;\n    \npublic:\n    ConcreteCharacter(char c, const string& f, int s) \n        : symbol(c), font(f), size(s) {}\n    \n    void display(int x, int y) const override {\n        cout << \"Character '\" << symbol << \"' at (\" << x << \",\" << y \n             << \") font: \" << font << \", size: \" << size << endl;\n    }\n};\n\nclass CharacterFactory {\nprivate:\n    unordered_map<string, shared_ptr<Character>> characters;\n    \n    string getKey(char c, const string& font, int size) {\n        return string(1, c) + font + to_string(size);\n    }\n    \npublic:\n    shared_ptr<Character> getCharacter(char c, const string& font, int size) {\n        string key = getKey(c, font, size);\n        if (characters.find(key) == characters.end()) {\n            characters[key] = make_shared<ConcreteCharacter>(c, font, size);\n            cout << \"Creating new character: \" << key << endl;\n        }\n        return characters[key];\n    }\n    \n    size_t getCacheSize() const {\n        return characters.size();\n    }\n};\n\nint main() {\n    CharacterFactory factory;\n    \n    // Create document: \"Hello\"\n    auto h = factory.getCharacter('H', \"Arial\", 12);\n    auto e1 = factory.getCharacter('e', \"Arial\", 12);\n    auto l1 = factory.getCharacter('l', \"Arial\", 12);\n    auto l2 = factory.getCharacter('l', \"Arial\", 12);\n    auto o = factory.getCharacter('o', \"Arial\", 12);\n    \n    h->display(0, 0);\n    e1->display(10, 0);\n    l1->display(20, 0);\n    l2->display(30, 0);\n    o->display(40, 0);\n    \n    cout << \"\\nTotal unique characters cached: \" << factory.getCacheSize() << endl;\n    \n    return 0;\n}",
+  "hint": "Flyweight pattern uses polymorphism to share immutable state."
+},
+{
+  id: 'cpp_polymorphism_37',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic bridge pattern.',
+  mathSolution: 'Bridge pattern separates abstraction from implementation using polymorphism.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass DrawingAPI {\npublic:\n    virtual void drawCircle(double x, double y, double radius) = 0;\n    virtual ~DrawingAPI() {}\n};\n\nclass DrawingAPI1 : public DrawingAPI {\npublic:\n    void drawCircle(double x, double y, double radius) override {\n        cout << \"API1.circle at (\" << x << \",\" << y << \") radius \" << radius << endl;\n    }\n};\n\nclass DrawingAPI2 : public DrawingAPI {\npublic:\n    void drawCircle(double x, double y, double radius) override {\n        cout << \"API2.circle at (\" << x << \",\" << y << \") radius \" << radius << endl;\n    }\n};\n\nclass Shape {\nprotected:\n    unique_ptr<DrawingAPI> drawingAPI;\n    \npublic:\n    Shape(unique_ptr<DrawingAPI> api) : drawingAPI(move(api)) {}\n    virtual void draw() = 0;\n    virtual ~Shape() {}\n};\n\nclass CircleShape : public Shape {\nprivate:\n    double x, y, radius;\n    \npublic:\n    CircleShape(double cx, double cy, double r, unique_ptr<DrawingAPI> api)\n        : Shape(move(api)), x(cx), y(cy), radius(r) {}\n    \n    void draw() override {\n        drawingAPI->drawCircle(x, y, radius);\n    }\n};\n\nint main() {\n    CircleShape circle1(1, 2, 3, make_unique<DrawingAPI1>());\n    CircleShape circle2(4, 5, 6, make_unique<DrawingAPI2>());\n    \n    circle1.draw();\n    circle2.draw();\n    \n    return 0;\n}',
+  hint: 'Bridge pattern decouples abstraction from implementation using polymorphism.'
+},
+{
+  id: 'cpp_polymorphism_38',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic mediator pattern.',
+  mathSolution: 'Mediator pattern centralizes communication between objects.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\nusing namespace std;\n\nclass Colleague;\n\nclass Mediator {\npublic:\n    virtual void notify(Colleague* sender, const string& event) = 0;\n    virtual ~Mediator() {}\n};\n\nclass Colleague {\nprotected:\n    Mediator* mediator;\n    \npublic:\n    Colleague(Mediator* m) : mediator(m) {}\n    virtual ~Colleague() {}\n};\n\nclass ConcreteMediator : public Mediator {\nprivate:\n    vector<Colleague*> colleagues;\n    \npublic:\n    void addColleague(Colleague* c) {\n        colleagues.push_back(c);\n    }\n    \n    void notify(Colleague* sender, const string& event) override {\n        for (Colleague* c : colleagues) {\n            if (c != sender) {\n                cout << \"Mediator forwarding to another colleague: \" << event << endl;\n            }\n        }\n    }\n};\n\nclass Component1 : public Colleague {\npublic:\n    Component1(Mediator* m) : Colleague(m) {}\n    \n    void doSomething() {\n        cout << \"Component1 does something\" << endl;\n        mediator->notify(this, \"Component1 event\");\n    }\n};\n\nclass Component2 : public Colleague {\npublic:\n    Component2(Mediator* m) : Colleague(m) {}\n    \n    void doSomethingElse() {\n        cout << \"Component2 does something else\" << endl;\n        mediator->notify(this, \"Component2 event\");\n    }\n};\n\nint main() {\n    ConcreteMediator mediator;\n    Component1 comp1(&mediator);\n    Component2 comp2(&mediator);\n    \n    mediator.addColleague(&comp1);\n    mediator.addColleague(&comp2);\n    \n    comp1.doSomething();\n    comp2.doSomethingElse();\n    \n    return 0;\n}',
+  hint: 'Mediator pattern uses polymorphism to decouple interacting objects.'
+},
+{
+  id: 'cpp_polymorphism_39',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic memento pattern.',
+  mathSolution: 'Memento pattern captures and restores object state.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\nusing namespace std;\n\nclass Memento {\nprivate:\n    string state;\n    \npublic:\n    Memento(const string& s) : state(s) {}\n    string getState() const { return state; }\n};\n\nclass Originator {\nprivate:\n    string state;\n    \npublic:\n    void setState(const string& s) {\n        state = s;\n        cout << \"State set to: \" << state << endl;\n    }\n    \n    string getState() const { return state; }\n    \n    unique_ptr<Memento> createMemento() {\n        return make_unique<Memento>(state);\n    }\n    \n    void restoreMemento(unique_ptr<Memento> m) {\n        state = m->getState();\n        cout << \"State restored to: \" << state << endl;\n    }\n};\n\nclass Caretaker {\nprivate:\n    vector<unique_ptr<Memento>> mementos;\n    \npublic:\n    void addMemento(unique_ptr<Memento> m) {\n        mementos.push_back(move(m));\n    }\n    \n    unique_ptr<Memento> getMemento(int index) {\n        if (index >= 0 && index < mementos.size()) {\n            return move(mementos[index]);\n        }\n        return nullptr;\n    }\n};\n\nint main() {\n    Originator originator;\n    Caretaker caretaker;\n    \n    originator.setState(\"State 1\");\n    caretaker.addMemento(originator.createMemento());\n    \n    originator.setState(\"State 2\");\n    caretaker.addMemento(originator.createMemento());\n    \n    originator.setState(\"State 3\");\n    \n    originator.restoreMemento(caretaker.getMemento(0));\n    \n    return 0;\n}',
+  hint: 'Memento pattern uses polymorphism to capture and restore object state.'
+},
+{
+  id: 'cpp_polymorphism_40',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphic visitor pattern with double dispatch.',
+  mathSolution: 'Visitor pattern enables adding new operations without modifying classes.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Circle;\nclass Rectangle;\nclass Triangle;\n\nclass Visitor {\npublic:\n    virtual void visit(Circle& c) = 0;\n    virtual void visit(Rectangle& r) = 0;\n    virtual void visit(Triangle& t) = 0;\n    virtual ~Visitor() {}\n};\n\nclass Shape {\npublic:\n    virtual void accept(Visitor& v) = 0;\n    virtual ~Shape() {}\n};\n\nclass Circle : public Shape {\nprivate:\n    double radius;\n    \npublic:\n    Circle(double r) : radius(r) {}\n    double getRadius() const { return radius; }\n    void accept(Visitor& v) override { v.visit(*this); }\n};\n\nclass Rectangle : public Shape {\nprivate:\n    double width, height;\n    \npublic:\n    Rectangle(double w, double h) : width(w), height(h) {}\n    double getWidth() const { return width; }\n    double getHeight() const { return height; }\n    void accept(Visitor& v) override { v.visit(*this); }\n};\n\nclass Triangle : public Shape {\nprivate:\n    double base, height;\n    \npublic:\n    Triangle(double b, double h) : base(b), height(h) {}\n    double getBase() const { return base; }\n    double getHeight() const { return height; }\n    void accept(Visitor& v) override { v.visit(*this); }\n};\n\nclass AreaVisitor : public Visitor {\npublic:\n    void visit(Circle& c) override {\n        cout << \"Circle area: \" << 3.14159 * c.getRadius() * c.getRadius() << endl;\n    }\n    \n    void visit(Rectangle& r) override {\n        cout << \"Rectangle area: \" << r.getWidth() * r.getHeight() << endl;\n    }\n    \n    void visit(Triangle& t) override {\n        cout << \"Triangle area: \" << 0.5 * t.getBase() * t.getHeight() << endl;\n    }\n};\n\nclass DrawVisitor : public Visitor {\npublic:\n    void visit(Circle& c) override { cout << \"Drawing Circle\" << endl; }\n    void visit(Rectangle& r) override { cout << \"Drawing Rectangle\" << endl; }\n    void visit(Triangle& t) override { cout << \"Drawing Triangle\" << endl; }\n};\n\nint main() {\n    Circle circle(5);\n    Rectangle rect(4, 6);\n    Triangle tri(3, 4);\n    \n    AreaVisitor areaCalc;\n    DrawVisitor drawer;\n    \n    Shape* shapes[] = {&circle, &rect, &tri};\n    \n    for (Shape* s : shapes) {\n        s->accept(areaCalc);\n        s->accept(drawer);\n    }\n    \n    return 0;\n}',
+  hint: 'Visitor pattern uses double dispatch through polymorphism.'
+},
+{
+  id: 'cpp_polymorphism_41',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with std::chrono for timing different operations.',
+  mathSolution: 'Polymorphic timing can be applied to different operations.',
+  codeSolution: '#include <iostream>\n#include <chrono>\n#include <memory>\n#include <vector>\nusing namespace std;\nusing namespace std::chrono;\n\nclass Operation {\npublic:\n    virtual void execute() = 0;\n    virtual ~Operation() {}\n};\n\nclass FastOperation : public Operation {\npublic:\n    void execute() override {\n        volatile int x = 0;\n        for (int i = 0; i < 1000000; i++) x++;\n    }\n};\n\nclass SlowOperation : public Operation {\npublic:\n    void execute() override {\n        volatile double x = 0;\n        for (int i = 0; i < 5000000; i++) x += 0.000001;\n    }\n};\n\nclass Timer {\npublic:\n    template<typename Func>\n    static long long measure(Func f) {\n        auto start = high_resolution_clock::now();\n        f();\n        auto end = high_resolution_clock::now();\n        return duration_cast<microseconds>(end - start).count();\n    }\n};\n\nint main() {\n    vector<unique_ptr<Operation>> ops;\n    ops.push_back(make_unique<FastOperation>());\n    ops.push_back(make_unique<SlowOperation>());\n    \n    for (const auto& op : ops) {\n        auto duration = Timer::measure([&op]() { op->execute(); });\n        cout << \"Operation took \" << duration << \" microseconds\" << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'Polymorphism enables measuring different operations uniformly.'
+},
+{
+  id: 'cpp_polymorphism_42',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphism in logging framework.',
+  mathSolution: 'Different loggers can be used polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <fstream>\n#include <ctime>\nusing namespace std;\n\nclass Logger {\npublic:\n    virtual void log(const string& message) = 0;\n    virtual ~Logger() {}\n};\n\nclass ConsoleLogger : public Logger {\npublic:\n    void log(const string& message) override {\n        cout << \"[CONSOLE] \" << message << endl;\n    }\n};\n\nclass FileLogger : public Logger {\nprivate:\n    ofstream file;\n    \npublic:\n    FileLogger(const string& filename) : file(filename, ios::app) {}\n    \n    void log(const string& message) override {\n        if (file.is_open()) {\n            time_t now = time(nullptr);\n            file << \"[FILE] \" << ctime(&now) << \" - \" << message << endl;\n        }\n    }\n};\n\nclass TimestampLogger : public Logger {\nprivate:\n    unique_ptr<Logger> logger;\n    \npublic:\n    TimestampLogger(unique_ptr<Logger> log) : logger(move(log)) {}\n    \n    void log(const string& message) override {\n        time_t now = time(nullptr);\n        string timestamp = ctime(&now);\n        timestamp.pop_back();  // Remove newline\n        logger->log(timestamp + \": \" + message);\n    }\n};\n\nint main() {\n    auto console = make_unique<ConsoleLogger>();\n    auto timestampConsole = make_unique<TimestampLogger>(move(console));\n    \n    timestampConsole->log(\"Application started\");\n    timestampConsole->log(\"Processing data\");\n    timestampConsole->log(\"Application finished\");\n    \n    return 0;\n}',
+  hint: 'Polymorphic logging allows flexible output destinations.'
+},
+{
+  id: 'cpp_polymorphism_43',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with database abstraction layer.',
+  mathSolution: 'Database engines can be swapped polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass DatabaseConnection {\npublic:\n    virtual void connect() = 0;\n    virtual void query(const string& sql) = 0;\n    virtual void disconnect() = 0;\n    virtual ~DatabaseConnection() {}\n};\n\nclass MySQLConnection : public DatabaseConnection {\npublic:\n    void connect() override { cout << \"Connecting to MySQL database\" << endl; }\n    void query(const string& sql) override { cout << \"MySQL executing: \" << sql << endl; }\n    void disconnect() override { cout << \"Disconnecting from MySQL\" << endl; }\n};\n\nclass PostgreSQLConnection : public DatabaseConnection {\npublic:\n    void connect() override { cout << \"Connecting to PostgreSQL database\" << endl; }\n    void query(const string& sql) override { cout << \"PostgreSQL executing: \" << sql << endl; }\n    void disconnect() override { cout << \"Disconnecting from PostgreSQL\" << endl; }\n};\n\nclass Database {\nprivate:\n    unique_ptr<DatabaseConnection> connection;\n    \npublic:\n    Database(unique_ptr<DatabaseConnection> conn) : connection(move(conn)) {}\n    \n    void execute(const string& sql) {\n        connection->connect();\n        connection->query(sql);\n        connection->disconnect();\n    }\n};\n\nint main() {\n    Database db1(make_unique<MySQLConnection>());\n    Database db2(make_unique<PostgreSQLConnection>());\n    \n    db1.execute(\"SELECT * FROM users\");\n    db2.execute(\"SELECT * FROM products\");\n    \n    return 0;\n}',
+  hint: 'Database abstraction layer uses polymorphism for database independence.'
+},
+{
+  "id": "cpp_polymorphism_44",
+  "topicId": "cpp_polymorphism",
+  "question": "Demonstrate polymorphic serialization.",
+  "mathSolution": "Different types can be serialized polymorphically.",
+  "codeSolution": "#include <iostream>\n#include <memory>\n#include <vector>\n#include <string>\nusing namespace std;\n\nclass Serializable {\npublic:\n    virtual void serialize(ostream& os) const = 0;\n    virtual ~Serializable() {}\n};\n\nclass Person : public Serializable {\nprivate:\n    string name;\n    int age;\n    \npublic:\n    Person(const string& n, int a) : name(n), age(a) {}\n    \n    void serialize(ostream& os) const override {\n        os << \"Person{name='\" << name << \"',age=\" << age << \"}\";\n    }\n};\n\nclass Product : public Serializable {\nprivate:\n    string title;\n    double price;\n    \npublic:\n    Product(const string& t, double p) : title(t), price(p) {}\n    \n    void serialize(ostream& os) const override {\n        os << \"Product{title='\" << title << \"',price=\" << price << \"}\";\n    }\n};\n\nclass Serializer {\npublic:\n    static void serializeAll(const vector<unique_ptr<Serializable>>& items, ostream& os) {\n        os << \"[\";\n        for (size_t i = 0; i < items.size(); i++) {\n            items[i]->serialize(os);\n            if (i < items.size() - 1) os << \",\";\n        }\n        os << \"]\" << endl;\n    }\n};\n\nint main() {\n    vector<unique_ptr<Serializable>> items;\n    items.push_back(make_unique<Person>(\"Alice\", 30));\n    items.push_back(make_unique<Product>(\"Laptop\", 999.99));\n    items.push_back(make_unique<Person>(\"Bob\", 25));\n    \n    Serializer::serializeAll(items, cout);\n    \n    return 0;\n}",
+  "hint": "Polymorphic serialization enables uniform handling of different types."
+},
+{
+  id: 'cpp_polymorphism_45',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with caching mechanism.',
+  mathSolution: 'Different caching strategies can be used polymorphically.',
+  codeSolution: '#include <iostream>\n#include <unordered_map>\n#include <memory>\n#include <ctime>\nusing namespace std;\n\nclass CacheStrategy {\npublic:\n    virtual void store(const string& key, const string& value) = 0;\n    virtual string retrieve(const string& key) = 0;\n    virtual ~CacheStrategy() {}\n};\n\nclass LRUCache : public CacheStrategy {\nprivate:\n    unordered_map<string, pair<string, time_t>> cache;\n    size_t capacity;\n    \npublic:\n    LRUCache(size_t cap) : capacity(cap) {}\n    \n    void store(const string& key, const string& value) override {\n        cache[key] = {value, time(nullptr)};\n        cout << \"LRU: Stored \" << key << endl;\n    }\n    \n    string retrieve(const string& key) override {\n        if (cache.find(key) != cache.end()) {\n            cache[key].second = time(nullptr);\n            cout << \"LRU: Cache hit for \" << key << endl;\n            return cache[key].first;\n        }\n        cout << \"LRU: Cache miss for \" << key << endl;\n        return \"\";\n    }\n};\n\nclass TTLCache : public CacheStrategy {\nprivate:\n    unordered_map<string, pair<string, time_t>> cache;\n    int ttlSeconds;\n    \npublic:\n    TTLCache(int ttl) : ttlSeconds(ttl) {}\n    \n    void store(const string& key, const string& value) override {\n        cache[key] = {value, time(nullptr)};\n        cout << \"TTL: Stored \" << key << endl;\n    }\n    \n    string retrieve(const string& key) override {\n        if (cache.find(key) != cache.end()) {\n            if (time(nullptr) - cache[key].second < ttlSeconds) {\n                cout << \"TTL: Cache hit for \" << key << endl;\n                return cache[key].first;\n            } else {\n                cache.erase(key);\n                cout << \"TTL: Cache expired for \" << key << endl;\n            }\n        }\n        cout << \"TTL: Cache miss for \" << key << endl;\n        return \"\";\n    }\n};\n\nint main() {\n    unique_ptr<CacheStrategy> cache1 = make_unique<LRUCache>(10);\n    unique_ptr<CacheStrategy> cache2 = make_unique<TTLCache>(60);\n    \n    cache1->store(\"key1\", \"value1\");\n    cache1->retrieve(\"key1\");\n    \n    cache2->store(\"key2\", \"value2\");\n    cache2->retrieve(\"key2\");\n    \n    return 0;\n}',
+  hint: 'Polymorphic caching enables swapping cache strategies at runtime.'
+},
+{
+  id: 'cpp_polymorphism_46',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic resource management (RAII).',
+  mathSolution: 'RAII wrappers can manage different resource types.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Resource {\npublic:\n    virtual void use() = 0;\n    virtual ~Resource() {}\n};\n\nclass FileResource : public Resource {\nprivate:\n    string filename;\n    \npublic:\n    FileResource(const string& f) : filename(f) {\n        cout << \"Opening file: \" << filename << endl;\n    }\n    \n    void use() override {\n        cout << \"Using file: \" << filename << endl;\n    }\n    \n    ~FileResource() {\n        cout << \"Closing file: \" << filename << endl;\n    }\n};\n\nclass NetworkResource : public Resource {\nprivate:\n    string url;\n    \npublic:\n    NetworkResource(const string& u) : url(u) {\n        cout << \"Connecting to: \" << url << endl;\n    }\n    \n    void use() override {\n        cout << \"Using network connection: \" << url << endl;\n    }\n    \n    ~NetworkResource() {\n        cout << \"Disconnecting from: \" << url << endl;\n    }\n};\n\nclass ResourceManager {\nprivate:\n    unique_ptr<Resource> resource;\n    \npublic:\n    template<typename T, typename... Args>\n    void acquire(Args&&... args) {\n        resource = make_unique<T>(forward<Args>(args)...);\n    }\n    \n    void use() {\n        if (resource) resource->use();\n    }\n};\n\nint main() {\n    ResourceManager manager;\n    \n    manager.acquire<FileResource>(\"data.txt\");\n    manager.use();\n    \n    manager.acquire<NetworkResource>(\"https://api.example.com\");\n    manager.use();\n    \n    return 0;\n}',
+  hint: 'Polymorphic RAII manages different resources automatically.'
+},
+{
+  id: 'cpp_polymorphism_47',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with mathematical operations.',
+  mathSolution: 'Different mathematical expressions can be evaluated polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <cmath>\nusing namespace std;\n\nclass Expression {\npublic:\n    virtual double evaluate() const = 0;\n    virtual ~Expression() {}\n};\n\nclass Constant : public Expression {\nprivate:\n    double value;\n    \npublic:\n    Constant(double v) : value(v) {}\n    double evaluate() const override { return value; }\n};\n\nclass Addition : public Expression {\nprivate:\n    unique_ptr<Expression> left;\n    unique_ptr<Expression> right;\n    \npublic:\n    Addition(unique_ptr<Expression> l, unique_ptr<Expression> r)\n        : left(move(l)), right(move(r)) {}\n    \n    double evaluate() const override {\n        return left->evaluate() + right->evaluate();\n    }\n};\n\nclass Multiplication : public Expression {\nprivate:\n    unique_ptr<Expression> left;\n    unique_ptr<Expression> right;\n    \npublic:\n    Multiplication(unique_ptr<Expression> l, unique_ptr<Expression> r)\n        : left(move(l)), right(move(r)) {}\n    \n    double evaluate() const override {\n        return left->evaluate() * right->evaluate();\n    }\n};\n\nclass Power : public Expression {\nprivate:\n    unique_ptr<Expression> base;\n    unique_ptr<Expression> exponent;\n    \npublic:\n    Power(unique_ptr<Expression> b, unique_ptr<Expression> e)\n        : base(move(b)), exponent(move(e)) {}\n    \n    double evaluate() const override {\n        return pow(base->evaluate(), exponent->evaluate());\n    }\n};\n\nint main() {\n    // Expression: (5 + 3) * 2^2\n    auto expr = make_unique<Multiplication>(\n        make_unique<Addition>(make_unique<Constant>(5), make_unique<Constant>(3)),\n        make_unique<Power>(make_unique<Constant>(2), make_unique<Constant>(2))\n    );\n    \n    cout << \"Result: \" << expr->evaluate() << endl;\n    \n    return 0;\n}',
+  hint: 'Expression trees use polymorphism for mathematical evaluation.'
+},
+{
+  id: 'cpp_polymorphism_48',
+  topicId: 'cpp_polymorphism',
+  question: 'Demonstrate polymorphic input validation.',
+  mathSolution: 'Different validation rules can be applied polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\n#include <regex>\nusing namespace std;\n\nclass Validator {\npublic:\n    virtual bool validate(const string& input) = 0;\n    virtual string getErrorMessage() const = 0;\n    virtual ~Validator() {}\n};\n\nclass RequiredValidator : public Validator {\npublic:\n    bool validate(const string& input) override {\n        return !input.empty();\n    }\n    \n    string getErrorMessage() const override {\n        return \"Field is required\";\n    }\n};\n\nclass MinLengthValidator : public Validator {\nprivate:\n    size_t minLength;\n    \npublic:\n    MinLengthValidator(size_t min) : minLength(min) {}\n    \n    bool validate(const string& input) override {\n        return input.length() >= minLength;\n    }\n    \n    string getErrorMessage() const override {\n        return \"Minimum length is \" + to_string(minLength);\n    }\n};\n\nclass EmailValidator : public Validator {\npublic:\n    bool validate(const string& input) override {\n        regex pattern(R\"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$)\");\n        return regex_match(input, pattern);\n    }\n    \n    string getErrorMessage() const override {\n        return \"Invalid email format\";\n    }\n};\n\nclass ValidationChain : public Validator {\nprivate:\n    vector<unique_ptr<Validator>> validators;\n    \npublic:\n    void addValidator(unique_ptr<Validator> v) {\n        validators.push_back(move(v));\n    }\n    \n    bool validate(const string& input) override {\n        for (const auto& v : validators) {\n            if (!v->validate(input)) {\n                errorMessage = v->getErrorMessage();\n                return false;\n            }\n        }\n        return true;\n    }\n    \n    string getErrorMessage() const override {\n        return errorMessage;\n    }\n    \nprivate:\n    mutable string errorMessage;\n};\n\nint main() {\n    ValidationChain validator;\n    validator.addValidator(make_unique<RequiredValidator>());\n    validator.addValidator(make_unique<MinLengthValidator>(5));\n    validator.addValidator(make_unique<EmailValidator>());\n    \n    string testEmail = \"user@example.com\";\n    if (validator.validate(testEmail)) {\n        cout << \"Valid email!\" << endl;\n    } else {\n        cout << \"Invalid: \" << validator.getErrorMessage() << endl;\n    }\n    \n    testEmail = \"invalid\";\n    if (validator.validate(testEmail)) {\n        cout << \"Valid email!\" << endl;\n    } else {\n        cout << \"Invalid: \" << validator.getErrorMessage() << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'Polymorphic validation enables composable validation rules.'
+},
+{
+  id: 'cpp_polymorphism_49',
+  topicId: 'cpp_polymorphism',
+  question: 'Use polymorphism with geometric calculations.',
+  mathSolution: 'Different shapes can be processed polymorphically.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\n#include <cmath>\nusing namespace std;\n\nclass Shape2D {\npublic:\n    virtual double area() const = 0;\n    virtual double perimeter() const = 0;\n    virtual string name() const = 0;\n    virtual ~Shape2D() {}\n};\n\nclass Circle2D : public Shape2D {\nprivate:\n    double radius;\n    \npublic:\n    Circle2D(double r) : radius(r) {}\n    double area() const override { return M_PI * radius * radius; }\n    double perimeter() const override { return 2 * M_PI * radius; }\n    string name() const override { return \"Circle\"; }\n};\n\nclass Square2D : public Shape2D {\nprivate:\n    double side;\n    \npublic:\n    Square2D(double s) : side(s) {}\n    double area() const override { return side * side; }\n    double perimeter() const override { return 4 * side; }\n    string name() const override { return \"Square\"; }\n};\n\nclass Rectangle2D : public Shape2D {\nprivate:\n    double width, height;\n    \npublic:\n    Rectangle2D(double w, double h) : width(w), height(h) {}\n    double area() const override { return width * height; }\n    double perimeter() const override { return 2 * (width + height); }\n    string name() const override { return \"Rectangle\"; }\n};\n\nclass GeometryProcessor {\npublic:\n    static void printStats(const vector<unique_ptr<Shape2D>>& shapes) {\n        double totalArea = 0;\n        double totalPerimeter = 0;\n        \n        for (const auto& shape : shapes) {\n            cout << shape->name() << \": Area = \" << shape->area() \n                 << \", Perimeter = \" << shape->perimeter() << endl;\n            totalArea += shape->area();\n            totalPerimeter += shape->perimeter();\n        }\n        \n        cout << \"Total Area: \" << totalArea << endl;\n        cout << \"Total Perimeter: \" << totalPerimeter << endl;\n    }\n};\n\nint main() {\n    vector<unique_ptr<Shape2D>> shapes;\n    shapes.push_back(make_unique<Circle2D>(5));\n    shapes.push_back(make_unique<Square2D>(4));\n    shapes.push_back(make_unique<Rectangle2D>(3, 6));\n    shapes.push_back(make_unique<Circle2D>(3));\n    \n    GeometryProcessor::printStats(shapes);\n    \n    return 0;\n}',
+  hint: 'Geometric calculations use polymorphism for different shape types.'
+},
+{
+  id: 'cpp_polymorphism_50',
+  topicId: 'cpp_polymorphism',
+  question: 'Create comprehensive polymorphism demonstration program.',
+  mathSolution: 'Combine compile-time and runtime polymorphism in one example.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\n#include <functional>\n#include <variant>\nusing namespace std;\n\n// Runtime polymorphism\nclass Animal {\npublic:\n    virtual string speak() const = 0;\n    virtual ~Animal() {}\n};\n\nclass Dog : public Animal {\npublic:\n    string speak() const override { return "Woof!"; }\n};\n\nclass Cat : public Animal {\npublic:\n    string speak() const override { return "Meow!"; }\n};\n\n// Compile-time polymorphism (templates)\ntemplate<typename T>\nT max(T a, T b) {\n    return (a > b) ? a : b;\n}\n\n// Function overloading (compile-time)\nvoid print(int x) { cout << "Int: " << x << endl; }\nvoid print(double x) { cout << "Double: " << x << endl; }\nvoid print(const string& x) { cout << "String: " << x << endl; }\n\n// Operator overloading (compile-time)\nclass Complex {\n    double r, i;\npublic:\n    Complex(double a, double b) : r(a), i(b) {}\n    Complex operator+(const Complex& other) { return Complex(r + other.r, i + other.i); }\n    void print() const { cout << r << "+" << i << "i" << endl; }\n};\n\nint main() {\n    cout << "=== Polymorphism Demonstration ===\\n\\n";\n    \n    // 1. Runtime polymorphism (virtual functions)\n    cout << "1. Runtime Polymorphism:\\n";\n    vector<unique_ptr<Animal>> animals;\n    animals.push_back(make_unique<Dog>());\n    animals.push_back(make_unique<Cat>());\n    animals.push_back(make_unique<Dog>());\n    \n    for (const auto& a : animals) {\n        cout << "  " << a->speak() << endl;\n    }\n    \n    // 2. Compile-time polymorphism (templates)\n    cout << "\\n2. Compile-time Polymorphism (Templates):\\n";\n    cout << "  max(5, 3): " << max(5, 3) << endl;\n    cout << "  max(5.5, 3.2): " << max(5.5, 3.2) << endl;\n    \n    // 3. Function overloading\n    cout << "\\n3. Function Overloading:\\n";\n    print(42);\n    print(3.14);\n    print("Hello");\n    \n    // 4. Operator overloading\n    cout << "\\n4. Operator Overloading:\\n";\n    Complex c1(3, 4), c2(1, 2);\n    Complex c3 = c1 + c2;\n    cout << "  "; c3.print();\n    \n    // 5. std::function (polymorphic callable)\n    cout << "\\n5. std::function Polymorphism:\\n";\n    vector<function<int(int, int)>> operations;\n    operations.push_back([](int a, int b) { return a + b; });\n    operations.push_back([](int a, int b) { return a - b; });\n    operations.push_back([](int a, int b) { return a * b; });\n    \n    int a = 10, b = 5;\n    for (const auto& op : operations) {\n        cout << "  Result: " << op(a, b) << endl;\n    }\n    \n    // 6. std::variant (compile-time polymorphism)\n    cout << "\\n6. std::variant Polymorphism:\\n";\n    variant<int, double, string> data;\n    data = 42;\n    cout << "  Int: " << get<int>(data) << endl;\n    data = 3.14;\n    cout << "  Double: " << get<double>(data) << endl;\n    data = "Hello";\n    cout << "  String: " << get<string>(data) << endl;\n    \n    cout << "\\n=== End of Demonstration ===\\n";\n    \n    return 0;\n}',
+  hint: 'Comprehensive demonstration of multiple polymorphism types in C++.'
+}
 );

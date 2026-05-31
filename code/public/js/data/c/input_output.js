@@ -1,825 +1,411 @@
 QuizData.questions.push(
-  // ============ LEVEL 1: BASIC PRINTF (1-10) ============
+  // ========== BASIC printf OUTPUT (1-5) ==========
   {
     id: 'c_io_1',
     topicId: 'c_input_output',
-    question: 'Write a printf statement to print an integer variable x with value 10.',
-    mathSolution: 'Display integer value 10',
-    codeSolution: 'printf("%d", x);',
-    hint: 'Use %d format specifier for integers'
+    question: 'Write a program to print "Hello, World!" using printf.',
+    mathSolution: 'Basic output using printf',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}',
+    hint: 'Use printf("text");'
   },
   {
     id: 'c_io_2',
     topicId: 'c_input_output',
-    question: 'Write code to print a float variable pi with value 3.14159 showing 2 decimal places.',
-    mathSolution: 'Display pi with 2 decimal digits: 3.14',
-    codeSolution: 'printf("%.2f", pi);',
-    hint: 'Use %.2f to limit decimal places'
+    question: 'Write a program to print your name using printf.',
+    mathSolution: 'String output',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    printf("John Doe\\n");\n    return 0;\n}',
+    hint: 'Place your name inside quotes'
   },
   {
     id: 'c_io_3',
     topicId: 'c_input_output',
-    question: 'Write a printf statement to print a character variable ch with value A.',
-    mathSolution: 'Display character A',
-    codeSolution: 'printf("%c", ch);',
-    hint: 'Use %c format specifier for characters'
+    question: 'Write a program to print numbers 1 to 5 on same line with spaces.',
+    mathSolution: 'Print multiple numbers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    printf("1 2 3 4 5\\n");\n    return 0;\n}',
+    hint: 'Use spaces between numbers'
   },
   {
     id: 'c_io_4',
     topicId: 'c_input_output',
-    question: 'Write code to print a string "Hello" using printf.',
-    mathSolution: 'Display the word Hello',
-    codeSolution: 'printf("%s", "Hello");',
-    hint: 'Use %s for strings'
+    question: 'Write a program to print pattern:\n*\n**\n***',
+    mathSolution: 'Print pattern using escape sequences',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    printf("*\\n**\\n***\\n");\n    return 0;\n}',
+    hint: 'Use \\n for new line'
   },
   {
     id: 'c_io_5',
     topicId: 'c_input_output',
-    question: 'Write a printf to print the address of variable x in hexadecimal.',
-    mathSolution: 'Display memory address in hex format',
-    codeSolution: 'printf("%p", (void*)&x);',
-    hint: 'Use %p format specifier for pointers'
+    question: 'Write a program to print integer 100 and float 3.14 using format specifiers.',
+    mathSolution: 'Format specifiers %d and %f',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    printf("Integer: %d\\n", 100);\n    printf("Float: %.2f\\n", 3.14);\n    return 0;\n}',
+    hint: 'Use %d for integers, %f for floats'
   },
+
+  // ========== SINGLE INPUT USING scanf (6-15) ==========
   {
     id: 'c_io_6',
     topicId: 'c_input_output',
-    question: 'Write code to print an integer in octal format. Number is 64.',
-    mathSolution: 'Convert 64 to octal = 100',
-    codeSolution: 'printf("%o", 64);',
-    hint: 'Use %o for octal representation'
+    question: 'Write a program to take one integer input from user and print it.',
+    mathSolution: 'Read and print integer',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    printf("You entered: %d\\n", num);\n    return 0;\n}',
+    hint: 'Use scanf("%d", &variable);'
   },
   {
     id: 'c_io_7',
     topicId: 'c_input_output',
-    question: 'Write code to print an integer 255 in hexadecimal format.',
-    mathSolution: 'Convert 255 to hexadecimal = FF',
-    codeSolution: 'printf("%X", 255);',
-    hint: 'Use %X for uppercase hexadecimal'
+    question: 'Write a program to take one float input and print it with 2 decimal places.',
+    mathSolution: 'Read and print float',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    float num;\n    printf("Enter a decimal number: ");\n    scanf("%f", &num);\n    printf("You entered: %.2f\\n", num);\n    return 0;\n}',
+    hint: 'Use %f for float, %.2f for 2 decimal places'
   },
   {
     id: 'c_io_8',
     topicId: 'c_input_output',
-    question: 'Write a printf to print an integer with width 5, right aligned. Value is 42.',
-    mathSolution: 'Print "   42" with 3 spaces before 42',
-    codeSolution: 'printf("%5d", 42);',
-    hint: 'Use %5d to specify minimum width'
+    question: 'Write a program to take one character input and print its ASCII value.',
+    mathSolution: 'Character and ASCII',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char ch;\n    printf("Enter a character: ");\n    scanf("%c", &ch);\n    printf("ASCII value of %c is %d\\n", ch, ch);\n    return 0;\n}',
+    hint: 'Use %c for char, %d prints ASCII value'
   },
   {
     id: 'c_io_9',
     topicId: 'c_input_output',
-    question: 'Write code to print an integer with width 5, left aligned. Value is 42.',
-    mathSolution: 'Print "42   " with 3 spaces after 42',
-    codeSolution: 'printf("%-5d", 42);',
-    hint: 'Use %-5d for left alignment'
+    question: 'Write a program to take one integer input and print its square.',
+    mathSolution: 'Calculate square',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    printf("Square of %d is %d\\n", num, num * num);\n    return 0;\n}',
+    hint: 'Square = num * num'
   },
   {
     id: 'c_io_10',
     topicId: 'c_input_output',
-    question: 'Write a printf to print a float with total width 8 and 2 decimal places. Value is 123.456.',
-    mathSolution: 'Print "  123.46" with 2 spaces before',
-    codeSolution: 'printf("%8.2f", 123.456);',
-    hint: 'Format: %width.precisionf'
+    question: 'Write a program to take one integer input and check if it is even or odd.',
+    mathSolution: 'Even-odd check',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    if(num % 2 == 0)\n        printf("%d is even\\n", num);\n    else\n        printf("%d is odd\\n", num);\n    return 0;\n}',
+    hint: 'Use modulo operator %'
   },
-
-  // ============ LEVEL 2: BASIC SCANF (11-20) ============
   {
     id: 'c_io_11',
     topicId: 'c_input_output',
-    question: 'Write scanf to read an integer into variable x.',
-    mathSolution: 'Read integer from user input',
-    codeSolution: 'scanf("%d", &x);',
-    hint: 'Don\'t forget the & operator'
+    question: 'Write a program to take one integer input and print its multiplication table up to 10.',
+    mathSolution: 'Multiplication table',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    for(int i = 1; i <= 10; i++) {\n        printf("%d x %d = %d\\n", num, i, num * i);\n    }\n    return 0;\n}',
+    hint: 'Use loop from 1 to 10'
   },
   {
     id: 'c_io_12',
     topicId: 'c_input_output',
-    question: 'Write code to read a float into variable f using scanf.',
-    mathSolution: 'Read floating-point number',
-    codeSolution: 'scanf("%f", &f);',
-    hint: 'Use %f for float'
+    question: 'Write a program to take one integer input and print whether it is positive, negative, or zero.',
+    mathSolution: 'Sign check',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    if(num > 0)\n        printf("Positive\\n");\n    else if(num < 0)\n        printf("Negative\\n");\n    else\n        printf("Zero\\n");\n    return 0;\n}',
+    hint: 'Use if-else if-else ladder'
   },
   {
     id: 'c_io_13',
     topicId: 'c_input_output',
-    question: 'Write scanf to read a character into variable ch.',
-    mathSolution: 'Read a single character',
-    codeSolution: 'scanf("%c", &ch);',
-    hint: 'Use %c for character input'
+    question: 'Write a program to take one integer input and print its factorial.',
+    mathSolution: 'Calculate factorial with validation',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num, fact = 1;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    if(num < 0) {\n        printf("Invalid input\\n");\n        return 0;\n    }\n    for(int i = 1; i <= num; i++) {\n        fact *= i;\n    }\n    printf("Factorial of %d is %d\\n", num, fact);\n    return 0;\n}',
+    hint: 'Factorial is not defined for negative numbers'
   },
   {
     id: 'c_io_14',
     topicId: 'c_input_output',
-    question: 'Write code to read a string into array str of size 50.',
-    mathSolution: 'Read a word (no spaces)',
-    codeSolution: 'scanf("%s", str);',
-    hint: 'String arrays don\'t need &'
+    question: 'Write a program to take one integer input and print sum of digits.',
+    mathSolution: 'Sum of digits (handle negative)',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int num, sum = 0, digit;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    int temp = abs(num);\n    while(temp > 0) {\n        digit = temp % 10;\n        sum += digit;\n        temp /= 10;\n    }\n    printf("Sum of digits of %d is %d\\n", num, sum);\n    return 0;\n}',
+    hint: 'Use abs() for negative numbers'
   },
   {
     id: 'c_io_15',
     topicId: 'c_input_output',
-    question: 'Write scanf to read two integers separated by space into a and b.',
-    mathSolution: 'Read values like: 10 20',
-    codeSolution: 'scanf("%d %d", &a, &b);',
-    hint: 'Use multiple format specifiers'
+    question: 'Write a program to take one integer input and print its reverse.',
+    mathSolution: 'Reverse number (handle negative)',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int num, reverse = 0, digit;\n    printf("Enter a number: ");\n    scanf("%d", &num);\n    int temp = abs(num);\n    while(temp > 0) {\n        digit = temp % 10;\n        reverse = reverse * 10 + digit;\n        temp /= 10;\n    }\n    if(num < 0) reverse = -reverse;\n    printf("Reverse of %d is %d\\n", num, reverse);\n    return 0;\n}',
+    hint: 'Handle negative numbers using abs()'
   },
+
+  // ========== TWO INPUTS (16-35) - MULTIPLE PROMPTS ==========
   {
     id: 'c_io_16',
     topicId: 'c_input_output',
-    question: 'Write code to read an integer and a float in one scanf statement.',
-    mathSolution: 'Read input like: 45 3.14',
-    codeSolution: 'scanf("%d %f", &i, &f);',
-    hint: 'Combine different format specifiers'
+    question: 'Write a program to take two integers as input and print their sum.',
+    mathSolution: 'Sum of two numbers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Sum = %d\\n", a + b);\n    return 0;\n}',
+    hint: 'Use separate prompts for each input'
   },
   {
     id: 'c_io_17',
     topicId: 'c_input_output',
-    question: 'Write scanf to read a string with spaces using gets() alternative.',
-    mathSolution: 'Read entire line including spaces',
-    codeSolution: 'scanf("%[^\\n]", str);',
-    hint: 'Use %[^\\n] to read until newline'
+    question: 'Write a program to take two integers as input and print their product.',
+    mathSolution: 'Product of two numbers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Product = %d\\n", a * b);\n    return 0;\n}',
+    hint: 'Multiply a and b'
   },
   {
     id: 'c_io_18',
     topicId: 'c_input_output',
-    question: 'Write code to read a hexadecimal number into variable hex.',
-    mathSolution: 'Read hex like FF or 1A',
-    codeSolution: 'scanf("%x", &hex);',
-    hint: 'Use %x for hexadecimal input'
+    question: 'Write a program to take two integers and print the larger one.',
+    mathSolution: 'Find maximum',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    if(a > b)\n        printf("Larger = %d\\n", a);\n    else\n        printf("Larger = %d\\n", b);\n    return 0;\n}',
+    hint: 'Compare using if-else'
   },
   {
     id: 'c_io_19',
     topicId: 'c_input_output',
-    question: 'Write scanf to read an octal number into variable oct.',
-    mathSolution: 'Read octal like 17 or 777',
-    codeSolution: 'scanf("%o", &oct);',
-    hint: 'Use %o for octal input'
+    question: 'Write a program to take two integers and swap them.',
+    mathSolution: 'Swap two numbers using temporary variable',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b, temp;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Before swap: a=%d, b=%d\\n", a, b);\n    temp = a;\n    a = b;\n    b = temp;\n    printf("After swap: a=%d, b=%d\\n", a, b);\n    return 0;\n}',
+    hint: 'Use third variable temp'
   },
   {
     id: 'c_io_20',
     topicId: 'c_input_output',
-    question: 'Write code to read a double variable d using scanf.',
-    mathSolution: 'Read double precision number',
-    codeSolution: 'scanf("%lf", &d);',
-    hint: 'Use %lf for double (long float)'
+    question: 'Write a program to take two integers and print their average as float.',
+    mathSolution: 'Average with type casting',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    float avg = (float)(a + b) / 2;\n    printf("Average = %.2f\\n", avg);\n    return 0;\n}',
+    hint: 'Cast sum to float before division'
   },
-
-  // ============ LEVEL 3: CHARACTER I/O (21-25) ============
   {
     id: 'c_io_21',
     topicId: 'c_input_output',
-    question: 'Write code to read a character using getchar() and store in c.',
-    mathSolution: 'Get single character from input',
-    codeSolution: 'int c = getchar();',
-    hint: 'getchar() returns int, not char'
+    question: 'Write a program to take two integers and print their division result as float.',
+    mathSolution: 'Division with zero check',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter dividend: ");\n    scanf("%d", &a);\n    printf("Enter divisor: ");\n    scanf("%d", &b);\n    if(b == 0) {\n        printf("Division by zero error\\n");\n        return 0;\n    }\n    float result = (float)a / b;\n    printf("%d / %d = %.2f\\n", a, b, result);\n    return 0;\n}',
+    hint: 'Check if divisor is zero'
   },
   {
     id: 'c_io_22',
     topicId: 'c_input_output',
-    question: 'Write code to print character A using putchar().',
-    mathSolution: 'Output character A',
-    codeSolution: "putchar('A');",
-    hint: 'putchar() outputs a single character'
+    question: 'Write a program to take two integers and print their remainder (modulus).',
+    mathSolution: 'Modulus operator',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Remainder = %d\\n", a % b);\n    return 0;\n}',
+    hint: 'Use % operator'
   },
   {
     id: 'c_io_23',
     topicId: 'c_input_output',
-    question: 'Write a loop using getchar() to read characters until EOF.',
-    mathSolution: 'Read all input until end of file',
-    codeSolution: 'while((c = getchar()) != EOF) { }',
-    hint: 'EOF is end of file marker'
+    question: 'Write a program to take two integers and check if first is divisible by second.',
+    mathSolution: 'Divisibility check',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    if(a % b == 0)\n        printf("%d is divisible by %d\\n", a, b);\n    else\n        printf("%d is not divisible by %d\\n", a, b);\n    return 0;\n}',
+    hint: 'Check if remainder is zero'
   },
   {
     id: 'c_io_24',
     topicId: 'c_input_output',
-    question: 'Write code to print all characters from A to Z using putchar().',
-    mathSolution: 'Output ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    codeSolution: "for(char c = 'A'; c <= 'Z'; c++) putchar(c);",
-    hint: 'Characters can be incremented'
+    question: 'Write a program to take two integers and print all numbers between them.',
+    mathSolution: 'Print range correctly',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    if(a > b) {\n        int temp = a;\n        a = b;\n        b = temp;\n    }\n    printf("Numbers between %d and %d: ", a, b);\n    for(int i = a + 1; i < b; i++) {\n        printf("%d ", i);\n    }\n    printf("\\n");\n    return 0;\n}',
+    hint: 'Swap if a > b'
   },
   {
     id: 'c_io_25',
     topicId: 'c_input_output',
-    question: 'Write code to read a line using getchar() until newline.',
-    mathSolution: 'Read characters until \\n is encountered',
-    codeSolution: "while((c = getchar()) != '\\n') { }",
-    hint: 'Check for newline character'
+    question: 'Write a program to take two integers and calculate power (first^second).',
+    mathSolution: 'Power calculation',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int base, exp, result = 1;\n    printf("Enter base: ");\n    scanf("%d", &base);\n    printf("Enter exponent: ");\n    scanf("%d", &exp);\n    for(int i = 1; i <= exp; i++) {\n        result *= base;\n    }\n    printf("%d^%d = %d\\n", base, exp, result);\n    return 0;\n}',
+    hint: 'Multiply base exponent times'
   },
-
-  // ============ LEVEL 4: STRING I/O (26-30) ============
   {
     id: 'c_io_26',
     topicId: 'c_input_output',
-    question: 'Write code to print string "Hello World" using puts().',
-    mathSolution: 'Output Hello World with newline',
-    codeSolution: 'puts("Hello World");',
-    hint: 'puts() automatically adds newline'
+    question: 'Write a program to take two integers and calculate GCD (HCF).',
+    mathSolution: 'Euclidean algorithm with abs',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int x = abs(a), y = abs(b);\n    while(y != 0) {\n        int temp = y;\n        y = x % y;\n        x = temp;\n    }\n    printf("GCD of %d and %d is %d\\n", a, b, x);\n    return 0;\n}',
+    hint: 'Use abs() for safety'
   },
   {
     id: 'c_io_27',
     topicId: 'c_input_output',
-    question: 'Write code to read a string using gets() (though unsafe).',
-    mathSolution: 'Read a line of text',
-    codeSolution: 'gets(str);',
-    hint: 'gets() is deprecated but shows concept'
+    question: 'Write a program to take two integers and calculate LCM.',
+    mathSolution: 'LCM using GCD safely',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int x = abs(a), y = abs(b);\n    while(y != 0) {\n        int temp = y;\n        y = x % y;\n        x = temp;\n    }\n    int lcm = abs(a * b) / x;\n    printf("LCM of %d and %d is %d\\n", a, b, lcm);\n    return 0;\n}',
+    hint: 'Use abs() and GCD'
   },
   {
     id: 'c_io_28',
     topicId: 'c_input_output',
-    question: 'Write safe alternative to gets() using fgets().',
-    mathSolution: 'Read line with buffer limit',
-    codeSolution: 'fgets(str, sizeof(str), stdin);',
-    hint: 'fgets() limits buffer size'
+    question: 'Write a program to take two integers and check if they are equal.',
+    mathSolution: 'Equality check',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    if(a == b)\n        printf("Numbers are equal\\n");\n    else\n        printf("Numbers are not equal\\n");\n    return 0;\n}',
+    hint: 'Use == operator'
   },
   {
     id: 'c_io_29',
     topicId: 'c_input_output',
-    question: 'Write printf to print integer with leading zeros, width 5. Value 42.',
-    mathSolution: 'Print 00042',
-    codeSolution: 'printf("%05d", 42);',
-    hint: 'Use 0 flag for zero padding'
+    question: 'Write a program to take name (string) and age (int) as input and print them.',
+    mathSolution: 'String input with spaces',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char name[50];\n    int age;\n    printf("Enter name: ");\n    fgets(name, sizeof(name), stdin);\n    printf("Enter age: ");\n    scanf("%d", &age);\n    printf("Name: %sAge: %d\\n", name, age);\n    return 0;\n}',
+    hint: 'Use fgets() for full name input'
   },
   {
     id: 'c_io_30',
     topicId: 'c_input_output',
-    question: 'Write code to print a float with sign always shown. Value 3.14.',
-    mathSolution: 'Print +3.14',
-    codeSolution: 'printf("%+f", 3.14);',
-    hint: 'Use + flag to show sign'
+    question: 'Write a program to take two integers and print if their sum is even or odd.',
+    mathSolution: 'Even-odd of sum',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int sum = a + b;\n    if(sum % 2 == 0)\n        printf("Sum is even\\n");\n    else\n        printf("Sum is odd\\n");\n    return 0;\n}',
+    hint: 'Calculate sum then check modulo'
   },
-
-  // ============ LEVEL 5: FORMAT FLAGS (31-40) ============
   {
     id: 'c_io_31',
     topicId: 'c_input_output',
-    question: 'Write printf to print integer with space for positive values. Value 42.',
-    mathSolution: 'Print " 42" with a leading space',
-    codeSolution: 'printf("% d", 42);',
-    hint: 'Space flag leaves space for missing sign'
+    question: 'Write a program to take two integers and find the distance between them (absolute difference).',
+    mathSolution: 'Absolute difference',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int diff = abs(a - b);\n    printf("Distance between %d and %d is %d\\n", a, b, diff);\n    return 0;\n}',
+    hint: 'Use abs() function from stdlib.h'
   },
   {
     id: 'c_io_32',
     topicId: 'c_input_output',
-    question: 'Write code to print octal with 0 prefix. Value 64.',
-    mathSolution: 'Print 0100 (octal with prefix)',
-    codeSolution: 'printf("%#o", 64);',
-    hint: 'Use # flag for alternate form'
+    question: 'Write a program to take two integers and print the smaller one.',
+    mathSolution: 'Find minimum',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int min = (a < b) ? a : b;\n    printf("Smaller = %d\\n", min);\n    return 0;\n}',
+    hint: 'Use ternary operator ? :'
   },
   {
     id: 'c_io_33',
     topicId: 'c_input_output',
-    question: 'Write printf to print hex with 0x prefix. Value 255.',
-    mathSolution: 'Print 0xFF',
-    codeSolution: 'printf("%#X", 255);',
-    hint: '# adds 0x for hex'
+    question: 'Write a program to take two integers and count numbers divisible by 3 in that range.',
+    mathSolution: 'Count divisible numbers in range',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b, count = 0;\n    printf("Enter start number: ");\n    scanf("%d", &a);\n    printf("Enter end number: ");\n    scanf("%d", &b);\n    for(int i = a; i <= b; i++) {\n        if(i % 3 == 0) count++;\n    }\n    printf("Numbers divisible by 3 between %d and %d: %d\\n", a, b, count);\n    return 0;\n}',
+    hint: 'Loop from a to b and check divisibility'
   },
   {
     id: 'c_io_34',
     topicId: 'c_input_output',
-    question: 'Write code to print pointer address in hex with padding.',
-    mathSolution: 'Display pointer with width 12',
-    codeSolution: 'printf("%12p", (void*)ptr);',
-    hint: 'Width can be applied to pointers'
+    question: 'Write a program to take two integers and check if they are co-prime (GCD=1).',
+    mathSolution: 'Co-prime with abs',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int a, b;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    int x = abs(a), y = abs(b);\n    while(y != 0) {\n        int temp = y;\n        y = x % y;\n        x = temp;\n    }\n    if(x == 1)\n        printf("%d and %d are co-prime\\n", a, b);\n    else\n        printf("%d and %d are not co-prime\\n", a, b);\n    return 0;\n}',
+    hint: 'Check GCD == 1'
   },
   {
-    id: 'c_io_35',
-    topicId: 'c_input_output',
-    question: 'Write printf to print scientific notation of 123.456.',
-    mathSolution: 'Print 1.234560e+02',
-    codeSolution: 'printf("%e", 123.456);',
-    hint: 'Use %e for scientific notation'
-  },
+  id: 'c_io_35',
+  topicId: 'c_input_output',
+  question: 'Write a program to take side of a square as input and calculate its area and perimeter.',
+  mathSolution: 'Area = side × side, Perimeter = 4 × side',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    float side, area, perimeter;\n    printf("Enter side of square: ");\n    scanf("%f", &side);\n    area = side * side;\n    perimeter = 4 * side;\n    printf("Area of square = %.2f\\n", area);\n    printf("Perimeter of square = %.2f\\n", perimeter);\n    return 0;\n}',
+  hint: 'Area = side², Perimeter = 4 × side'
+},
+
+  // ========== THREE OR MORE INPUTS (36-45) ==========
   {
     id: 'c_io_36',
     topicId: 'c_input_output',
-    question: 'Write code to print in shortest representation: %g for 123.456.',
-    mathSolution: 'Print 123.456 (not scientific if shorter)',
-    codeSolution: 'printf("%g", 123.456);',
-    hint: '%g chooses %f or %e automatically'
+    question: 'Write a program to take three integers and print their sum and average.',
+    mathSolution: 'Sum and average of three numbers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Enter third number: ");\n    scanf("%d", &c);\n    int sum = a + b + c;\n    float avg = sum / 3.0;\n    printf("Sum = %d\\n", sum);\n    printf("Average = %.2f\\n", avg);\n    return 0;\n}',
+    hint: 'Sum all three, divide by 3 for average'
   },
   {
     id: 'c_io_37',
     topicId: 'c_input_output',
-    question: 'Write code to read 3 integers in one line and store in a,b,c.',
-    mathSolution: 'Read values like: 1 2 3',
-    codeSolution: 'scanf("%d %d %d", &a, &b, &c);',
-    hint: 'Separate with spaces in format string'
+    question: 'Write a program to take three integers and find the largest among them.',
+    mathSolution: 'Maximum of three numbers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b, c, max;\n    printf("Enter first number: ");\n    scanf("%d", &a);\n    printf("Enter second number: ");\n    scanf("%d", &b);\n    printf("Enter third number: ");\n    scanf("%d", &c);\n    max = a;\n    if(b > max) max = b;\n    if(c > max) max = c;\n    printf("Largest number = %d\\n", max);\n    return 0;\n}',
+    hint: 'Compare sequentially'
   },
   {
     id: 'c_io_38',
     topicId: 'c_input_output',
-    question: 'Write printf to print a table row: num, square, cube for 5.',
-    mathSolution: 'Print: 5 25 125',
-    codeSolution: 'printf("%d\\t%d\\t%d", num, num*num, num*num*num);',
-    hint: 'Use \\t for tab alignment'
+    question: 'Write a program to take three sides of triangle and check if it forms a valid triangle.',
+    mathSolution: 'Triangle validity check (sum of two sides > third side)',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int a, b, c;\n    printf("Enter first side: ");\n    scanf("%d", &a);\n    printf("Enter second side: ");\n    scanf("%d", &b);\n    printf("Enter third side: ");\n    scanf("%d", &c);\n    if((a + b > c) && (a + c > b) && (b + c > a))\n        printf("Valid triangle\\n");\n    else\n        printf("Invalid triangle\\n");\n    return 0;\n}',
+    hint: 'Sum of any two sides must be greater than third'
   },
   {
-    id: 'c_io_39',
-    topicId: 'c_input_output',
-    question: 'Write code to read comma-separated values: 10,20,30.',
-    mathSolution: 'Parse numbers separated by commas',
-    codeSolution: 'scanf("%d,%d,%d", &a, &b, &c);',
-    hint: 'Include commas in format string'
-  },
+  id: 'c_io_39',
+  topicId: 'c_input_output',
+  question: 'Write a program to take length and breadth of a rectangle as input and calculate its area and perimeter.',
+  mathSolution: 'Area = length × breadth, Perimeter = 2 × (length + breadth)',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    float l, b, area, perimeter;\n    printf("Enter length: ");\n    scanf("%f", &l);\n    printf("Enter breadth: ");\n    scanf("%f", &b);\n    area = l * b;\n    perimeter = 2 * (l + b);\n    printf("Area of rectangle = %.2f\\n", area);\n    printf("Perimeter of rectangle = %.2f\\n", perimeter);\n    return 0;\n}',
+  hint: 'Area = l × b, Perimeter = 2 × (l + b)'
+},
   {
     id: 'c_io_40',
     topicId: 'c_input_output',
-    question: 'Write printf with escape sequences to print "Hello" in quotes.',
-    mathSolution: 'Print: "Hello"',
-    codeSolution: 'printf("\\"Hello\\"");',
-    hint: 'Use \\" to print double quotes'
+    question: 'Write a program to take marks of 5 subjects and calculate percentage.',
+    mathSolution: 'Percentage calculation',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int marks[5], sum = 0;\n    for(int i = 0; i < 5; i++) {\n        printf("Enter marks for subject %d: ", i+1);\n        scanf("%d", &marks[i]);\n        sum += marks[i];\n    }\n    float percentage = sum / 5.0;\n    printf("Total = %d\\n", sum);\n    printf("Percentage = %.2f%%\\n", percentage);\n    return 0;\n}',
+    hint: 'Loop through 5 subjects for input'
   },
-
-  // ============ LEVEL 6: RETURN VALUES & VALIDATION (41-45) ============
   {
     id: 'c_io_41',
     topicId: 'c_input_output',
-    question: 'Write code to check if scanf successfully read an integer.',
-    mathSolution: 'Check return value of scanf',
-    codeSolution: 'if(scanf("%d", &x) == 1) { success }',
-    hint: 'scanf returns number of successful conversions'
+    question: 'Write a program to take N (size) and N integers, then print their sum and average.',
+    mathSolution: 'Dynamic array sum and average',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int n, sum = 0;\n    printf("Enter number of elements: ");\n    scanf("%d", &n);\n    int arr[n];\n    for(int i = 0; i < n; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n        sum += arr[i];\n    }\n    printf("Sum = %d\\n", sum);\n    printf("Average = %.2f\\n", (float)sum / n);\n    return 0;\n}',
+    hint: 'First ask N, then loop N times for inputs'
   },
   {
     id: 'c_io_42',
     topicId: 'c_input_output',
-    question: 'Write code to count characters printed by printf.',
-    mathSolution: 'Get number of characters output',
-    codeSolution: 'int count = printf("Hello");',
-    hint: 'printf returns number of characters printed'
+    question: 'Write a program to take N and N integers, then find maximum and minimum.',
+    mathSolution: 'Find max and min from array',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int n, max, min;\n    printf("Enter number of elements: ");\n    scanf("%d", &n);\n    int arr[n];\n    for(int i = 0; i < n; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n    }\n    max = min = arr[0];\n    for(int i = 1; i < n; i++) {\n        if(arr[i] > max) max = arr[i];\n        if(arr[i] < min) min = arr[i];\n    }\n    printf("Maximum = %d\\n", max);\n    printf("Minimum = %d\\n", min);\n    return 0;\n}',
+    hint: 'Initialize max/min with first element'
   },
   {
     id: 'c_io_43',
     topicId: 'c_input_output',
-    question: 'Write code to read until 2 valid integers are entered.',
-    mathSolution: 'Continue reading until 2 numbers received',
-    codeSolution: 'while(scanf("%d %d", &a, &b) != 2) { clear input }',
-    hint: 'Check return value in loop'
+    question: 'Write a program to take a 3x3 matrix (9 inputs) and print it in matrix format.',
+    mathSolution: '2D array input and output',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int mat[3][3];\n    for(int i = 0; i < 3; i++) {\n        for(int j = 0; j < 3; j++) {\n            printf("Enter mat[%d][%d]: ", i, j);\n            scanf("%d", &mat[i][j]);\n        }\n    }\n    printf("\\nMatrix:\\n");\n    for(int i = 0; i < 3; i++) {\n        for(int j = 0; j < 3; j++) {\n            printf("%d ", mat[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}',
+    hint: 'Nested loops for 2D array input'
   },
   {
     id: 'c_io_44',
     topicId: 'c_input_output',
-    question: 'Write code to open a file "data.txt" for reading.',
-    mathSolution: 'Open file in read mode',
-    codeSolution: 'FILE *fp = fopen("data.txt", "r");',
-    hint: 'Use "r" for read mode'
+    question: 'Write a program to take 5 integers and print them in reverse order.',
+    mathSolution: 'Array reversal',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[5];\n    for(int i = 0; i < 5; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n    }\n    printf("Reverse order: ");\n    for(int i = 4; i >= 0; i--) {\n        printf("%d ", arr[i]);\n    }\n    printf("\\n");\n    return 0;\n}',
+    hint: 'Loop from last index to first'
   },
   {
     id: 'c_io_45',
     topicId: 'c_input_output',
-    question: 'Write code to open a file "output.txt" for writing.',
-    mathSolution: 'Open file in write mode',
-    codeSolution: 'FILE *fp = fopen("output.txt", "w");',
-    hint: 'Use "w" for write mode'
+    question: 'Write a program to take two 2x2 matrices (8 inputs) and print their sum.',
+    mathSolution: 'Matrix addition',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int A[2][2], B[2][2], C[2][2];\n    printf("Enter first 2x2 matrix:\\n");\n    for(int i = 0; i < 2; i++) {\n        for(int j = 0; j < 2; j++) {\n            printf("A[%d][%d]: ", i, j);\n            scanf("%d", &A[i][j]);\n        }\n    }\n    printf("Enter second 2x2 matrix:\\n");\n    for(int i = 0; i < 2; i++) {\n        for(int j = 0; j < 2; j++) {\n            printf("B[%d][%d]: ", i, j);\n            scanf("%d", &B[i][j]);\n            C[i][j] = A[i][j] + B[i][j];\n        }\n    }\n    printf("\\nSum Matrix:\\n");\n    for(int i = 0; i < 2; i++) {\n        for(int j = 0; j < 2; j++) {\n            printf("%d ", C[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}',
+    hint: 'Add corresponding elements of both matrices'
   },
 
-  // ============ LEVEL 7: FILE I/O BASICS (46-55) ============
+  // ========== ADVANCED MULTIPLE INPUTS (46-50) ==========
   {
     id: 'c_io_46',
     topicId: 'c_input_output',
-    question: 'Write fprintf to write integer 100 to file fp.',
-    mathSolution: 'Write to file instead of console',
-    codeSolution: 'fprintf(fp, "%d", 100);',
-    hint: 'fprintf takes FILE* as first argument'
+    question: 'Write a program to take N and N integers, then print only even numbers.',
+    mathSolution: 'Filter even numbers from array',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int n;\n    printf("Enter number of elements: ");\n    scanf("%d", &n);\n    int arr[n];\n    for(int i = 0; i < n; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n    }\n    printf("Even numbers: ");\n    for(int i = 0; i < n; i++) {\n        if(arr[i] % 2 == 0) {\n            printf("%d ", arr[i]);\n        }\n    }\n    printf("\\n");\n    return 0;\n}',
+    hint: 'Check arr[i] % 2 == 0 for even numbers'
   },
   {
     id: 'c_io_47',
     topicId: 'c_input_output',
-    question: 'Write fscanf to read integer from file fp into variable x.',
-    mathSolution: 'Read integer from file',
-    codeSolution: 'fscanf(fp, "%d", &x);',
-    hint: 'fscanf works like scanf but from file'
+    question: 'Write a program to take N and N integers, then sort them in ascending order.',
+    mathSolution: 'Bubble sort',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int n, temp;\n    printf("Enter number of elements: ");\n    scanf("%d", &n);\n    int arr[n];\n    for(int i = 0; i < n; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n    }\n    for(int i = 0; i < n-1; i++) {\n        for(int j = 0; j < n-i-1; j++) {\n            if(arr[j] > arr[j+1]) {\n                temp = arr[j];\n                arr[j] = arr[j+1];\n                arr[j+1] = temp;\n            }\n        }\n    }\n    printf("Sorted array: ");\n    for(int i = 0; i < n; i++) {\n        printf("%d ", arr[i]);\n    }\n    printf("\\n");\n    return 0;\n}',
+    hint: 'Use nested loops for bubble sort'
   },
   {
     id: 'c_io_48',
     topicId: 'c_input_output',
-    question: 'Write code to close a file pointer fp.',
-    mathSolution: 'Close opened file',
-    codeSolution: 'fclose(fp);',
-    hint: 'Always close files after use'
+    question: 'Write a program to take student records: N, then for each student name and marks (2 inputs each).',
+    mathSolution: 'Struct-like multiple records',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int n;\n    printf("Enter number of students: ");\n    scanf("%d", &n);\n    char names[n][50];\n    int marks[n];\n    for(int i = 0; i < n; i++) {\n        printf("Student %d name: ", i+1);\n        scanf("%s", names[i]);\n        printf("Student %d marks: ", i+1);\n        scanf("%d", &marks[i]);\n    }\n    printf("\\nStudent Records:\\n");\n    for(int i = 0; i < n; i++) {\n        printf("%s: %d\\n", names[i], marks[i]);\n    }\n    return 0;\n}',
+    hint: 'Store names in 2D array, marks in 1D array'
   },
   {
     id: 'c_io_49',
     topicId: 'c_input_output',
-    question: 'Write code to check if file opened successfully.',
-    mathSolution: 'Verify file pointer is not NULL',
-    codeSolution: 'if(fp == NULL) { error }',
-    hint: 'fopen returns NULL on failure'
+    question: 'Write a program to take 10 integers and count how many are positive, negative, and zero.',
+    mathSolution: 'Count positive, negative, zero',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int arr[10], pos = 0, neg = 0, zero = 0;\n    for(int i = 0; i < 10; i++) {\n        printf("Enter number %d: ", i+1);\n        scanf("%d", &arr[i]);\n        if(arr[i] > 0) pos++;\n        else if(arr[i] < 0) neg++;\n        else zero++;\n    }\n    printf("Positive: %d\\n", pos);\n    printf("Negative: %d\\n", neg);\n    printf("Zero: %d\\n", zero);\n    return 0;\n}',
+    hint: 'Use counters for each category'
   },
   {
     id: 'c_io_50',
     topicId: 'c_input_output',
-    question: 'Write fgetc() to read character from file fp.',
-    mathSolution: 'Get next character from file',
-    codeSolution: 'int ch = fgetc(fp);',
-    hint: 'fgetc returns int for EOF detection'
-  },
-  {
-    id: 'c_io_51',
-    topicId: 'c_input_output',
-    question: 'Write fputc() to write character A to file fp.',
-    mathSolution: 'Write single character to file',
-    codeSolution: "fputc('A', fp);",
-    hint: 'fputc(char, FILE*)'
-  },
-  {
-    id: 'c_io_52',
-    topicId: 'c_input_output',
-    question: 'Write code to copy file contents character by character.',
-    mathSolution: 'Copy from source to destination',
-    codeSolution: 'while((ch = fgetc(source)) != EOF) fputc(ch, dest);',
-    hint: 'Read until EOF'
-  },
-  {
-    id: 'c_io_53',
-    topicId: 'c_input_output',
-    question: 'Write fgets() to read a line from file fp into buffer of size 100.',
-    mathSolution: 'Read line from file safely',
-    codeSolution: 'fgets(buffer, 100, fp);',
-    hint: 'fgets(buffer, size, stream)'
-  },
-  {
-    id: 'c_io_54',
-    topicId: 'c_input_output',
-    question: 'Write fputs() to write string "Hello" to file fp.',
-    mathSolution: 'Write string to file',
-    codeSolution: 'fputs("Hello", fp);',
-    hint: 'fputs doesn\'t add newline automatically'
-  },
-  {
-    id: 'c_io_55',
-    topicId: 'c_input_output',
-    question: 'Write code to read all lines from file until EOF using fgets.',
-    mathSolution: 'Process entire file line by line',
-    codeSolution: 'while(fgets(line, sizeof(line), fp) != NULL) { }',
-    hint: 'fgets returns NULL on EOF'
-  },
-
-  // ============ LEVEL 8: ADVANCED FILE I/O (56-65) ============
-  {
-    id: 'c_io_56',
-    topicId: 'c_input_output',
-    question: 'Write fprintf to write formatted table header to file.',
-    mathSolution: 'Write "Name\\tAge\\tScore" to file',
-    codeSolution: 'fprintf(fp, "Name\\tAge\\tScore\\n");',
-    hint: 'Same format as printf'
-  },
-  {
-    id: 'c_io_57',
-    topicId: 'c_input_output',
-    question: 'Write fscanf to read name and age from file.',
-    mathSolution: 'Parse formatted data from file',
-    codeSolution: 'fscanf(fp, "%s %d", name, &age);',
-    hint: 'String doesn\'t need &'
-  },
-  {
-    id: 'c_io_58',
-    topicId: 'c_input_output',
-    question: 'Write fwrite() to write structure s to file in binary mode.',
-    mathSolution: 'Write binary data to file',
-    codeSolution: 'fwrite(&s, sizeof(s), 1, fp);',
-    hint: 'fwrite(ptr, size, count, stream)'
-  },
-  {
-    id: 'c_io_59',
-    topicId: 'c_input_output',
-    question: 'Write fread() to read structure from binary file into s.',
-    mathSolution: 'Read binary data from file',
-    codeSolution: 'fread(&s, sizeof(s), 1, fp);',
-    hint: 'fread returns number of items read'
-  },
-  {
-    id: 'c_io_60',
-    topicId: 'c_input_output',
-    question: 'Write ungetc() to push character back to input stream.',
-    mathSolution: 'Return character to input buffer',
-    codeSolution: 'ungetc(ch, stdin);',
-    hint: 'Use for lookahead operations'
-  },
-  {
-    id: 'c_io_61',
-    topicId: 'c_input_output',
-    question: 'Write clearerr() to reset error and EOF indicators.',
-    mathSolution: 'Clear file stream errors',
-    codeSolution: 'clearerr(fp);',
-    hint: 'Resets error state of stream'
-  },
-  {
-    id: 'c_io_62',
-    topicId: 'c_input_output',
-    question: 'Write feof() to check if end of file reached.',
-    mathSolution: 'Test for EOF condition',
-    codeSolution: 'if(feof(fp)) { }',
-    hint: 'Returns non-zero if EOF'
-  },
-  {
-    id: 'c_io_63',
-    topicId: 'c_input_output',
-    question: 'Write ferror() to check for file errors.',
-    mathSolution: 'Test for file stream errors',
-    codeSolution: 'if(ferror(fp)) { }',
-    hint: 'Returns non-zero if error'
-  },
-  {
-    id: 'c_io_64',
-    topicId: 'c_input_output',
-    question: 'Write perror() to print error message for last error.',
-    mathSolution: 'Print system error message',
-    codeSolution: 'perror("Error message");',
-    hint: 'Prints description of errno'
-  },
-  {
-    id: 'c_io_65',
-    topicId: 'c_input_output',
-    question: 'Write sprintf() to format string into buffer.',
-    mathSolution: 'Create formatted string in memory',
-    codeSolution: 'sprintf(buffer, "%d + %d = %d", a, b, a+b);',
-    hint: 'sprintf writes to character array'
-  },
-
-  // ============ LEVEL 9: STRING STREAMS & SAFETY (66-75) ============
-  {
-    id: 'c_io_66',
-    topicId: 'c_input_output',
-    question: 'Write sscanf() to parse data from string.',
-    mathSolution: 'Extract values from string',
-    codeSolution: 'sscanf("123 456", "%d %d", &x, &y);',
-    hint: 'sscanf reads from string'
-  },
-  {
-    id: 'c_io_67',
-    topicId: 'c_input_output',
-    question: 'Write snprintf() for safe string formatting with buffer size 50.',
-    mathSolution: 'Formatted output with size limit',
-    codeSolution: 'snprintf(buffer, 50, "%s", str);',
-    hint: 'Prevents buffer overflow'
-  },
-  {
-    id: 'c_io_68',
-    topicId: 'c_input_output',
-    question: 'Write code to print a box border using characters.',
-    mathSolution: 'Draw rectangle with +, -, |',
-    codeSolution: 'printf("+----+\\n|    |\\n+----+");',
-    hint: 'Use ASCII line characters'
-  },
-  {
-    id: 'c_io_69',
-    topicId: 'c_input_output',
-    question: 'Write printf to print a right triangle pattern of stars with 5 rows.',
-    mathSolution: 'Print:\\n*\\n**\\n***\\n****\\n*****',
-    codeSolution: 'for(i = 1; i <= 5; i++) {\n    for(j = 1; j <= i; j++) printf("*");\n    printf("\\n");\n}',
-    hint: 'Nested loops for pattern'
-  },
-  {
-    id: 'c_io_70',
-    topicId: 'c_input_output',
-    question: 'Write code to clear screen using escape sequences.',
-    mathSolution: 'Clear console screen',
-    codeSolution: 'printf("\\033[2J\\033[1;1H");',
-    hint: 'ANSI escape codes for terminal'
-  },
-  {
-    id: 'c_io_71',
-    topicId: 'c_input_output',
-    question: 'Write printf to print colored text (red) using ANSI codes.',
-    mathSolution: 'Change text color to red',
-    codeSolution: 'printf("\\033[31mRed Text\\033[0m");',
-    hint: '\\033[31m sets red, \\033[0m resets'
-  },
-  {
-    id: 'c_io_72',
-    topicId: 'c_input_output',
-    question: 'Write code to clear input buffer after scanf.',
-    mathSolution: 'Remove leftover newline from buffer',
-    codeSolution: "while(getchar() != '\\n');",
-    hint: 'Loop reads until newline'
-  },
-  {
-    id: 'c_io_73',
-    topicId: 'c_input_output',
-    question: 'Write code to read integer, handle non-numeric input.',
-    mathSolution: 'Validate numeric input',
-    codeSolution: 'while(scanf("%d", &num) != 1) {\n    while(getchar() != \'\\n\');\n    printf("Try again: ");\n}',
-    hint: 'Clear invalid input and retry'
-  },
-  {
-    id: 'c_io_74',
-    topicId: 'c_input_output',
-    question: 'Write fprintf to stderr for error message.',
-    mathSolution: 'Print error to standard error',
-    codeSolution: 'fprintf(stderr, "Error occurred\\n");',
-    hint: 'stderr is unbuffered error stream'
-  },
-  {
-    id: 'c_io_75',
-    topicId: 'c_input_output',
-    question: 'Write code to redirect stdout to file using freopen.',
-    mathSolution: 'Change stdout to file',
-    codeSolution: 'freopen("output.txt", "w", stdout);',
-    hint: 'Redirects all printf to file'
-  },
-
-  // ============ LEVEL 10: ADVANCED TECHNIQUES (76-85) ============
-  {
-    id: 'c_io_76',
-    topicId: 'c_input_output',
-    question: 'Write code to read from stdin using fread.',
-    mathSolution: 'Read binary data from standard input',
-    codeSolution: 'fread(buffer, 1, sizeof(buffer), stdin);',
-    hint: 'stdin is FILE* stream'
-  },
-  {
-    id: 'c_io_77',
-    topicId: 'c_input_output',
-    question: 'Write printf to print float with thousands separator (locale-specific).',
-    mathSolution: 'Print 1,234.56',
-    codeSolution: 'setlocale(LC_NUMERIC, ""); printf("%\'f", 1234.56);',
-    hint: '\' flag adds thousands separator'
-  },
-  {
-    id: 'c_io_78',
-    topicId: 'c_input_output',
-    question: 'Write printf with dynamic width using *.',
-    mathSolution: 'Width specified by variable',
-    codeSolution: 'printf("%*d", width, value);',
-    hint: '* takes width from argument'
-  },
-  {
-    id: 'c_io_79',
-    topicId: 'c_input_output',
-    question: 'Write printf with dynamic precision using *.',
-    mathSolution: 'Precision from variable',
-    codeSolution: 'printf("%.*f", precision, value);',
-    hint: '.* takes precision from argument'
-  },
-  {
-    id: 'c_io_80',
-    topicId: 'c_input_output',
-    question: 'Write printf to print a backslash character.',
-    mathSolution: 'Print single backslash',
-    codeSolution: 'printf("\\\\");',
-    hint: 'Backslash needs escaping'
-  },
-  {
-    id: 'c_io_81',
-    topicId: 'c_input_output',
-    question: 'Write printf to print a percent sign.',
-    mathSolution: 'Print % character',
-    codeSolution: 'printf("%%");',
-    hint: 'Use %% to print %'
-  },
-  {
-    id: 'c_io_82',
-    topicId: 'c_input_output',
-    question: 'Write code to print ASCII table from 32 to 126.',
-    mathSolution: 'Display printable ASCII characters',
-    codeSolution: 'for(i = 32; i <= 126; i++) printf("%d: %c\\n", i, i);',
-    hint: 'Print both value and character'
-  },
-  {
-    id: 'c_io_83',
-    topicId: 'c_input_output',
-    question: 'Write code to display menu and get user choice.',
-    mathSolution: 'Interactive menu system',
-    codeSolution: 'printf("1. Option A\\n2. Option B\\nChoice: ");\nscanf("%d", &choice);',
-    hint: 'Clear and simple prompts'
-  },
-  {
-    id: 'c_io_84',
-    topicId: 'c_input_output',
-    question: 'Write code to pause until Enter key pressed.',
-    mathSolution: 'Wait for user input',
-    codeSolution: 'printf("Press Enter to continue...");\nwhile(getchar() != \'\\n\');\ngetchar();',
-    hint: 'Wait for newline'
-  },
-  {
-    id: 'c_io_85',
-    topicId: 'c_input_output',
-    question: 'Write code to read 5 integers into array arr.',
-    mathSolution: 'Input array elements',
-    codeSolution: 'for(i = 0; i < 5; i++) scanf("%d", &arr[i]);',
-    hint: 'Loop for array input'
-  },
-
-  // ============ LEVEL 11: ARRAY & PATTERN I/O (86-95) ============
-  {
-    id: 'c_io_86',
-    topicId: 'c_input_output',
-    question: 'Write code to print array arr of size n in reverse order.',
-    mathSolution: 'Display array backwards',
-    codeSolution: 'for(i = n-1; i >= 0; i--) printf("%d ", arr[i]);',
-    hint: 'Start from last index'
-  },
-  {
-    id: 'c_io_87',
-    topicId: 'c_input_output',
-    question: 'Write code to print 2D array matrix of 3x3.',
-    mathSolution: 'Display matrix format',
-    codeSolution: 'for(i = 0; i < 3; i++) {\n    for(j = 0; j < 3; j++) printf("%d ", mat[i][j]);\n    printf("\\n");\n}',
-    hint: 'Nested loops with newline after row'
-  },
-  {
-    id: 'c_io_88',
-    topicId: 'c_input_output',
-    question: 'Write code to read string with spaces using scanf.',
-    mathSolution: 'Read until newline',
-    codeSolution: 'scanf("%[^\\n]", str);',
-    hint: 'Character set scanset'
-  },
-  {
-    id: 'c_io_89',
-    topicId: 'c_input_output',
-    question: 'Write code to print string character by character.',
-    mathSolution: 'Output each character individually',
-    codeSolution: 'for(i = 0; str[i] != \'\\0\'; i++) putchar(str[i]);',
-    hint: 'Loop until null terminator'
-  },
-  {
-    id: 'c_io_90',
-    topicId: 'c_input_output',
-    question: 'Write vprintf() example for variable arguments.',
-    mathSolution: 'Print using variable argument list',
-    codeSolution: 'vprintf(format, args);',
-    hint: 'Used in custom printf functions'
-  },
-  {
-    id: 'c_io_91',
-    topicId: 'c_input_output',
-    question: 'Write setbuf() to set custom buffer for file.',
-    mathSolution: 'Assign buffer to stream',
-    codeSolution: 'setbuf(fp, buffer);',
-    hint: 'NULL for unbuffered'
-  },
-  {
-    id: 'c_io_92',
-    topicId: 'c_input_output',
-    question: 'Write setvbuf() for full buffering with size.',
-    mathSolution: 'Set buffer mode and size',
-    codeSolution: 'setvbuf(fp, buffer, _IOFBF, BUFSIZ);',
-    hint: '_IOFBF for full buffering'
-  },
-  {
-    id: 'c_io_93',
-    topicId: 'c_input_output',
-    question: 'Write fseek() to move to position 10 in file.',
-    mathSolution: 'Seek to byte 10 from start',
-    codeSolution: 'fseek(fp, 10, SEEK_SET);',
-    hint: 'SEEK_SET for beginning'
-  },
-  {
-    id: 'c_io_94',
-    topicId: 'c_input_output',
-    question: 'Write ftell() to get current file position.',
-    mathSolution: 'Get file position indicator',
-    codeSolution: 'long pos = ftell(fp);',
-    hint: 'Returns current offset'
-  },
-  {
-    id: 'c_io_95',
-    topicId: 'c_input_output',
-    question: 'Write rewind() to reset file position to beginning.',
-    mathSolution: 'Go to start of file',
-    codeSolution: 'rewind(fp);',
-    hint: 'Same as fseek(fp, 0, SEEK_SET)'
-  },
-
-  // ============ LEVEL 12: TEMP FILES & WIDE I/O (96-100) ============
-  {
-    id: 'c_io_96',
-    topicId: 'c_input_output',
-    question: 'Write tmpfile() to create temporary file.',
-    mathSolution: 'Create temp file automatically deleted',
-    codeSolution: 'FILE *tmp = tmpfile();',
-    hint: 'File removed when closed'
-  },
-  {
-    id: 'c_io_97',
-    topicId: 'c_input_output',
-    question: 'Write tmpnam() to generate unique filename.',
-    mathSolution: 'Get unique temporary name',
-    codeSolution: 'char *name = tmpnam(NULL);',
-    hint: 'Returns unique string'
-  },
-  {
-    id: 'c_io_98',
-    topicId: 'c_input_output',
-    question: 'Write wprintf() to print wide character string.',
-    mathSolution: 'Print Unicode/wide string',
-    codeSolution: 'wprintf(L"Hello World");',
-    hint: 'L prefix for wide strings'
-  },
-  {
-    id: 'c_io_99',
-    topicId: 'c_input_output',
-    question: 'Write fgetwc() to read wide character from file.',
-    mathSolution: 'Read wide character',
-    codeSolution: 'wint_t ch = fgetwc(fp);',
-    hint: 'Wide character version of fgetc'
-  },
-  {
-    id: 'c_io_100',
-    topicId: 'c_input_output',
-    question: 'Write code to print current date and time using I/O.',
-    mathSolution: 'Display system time',
-    codeSolution: 'time_t t = time(NULL);\nprintf("%s", ctime(&t));',
-    hint: 'Use time() and ctime() functions'
+    question: 'Write a program to take N and N integers, then find the second largest element.',
+    mathSolution: 'Find second largest',
+    codeSolution: '#include <stdio.h>\n#include <limits.h>\n\nint main() {\n    int n;\n    printf("Enter number of elements: ");\n    scanf("%d", &n);\n    int arr[n];\n    for(int i = 0; i < n; i++) {\n        printf("Enter element %d: ", i+1);\n        scanf("%d", &arr[i]);\n    }\n    int first = INT_MIN, second = INT_MIN;\n    for(int i = 0; i < n; i++) {\n        if(arr[i] > first) {\n            second = first;\n            first = arr[i];\n        } else if(arr[i] > second && arr[i] != first) {\n            second = arr[i];\n        }\n    }\n    if(second == INT_MIN)\n        printf("No second largest element\\n");\n    else\n        printf("Second largest = %d\\n", second);\n    return 0;\n}',
+    hint: 'Track both largest and second largest'
   }
 );

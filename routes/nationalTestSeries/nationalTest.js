@@ -3,32 +3,302 @@ const router = express.Router();
 const Test = require("../../models/teacherTestModel");
 const User = require("../../models/user"); // 🔥 ADD THIS
 const Teacher = require("../../models/Teacher"); // 🔥 ADD THIS
+
 router.get("/", async (req, res) => {
+
   try {
-    const tests = await Test.find({
-  status: "published",
-  visibility: "public"
-})
-      .populate({
-  path: "createdBy",
-  select: "_id name followers"
-})
-      .sort({ createdAt: -1 });
 
-    res.render("NationalTestSeries/NationalTest", { 
-      tests,
-      user: res.locals.user
-    });
+    // ================= FETCH ALL TESTS =================
 
-  } catch (err) {
-    console.log(err);
-    res.send("Error loading tests");
+    let tests = await Test.find({
+
+      status: "published",
+      visibility: "public"
+
+    })
+
+    .populate({
+      path: "createdBy",
+      select: "_id name followers"
+    })
+
+    .sort({ createdAt: -1 });
+
+
+
+    // ================= RECOMMENDATION SYSTEM =================
+
+    const userId = req.session.userId;
+
+    if (userId) {
+
+      // ================= FIND CURRENT USER =================
+
+      let currentUser =
+        await User.findById(userId)
+        .populate("viewHistory.test");
+
+
+
+      // ================= TEACHER LOGIN SUPPORT =================
+
+      if (!currentUser) {
+
+        currentUser =
+          await Teacher.findById(userId)
+          .populate("viewHistory.test");
+
+      }
+
+
+
+      // ================= IF USER HISTORY EXISTS =================
+
+      if (
+
+        currentUser &&
+        currentUser.viewHistory &&
+        currentUser.viewHistory.length > 0
+
+      ) {
+
+        let subjectCount = {};
+        let teacherCount = {};
+
+
+
+        // ================= HISTORY LOOP =================
+
+        currentUser.viewHistory.forEach(item => {
+
+          if (!item.test) return;
+
+
+
+          // ================= SUBJECT COUNT =================
+
+          if (item.test.subject) {
+
+            const sub =
+              item.test.subject
+              .toLowerCase();
+
+            subjectCount[sub] =
+              (subjectCount[sub] || 0) + 1;
+
+          }
+
+
+
+          // ================= TEACHER COUNT =================
+
+          if (item.test.createdBy) {
+
+            const teacherId =
+              item.test.createdBy.toString();
+
+            teacherCount[teacherId] =
+              (teacherCount[teacherId] || 0) + 1;
+
+          }
+
+        });
+
+
+
+        // ================= FIND TOP SUBJECT =================
+
+        let topSubject = "";
+        let maxSubject = 0;
+
+        for (let sub in subjectCount) {
+
+          if (subjectCount[sub] > maxSubject) {
+
+            maxSubject =
+              subjectCount[sub];
+
+            topSubject =
+              sub;
+
+          }
+
+        }
+
+
+
+        // ================= FIND TOP TEACHER =================
+
+        let topTeacher = "";
+        let maxTeacher = 0;
+
+        for (let teacher in teacherCount) {
+
+          if (teacherCount[teacher] > maxTeacher) {
+
+            maxTeacher =
+              teacherCount[teacher];
+
+            topTeacher =
+              teacher;
+
+          }
+
+        }
+
+
+
+        // ================= FINAL SORTING =================
+
+        tests.sort((a, b) => {
+
+          let scoreA = 0;
+          let scoreB = 0;
+
+
+
+          // ================= SUBJECT MATCH =================
+
+          if (
+
+            topSubject &&
+            a.subject &&
+            a.subject.toLowerCase().includes(topSubject)
+
+          ) {
+
+            scoreA += 1000;
+
+          }
+
+          if (
+
+            topSubject &&
+            b.subject &&
+            b.subject.toLowerCase().includes(topSubject)
+
+          ) {
+
+            scoreB += 1000;
+
+          }
+
+
+
+          // ================= SAME TEACHER BOOST =================
+
+          if (
+
+            topTeacher &&
+            a.createdBy &&
+            a.createdBy._id &&
+            a.createdBy._id.toString() === topTeacher
+
+          ) {
+
+            scoreA += 2000;
+
+          }
+
+          if (
+
+            topTeacher &&
+            b.createdBy &&
+            b.createdBy._id &&
+            b.createdBy._id.toString() === topTeacher
+
+          ) {
+
+            scoreB += 2000;
+
+          }
+
+
+
+          // ================= RELATED NAME BOOST =================
+
+          if (
+
+            topSubject &&
+            a.name &&
+            a.name.toLowerCase().includes(topSubject)
+
+          ) {
+
+            scoreA += 300;
+
+          }
+
+          if (
+
+            topSubject &&
+            b.name &&
+            b.name.toLowerCase().includes(topSubject)
+
+          ) {
+
+            scoreB += 300;
+
+          }
+
+
+
+          // ================= TRENDING BONUS =================
+
+          scoreA += (a.views || 0) * 0.2;
+          scoreB += (b.views || 0) * 0.2;
+
+
+
+          // ================= LIKE BONUS =================
+
+          scoreA += (a.likes || 0) * 5;
+          scoreB += (b.likes || 0) * 5;
+
+
+
+          return scoreB - scoreA;
+
+        });
+
+      }
+
+    }
+
+
+
+    // ================= RENDER PAGE =================
+
+    res.render(
+      "NationalTestSeries/NationalTest",
+      {
+        tests,
+        user: res.locals.user
+      }
+    );
+
   }
+
+  catch (err) {
+
+    console.log(
+      "RECOMMENDATION ERROR:",
+      err
+    );
+
+    res.send(
+      "Error loading tests"
+    );
+
+  }
+
 });
+
+
 router.post("/like/:id", async (req, res) => {
   try {
     const testId = req.params.id;
-   const userId = req.session.userId;
+    const userId = req.session.userId;
 
     const test = await Test.findById(testId); // ✅ FIXED
 
@@ -71,7 +341,7 @@ router.get("/test/:id", async (req, res) => {
     }
 
     // ✅ VIEWS
-    test.views += 1;  
+    test.views += 1;
     await test.save();
 
     // 🔥 HISTORY SAVE (FINAL FIX)
@@ -91,16 +361,16 @@ router.get("/test/:id", async (req, res) => {
 
       // ✅ teacher me save
       await Teacher.findByIdAndUpdate(userId, {
-  $push: {
-    viewHistory: {
-      test: test._id,
-      viewedAt: new Date()
-    }
-  }
-}, { new: true, upsert: false });
+        $push: {
+          viewHistory: {
+            test: test._id,
+            viewedAt: new Date()
+          }
+        }
+      }, { new: true, upsert: false });
 
     }
-// console.log("TEST QUESTIONS:", test.questions);
+    // console.log("TEST QUESTIONS:", test.questions);
     res.render("NationalTestSeries/NationalTestPage", {
       questions: test.questions || [],
       testTitle: test.name,

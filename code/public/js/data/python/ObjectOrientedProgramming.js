@@ -1,401 +1,506 @@
-QuizData.questions.push({
-    Id: "py_oop_1",
+QuizData.questions.push(
+  {
+    id: "py_oop_1",
     topicId: "py_oop",
-    question: "Create a simple class called 'Dog' with attributes name and age, and a method bark() that prints 'Woof!'.",
-    mathSolution: "Class defines blueprint for objects with attributes and methods",
-    codeSolution: "class Dog:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def bark(self):\n        print('Woof!')\n\n# Create an object\nmy_dog = Dog('Buddy', 3)\nprint(f'{my_dog.name} is {my_dog.age} years old')\nmy_dog.bark()",
-    hint: "Use __init__() method as constructor to initialize attributes"
+    question:
+      'Create an empty class named "Car" with no attributes or methods.',
+    mathSolution:
+      "Use class keyword followed by class name and pass statement.",
+    codeSolution: "class Car:\n    pass",
+    hint: "Use `class ClassName: pass`",
   },
   {
-    Id: "py_oop_2",
+    id: "py_oop_2",
     topicId: "py_oop",
-    question: "Create a class 'Rectangle' with attributes length and width, and methods to calculate area and perimeter.",
-    mathSolution: "Area = length × width, Perimeter = 2 × (length + width)",
-    codeSolution: "class Rectangle:\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n    \n    def area(self):\n        return self.length * self.width\n    \n    def perimeter(self):\n        return 2 * (self.length + self.width)\n\nrect = Rectangle(5, 3)\nprint(f'Area: {rect.area()}')\nprint(f'Perimeter: {rect.perimeter()}')",
-    hint: "Methods can access instance attributes using self"
+    question:
+      'Create a class "Student" with an __init__ method that initializes name and age attributes.',
+    mathSolution: "__init__ method runs when object is created.",
+    codeSolution:
+      "class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age",
+    hint: "Use `def __init__(self, params):`",
   },
   {
-    Id: "py_oop_3",
+    id: "py_oop_3",
     topicId: "py_oop",
-    question: "Create a class 'BankAccount' with balance attribute and methods deposit(), withdraw(), and display_balance().",
-    mathSolution: "Deposit adds to balance, withdraw subtracts if sufficient funds",
-    codeSolution: "class BankAccount:\n    def __init__(self, initial_balance=0):\n        self.balance = initial_balance\n    \n    def deposit(self, amount):\n        if amount > 0:\n            self.balance += amount\n            print(f'Deposited: ${amount}')\n        else:\n            print('Invalid amount')\n    \n    def withdraw(self, amount):\n        if 0 < amount <= self.balance:\n            self.balance -= amount\n            print(f'Withdrawn: ${amount}')\n        else:\n            print('Insufficient funds or invalid amount')\n    \n    def display_balance(self):\n        print(f'Current balance: ${self.balance}')\n\naccount = BankAccount(100)\naccount.deposit(50)\naccount.withdraw(30)\naccount.display_balance()",
-    hint: "Add validation to prevent negative balances"
+    question:
+      'Create an object of class "Student" with name "John" and age 20, then print the name.',
+    mathSolution: "Object is created by calling class name like a function.",
+    codeSolution:
+      'class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n\ns1 = Student("John", 20)\nprint(s1.name)  # John',
+    hint: "Use `object_name = ClassName(parameters)`",
   },
   {
-    Id: "py_oop_4",
+    id: "py_oop_4",
     topicId: "py_oop",
-    question: "Create a class 'Student' with name, roll_number, and marks list. Add method to calculate average marks.",
-    mathSolution: "Average = sum of marks / number of subjects",
-    codeSolution: "class Student:\n    def __init__(self, name, roll_number):\n        self.name = name\n        self.roll_number = roll_number\n        self.marks = []\n    \n    def add_marks(self, mark):\n        self.marks.append(mark)\n    \n    def calculate_average(self):\n        if self.marks:\n            return sum(self.marks) / len(self.marks)\n        return 0\n    \n    def display_info(self):\n        print(f'Name: {self.name}, Roll: {self.roll_number}')\n        print(f'Marks: {self.marks}')\n        print(f'Average: {self.calculate_average():.2f}')\n\nstudent = Student('Alice', 101)\nstudent.add_marks(85)\nstudent.add_marks(90)\nstudent.add_marks(78)\nstudent.display_info()",
-    hint: "Store marks in a list for flexibility"
+    question:
+      'Create a class "Rectangle" with attributes length and width, and a method area() that returns the area.',
+    mathSolution: "Area = length × width.",
+    codeSolution:
+      "class Rectangle:\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n    \n    def area(self):\n        return self.length * self.width\n\nrect = Rectangle(5, 3)\nprint(rect.area())  # 15",
+    hint: "Define method with `def method_name(self):`",
   },
   {
-    Id: "py_oop_5",
+    id: "py_oop_5",
     topicId: "py_oop",
-    question: "Demonstrate inheritance by creating base class 'Vehicle' and derived classes 'Car' and 'Bike'.",
-    mathSolution: "Child classes inherit attributes and methods from parent",
-    codeSolution: "class Vehicle:\n    def __init__(self, brand, model):\n        self.brand = brand\n        self.model = model\n    \n    def display_info(self):\n        print(f'Brand: {self.brand}, Model: {self.model}')\n\nclass Car(Vehicle):\n    def __init__(self, brand, model, doors):\n        super().__init__(brand, model)\n        self.doors = doors\n    \n    def display_info(self):\n        super().display_info()\n        print(f'Doors: {self.doors}')\n\nclass Bike(Vehicle):\n    def __init__(self, brand, model, type):\n        super().__init__(brand, model)\n        self.type = type  # sports, cruiser, etc.\n    \n    def display_info(self):\n        super().display_info()\n        print(f'Type: {self.type}')\n\ncar = Car('Toyota', 'Camry', 4)\nbike = Bike('Harley', 'Street 750', 'Cruiser')\n\ncar.display_info()\nprint()\nbike.display_info()",
-    hint: "Use super() to call parent class methods"
+    question:
+      "Add a perimeter method to Rectangle class that returns the perimeter.",
+    mathSolution: "Perimeter = 2 × (length + width).",
+    codeSolution:
+      "class Rectangle:\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n    \n    def area(self):\n        return self.length * self.width\n    \n    def perimeter(self):\n        return 2 * (self.length + self.width)\n\nrect = Rectangle(5, 3)\nprint(rect.perimeter())  # 16",
+    hint: "Use formula `2 * (length + width)`",
   },
   {
-    Id: "py_oop_6",
+    id: "py_oop_6",
     topicId: "py_oop",
-    question: "Demonstrate polymorphism with a method that works for different shape classes.",
-    mathSolution: "Same method name behaves differently for different classes",
-    codeSolution: "class Circle:\n    def __init__(self, radius):\n        self.radius = radius\n    \n    def area(self):\n        return 3.14 * self.radius ** 2\n\nclass Square:\n    def __init__(self, side):\n        self.side = side\n    \n    def area(self):\n        return self.side ** 2\n\nclass Triangle:\n    def __init__(self, base, height):\n        self.base = base\n        self.height = height\n    \n    def area(self):\n        return 0.5 * self.base * self.height\n\n# Polymorphic function\ndef print_area(shape):\n    print(f'Area: {shape.area()}')\n\nshapes = [Circle(5), Square(4), Triangle(3, 6)]\nfor shape in shapes:\n    print_area(shape)",
-    hint: "Polymorphism allows different classes to have methods with same name"
+    question:
+      'Create a class "Circle" with attribute radius, and methods area() and circumference().',
+    mathSolution: "Area = πr², Circumference = 2πr.",
+    codeSolution:
+      "import math\n\nclass Circle:\n    def __init__(self, radius):\n        self.radius = radius\n    \n    def area(self):\n        return math.pi * self.radius ** 2\n    \n    def circumference(self):\n        return 2 * math.pi * self.radius\n\nc = Circle(5)\nprint(c.area())  # 78.53981633974483\nprint(c.circumference())  # 31.41592653589793",
+    hint: "Use `import math` and `math.pi`",
   },
   {
-    Id: "py_oop_7",
+    id: "py_oop_7",
     topicId: "py_oop",
-    question: "Create a class 'Employee' with class variable 'company' and instance variables name and salary.",
-    mathSolution: "Class variables shared by all instances, instance variables unique to each",
-    codeSolution: "class Employee:\n    company = 'Tech Corp'  # Class variable\n    \n    def __init__(self, name, salary):\n        self.name = name    # Instance variable\n        self.salary = salary\n    \n    def display_info(self):\n        print(f'Name: {self.name}')\n        print(f'Salary: ${self.salary}')\n        print(f'Company: {Employee.company}')\n\n# Create employees\nemp1 = Employee('John', 50000)\nemp2 = Employee('Jane', 60000)\n\nemp1.display_info()\nprint()\nemp2.display_info()\n\n# Change company for all instances\nEmployee.company = 'New Tech Inc'\nprint('\\nAfter company change:')\nemp1.display_info()",
-    hint: "Access class variables using ClassName.variable or self.__class__.variable"
+    question:
+      'Create a class "BankAccount" with attributes account_number and balance, and methods deposit() and withdraw().',
+    mathSolution:
+      "Deposit adds money, withdraw subtracts if sufficient balance.",
+    codeSolution:
+      'class BankAccount:\n    def __init__(self, account_number, balance=0):\n        self.account_number = account_number\n        self.balance = balance\n    \n    def deposit(self, amount):\n        self.balance += amount\n        return f"Deposited {amount}. New balance: {self.balance}"\n    \n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n            return f"Withdrew {amount}. New balance: {self.balance}"\n        else:\n            return "Insufficient funds"\n\nacc = BankAccount("12345", 1000)\nprint(acc.deposit(500))  # Deposited 500. New balance: 1500\nprint(acc.withdraw(200))  # Withdrew 200. New balance: 1300',
+    hint: "Check balance before withdraw",
   },
   {
-    Id: "py_oop_8",
+    id: "py_oop_8",
     topicId: "py_oop",
-    question: "Use @classmethod and @staticmethod decorators in a class.",
-    mathSolution: "Class methods work with class, static methods independent",
-    codeSolution: "class MathOperations:\n    pi = 3.14159\n    \n    @classmethod\n    def circle_area(cls, radius):\n        return cls.pi * radius ** 2\n    \n    @staticmethod\n    def add(a, b):\n        return a + b\n    \n    @staticmethod\n    def multiply(a, b):\n        return a * b\n\n# Use without creating instance\nprint(f'Circle area: {MathOperations.circle_area(5)}')\nprint(f'Add: {MathOperations.add(10, 20)}')\nprint(f'Multiply: {MathOperations.multiply(5, 6)}')\n\n# Can also be called from instance\nmath = MathOperations()\nprint(f'From instance: {math.add(3, 4)}')",
-    hint: "@classmethod gets class as first parameter, @staticmethod gets no special first parameter"
+    question:
+      'Create a class variable "count" in class "Employee" that tracks number of employees created.',
+    mathSolution: "Class variables are shared across all instances.",
+    codeSolution:
+      'class Employee:\n    count = 0\n    \n    def __init__(self, name):\n        self.name = name\n        Employee.count += 1\n\nemp1 = Employee("Alice")\nemp2 = Employee("Bob")\nprint(Employee.count)  # 2',
+    hint: "Increment class variable in __init__",
   },
   {
-    Id: "py_oop_9",
+    id: "py_oop_9",
     topicId: "py_oop",
-    question: "Create a class 'Library' that maintains a list of books with add, remove, and display methods.",
-    mathSolution: "Encapsulate book collection within class",
-    codeSolution: "class Library:\n    def __init__(self, name):\n        self.name = name\n        self.books = []\n    \n    def add_book(self, title, author):\n        book = {'title': title, 'author': author}\n        self.books.append(book)\n        print(f'Added: {title} by {author}')\n    \n    def remove_book(self, title):\n        for book in self.books:\n            if book['title'].lower() == title.lower():\n                self.books.remove(book)\n                print(f'Removed: {title}')\n                return\n        print(f'Book not found: {title}')\n    \n    def display_books(self):\n        if not self.books:\n            print('No books in library')\n            return\n        print(f'\\n{self.name} Library Catalog:')\n        for i, book in enumerate(self.books, 1):\n            print(f'{i}. {book[\"title\"]} by {book[\"author\"]}')\n\nlibrary = Library('City Central')\nlibrary.add_book('1984', 'George Orwell')\nlibrary.add_book('To Kill a Mockingbird', 'Harper Lee')\nlibrary.display_books()\nlibrary.remove_book('1984')\nlibrary.display_books()",
-    hint: "Use list of dictionaries to store book information"
+    question:
+      'Create a class variable "pi" in class "MathConstants" and access it without creating an object.',
+    mathSolution: "Class variables can be accessed using class name.",
+    codeSolution:
+      "class MathConstants:\n    pi = 3.14159\n\nprint(MathConstants.pi)  # 3.14159",
+    hint: "Use `ClassName.variable_name`",
   },
   {
-    Id: "py_oop_10",
+    id: "py_oop_10",
     topicId: "py_oop",
-    question: "Implement method overloading using default arguments and variable arguments.",
-    mathSolution: "Python doesn't support traditional method overloading, use default args or *args",
-    codeSolution: "class Calculator:\n    def add(self, *args):\n        return sum(args)\n    \n    def multiply(self, a, b, c=1):\n        return a * b * c\n    \n    def process_numbers(self, a, b, operation='add'):\n        if operation == 'add':\n            return a + b\n        elif operation == 'subtract':\n            return a - b\n        elif operation == 'multiply':\n            return a * b\n        else:\n            return None\n\ncalc = Calculator()\nprint(f'Add 2 numbers: {calc.add(5, 3)}')\nprint(f'Add 3 numbers: {calc.add(5, 3, 2)}')\nprint(f'Add 4 numbers: {calc.add(5, 3, 2, 1)}')\nprint(f'Multiply with default: {calc.multiply(5, 3)}')\nprint(f'Multiply with 3 args: {calc.multiply(5, 3, 2)}')\nprint(f'Process add: {calc.process_numbers(10, 5, \"add\")}')\nprint(f'Process subtract: {calc.process_numbers(10, 5, \"subtract\")}')",
-    hint: "Use *args for variable number of arguments, default parameters for optional args"
+    question:
+      'Create a class "Person" with __init__ method and a __str__ method that returns a formatted string.',
+    mathSolution: "__str__ defines string representation of object.",
+    codeSolution:
+      'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def __str__(self):\n        return f"Person(name={self.name}, age={self.age})"\n\np = Person("Alice", 25)\nprint(p)  # Person(name=Alice, age=25)',
+    hint: "Use `def __str__(self):`",
   },
   {
-    Id: "py_oop_11",
+    id: "py_oop_11",
     topicId: "py_oop",
-    question: "Create a class 'Person' with private attributes using name mangling.",
-    mathSolution: "Name mangling (__attr) makes attributes harder to access externally",
-    codeSolution: "class Person:\n    def __init__(self, name, age, ssn):\n        self.name = name          # Public\n        self._age = age            # Protected (convention)\n        self.__ssn = ssn           # Private (name mangling)\n    \n    def display_info(self):\n        print(f'Name: {self.name}')\n        print(f'Age: {self._age}')\n        # Can access private within class\n        print(f'SSN: {self.__ssn}')\n    \n    def get_ssn(self):\n        return f'***-**-{self.__ssn[-4:]}'  # Getter\n    \n    def set_age(self, age):\n        if age > 0:\n            self._age = age\n\nperson = Person('Alice', 30, '123-45-6789')\nprint(person.name)           # Works\nprint(person._age)           # Works but discouraged\n# print(person.__ssn)        # Error!\nprint(person.get_ssn())      # Works via getter\nprint(person._Person__ssn)   # Name mangling (not recommended)",
-    hint: "Double underscore __ triggers name mangling to _ClassName__attr"
+    question:
+      'Create a class "Book" with attributes title, author, and price, and a method discount() that applies 10% discount.',
+    mathSolution: "Discounted price = price × 0.9.",
+    codeSolution:
+      'class Book:\n    def __init__(self, title, author, price):\n        self.title = title\n        self.author = author\n        self.price = price\n    \n    def discount(self):\n        return self.price * 0.9\n\nb = Book("Python 101", "John Doe", 100)\nprint(b.discount())  # 90.0',
+    hint: "Return `self.price * 0.9`",
   },
   {
-    Id: "py_oop_12",
+    id: "py_oop_12",
     topicId: "py_oop",
-    question: "Use @property decorator to create getters and setters.",
-    mathSolution: "Properties allow method calls to look like attribute access",
-    codeSolution: "class Temperature:\n    def __init__(self, celsius):\n        self._celsius = celsius\n    \n    @property\n    def celsius(self):\n        return self._celsius\n    \n    @celsius.setter\n    def celsius(self, value):\n        if value < -273.15:\n            raise ValueError('Temperature below absolute zero')\n        self._celsius = value\n    \n    @property\n    def fahrenheit(self):\n        return (self._celsius * 9/5) + 32\n    \n    @fahrenheit.setter\n    def fahrenheit(self, value):\n        self.celsius = (value - 32) * 5/9\n\ntemp = Temperature(25)\nprint(f'Celsius: {temp.celsius}')\nprint(f'Fahrenheit: {temp.fahrenheit}')\n\ntemp.celsius = 30\nprint(f'New Celsius: {temp.celsius}')\nprint(f'New Fahrenheit: {temp.fahrenheit}')\n\ntemp.fahrenheit = 100\nprint(f'After setting Fahrenheit: {temp.celsius}°C')\n\n# temp.celsius = -300  # Would raise ValueError",
-    hint: "@property for getter, @attr.setter for setter"
+    question:
+      'Create a simple inheritance where class "Dog" inherits from class "Animal".',
+    mathSolution: "Use class Child(Parent): syntax.",
+    codeSolution:
+      'class Animal:\n    def speak(self):\n        return "Animal speaks"\n\nclass Dog(Animal):\n    pass\n\nd = Dog()\nprint(d.speak())  # Animal speaks',
+    hint: "Use `class Dog(Animal):`",
   },
   {
-    Id: "py_oop_13",
+    id: "py_oop_13",
     topicId: "py_oop",
-    question: "Create a class 'Complex' to represent complex numbers with operator overloading.",
-    mathSolution: "Override __add__, __sub__, __mul__, __str__ for custom behavior",
-    codeSolution: "class Complex:\n    def __init__(self, real, imag):\n        self.real = real\n        self.imag = imag\n    \n    def __add__(self, other):\n        return Complex(self.real + other.real, self.imag + other.imag)\n    \n    def __sub__(self, other):\n        return Complex(self.real - other.real, self.imag - other.imag)\n    \n    def __mul__(self, other):\n        real = self.real * other.real - self.imag * other.imag\n        imag = self.real * other.imag + self.imag * other.real\n        return Complex(real, imag)\n    \n    def __str__(self):\n        sign = '+' if self.imag >= 0 else '-'\n        return f'{self.real} {sign} {abs(self.imag)}i'\n\nc1 = Complex(3, 4)\nc2 = Complex(1, 2)\n\nprint(f'c1: {c1}')\nprint(f'c2: {c2}')\nprint(f'c1 + c2: {c1 + c2}')\nprint(f'c1 - c2: {c1 - c2}')\nprint(f'c1 * c2: {c1 * c2}')",
-    hint: "Magic methods like __add__ define behavior for operators"
+    question:
+      'Override speak() method in Dog class to return "Woof!" instead of parent\'s "Animal speaks".',
+    mathSolution: "Override by defining same method name in child class.",
+    codeSolution:
+      'class Animal:\n    def speak(self):\n        return "Animal speaks"\n\nclass Dog(Animal):\n    def speak(self):\n        return "Woof!"\n\nd = Dog()\nprint(d.speak())  # Woof!',
+    hint: "Redefine method in child class",
   },
   {
-    Id: "py_oop_14",
+    id: "py_oop_14",
     topicId: "py_oop",
-    question: "Implement multiple inheritance with classes A, B, and C inheriting from both.",
-    mathSolution: "Child class inherits from multiple parents, MRO determines method resolution",
-    codeSolution: "class A:\n    def method(self):\n        print('Method from A')\n    \n    def a_method(self):\n        print('Specific to A')\n\nclass B:\n    def method(self):\n        print('Method from B')\n    \n    def b_method(self):\n        print('Specific to B')\n\nclass C(A, B):\n    def method(self):\n        print('Method from C')\n        super().method()  # Calls next in MRO\n    \n    def c_method(self):\n        print('Specific to C')\n\n# Create instance\nobj = C()\nobj.method()      # C's method, then A's\nobj.a_method()    # From A\nobj.b_method()    # From B\nobj.c_method()    # From C\n\nprint(f'\\nMRO: {C.__mro__}')",
-    hint: "Method Resolution Order (MRO) determines which parent method is called"
+    question:
+      "Use super() to call parent class __init__ method in child class.",
+    mathSolution: "super().__init__() calls parent constructor.",
+    codeSolution:
+      'class Animal:\n    def __init__(self, name):\n        self.name = name\n\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed\n\nd = Dog("Max", "Golden Retriever")\nprint(d.name)  # Max\nprint(d.breed)  # Golden Retriever',
+    hint: "Use `super().__init__(params)`",
   },
   {
-    Id: "py_oop_15",
+    id: "py_oop_15",
     topicId: "py_oop",
-    question: "Create an abstract base class 'Shape' with abstract method area().",
-    mathSolution: "Abstract classes define interface, cannot be instantiated",
-    codeSolution: "from abc import ABC, abstractmethod\nimport math\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        pass\n    \n    @abstractmethod\n    def perimeter(self):\n        pass\n    \n    def display(self):\n        print(f'Area: {self.area():.2f}')\n        print(f'Perimeter: {self.perimeter():.2f}')\n\nclass Circle(Shape):\n    def __init__(self, radius):\n        self.radius = radius\n    \n    def area(self):\n        return math.pi * self.radius ** 2\n    \n    def perimeter(self):\n        return 2 * math.pi * self.radius\n\nclass Rectangle(Shape):\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n    \n    def area(self):\n        return self.length * self.width\n    \n    def perimeter(self):\n        return 2 * (self.length + self.width)\n\n# shape = Shape()  # Error! Can't instantiate abstract class\ncircle = Circle(5)\nrectangle = Rectangle(4, 6)\n\nprint('Circle:')\ncircle.display()\nprint('\\nRectangle:')\nrectangle.display()",
-    hint: "Import ABC and abstractmethod from abc module"
+    question:
+      'Create a class "Vehicle" with method start(), and class "Car" inheriting from Vehicle that adds method honk().',
+    mathSolution: "Child class inherits parent methods and can add new ones.",
+    codeSolution:
+      'class Vehicle:\n    def start(self):\n        return "Vehicle starting..."\n\nclass Car(Vehicle):\n    def honk(self):\n        return "Beep beep!"\n\nc = Car()\nprint(c.start())  # Vehicle starting...\nprint(c.honk())   # Beep beep!',
+    hint: "Child class automatically gets parent methods",
   },
   {
-    Id: "py_oop_16",
+    id: "py_oop_16",
     topicId: "py_oop",
-    question: "Create a class 'Stack' using list with push, pop, peek, and is_empty methods.",
-    mathSolution: "Stack follows LIFO (Last In First Out) principle",
-    codeSolution: "class Stack:\n    def __init__(self):\n        self.items = []\n    \n    def push(self, item):\n        self.items.append(item)\n        print(f'Pushed: {item}')\n    \n    def pop(self):\n        if not self.is_empty():\n            item = self.items.pop()\n            print(f'Popped: {item}')\n            return item\n        print('Stack is empty')\n        return None\n    \n    def peek(self):\n        if not self.is_empty():\n            return self.items[-1]\n        return None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n    \n    def size(self):\n        return len(self.items)\n    \n    def display(self):\n        print(f'Stack: {self.items}')\n\nstack = Stack()\nstack.push(10)\nstack.push(20)\nstack.push(30)\nstack.display()\nprint(f'Peek: {stack.peek()}')\nstack.pop()\nstack.display()\nprint(f'Size: {stack.size()}')",
-    hint: "Use list append() for push and pop() for pop"
+    question:
+      'Demonstrate multiple inheritance: class "Child" inherits from "Father" and "Mother".',
+    mathSolution: "Use class Child(Father, Mother): syntax.",
+    codeSolution:
+      'class Father:\n    def father_method(self):\n        return "Father"\n\nclass Mother:\n    def mother_method(self):\n        return "Mother"\n\nclass Child(Father, Mother):\n    pass\n\nc = Child()\nprint(c.father_method())  # Father\nprint(c.mother_method())  # Mother',
+    hint: "Use `class Child(Parent1, Parent2):`",
   },
   {
-    Id: "py_oop_17",
+    id: "py_oop_17",
     topicId: "py_oop",
-    question: "Create a class 'Queue' using list with enqueue, dequeue, and display methods.",
-    mathSolution: "Queue follows FIFO (First In First Out) principle",
-    codeSolution: "class Queue:\n    def __init__(self):\n        self.items = []\n    \n    def enqueue(self, item):\n        self.items.append(item)\n        print(f'Enqueued: {item}')\n    \n    def dequeue(self):\n        if not self.is_empty():\n            item = self.items.pop(0)\n            print(f'Dequeued: {item}')\n            return item\n        print('Queue is empty')\n        return None\n    \n    def front(self):\n        if not self.is_empty():\n            return self.items[0]\n        return None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n    \n    def size(self):\n        return len(self.items)\n    \n    def display(self):\n        print(f'Queue: {self.items}')\n\nqueue = Queue()\nqueue.enqueue(10)\nqueue.enqueue(20)\nqueue.enqueue(30)\nqueue.display()\nprint(f'Front: {queue.front()}')\nqueue.dequeue()\nqueue.display()",
-    hint: "Use pop(0) for dequeue (though collections.deque is more efficient)"
+    question:
+      'Create a class "Temperature" with property celsius, and getter/setter for fahrenheit.',
+    mathSolution:
+      "Use @property decorator for getter, @attr.setter for setter.",
+    codeSolution:
+      "class Temperature:\n    def __init__(self, celsius=0):\n        self._celsius = celsius\n    \n    @property\n    def celsius(self):\n        return self._celsius\n    \n    @celsius.setter\n    def celsius(self, value):\n        self._celsius = value\n    \n    @property\n    def fahrenheit(self):\n        return (self._celsius * 9/5) + 32\n    \n    @fahrenheit.setter\n    def fahrenheit(self, value):\n        self._celsius = (value - 32) * 5/9\n\ntemp = Temperature(25)\nprint(temp.fahrenheit)  # 77.0\ntemp.fahrenheit = 86\nprint(temp.celsius)  # 30.0",
+    hint: "Use `@property` and `@attribute.setter`",
   },
   {
-    Id: "py_oop_18",
+    id: "py_oop_18",
     topicId: "py_oop",
-    question: "Create a class 'Bank' that manages multiple BankAccount objects.",
-    mathSolution: "Composition: Bank has multiple accounts",
-    codeSolution: "class BankAccount:\n    def __init__(self, account_number, owner, balance=0):\n        self.account_number = account_number\n        self.owner = owner\n        self.balance = balance\n    \n    def deposit(self, amount):\n        self.balance += amount\n        return self.balance\n    \n    def withdraw(self, amount):\n        if amount <= self.balance:\n            self.balance -= amount\n            return True\n        return False\n    \n    def __str__(self):\n        return f'Account {self.account_number}: {self.owner} - ${self.balance}'\n\nclass Bank:\n    def __init__(self, name):\n        self.name = name\n        self.accounts = {}\n    \n    def create_account(self, account_number, owner, initial_deposit=0):\n        if account_number not in self.accounts:\n            account = BankAccount(account_number, owner, initial_deposit)\n            self.accounts[account_number] = account\n            print(f'Account created for {owner}')\n            return account\n        print('Account number already exists')\n        return None\n    \n    def get_account(self, account_number):\n        return self.accounts.get(account_number)\n    \n    def transfer(self, from_acc, to_acc, amount):\n        from_account = self.get_account(from_acc)\n        to_account = self.get_account(to_acc)\n        \n        if from_account and to_account:\n            if from_account.withdraw(amount):\n                to_account.deposit(amount)\n                print(f'Transferred ${amount} from {from_acc} to {to_acc}')\n                return True\n            print('Insufficient funds')\n        else:\n            print('Invalid account numbers')\n        return False\n    \n    def display_all_accounts(self):\n        print(f'\\n{self.name} - All Accounts:')\n        for account in self.accounts.values():\n            print(f'  {account}')\n\nbank = Bank('National Bank')\nbank.create_account('A001', 'John Doe', 1000)\nbank.create_account('A002', 'Jane Smith', 500)\nbank.display_all_accounts()\nbank.transfer('A001', 'A002', 200)\nbank.display_all_accounts()",
-    hint: "Use dictionary to store accounts with account number as key"
+    question:
+      'Create a private attribute "__salary" in class "Employee" with getter and setter methods.',
+    mathSolution: "Double underscore makes attribute name mangled (private).",
+    codeSolution:
+      'class Employee:\n    def __init__(self, name, salary):\n        self.name = name\n        self.__salary = salary\n    \n    def get_salary(self):\n        return self.__salary\n    \n    def set_salary(self, salary):\n        if salary > 0:\n            self.__salary = salary\n        else:\n            print("Invalid salary")\n\nemp = Employee("John", 50000)\nprint(emp.get_salary())  # 50000\nemp.set_salary(60000)\nprint(emp.get_salary())  # 60000',
+    hint: "Use `__attribute` for private attributes",
   },
   {
-    Id: "py_oop_19",
+    id: "py_oop_19",
     topicId: "py_oop",
-    question: "Implement a class 'Playlist' that stores Song objects.",
-    mathSolution: "Composition: Playlist contains multiple Song objects",
-    codeSolution: "class Song:\n    def __init__(self, title, artist, duration):\n        self.title = title\n        self.artist = artist\n        self.duration = duration  # in seconds\n    \n    def __str__(self):\n        minutes = self.duration // 60\n        seconds = self.duration % 60\n        return f'{self.title} by {self.artist} ({minutes}:{seconds:02d})'\n\nclass Playlist:\n    def __init__(self, name):\n        self.name = name\n        self.songs = []\n    \n    def add_song(self, song):\n        self.songs.append(song)\n        print(f'Added: {song.title}')\n    \n    def remove_song(self, title):\n        for song in self.songs:\n            if song.title.lower() == title.lower():\n                self.songs.remove(song)\n                print(f'Removed: {title}')\n                return\n        print(f'Song not found: {title}')\n    \n    def total_duration(self):\n        total = sum(song.duration for song in self.songs)\n        hours = total // 3600\n        minutes = (total % 3600) // 60\n        seconds = total % 60\n        \n        if hours > 0:\n            return f'{hours}h {minutes}m {seconds}s'\n        else:\n            return f'{minutes}m {seconds}s'\n    \n    def display(self):\n        print(f'\\nPlaylist: {self.name}')\n        if not self.songs:\n            print('  Empty')\n            return\n        for i, song in enumerate(self.songs, 1):\n            print(f'  {i}. {song}')\n        print(f'Total duration: {self.total_duration()}')\n\n# Create songs\nsong1 = Song('Bohemian Rhapsody', 'Queen', 355)\nsong2 = Song('Stairway to Heaven', 'Led Zeppelin', 482)\nsong3 = Song('Hotel California', 'Eagles', 391)\n\n# Create playlist\nplaylist = Playlist('Rock Classics')\nplaylist.add_song(song1)\nplaylist.add_song(song2)\nplaylist.add_song(song3)\nplaylist.display()",
-    hint: "Store Song objects directly in list, not just song titles"
+    question:
+      "Create a class method using @classmethod decorator that returns class name.",
+    mathSolution: "Class method receives class as first parameter (cls).",
+    codeSolution:
+      "class MyClass:\n    @classmethod\n    def get_class_name(cls):\n        return cls.__name__\n\nprint(MyClass.get_class_name())  # MyClass",
+    hint: "Use `@classmethod` and `cls` parameter",
   },
   {
-    Id: "py_oop_20",
+    id: "py_oop_20",
     topicId: "py_oop",
-    question: "Create a class 'Fraction' with numerator and denominator, implement arithmetic operations.",
-    mathSolution: "Fractions need common denominators for addition/subtraction",
-    codeSolution: "import math\n\nclass Fraction:\n    def __init__(self, numerator, denominator):\n        if denominator == 0:\n            raise ValueError('Denominator cannot be zero')\n        self.numerator = numerator\n        self.denominator = denominator\n        self.simplify()\n    \n    def simplify(self):\n        gcd = math.gcd(self.numerator, self.denominator)\n        self.numerator //= gcd\n        self.denominator //= gcd\n        if self.denominator < 0:\n            self.numerator = -self.numerator\n            self.denominator = -self.denominator\n    \n    def __add__(self, other):\n        num = self.numerator * other.denominator + other.numerator * self.denominator\n        den = self.denominator * other.denominator\n        return Fraction(num, den)\n    \n    def __sub__(self, other):\n        num = self.numerator * other.denominator - other.numerator * self.denominator\n        den = self.denominator * other.denominator\n        return Fraction(num, den)\n    \n    def __mul__(self, other):\n        return Fraction(self.numerator * other.numerator, \n                       self.denominator * other.denominator)\n    \n    def __truediv__(self, other):\n        return Fraction(self.numerator * other.denominator,\n                       self.denominator * other.numerator)\n    \n    def __str__(self):\n        return f'{self.numerator}/{self.denominator}'\n    \n    def as_decimal(self):\n        return self.numerator / self.denominator\n\nf1 = Fraction(1, 2)\nf2 = Fraction(1, 3)\n\nprint(f'f1 = {f1}')\nprint(f'f2 = {f2}')\nprint(f'f1 + f2 = {f1 + f2}')\nprint(f'f1 - f2 = {f1 - f2}')\nprint(f'f1 * f2 = {f1 * f2}')\nprint(f'f1 / f2 = {f1 / f2}')\nprint(f'f1 as decimal: {f1.as_decimal()}')",
-    hint: "Use math.gcd() to simplify fractions"
+    question:
+      "Create a static method using @staticmethod decorator that adds two numbers.",
+    mathSolution: "Static method doesn't receive self or cls.",
+    codeSolution:
+      "class Calculator:\n    @staticmethod\n    def add(a, b):\n        return a + b\n\nprint(Calculator.add(5, 3))  # 8",
+    hint: "Use `@staticmethod` decorator",
   },
   {
-    Id: "py_oop_21",
+    id: "py_oop_21",
     topicId: "py_oop",
-    question: "Create a class 'Deck' of playing cards with shuffle and deal methods.",
-    mathSolution: "Deck contains 52 cards, shuffle randomizes order",
-    codeSolution: "import random\n\nclass Card:\n    def __init__(self, suit, rank):\n        self.suit = suit\n        self.rank = rank\n    \n    def __str__(self):\n        return f'{self.rank} of {self.suit}'\n\nclass Deck:\n    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']\n    ranks = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King']\n    \n    def __init__(self):\n        self.cards = []\n        self.create_deck()\n    \n    def create_deck(self):\n        for suit in self.suits:\n            for rank in self.ranks:\n                self.cards.append(Card(suit, rank))\n    \n    def shuffle(self):\n        random.shuffle(self.cards)\n        print('Deck shuffled')\n    \n    def deal(self, num_cards=1):\n        dealt = []\n        for _ in range(num_cards):\n            if self.cards:\n                dealt.append(self.cards.pop())\n            else:\n                print('No more cards in deck')\n                break\n        return dealt if num_cards > 1 else dealt[0] if dealt else None\n    \n    def remaining(self):\n        return len(self.cards)\n    \n    def display(self):\n        for i, card in enumerate(self.cards, 1):\n            print(f'{i:3}: {card}')\n\n# Create and use deck\ndeck = Deck()\nprint(f'Deck created with {deck.remaining()} cards')\ndeck.shuffle()\n\n# Deal cards\ncard1 = deck.deal()\nprint(f'Dealt: {card1}')\n\nhand = deck.deal(5)\nprint('Hand:')\nfor card in hand:\n    print(f'  {card}')\n\nprint(f'Cards remaining: {deck.remaining()}')",
-    hint: "Use random.shuffle() to randomize the deck"
+    question:
+      'Create a class "Stack" with methods push(), pop(), and is_empty().',
+    mathSolution: "Use list to implement stack (LIFO).",
+    codeSolution:
+      "class Stack:\n    def __init__(self):\n        self.items = []\n    \n    def push(self, item):\n        self.items.append(item)\n    \n    def pop(self):\n        if not self.is_empty():\n            return self.items.pop()\n        return None\n    \n    def is_empty(self):\n        return len(self.items) == 0\n\ns = Stack()\ns.push(1)\ns.push(2)\nprint(s.pop())  # 2\nprint(s.is_empty())  # False",
+    hint: "Use list append() and pop()",
   },
   {
-    Id: "py_oop_22",
+    id: "py_oop_22",
     topicId: "py_oop",
-    question: "Create a class 'Student' with decorator to validate age input.",
-    mathSolution: "Use property decorator with validation",
-    codeSolution: "class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self._age = age\n    \n    @property\n    def age(self):\n        return self._age\n    \n    @age.setter\n    def age(self, value):\n        if not isinstance(value, int):\n            raise TypeError('Age must be an integer')\n        if value < 0 or value > 150:\n            raise ValueError('Age must be between 0 and 150')\n        self._age = value\n    \n    @property\n    def name(self):\n        return self._name\n    \n    @name.setter\n    def name(self, value):\n        if not value or not value.strip():\n            raise ValueError('Name cannot be empty')\n        self._name = value.strip()\n    \n    @property\n    def year_of_birth(self):\n        from datetime import datetime\n        return datetime.now().year - self.age\n    \n    def __str__(self):\n        return f'Student: {self.name}, Age: {self.age}, Born: {self.year_of_birth}'\n\n# Test valid student\nstudent = Student('Alice', 20)\nprint(student)\n\n# Test validation\ntry:\n    student.age = -5\nexcept ValueError as e:\n    print(f'Error: {e}')\n\ntry:\n    student.name = ''\nexcept ValueError as e:\n    print(f'Error: {e}')\n\n# Works fine\nstudent.age = 21\nstudent.name = 'Alice Smith'\nprint(student)",
-    hint: "Use property setters to validate data before assignment"
+    question:
+      'Create a class "Car" with instance attributes brand, model, and class attribute wheels=4.',
+    mathSolution:
+      "Class attributes are shared, instance attributes are unique.",
+    codeSolution:
+      'class Car:\n    wheels = 4\n    \n    def __init__(self, brand, model):\n        self.brand = brand\n        self.model = model\n\nc1 = Car("Toyota", "Camry")\nc2 = Car("Honda", "Civic")\nprint(c1.wheels)  # 4\nprint(c2.wheels)  # 4\nprint(Car.wheels)  # 4',
+    hint: "Define class variable outside __init__",
   },
   {
-    Id: "py_oop_23",
+    id: "py_oop_23",
     topicId: "py_oop",
-    question: "Create a class 'Time' with hours, minutes, seconds and implement addition.",
-    mathSolution: "Time arithmetic with carry-over for seconds/minutes/hours",
-    codeSolution: "class Time:\n    def __init__(self, hours=0, minutes=0, seconds=0):\n        self.total_seconds = hours * 3600 + minutes * 60 + seconds\n        self.normalize()\n    \n    def normalize(self):\n        # Ensure values are within ranges\n        seconds = self.total_seconds\n        self.hours = (seconds // 3600) % 24\n        seconds %= 3600\n        self.minutes = seconds // 60\n        self.seconds = seconds % 60\n    \n    def __add__(self, other):\n        return Time(0, 0, self.total_seconds + other.total_seconds)\n    \n    def __sub__(self, other):\n        return Time(0, 0, abs(self.total_seconds - other.total_seconds))\n    \n    def __str__(self):\n        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'\n    \n    def add_seconds(self, seconds):\n        self.total_seconds += seconds\n        self.normalize()\n    \n    def add_minutes(self, minutes):\n        self.add_seconds(minutes * 60)\n    \n    def add_hours(self, hours):\n        self.add_seconds(hours * 3600)\n\n# Create time objects\nt1 = Time(10, 30, 45)\nt2 = Time(2, 15, 30)\n\nprint(f't1 = {t1}')\nprint(f't2 = {t2}')\nprint(f't1 + t2 = {t1 + t2}')\nprint(f't1 - t2 = {t1 - t2}')\n\n# Add time\nt1.add_minutes(45)\nprint(f't1 after adding 45 minutes: {t1}')\n\n# Time arithmetic with carry-over\nt3 = Time(23, 45, 30)\nt3.add_hours(2)\nprint(f't3 after adding 2 hours: {t3}')  # Should wrap to next day",
-    hint: "Store total seconds internally for easier arithmetic"
+    question:
+      'Add __add__ magic method to class "Vector" to add two vectors (x, y).',
+    mathSolution: "__add__ defines behavior for + operator.",
+    codeSolution:
+      'class Vector:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __add__(self, other):\n        return Vector(self.x + other.x, self.y + other.y)\n    \n    def __str__(self):\n        return f"Vector({self.x}, {self.y})"\n\nv1 = Vector(2, 3)\nv2 = Vector(4, 5)\nv3 = v1 + v2\nprint(v3)  # Vector(6, 8)',
+    hint: "Define `def __add__(self, other):`",
   },
   {
-    Id: "py_oop_24",
+    id: "py_oop_24",
     topicId: "py_oop",
-    question: "Create a class 'ShoppingCart' that stores items with prices and quantities.",
-    mathSolution: "Cart total = sum(price × quantity for each item)",
-    codeSolution: "class ShoppingCart:\n    def __init__(self):\n        self.items = {}  # item_name -> {'price': price, 'quantity': quantity}\n    \n    def add_item(self, name, price, quantity=1):\n        if name in self.items:\n            self.items[name]['quantity'] += quantity\n        else:\n            self.items[name] = {'price': price, 'quantity': quantity}\n        print(f'Added {quantity} x {name}')\n    \n    def remove_item(self, name, quantity=1):\n        if name in self.items:\n            if self.items[name]['quantity'] <= quantity:\n                del self.items[name]\n                print(f'Removed {name}')\n            else:\n                self.items[name]['quantity'] -= quantity\n                print(f'Removed {quantity} x {name}')\n        else:\n            print(f'Item not found: {name}')\n    \n    def update_quantity(self, name, quantity):\n        if name in self.items:\n            if quantity <= 0:\n                del self.items[name]\n                print(f'Removed {name}')\n            else:\n                self.items[name]['quantity'] = quantity\n                print(f'Updated {name} quantity to {quantity}')\n        else:\n            print(f'Item not found: {name}')\n    \n    def calculate_total(self):\n        total = sum(item['price'] * item['quantity'] \n                   for item in self.items.values())\n        return total\n    \n    def display_cart(self):\n        if not self.items:\n            print('Cart is empty')\n            return\n        \n        print('\\nShopping Cart:')\n        print('-' * 50)\n        total = 0\n        for name, details in self.items.items():\n            subtotal = details['price'] * details['quantity']\n            total += subtotal\n            print(f'{name:20} x{details[\"quantity\"]:3} @ ${details[\"price\"]:5.2f} = ${subtotal:7.2f}')\n        print('-' * 50)\n        print(f'{Total:20} {:8} ${total:7.2f}')\n\n# Create and use cart\ncart = ShoppingCart()\ncart.add_item('Apple', 0.50, 5)\ncart.add_item('Bread', 2.99, 2)\ncart.add_item('Milk', 3.49, 1)\ncart.display_cart()\n\ncart.remove_item('Apple', 2)\ncart.update_quantity('Bread', 1)\ncart.display_cart()",
-    hint: "Store items in dictionary with item name as key"
+    question:
+      'Add __len__ method to class "BookCollection" that returns number of books.',
+    mathSolution: "__len__ defines behavior for len() function.",
+    codeSolution:
+      'class BookCollection:\n    def __init__(self, books):\n        self.books = books\n    \n    def __len__(self):\n        return len(self.books)\n\ncollection = BookCollection(["Book1", "Book2", "Book3"])\nprint(len(collection))  # 3',
+    hint: "Return length of internal collection",
   },
   {
-    Id: "py_oop_25",
+    id: "py_oop_25",
     topicId: "py_oop",
-    question: "Create a class 'Temperature' that stores temperature and converts between units.",
-    mathSolution: "C to F: (C × 9/5) + 32, F to C: (F - 32) × 5/9, C to K: C + 273.15",
-    codeSolution: "class Temperature:\n    def __init__(self, value, unit='C'):\n        self._celsius = None\n        if unit.upper() == 'C':\n            self.celsius = value\n        elif unit.upper() == 'F':\n            self.fahrenheit = value\n        elif unit.upper() == 'K':\n            self.kelvin = value\n        else:\n            raise ValueError('Unit must be C, F, or K')\n    \n    @property\n    def celsius(self):\n        return self._celsius\n    \n    @celsius.setter\n    def celsius(self, value):\n        if value < -273.15:\n            raise ValueError('Temperature below absolute zero')\n        self._celsius = value\n    \n    @property\n    def fahrenheit(self):\n        return (self._celsius * 9/5) + 32\n    \n    @fahrenheit.setter\n    def fahrenheit(self, value):\n        self.celsius = (value - 32) * 5/9\n    \n    @property\n    def kelvin(self):\n        return self._celsius + 273.15\n    \n    @kelvin.setter\n    def kelvin(self, value):\n        if value < 0:\n            raise ValueError('Kelvin cannot be negative')\n        self.celsius = value - 273.15\n    \n    def __str__(self):\n        return f'{self.celsius:.1f}°C = {self.fahrenheit:.1f}°F = {self.kelvin:.1f}K'\n    \n    def __add__(self, other):\n        if isinstance(other, Temperature):\n            return Temperature(self.celsius + other.celsius, 'C')\n        return Temperature(self.celsius + other, 'C')\n    \n    def __sub__(self, other):\n        if isinstance(other, Temperature):\n            return Temperature(self.celsius - other.celsius, 'C')\n        return Temperature(self.celsius - other, 'C')\n\n# Create temperatures\ntemp_c = Temperature(25, 'C')\ntemp_f = Temperature(98.6, 'F')\ntemp_k = Temperature(300, 'K')\n\nprint(f'Room temp: {temp_c}')\nprint(f'Body temp: {temp_f}')\nprint(f'Hot temp: {temp_k}')\n\n# Arithmetic\nprint(f'Sum: {temp_c + 10}')\nprint(f'Difference: {temp_f - temp_c}')",
-    hint: "Store all temperatures internally in one unit (Celsius)"
+    question:
+      'Add __eq__ method to class "Point" to compare two points for equality.',
+    mathSolution: "__eq__ defines behavior for == operator.",
+    codeSolution:
+      "class Point:\n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n    \n    def __eq__(self, other):\n        return self.x == other.x and self.y == other.y\n\np1 = Point(1, 2)\np2 = Point(1, 2)\np3 = Point(3, 4)\nprint(p1 == p2)  # True\nprint(p1 == p3)  # False",
+    hint: "Return comparison of attributes",
   },
   {
-    Id: "py_oop_26",
+    id: "py_oop_26",
     topicId: "py_oop",
-    question: "Create a class 'Matrix' with basic matrix operations (add, multiply, transpose).",
-    mathSolution: "Matrix addition: element-wise, Multiplication: row × column",
-    codeSolution: "class Matrix:\n    def __init__(self, data):\n        self.data = data\n        self.rows = len(data)\n        self.cols = len(data[0]) if data else 0\n    \n    def __add__(self, other):\n        if self.rows != other.rows or self.cols != other.cols:\n            raise ValueError('Matrices must have same dimensions')\n        \n        result = []\n        for i in range(self.rows):\n            row = []\n            for j in range(self.cols):\n                row.append(self.data[i][j] + other.data[i][j])\n            result.append(row)\n        return Matrix(result)\n    \n    def __mul__(self, other):\n        if self.cols != other.rows:\n            raise ValueError('Invalid dimensions for multiplication')\n        \n        result = []\n        for i in range(self.rows):\n            row = []\n            for j in range(other.cols):\n                sum_val = 0\n                for k in range(self.cols):\n                    sum_val += self.data[i][k] * other.data[k][j]\n                row.append(sum_val)\n            result.append(row)\n        return Matrix(result)\n    \n    def transpose(self):\n        result = []\n        for j in range(self.cols):\n            row = []\n            for i in range(self.rows):\n                row.append(self.data[i][j])\n            result.append(row)\n        return Matrix(result)\n    \n    def __str__(self):\n        output = []\n        for row in self.data:\n            output.append('  '.join(f'{x:5}' for x in row))\n        return '\\n'.join(output)\n\n# Create matrices\nm1 = Matrix([[1, 2], [3, 4]])\nm2 = Matrix([[5, 6], [7, 8]])\n\nprint('Matrix 1:')\nprint(m1)\nprint('\\nMatrix 2:')\nprint(m2)\nprint('\\nAddition:')\nprint(m1 + m2)\nprint('\\nMultiplication:')\nprint(m1 * m2)\nprint('\\nTranspose of m1:')\nprint(m1.transpose())",
-    hint: "Store matrix as list of lists"
+    question:
+      'Create an abstract class "Shape" with abstract method area(), then implement in class "Square".',
+    mathSolution: "Use ABC and abstractmethod from abc module.",
+    codeSolution:
+      "from abc import ABC, abstractmethod\n\nclass Shape(ABC):\n    @abstractmethod\n    def area(self):\n        pass\n\nclass Square(Shape):\n    def __init__(self, side):\n        self.side = side\n    \n    def area(self):\n        return self.side ** 2\n\ns = Square(5)\nprint(s.area())  # 25",
+    hint: "Import `ABC` and `abstractmethod`",
   },
   {
-    Id: "py_oop_27",
+    id: "py_oop_27",
     topicId: "py_oop",
-    question: "Create a class 'Employee' with class method to track employee count.",
-    mathSolution: "Class variable counts instances, class method accesses it",
-    codeSolution: "class Employee:\n    # Class variable\n    employee_count = 0\n    \n    def __init__(self, name, salary):\n        self.name = name\n        self.salary = salary\n        Employee.employee_count += 1\n        self.emp_id = Employee.employee_count\n    \n    def display_info(self):\n        print(f'ID: {self.emp_id}, Name: {self.name}, Salary: ${self.salary}')\n    \n    @classmethod\n    def get_employee_count(cls):\n        return f'Total employees: {cls.employee_count}'\n    \n    @classmethod\n    def create_from_string(cls, emp_string):\n        # Factory method: create employee from string \"name,salary\"\n        name, salary = emp_string.split(',')\n        return cls(name.strip(), float(salary.strip()))\n    \n    @staticmethod\n    def validate_salary(salary):\n        return salary > 0\n\n# Create employees\nprint(Employee.get_employee_count())\n\nemp1 = Employee('John Doe', 50000)\nemp2 = Employee('Jane Smith', 60000)\nemp3 = Employee.create_from_string('Bob Johnson,55000')\n\nemp1.display_info()\nemp2.display_info()\nemp3.display_info()\n\nprint(Employee.get_employee_count())\n\n# Use static method\nprint(f'Salary 50000 valid: {Employee.validate_salary(50000)}')\nprint(f'Salary -1000 valid: {Employee.validate_salary(-1000)}')",
-    hint: "Use class variable to track count, increment in __init__"
+    question:
+      'Create a class "Logger" that uses __new__ method to implement Singleton pattern.',
+    mathSolution:
+      "__new__ controls instance creation, return same instance each time.",
+    codeSolution:
+      'class Logger:\n    _instance = None\n    \n    def __new__(cls):\n        if cls._instance is None:\n            cls._instance = super().__new__(cls)\n        return cls._instance\n    \n    def log(self, message):\n        print(f"LOG: {message}")\n\nl1 = Logger()\nl2 = Logger()\nprint(l1 is l2)  # True',
+    hint: "Store instance in class variable",
   },
   {
-    Id: "py_oop_28",
+    id: "py_oop_28",
     topicId: "py_oop",
-    question: "Create a class 'Point' with distance calculation methods.",
-    mathSolution: "Distance = √[(x₂-x₁)² + (y₂-y₁)²] for 2D, similar for 3D",
-    codeSolution: "import math\n\nclass Point:\n    def __init__(self, x, y, z=0):\n        self.x = x\n        self.y = y\n        self.z = z\n    \n    def distance_to(self, other):\n        \"\"\"Calculate Euclidean distance to another point\"\"\"\n        dx = self.x - other.x\n        dy = self.y - other.y\n        dz = self.z - other.z\n        return math.sqrt(dx**2 + dy**2 + dz**2)\n    \n    def distance_from_origin(self):\n        return math.sqrt(self.x**2 + self.y**2 + self.z**2)\n    \n    def midpoint(self, other):\n        \"\"\"Return midpoint between this point and another\"\"\"\n        return Point(\n            (self.x + other.x) / 2,\n            (self.y + other.y) / 2,\n            (self.z + other.z) / 2\n        )\n    \n    def __str__(self):\n        if self.z == 0:\n            return f'({self.x}, {self.y})'\n        return f'({self.x}, {self.y}, {self.z})'\n    \n    def __add__(self, other):\n        return Point(self.x + other.x, self.y + other.y, self.z + other.z)\n    \n    def __sub__(self, other):\n        return Point(self.x - other.x, self.y - other.y, self.z - other.z)\n\n# 2D points\np1 = Point(1, 2)\np2 = Point(4, 6)\n\nprint(f'p1 = {p1}')\nprint(f'p2 = {p2}')\nprint(f'Distance between p1 and p2: {p1.distance_to(p2):.2f}')\nprint(f'p1 from origin: {p1.distance_from_origin():.2f}')\nprint(f'Midpoint: {p1.midpoint(p2)}')\n\n# 3D points\np3 = Point(1, 2, 3)\np4 = Point(4, 5, 6)\nprint(f'\\np3 = {p3}')\nprint(f'p4 = {p4}')\nprint(f'3D distance: {p3.distance_to(p4):.2f}')",
-    hint: "Use math.sqrt() for square root"
+    question:
+      "Use __call__ magic method to make a class instance callable like a function.",
+    mathSolution: "__call__ allows object to be called as function.",
+    codeSolution:
+      "class Multiplier:\n    def __init__(self, factor):\n        self.factor = factor\n    \n    def __call__(self, x):\n        return x * self.factor\n\ndouble = Multiplier(2)\nprint(double(5))  # 10\nprint(double(10))  # 20",
+    hint: "Define `def __call__(self, params):`",
   },
   {
-    Id: "py_oop_29",
+    id: "py_oop_29",
     topicId: "py_oop",
-    question: "Create a class 'Book' with magic methods __str__, __repr__, and __eq__.",
-    mathSolution: "Magic methods define object representation and comparison",
-    codeSolution: "class Book:\n    def __init__(self, title, author, isbn, year):\n        self.title = title\n        self.author = author\n        self.isbn = isbn\n        self.year = year\n    \n    def __str__(self):\n        \"\"\"User-friendly string representation\"\"\"\n        return f'\"{self.title}\" by {self.author} ({self.year})'\n    \n    def __repr__(self):\n        \"\"\"Developer-friendly string representation\"\"\"\n        return f\"Book('{self.title}', '{self.author}', '{self.isbn}', {self.year})\"\n    \n    def __eq__(self, other):\n        \"\"\"Equality comparison based on ISBN\"\"\"\n        if not isinstance(other, Book):\n            return False\n        return self.isbn == other.isbn\n    \n    def __lt__(self, other):\n        \"\"\"Less than comparison based on year\"\"\"\n        return self.year < other.year\n    \n    def __hash__(self):\n        \"\"\"Hash based on ISBN\"\"\"\n        return hash(self.isbn)\n    \n    def __len__(self):\n        \"\"\"Length of title\"\"\"\n        return len(self.title)\n\n# Create books\nbook1 = Book('1984', 'George Orwell', '978-0451524935', 1949)\nbook2 = Book('Animal Farm', 'George Orwell', '978-0451526342', 1945)\nbook3 = Book('1984', 'George Orwell', '978-0451524935', 1949)  # Same ISBN\n\n# __str__ and __repr__\nprint(str(book1))\nprint(repr(book1))\n\n# __eq__\nprint(f'book1 == book2: {book1 == book2}')\nprint(f'book1 == book3: {book1 == book3}')\n\n# __lt__ for sorting\nbooks = [book1, book2]\nbooks.sort()\nprint('Sorted by year:')\nfor book in books:\n    print(f'  {book}')\n\n# __len__\nprint(f\"Title length: {len(book1)}\")\n\n# Use in set (requires __hash__)\nbook_set = {book1, book2, book3}\nprint(f'Set size (duplicates removed): {len(book_set)}')",
-    hint: "__str__ for users, __repr__ for developers, __eq__ for comparison"
+    question:
+      'Create a class "Employee" with a destructor __del__ that prints message when object is deleted.',
+    mathSolution: "__del__ is called when object is garbage collected.",
+    codeSolution:
+      'class Employee:\n    def __init__(self, name):\n        self.name = name\n        print(f"Employee {name} created")\n    \n    def __del__(self):\n        print(f"Employee {self.name} deleted")\n\nemp = Employee("John")\ndel emp  # Employee John deleted',
+    hint: "Define `def __del__(self):`",
   },
   {
-    Id: "py_oop_30",
+    id: "py_oop_30",
     topicId: "py_oop",
-    question: "Create a class 'Logger' using Singleton pattern.",
-    mathSolution: "Singleton ensures only one instance of a class exists",
-    codeSolution: "class Logger:\n    _instance = None\n    \n    def __new__(cls):\n        if cls._instance is None:\n            print('Creating new Logger instance')\n            cls._instance = super().__new__(cls)\n            cls._instance.logs = []\n        return cls._instance\n    \n    def log(self, message, level='INFO'):\n        from datetime import datetime\n        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')\n        log_entry = f'[{timestamp}] {level}: {message}'\n        self.logs.append(log_entry)\n        print(log_entry)\n    \n    def get_logs(self):\n        return self.logs.copy()\n    \n    def clear_logs(self):\n        self.logs.clear()\n        print('Logs cleared')\n\n# Test Singleton\nlogger1 = Logger()\nlogger2 = Logger()\n\nprint(f'logger1 is logger2: {logger1 is logger2}')\n\n# Use logger\nlogger1.log('Application started')\nlogger1.log('User logged in', 'DEBUG')\nlogger2.log('Database connected', 'INFO')\n\nprint('\\nAll logs:')\nfor log in logger1.get_logs():\n    print(f'  {log}')\n\n# Clear logs\nlogger2.clear_logs()\nprint(f'Logs after clear: {logger1.get_logs()}')",
-    hint: "Override __new__ to control instance creation"
+    question:
+      'Create a class "Time" with hours and minutes, and implement __add__ to add two Time objects.',
+    mathSolution: "Handle minutes overflow (60 minutes = 1 hour).",
+    codeSolution:
+      'class Time:\n    def __init__(self, hours, minutes):\n        self.hours = hours\n        self.minutes = minutes\n    \n    def __add__(self, other):\n        total_minutes = self.minutes + other.minutes\n        total_hours = self.hours + other.hours + total_minutes // 60\n        total_minutes = total_minutes % 60\n        return Time(total_hours, total_minutes)\n    \n    def __str__(self):\n        return f"{self.hours}:{self.minutes:02d}"\n\nt1 = Time(2, 45)\nt2 = Time(1, 30)\nprint(t1 + t2)  # 4:15',
+    hint: "Use `// 60` and `% 60` for carryover",
   },
   {
-    Id: "py_oop_31",
+    id: "py_oop_31",
     topicId: "py_oop",
-    question: "Create a class 'Observable' that implements the Observer pattern.",
-    mathSolution: "Observers register with subject and get notified of changes",
-    codeSolution: "class Observer:\n    def update(self, message):\n        pass\n\nclass Observable:\n    def __init__(self):\n        self._observers = []\n    \n    def add_observer(self, observer):\n        if observer not in self._observers:\n            self._observers.append(observer)\n    \n    def remove_observer(self, observer):\n        if observer in self._observers:\n            self._observers.remove(observer)\n    \n    def notify_observers(self, message):\n        for observer in self._observers:\n            observer.update(message)\n\nclass NewsAgency(Observable):\n    def __init__(self, name):\n        super().__init__()\n        self.name = name\n        self.news = []\n    \n    def publish_news(self, headline):\n        self.news.append(headline)\n        self.notify_observers(f'{self.name}: {headline}')\n\nclass NewsChannel(Observer):\n    def __init__(self, name):\n        self.name = name\n        self.received_news = []\n    \n    def update(self, message):\n        self.received_news.append(message)\n        print(f'{self.name} received: {message}')\n    \n    def show_news(self):\n        print(f'\\n{self.name} news feed:')\n        for news in self.received_news[-5:]:  # Last 5\n            print(f'  {news}')\n\nclass NewsApp(Observer):\n    def __init__(self, user):\n        self.user = user\n        self.notifications = []\n    \n    def update(self, message):\n        self.notifications.append(message)\n        print(f'Notification for {self.user}: {message}')\n\n# Create observable\nagency = NewsAgency('Global News')\n\n# Create observers\ncnn = NewsChannel('CNN')\nbbc = NewsChannel('BBC')\napp = NewsApp('John')\n\n# Register observers\nagency.add_observer(cnn)\nagency.add_observer(bbc)\nagency.add_observer(app)\n\n# Publish news\nagency.publish_news('Breaking: Major event happened!')\nagency.publish_news('Weather update: Sunny today')\n\n# Show feeds\ncnn.show_news()\nbbc.show_news()",
-    hint: "Subject maintains list of observers and notifies them of changes"
+    question:
+      'Create a class "BankAccount" with __str__, __repr__, and __len__ (balance in thousands).',
+    mathSolution: "__repr__ is for developers, __str__ for users.",
+    codeSolution:
+      'class BankAccount:\n    def __init__(self, owner, balance):\n        self.owner = owner\n        self.balance = balance\n    \n    def __str__(self):\n        return f"Account of {self.owner} with balance ${self.balance}"\n    \n    def __repr__(self):\n        return f"BankAccount(\'{self.owner}\', {self.balance})"\n    \n    def __len__(self):\n        return self.balance // 1000\n\nacc = BankAccount("Alice", 5000)\nprint(str(acc))  # Account of Alice with balance $5000\nprint(repr(acc))  # BankAccount(\'Alice\', 5000)\nprint(len(acc))  # 5',
+    hint: "Define all three magic methods",
   },
   {
-    Id: "py_oop_32",
+    id: "py_oop_32",
     topicId: "py_oop",
-    question: "Create a class 'Vector' with dot product, cross product, and magnitude.",
-    mathSolution: "Dot: a·b = Σ(ai×bi), Cross: a×b = (a2b3-a3b2, a3b1-a1b3, a1b2-a2b1)",
-    codeSolution: "import math\n\nclass Vector:\n    def __init__(self, *components):\n        self.components = list(components)\n    \n    def __len__(self):\n        return len(self.components)\n    \n    def __getitem__(self, index):\n        return self.components[index]\n    \n    def __add__(self, other):\n        if len(self) != len(other):\n            raise ValueError('Vectors must have same dimension')\n        result = [self[i] + other[i] for i in range(len(self))]\n        return Vector(*result)\n    \n    def __sub__(self, other):\n        if len(self) != len(other):\n            raise ValueError('Vectors must have same dimension')\n        result = [self[i] - other[i] for i in range(len(self))]\n        return Vector(*result)\n    \n    def __mul__(self, scalar):\n        result = [self[i] * scalar for i in range(len(self))]\n        return Vector(*result)\n    \n    def dot(self, other):\n        if len(self) != len(other):\n            raise ValueError('Vectors must have same dimension')\n        return sum(self[i] * other[i] for i in range(len(self)))\n    \n    def cross(self, other):\n        if len(self) != 3 or len(other) != 3:\n            raise ValueError('Cross product only defined for 3D vectors')\n        x = self[1] * other[2] - self[2] * other[1]\n        y = self[2] * other[0] - self[0] * other[2]\n        z = self[0] * other[1] - self[1] * other[0]\n        return Vector(x, y, z)\n    \n    def magnitude(self):\n        return math.sqrt(sum(x**2 for x in self.components))\n    \n    def normalize(self):\n        mag = self.magnitude()\n        if mag == 0:\n            raise ValueError('Cannot normalize zero vector')\n        return self * (1 / mag)\n    \n    def __str__(self):\n        return f'Vector{tuple(self.components)}'\n\n# 2D vectors\nv1 = Vector(1, 2)\nv2 = Vector(3, 4)\nprint(f'v1 = {v1}')\nprint(f'v2 = {v2}')\nprint(f'v1 + v2 = {v1 + v2}')\nprint(f'v1 dot v2 = {v1.dot(v2)}')\nprint(f'|v1| = {v1.magnitude():.2f}')\n\n# 3D vectors\nv3 = Vector(1, 0, 0)\nv4 = Vector(0, 1, 0)\nprint(f'\\nv3 = {v3}')\nprint(f'v4 = {v4}')\nprint(f'v3 × v4 = {v3.cross(v4)}')\nprint(f'v3 normalized = {v3.normalize()}')",
-    hint: "Use *args in constructor to accept any number of components"
+    question:
+      'Create a class "Playlist" that supports iteration by implementing __iter__ and __next__.',
+    mathSolution: "Make class iterable by implementing iterator protocol.",
+    codeSolution:
+      'class Playlist:\n    def __init__(self, songs):\n        self.songs = songs\n        self._index = 0\n    \n    def __iter__(self):\n        self._index = 0\n        return self\n    \n    def __next__(self):\n        if self._index < len(self.songs):\n            song = self.songs[self._index]\n            self._index += 1\n            return song\n        raise StopIteration\n\nplaylist = Playlist(["Song1", "Song2", "Song3"])\nfor song in playlist:\n    print(song)',
+    hint: "Implement both __iter__ and __next__",
   },
   {
-    Id: "py_oop_33",
+    id: "py_oop_33",
     topicId: "py_oop",
-    question: "Create a class 'Employee' with composition: Employee has an Address.",
-    mathSolution: "Composition: one class contains instances of another class",
-    codeSolution: "class Address:\n    def __init__(self, street, city, state, zip_code):\n        self.street = street\n        self.city = city\n        self.state = state\n        self.zip_code = zip_code\n    \n    def __str__(self):\n        return f'{self.street}, {self.city}, {self.state} {self.zip_code}'\n    \n    def validate(self):\n        return all([self.street, self.city, self.state, self.zip_code])\n\nclass Employee:\n    def __init__(self, name, salary, address):\n        self.name = name\n        self.salary = salary\n        self.address = address  # Composition\n    \n    def display_info(self):\n        print(f'Name: {self.name}')\n        print(f'Salary: ${self.salary}')\n        print(f'Address: {self.address}')\n    \n    def relocate(self, new_address):\n        self.address = new_address\n        print(f'{self.name} relocated to {self.address}')\n\n# Create address objects\naddr1 = Address('123 Main St', 'New York', 'NY', '10001')\naddr2 = Address('456 Oak Ave', 'Los Angeles', 'CA', '90001')\n\n# Create employee with address\nemp = Employee('John Doe', 75000, addr1)\nemp.display_info()\n\n# Relocate\nemp.relocate(addr2)\nemp.display_info()\n\n# Company with multiple employees\nclass Company:\n    def __init__(self, name):\n        self.name = name\n        self.employees = []\n    \n    def hire(self, employee):\n        self.employees.append(employee)\n        print(f'Hired: {employee.name}')\n    \n    def list_employees(self):\n        print(f'\\n{self.name} Employees:')\n        for emp in self.employees:\n            print(f'  {emp.name} - {emp.address.city}')\n\ncompany = Company('Tech Corp')\ncompany.hire(emp)\ncompany.hire(Employee('Jane Smith', 85000, addr2))\ncompany.list_employees()",
-    hint: "Pass Address object to Employee constructor"
+    question:
+      'Use @property decorator to create read-only attribute "area" in class "Circle".',
+    mathSolution: "Property without setter creates read-only attribute.",
+    codeSolution:
+      "import math\n\nclass Circle:\n    def __init__(self, radius):\n        self._radius = radius\n    \n    @property\n    def radius(self):\n        return self._radius\n    \n    @property\n    def area(self):\n        return math.pi * self._radius ** 2\n\nc = Circle(5)\nprint(c.area)  # 78.53981633974483\n# c.area = 100  # AttributeError: can't set attribute",
+    hint: "Define property without setter",
   },
   {
-    Id: "py_oop_34",
+    id: "py_oop_34",
     topicId: "py_oop",
-    question: "Create a class 'Password' with strength checker and validation.",
-    mathSolution: "Password strength based on length, uppercase, lowercase, digits, special chars",
-    codeSolution: "import re\n\nclass Password:\n    def __init__(self, password):\n        self.password = password\n    \n    def check_strength(self):\n        score = 0\n        feedback = []\n        \n        # Length check\n        if len(self.password) >= 12:\n            score += 3\n            feedback.append('✓ Good length')\n        elif len(self.password) >= 8:\n            score += 2\n            feedback.append('✓ Adequate length')\n        else:\n            feedback.append('✗ Too short (min 8 characters)')\n        \n        # Uppercase check\n        if re.search(r'[A-Z]', self.password):\n            score += 2\n            feedback.append('✓ Has uppercase')\n        else:\n            feedback.append('✗ No uppercase letters')\n        \n        # Lowercase check\n        if re.search(r'[a-z]', self.password):\n            score += 2\n            feedback.append('✓ Has lowercase')\n        else:\n            feedback.append('✗ No lowercase letters')\n        \n        # Digit check\n        if re.search(r'[0-9]', self.password):\n            score += 2\n            feedback.append('✓ Has numbers')\n        else:\n            feedback.append('✗ No numbers')\n        \n        # Special character check\n        if re.search(r'[!@#$%^&*(),.?\":{}|<>]', self.password):\n            score += 2\n            feedback.append('✓ Has special characters')\n        else:\n            feedback.append('✗ No special characters')\n        \n        # Strength rating\n        if score >= 9:\n            strength = 'STRONG'\n        elif score >= 6:\n            strength = 'MEDIUM'\n        else:\n            strength = 'WEAK'\n        \n        return strength, score, feedback\n    \n    def __str__(self):\n        strength, score, _ = self.check_strength()\n        return f'Password: {\"*\" * len(self.password)} ({strength}, score: {score}/11)'\n\n# Test passwords\npasswords = [\n    'pass123',\n    'Password123',\n    'P@ssw0rd!',\n    'Th1sIs@Str0ngP@ssw0rd!'\n]\n\nfor pwd in passwords:\n    password = Password(pwd)\n    print(f'\\n{password}')\n    strength, score, feedback = password.check_strength()\n    for item in feedback:\n        print(f'  {item}')",
-    hint: "Use regular expressions (re module) for pattern matching"
+    question:
+      'Create a class "StringManipulator" that overloads the * operator to repeat string n times.',
+    mathSolution: "Implement __mul__ method.",
+    codeSolution:
+      'class StringManipulator:\n    def __init__(self, text):\n        self.text = text\n    \n    def __mul__(self, n):\n        return StringManipulator(self.text * n)\n    \n    def __str__(self):\n        return self.text\n\ns = StringManipulator("Hi")\nresult = s * 3\nprint(result)  # HiHiHi',
+    hint: "Define `def __mul__(self, n):`",
   },
   {
-    Id: "py_oop_35",
+    id: "py_oop_35",
     topicId: "py_oop",
-    question: "Create a class 'URL' that parses and manipulates URLs.",
-    mathSolution: "URL structure: scheme://netloc/path;params?query#fragment",
-    codeSolution: "from urllib.parse import urlparse, parse_qs, urlunparse\n\nclass URL:\n    def __init__(self, url_string):\n        self.url_string = url_string\n        self.parsed = urlparse(url_string)\n    \n    @property\n    def scheme(self):\n        return self.parsed.scheme\n    \n    @property\n    def netloc(self):\n        return self.parsed.netloc\n    \n    @property\n    def path(self):\n        return self.parsed.path\n    \n    @property\n    def params(self):\n        return self.parsed.params\n    \n    @property\n    def query(self):\n        return self.parsed.query\n    \n    @property\n    def fragment(self):\n        return self.parsed.fragment\n    \n    def get_query_params(self):\n        return parse_qs(self.parsed.query)\n    \n    def add_query_param(self, key, value):\n        params = self.get_query_params()\n        params[key] = [value]\n        from urllib.parse import urlencode\n        new_query = urlencode(params, doseq=True)\n        \n        # Rebuild URL\n        from urllib.parse import urlunparse\n        new_url = urlunparse((\n            self.scheme,\n            self.netloc,\n            self.path,\n            self.params,\n            new_query,\n            self.fragment\n        ))\n        return URL(new_url)\n    \n    def without_query(self):\n        new_url = urlunparse((\n            self.scheme,\n            self.netloc,\n            self.path,\n            self.params,\n            '',\n            self.fragment\n        ))\n        return URL(new_url)\n    \n    def __str__(self):\n        return self.url_string\n    \n    def __repr__(self):\n        return f'URL(\"{self.url_string}\")'\n\n# Test URLs\nurls = [\n    'https://www.example.com',\n    'https://www.example.com/path/to/page',\n    'https://www.example.com/search?q=python&page=2',\n    'https://www.example.com/path;params?q=test#section'\n]\n\nfor url_str in urls:\n    url = URL(url_str)\n    print(f'\\nURL: {url}')\n    print(f'  Scheme: {url.scheme}')\n    print(f'  Netloc: {url.netloc}')\n    print(f'  Path: {url.path}')\n    print(f'  Query: {url.query}')\n    print(f'  Fragment: {url.fragment}')\n    \n    if url.query:\n        params = url.get_query_params()\n        print(f'  Query params: {params}')\n\n# Manipulate URL\nurl = URL('https://example.com/search?q=python')\nprint(f'\\nOriginal: {url}')\nnew_url = url.add_query_param('page', '2')\nprint(f'With added param: {new_url}')\nwithout_query = url.without_query()\nprint(f'Without query: {without_query}')",
-    hint: "Use urllib.parse module for URL parsing"
+    question:
+      "Create a class hierarchy: Animal (parent) -> Mammal -> Dog, demonstrating multi-level inheritance.",
+    mathSolution: "Chain inheritance Animal → Mammal → Dog.",
+    codeSolution:
+      'class Animal:\n    def breathe(self):\n        return "Breathing"\n\nclass Mammal(Animal):\n    def feed_milk(self):\n        return "Feeding milk"\n\nclass Dog(Mammal):\n    def bark(self):\n        return "Woof!"\n\nd = Dog()\nprint(d.breathe())  # Breathing\nprint(d.feed_milk())  # Feeding milk\nprint(d.bark())  # Woof!',
+    hint: "Define class Dog(Mammal) and Mammal(Animal)",
   },
   {
-    Id: "py_oop_36",
+    id: "py_oop_36",
     topicId: "py_oop",
-    question: "Create a class 'Cache' using dictionary with timeout mechanism.",
-    mathSolution: "Cache stores key-value pairs with expiration time",
-    codeSolution: "import time\n\nclass Cache:\n    def __init__(self, default_timeout=60):\n        self.cache = {}\n        self.default_timeout = default_timeout\n    \n    def set(self, key, value, timeout=None):\n        if timeout is None:\n            timeout = self.default_timeout\n        \n        expires_at = time.time() + timeout\n        self.cache[key] = {\n            'value': value,\n            'expires_at': expires_at\n        }\n        print(f'Set: {key} = {value} (expires in {timeout}s)')\n    \n    def get(self, key):\n        if key not in self.cache:\n            return None\n        \n        item = self.cache[key]\n        if time.time() > item['expires_at']:\n            # Expired\n            del self.cache[key]\n            return None\n        \n        return item['value']\n    \n    def delete(self, key):\n        if key in self.cache:\n            del self.cache[key]\n            print(f'Deleted: {key}')\n    \n    def clear_expired(self):\n        now = time.time()\n        expired = [k for k, v in self.cache.items() if now > v['expires_at']]\n        for k in expired:\n            del self.cache[k]\n        return len(expired)\n    \n    def __contains__(self, key):\n        return self.get(key) is not None\n    \n    def __len__(self):\n        self.clear_expired()\n        return len(self.cache)\n\n# Test cache\ncache = Cache(default_timeout=5)\n\n# Set values\ncache.set('user:1', {'name': 'Alice', 'age': 30})\ncache.set('user:2', {'name': 'Bob', 'age': 25}, 10)\n\n# Get values\nprint(f'\\nuser:1 = {cache.get(\"user:1\")}')\nprint(f'user:2 = {cache.get(\"user:2\")}')\n\n# Wait for expiration\nprint('\\nWaiting 6 seconds...')\ntime.sleep(6)\n\nprint(f'user:1 after sleep = {cache.get(\"user:1\")}')  # Should be None\nprint(f'user:2 after sleep = {cache.get(\"user:2\")}')  # Should still exist\n\nprint(f'\\nCache size: {len(cache)}')\n\n# Check membership\nprint(f'user:1 in cache: {\"user:1\" in cache}')\nprint(f'user:2 in cache: {\"user:2\" in cache}')",
-    hint: "Store expiration timestamp with each value"
+    question:
+      "Use method resolution order (MRO) to understand which method is called in multiple inheritance.",
+    mathSolution: "Python uses C3 linearization for MRO.",
+    codeSolution:
+      'class A:\n    def method(self):\n        return "A"\n\nclass B(A):\n    def method(self):\n        return "B"\n\nclass C(A):\n    def method(self):\n        return "C"\n\nclass D(B, C):\n    pass\n\nd = D()\nprint(d.method())  # B (MRO: D -> B -> C -> A)\nprint(D.__mro__)',
+    hint: "Use `ClassName.__mro__` to see order",
   },
   {
-    Id: "py_oop_37",
+    id: "py_oop_37",
     topicId: "py_oop",
-    question: "Create a class 'RomanNumeral' that converts between Roman and Arabic numerals.",
-    mathSolution: "Roman numerals: I=1, V=5, X=10, L=50, C=100, D=500, M=1000",
-    codeSolution: "class RomanNumeral:\n    roman_map = [\n        (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),\n        (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),\n        (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')\n    ]\n    \n    roman_values = {\n        'I': 1, 'V': 5, 'X': 10, 'L': 50,\n        'C': 100, 'D': 500, 'M': 1000\n    }\n    \n    def __init__(self, value):\n        if isinstance(value, int):\n            if value < 1 or value > 3999:\n                raise ValueError('Roman numerals only support 1-3999')\n            self.arabic = value\n            self.roman = self._to_roman(value)\n        elif isinstance(value, str):\n            self.roman = value.upper()\n            self.arabic = self._from_roman(value.upper())\n        else:\n            raise TypeError('Value must be int or str')\n    \n    def _to_roman(self, num):\n        result = ''\n        for value, symbol in self.roman_map:\n            while num >= value:\n                result += symbol\n                num -= value\n        return result\n    \n    def _from_roman(self, roman):\n        result = 0\n        i = 0\n        while i < len(roman):\n            current = self.roman_values[roman[i]]\n            if i + 1 < len(roman) and self.roman_values[roman[i+1]] > current:\n                result += self.roman_values[roman[i+1]] - current\n                i += 2\n            else:\n                result += current\n                i += 1\n        return result\n    \n    def __int__(self):\n        return self.arabic\n    \n    def __str__(self):\n        return self.roman\n    \n    def __add__(self, other):\n        if isinstance(other, RomanNumeral):\n            return RomanNumeral(self.arabic + other.arabic)\n        return RomanNumeral(self.arabic + other)\n    \n    def __sub__(self, other):\n        if isinstance(other, RomanNumeral):\n            return RomanNumeral(self.arabic - other.arabic)\n        return RomanNumeral(self.arabic - other)\n\n# Test conversions\nnumbers = [1, 4, 9, 40, 99, 500, 2024]\n\nprint('Arabic to Roman:')\nfor num in numbers:\n    r = RomanNumeral(num)\n    print(f'  {num:4} = {r}')\n\nprint('\\nRoman to Arabic:')\nromans = ['I', 'IV', 'IX', 'XL', 'XCIX', 'D', 'MMXXIV']\nfor roman in romans:\n    r = RomanNumeral(roman)\n    print(f'  {roman:6} = {int(r)}')\n\n# Arithmetic\nr1 = RomanNumeral(10)\nr2 = RomanNumeral('V')\nprint(f'\\n{r1} + {r2} = {r1 + r2}')\nprint(f'{r1} - {r2} = {r1 - r2}')",
-    hint: "Handle subtractive notation (IV = 4, IX = 9, etc.)"
+    question:
+      'Create a class "Product" with validation in setter: price cannot be negative.',
+    mathSolution: "Use property setter with validation.",
+    codeSolution:
+      'class Product:\n    def __init__(self, name, price):\n        self.name = name\n        self.price = price\n    \n    @property\n    def price(self):\n        return self._price\n    \n    @price.setter\n    def price(self, value):\n        if value < 0:\n            raise ValueError("Price cannot be negative")\n        self._price = value\n\np = Product("Laptop", 1000)\np.price = 1200\n# p.price = -500  # ValueError',
+    hint: "Raise ValueError for invalid values",
   },
   {
-    Id: "py_oop_38",
+    id: "py_oop_38",
     topicId: "py_oop",
-    question: "Create a class 'Polygon' that calculates area and perimeter for regular polygons.",
-    mathSolution: "Perimeter = n × side, Area = (n × side²) / (4 × tan(π/n))",
-    codeSolution: "import math\n\nclass Polygon:\n    def __init__(self, num_sides, side_length):\n        if num_sides < 3:\n            raise ValueError('Polygon must have at least 3 sides')\n        self.num_sides = num_sides\n        self.side_length = side_length\n    \n    @property\n    def perimeter(self):\n        return self.num_sides * self.side_length\n    \n    @property\n    def area(self):\n        if self.num_sides == 3:\n            # Equilateral triangle\n            return (math.sqrt(3) / 4) * self.side_length ** 2\n        elif self.num_sides == 4:\n            # Square\n            return self.side_length ** 2\n        else:\n            # Regular polygon formula\n            return (self.num_sides * self.side_length ** 2) / (4 * math.tan(math.pi / self.num_sides))\n    \n    @property\n    def apothem(self):\n        \"\"\"Distance from center to midpoint of side\"\"\"\n        return self.side_length / (2 * math.tan(math.pi / self.num_sides))\n    \n    @property\n    def circumradius(self):\n        \"\"\"Radius of circumscribed circle\"\"\"\n        return self.side_length / (2 * math.sin(math.pi / self.num_sides))\n    \n    def __str__(self):\n        return f'{self.num_sides}-sided polygon with side {self.side_length}'\n\n# Create polygons\npolygons = [\n    Polygon(3, 5),   # Triangle\n    Polygon(4, 5),   # Square\n    Polygon(5, 5),   # Pentagon\n    Polygon(6, 5),   # Hexagon\n    Polygon(8, 5)    # Octagon\n]\n\nprint('Regular Polygons (side = 5):')\nfor p in polygons:\n    print(f'\\n{p}')\n    print(f'  Perimeter: {p.perimeter:.2f}')\n    print(f'  Area: {p.area:.2f}')\n    print(f'  Apothem: {p.apothem:.2f}')\n    print(f'  Circumradius: {p.circumradius:.2f}')\n\n# Compare area as sides increase\nprint('\\nArea vs Number of Sides:')\nfor sides in range(3, 9):\n    p = Polygon(sides, 1)\n    print(f'  {sides} sides: area = {p.area:.4f} (approaches circle area πr² ≈ 0.7854)')",
-    hint: "Use math.tan() and math.pi for calculations"
+    question:
+      'Create a class "Counter" with __iadd__ method to support += operator.',
+    mathSolution: "__iadd__ defines in-place addition.",
+    codeSolution:
+      'class Counter:\n    def __init__(self, value=0):\n        self.value = value\n    \n    def __iadd__(self, other):\n        self.value += other\n        return self\n    \n    def __str__(self):\n        return f"Counter({self.value})"\n\nc = Counter(5)\nc += 3\nprint(c)  # Counter(8)',
+    hint: "Define `def __iadd__(self, other):`",
   },
   {
-    Id: "py_oop_39",
+    id: "py_oop_39",
     topicId: "py_oop",
-    question: "Create a class 'UnitConverter' with multiple unit conversions.",
-    mathSolution: "Use conversion factors and formulas for different units",
-    codeSolution: "class UnitConverter:\n    # Length conversions (to meters)\n    length_to_m = {\n        'm': 1, 'km': 1000, 'cm': 0.01, 'mm': 0.001,\n        'mile': 1609.344, 'yard': 0.9144, 'foot': 0.3048,\n        'inch': 0.0254, 'nautical_mile': 1852\n    }\n    \n    # Weight conversions (to kg)\n    weight_to_kg = {\n        'kg': 1, 'g': 0.001, 'mg': 0.000001,\n        'lb': 0.453592, 'oz': 0.0283495,\n        'stone': 6.35029, 'ton': 1000\n    }\n    \n    # Temperature conversions\n    @staticmethod\n    def celsius_to_fahrenheit(c):\n        return (c * 9/5) + 32\n    \n    @staticmethod\n    def fahrenheit_to_celsius(f):\n        return (f - 32) * 5/9\n    \n    @staticmethod\n    def celsius_to_kelvin(c):\n        return c + 273.15\n    \n    @classmethod\n    def convert_length(cls, value, from_unit, to_unit):\n        if from_unit not in cls.length_to_m or to_unit not in cls.length_to_m:\n            raise ValueError('Invalid length unit')\n        \n        # Convert to meters first, then to target unit\n        meters = value * cls.length_to_m[from_unit]\n        result = meters / cls.length_to_m[to_unit]\n        return result\n    \n    @classmethod\n    def convert_weight(cls, value, from_unit, to_unit):\n        if from_unit not in cls.weight_to_kg or to_unit not in cls.weight_to_kg:\n            raise ValueError('Invalid weight unit')\n        \n        kg = value * cls.weight_to_kg[from_unit]\n        result = kg / cls.weight_to_kg[to_unit]\n        return result\n    \n    @classmethod\n    def list_units(cls, category):\n        if category == 'length':\n            return list(cls.length_to_m.keys())\n        elif category == 'weight':\n            return list(cls.weight_to_kg.keys())\n        elif category == 'temperature':\n            return ['celsius', 'fahrenheit', 'kelvin']\n        return []\n\n# Test length conversions\nprint('Length Conversions:')\nlengths = [\n    (1, 'km', 'mile'),\n    (100, 'cm', 'inch'),\n    (1, 'mile', 'm'),\n    (1, 'foot', 'm')\n]\n\nfor value, from_unit, to_unit in lengths:\n    result = UnitConverter.convert_length(value, from_unit, to_unit)\n    print(f'  {value} {from_unit} = {result:.4f} {to_unit}')\n\n# Test weight conversions\nprint('\\nWeight Conversions:')\nweights = [\n    (1, 'kg', 'lb'),\n    (1, 'lb', 'kg'),\n    (100, 'g', 'oz'),\n    (1, 'stone', 'kg')\n]\n\nfor value, from_unit, to_unit in weights:\n    result = UnitConverter.convert_weight(value, from_unit, to_unit)\n    print(f'  {value} {from_unit} = {result:.4f} {to_unit}')\n\n# Test temperature conversions\nprint('\\nTemperature Conversions:')\nprint(f'  0°C = {UnitConverter.celsius_to_fahrenheit(0)}°F')\nprint(f'  100°C = {UnitConverter.celsius_to_fahrenheit(100)}°F')\nprint(f'  98.6°F = {UnitConverter.fahrenheit_to_celsius(98.6):.1f}°C')\nprint(f'  0°C = {UnitConverter.celsius_to_kelvin(0)}K')",
-    hint: "Convert to base unit first, then to target unit"
+    question:
+      'Create a class "DatabaseConnection" that uses __enter__ and __exit__ for context manager.',
+    mathSolution: 'Context manager protocol enables "with" statement.',
+    codeSolution:
+      'class DatabaseConnection:\n    def __enter__(self):\n        print("Connecting to database...")\n        return self\n    \n    def __exit__(self, exc_type, exc_val, exc_tb):\n        print("Closing database connection...")\n    \n    def query(self, sql):\n        print(f"Executing: {sql}")\n\nwith DatabaseConnection() as db:\n    db.query("SELECT * FROM users")',
+    hint: "Implement __enter__ and __exit__",
   },
   {
-    Id: "py_oop_40",
+    id: "py_oop_40",
     topicId: "py_oop",
-    question: "Create a class 'Maze' that generates and solves simple mazes.",
-    mathSolution: "Use depth-first search or breadth-first search for pathfinding",
-    codeSolution: "import random\n\nclass Maze:\n    def __init__(self, width, height):\n        self.width = width\n        self.height = height\n        self.grid = [['#' for _ in range(width)] for _ in range(height)]\n    \n    def generate(self, start_x=1, start_y=1):\n        \"\"\"Generate a random maze using recursive backtracking\"\"\"\n        def carve(x, y):\n            self.grid[y][x] = ' '\n            directions = [(0, 2), (2, 0), (0, -2), (-2, 0)]\n            random.shuffle(directions)\n            \n            for dx, dy in directions:\n                nx, ny = x + dx, y + dy\n                if 0 <= nx < self.width and 0 <= ny < self.height and self.grid[ny][nx] == '#':\n                    # Carve passage\n                    self.grid[y + dy//2][x + dx//2] = ' '\n                    carve(nx, ny)\n        \n        # Start carving from given point\n        carve(start_x, start_y)\n        # Set start and end\n        self.grid[1][1] = 'S'\n        self.grid[self.height-2][self.width-2] = 'E'\n    \n    def solve(self):\n        \"\"\"Solve maze using BFS\"\"\"\n        # Find start\n        start = None\n        for y in range(self.height):\n            for x in range(self.width):\n                if self.grid[y][x] == 'S':\n                    start = (x, y)\n                    break\n        if not start:\n            return None\n        \n        # BFS\n        queue = [(start, [start])]\n        visited = {start}\n        \n        while queue:\n            (x, y), path = queue.pop(0)\n            \n            if self.grid[y][x] == 'E':\n                return path\n            \n            for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:\n                nx, ny = x + dx, y + dy\n                if (0 <= nx < self.width and 0 <= ny < self.height and \n                    (nx, ny) not in visited and self.grid[ny][nx] in [' ', 'E']):\n                    visited.add((nx, ny))\n                    queue.append(((nx, ny), path + [(nx, ny)]))\n        \n        return None\n    \n    def display(self, path=None):\n        \"\"\"Display maze with optional solution path\"\"\"\n        for y in range(self.height):\n            row = ''\n            for x in range(self.width):\n                if path and (x, y) in path and self.grid[y][x] not in ['S', 'E']:\n                    row += '.'\n                else:\n                    row += self.grid[y][x]\n            print(row)\n\n# Create and generate maze\nmaze = Maze(21, 11)\nmaze.generate()\nprint('Generated Maze:')\nmaze.display()\n\n# Solve maze\npath = maze.solve()\nif path:\n    print(f'\\nSolution found! Path length: {len(path)}')\n    print('Solved Maze (path shown as dots):')\n    maze.display(path)\nelse:\n    print('\\nNo solution found')",
-    hint: "Use '#' for walls, ' ' for paths, 'S' for start, 'E' for end"
+    question:
+      "Demonstrate method overloading using default arguments (Python doesn't support traditional overloading).",
+    mathSolution: "Use default parameters or *args to simulate overloading.",
+    codeSolution:
+      "class Math:\n    def add(self, a, b, c=0):\n        return a + b + c\n\nm = Math()\nprint(m.add(5, 3))  # 8 (2 arguments)\nprint(m.add(5, 3, 2))  # 10 (3 arguments)",
+    hint: "Use default parameters with value 0 or None",
   },
   {
-    Id: "py_oop_41",
+    id: "py_oop_41",
     topicId: "py_oop",
-    question: "Create a class 'TextProcessor' for text analysis (word count, frequency, etc.).",
-    mathSolution: "Count words, characters, sentences, and word frequencies",
-    codeSolution: "import re\nfrom collections import Counter\n\nclass TextProcessor:\n    def __init__(self, text=''):\n        self.text = text\n    \n    def load_file(self, filename):\n        try:\n            with open(filename, 'r', encoding='utf-8') as f:\n                self.text = f.read()\n            return True\n        except FileNotFoundError:\n            print(f'File {filename} not found')\n            return False\n    \n    def word_count(self):\n        words = re.findall(r'\\b\\w+\\b', self.text.lower())\n        return len(words)\n    \n    def character_count(self, include_spaces=True):\n        if include_spaces:\n            return len(self.text)\n        return len(self.text.replace(' ', ''))\n    \n    def sentence_count(self):\n        sentences = re.split(r'[.!?]+', self.text)\n        return len([s for s in sentences if s.strip()])\n    \n    def word_frequency(self, top_n=None):\n        words = re.findall(r'\\b\\w+\\b', self.text.lower())\n        freq = Counter(words)\n        if top_n:\n            return freq.most_common(top_n)\n        return freq\n    \n    def average_word_length(self):\n        words = re.findall(r'\\b\\w+\\b', self.text)\n        if not words:\n            return 0\n        return sum(len(word) for word in words) / len(words)\n    \n    def reading_time(self, words_per_minute=200):\n        minutes = self.word_count() / words_per_minute\n        return minutes\n    \n    def summary(self):\n        print('\\n=== Text Analysis Summary ===')\n        print(f'Characters (with spaces): {self.character_count(True)}')\n        print(f'Characters (no spaces): {self.character_count(False)}')\n        print(f'Words: {self.word_count()}')\n        print(f'Sentences: {self.sentence_count()}')\n        print(f'Average word length: {self.average_word_length():.2f}')\n        print(f'Reading time: {self.reading_time():.1f} minutes')\n        \n        print('\\nTop 5 most common words:')\n        for word, count in self.word_frequency(5):\n            print(f'  {word}: {count}')\n\n# Test with sample text\ntext = \"\"\"\nPython is a powerful programming language. It is widely used for web development,\ndata science, and artificial intelligence. Python's syntax is clear and readable,\nmaking it an excellent choice for beginners. Many companies use Python for their\nprojects. Python has a large ecosystem of libraries and frameworks.\n\"\"\"\n\nprocessor = TextProcessor(text)\nprocessor.summary()\n\n# Test with different text\nprocessor.text = \"Hello world! Hello everyone. How are you today?\"\nprint('\\n' + '='*30)\nprocessor.summary()",
-    hint: "Use regular expressions for word extraction, collections.Counter for frequency"
+    question:
+      'Create a class "LazyProperty" that computes property only once using caching.',
+    mathSolution: "Use internal attribute to cache computed value.",
+    codeSolution:
+      'class DataProcessor:\n    def __init__(self, data):\n        self.data = data\n        self._processed = None\n    \n    @property\n    def processed(self):\n        if self._processed is None:\n            print("Processing data...")\n            self._processed = sum(self.data)\n        return self._processed\n\ndp = DataProcessor([1, 2, 3, 4, 5])\nprint(dp.processed)  # Processing data... 15\nprint(dp.processed)  # 15 (cached, no processing)',
+    hint: "Check if attribute exists before computing",
   },
   {
-    Id: "py_oop_42",
+    id: "py_oop_42",
     topicId: "py_oop",
-    question: "Create a class 'Scheduler' for scheduling tasks with time slots.",
-    mathSolution: "Manage appointments in time slots, check for conflicts",
-    codeSolution: "from datetime import datetime, timedelta\n\nclass Appointment:\n    def __init__(self, start_time, end_time, title):\n        self.start_time = start_time\n        self.end_time = end_time\n        self.title = title\n    \n    def duration(self):\n        return (self.end_time - self.start_time).total_seconds() / 3600\n    \n    def conflicts_with(self, other):\n        return not (self.end_time <= other.start_time or \n                   self.start_time >= other.end_time)\n    \n    def __str__(self):\n        return f'{self.start_time.strftime(\"%H:%M\")}-{self.end_time.strftime(\"%H:%M\")}: {self.title}'\n\nclass Scheduler:\n    def __init__(self):\n        self.appointments = []\n    \n    def add_appointment(self, start, end, title):\n        # Parse times if strings\n        if isinstance(start, str):\n            start = datetime.strptime(start, '%H:%M')\n        if isinstance(end, str):\n            end = datetime.strptime(end, '%H:%M')\n        \n        # Create appointment\n        new_app = Appointment(start, end, title)\n        \n        # Check for conflicts\n        conflicts = self.find_conflicts(new_app)\n        if conflicts:\n            print(f'Conflict! Cannot add \"{title}\"')\n            print('Conflicts with:')\n            for app in conflicts:\n                print(f'  {app}')\n            return False\n        \n        self.appointments.append(new_app)\n        self.appointments.sort(key=lambda x: x.start_time)\n        print(f'Added: {new_app}')\n        return True\n    \n    def find_conflicts(self, appointment):\n        return [a for a in self.appointments if a.conflicts_with(appointment)]\n    \n    def remove_appointment(self, title):\n        for app in self.appointments:\n            if app.title == title:\n                self.appointments.remove(app)\n                print(f'Removed: {title}')\n                return True\n        print(f'Appointment not found: {title}')\n        return False\n    \n    def find_available_slots(self, date, duration_hours):\n        \"\"\"Find available time slots of given duration on a date\"\"\"\n        slots = []\n        start = datetime.combine(date, datetime.min.time())\n        end = start + timedelta(hours=24)\n        \n        current = start\n        for app in self.appointments:\n            if app.start_time >= current:\n                if (app.start_time - current).total_seconds() / 3600 >= duration_hours:\n                    slots.append((current, app.start_time))\n            current = max(current, app.end_time)\n        \n        if (end - current).total_seconds() / 3600 >= duration_hours:\n            slots.append((current, end))\n        \n        return slots\n    \n    def display_schedule(self):\n        if not self.appointments:\n            print('No appointments scheduled')\n            return\n        \n        print('\\nDaily Schedule:')\n        for app in self.appointments:\n            print(f'  {app}')\n\n# Test scheduler\nscheduler = Scheduler()\n\n# Add appointments\nscheduler.add_appointment('09:00', '10:30', 'Meeting with team')\nscheduler.add_appointment('11:00', '12:00', 'Client call')\nscheduler.add_appointment('14:00', '15:30', 'Project work')\n\n# Try to add conflicting appointment\nscheduler.add_appointment('10:00', '11:30', 'Doctor appointment')\n\n# Display schedule\nscheduler.display_schedule()\n\n# Remove an appointment\nscheduler.remove_appointment('Client call')\nscheduler.display_schedule()\n\n# Find available slots\nfrom datetime import date\nslots = scheduler.find_available_slots(date.today(), 1)\nprint('\\nAvailable 1-hour slots:')\nfor start, end in slots:\n    print(f'  {start.strftime(\"%H:%M\")} - {end.strftime(\"%H:%M\")}')",
-    hint: "Sort appointments by start time, check for overlaps"
+    question:
+      'Create a class "Vector3D" with __sub__ method for vector subtraction.',
+    mathSolution: "Implement __sub__ similar to __add__.",
+    codeSolution:
+      'class Vector3D:\n    def __init__(self, x, y, z):\n        self.x = x\n        self.y = y\n        self.z = z\n    \n    def __sub__(self, other):\n        return Vector3D(self.x - other.x, self.y - other.y, self.z - other.z)\n    \n    def __str__(self):\n        return f"Vector3D({self.x}, {self.y}, {self.z})"\n\nv1 = Vector3D(5, 6, 7)\nv2 = Vector3D(2, 3, 4)\nprint(v1 - v2)  # Vector3D(3, 3, 3)',
+    hint: "Return new object with subtracted components",
   },
   {
-    Id: "py_oop_43",
+    id: "py_oop_43",
     topicId: "py_oop",
-    question: "Create a class 'Polynomial' for polynomial arithmetic.",
-    mathSolution: "Polynomial: anx^n + ... + a1x + a0, store coefficients in list",
-    codeSolution: "class Polynomial:\n    def __init__(self, coefficients):\n        # coefficients[0] is constant term, coefficients[1] is x term, etc.\n        # Remove trailing zeros\n        while len(coefficients) > 1 and coefficients[-1] == 0:\n            coefficients.pop()\n        self.coeffs = coefficients\n    \n    def degree(self):\n        return len(self.coeffs) - 1\n    \n    def evaluate(self, x):\n        result = 0\n        for i, coeff in enumerate(self.coeffs):\n            result += coeff * (x ** i)\n        return result\n    \n    def __add__(self, other):\n        max_len = max(len(self.coeffs), len(other.coeffs))\n        new_coeffs = [0] * max_len\n        for i in range(max_len):\n            if i < len(self.coeffs):\n                new_coeffs[i] += self.coeffs[i]\n            if i < len(other.coeffs):\n                new_coeffs[i] += other.coeffs[i]\n        return Polynomial(new_coeffs)\n    \n    def __sub__(self, other):\n        max_len = max(len(self.coeffs), len(other.coeffs))\n        new_coeffs = [0] * max_len\n        for i in range(max_len):\n            if i < len(self.coeffs):\n                new_coeffs[i] += self.coeffs[i]\n            if i < len(other.coeffs):\n                new_coeffs[i] -= other.coeffs[i]\n        return Polynomial(new_coeffs)\n    \n    def __mul__(self, other):\n        new_coeffs = [0] * (len(self.coeffs) + len(other.coeffs) - 1)\n        for i, c1 in enumerate(self.coeffs):\n            for j, c2 in enumerate(other.coeffs):\n                new_coeffs[i + j] += c1 * c2\n        return Polynomial(new_coeffs)\n    \n    def derivative(self):\n        if self.degree() == 0:\n            return Polynomial([0])\n        new_coeffs = [i * self.coeffs[i] for i in range(1, len(self.coeffs))]\n        return Polynomial(new_coeffs)\n    \n    def __str__(self):\n        terms = []\n        for i, coeff in enumerate(self.coeffs):\n            if coeff == 0:\n                continue\n            if i == 0:\n                terms.append(f'{coeff}')\n            elif i == 1:\n                terms.append(f'{coeff}x')\n            else:\n                terms.append(f'{coeff}x^{i}')\n        if not terms:\n            return '0'\n        return ' + '.join(terms).replace('+ -', '- ')\n\n# Create polynomials\np1 = Polynomial([1, 2, 3])     # 1 + 2x + 3x²\np2 = Polynomial([0, 1, 1])     # x + x²\n\nprint(f'p1 = {p1}')\nprint(f'p2 = {p2}')\nprint(f'p1 + p2 = {p1 + p2}')\nprint(f'p1 - p2 = {p1 - p2}')\nprint(f'p1 * p2 = {p1 * p2}')\nprint(f'p1 derivative = {p1.derivative()}')\nprint(f'p1(2) = {p1.evaluate(2)}')",
-    hint: "Store coefficients in list where index = power of x"
+    question:
+      'Use __slots__ in class "Point" to reduce memory usage and prevent dynamic attributes.',
+    mathSolution: "__slots__ restricts attributes to predefined list.",
+    codeSolution:
+      "class Point:\n    __slots__ = [\"x\", \"y\"]\n    \n    def __init__(self, x, y):\n        self.x = x\n        self.y = y\n\np = Point(1, 2)\nprint(p.x, p.y)  # 1 2\n# p.z = 3  # AttributeError: 'Point' object has no attribute 'z'",
+    hint: "Define `__slots__ = [list of attributes]`",
   },
   {
-    Id: "py_oop_44",
+    id: "py_oop_44",
     topicId: "py_oop",
-    question: "Create a class 'Sudoku' that generates and solves Sudoku puzzles.",
-    mathSolution: "Use backtracking algorithm to solve Sudoku",
-    codeSolution: "import random\n\nclass Sudoku:\n    def __init__(self, grid=None):\n        if grid:\n            self.grid = [row[:] for row in grid]\n        else:\n            self.grid = [[0 for _ in range(9)] for _ in range(9)]\n    \n    def is_valid(self, row, col, num):\n        # Check row\n        for c in range(9):\n            if self.grid[row][c] == num:\n                return False\n        \n        # Check column\n        for r in range(9):\n            if self.grid[r][col] == num:\n                return False\n        \n        # Check 3x3 box\n        box_row = (row // 3) * 3\n        box_col = (col // 3) * 3\n        for r in range(box_row, box_row + 3):\n            for c in range(box_col, box_col + 3):\n                if self.grid[r][c] == num:\n                    return False\n        \n        return True\n    \n    def solve(self):\n        empty = self.find_empty()\n        if not empty:\n            return True\n        \n        row, col = empty\n        for num in range(1, 10):\n            if self.is_valid(row, col, num):\n                self.grid[row][col] = num\n                if self.solve():\n                    return True\n                self.grid[row][col] = 0\n        return False\n    \n    def find_empty(self):\n        for r in range(9):\n            for c in range(9):\n                if self.grid[r][c] == 0:\n                    return (r, c)\n        return None\n    \n    def generate(self, difficulty='medium'):\n        \"\"\"Generate a random Sudoku puzzle\"\"\"\n        # Start with solved grid\n        self.solve()\n        solved = [row[:] for row in self.grid]\n        \n        # Remove cells based on difficulty\n        if difficulty == 'easy':\n            cells_to_remove = 40\n        elif difficulty == 'medium':\n            cells_to_remove = 50\n        else:  # hard\n            cells_to_remove = 60\n        \n        # Randomly remove cells\n        cells = [(r, c) for r in range(9) for c in range(9)]\n        random.shuffle(cells)\n        for r, c in cells[:cells_to_remove]:\n            self.grid[r][c] = 0\n        \n        return solved\n    \n    def display(self):\n        for r in range(9):\n            if r % 3 == 0 and r != 0:\n                print('------+-------+------')\n            for c in range(9):\n                if c % 3 == 0 and c != 0:\n                    print('|', end=' ')\n                val = self.grid[r][c]\n                print(val if val != 0 else '.', end=' ')\n            print()\n\n# Create and solve a puzzle\npuzzle = Sudoku([\n    [5, 3, 0, 0, 7, 0, 0, 0, 0],\n    [6, 0, 0, 1, 9, 5, 0, 0, 0],\n    [0, 9, 8, 0, 0, 0, 0, 6, 0],\n    [8, 0, 0, 0, 6, 0, 0, 0, 3],\n    [4, 0, 0, 8, 0, 3, 0, 0, 1],\n    [7, 0, 0, 0, 2, 0, 0, 0, 6],\n    [0, 6, 0, 0, 0, 0, 2, 8, 0],\n    [0, 0, 0, 4, 1, 9, 0, 0, 5],\n    [0, 0, 0, 0, 8, 0, 0, 7, 9]\n])\n\nprint('Puzzle:')\npuzzle.display()\n\nif puzzle.solve():\n    print('\\nSolution:')\n    puzzle.display()\nelse:\n    print('\\nNo solution exists')\n\n# Generate a new puzzle\nprint('\\n' + '='*30)\nsudoku = Sudoku()\nsolution = sudoku.generate('medium')\nprint('Generated Puzzle (medium):')\nsudoku.display()",
-    hint: "Use backtracking: try numbers 1-9, backtrack if invalid"
+    question:
+      'Create a class "Fraction" with numerator and denominator, implement __mul__ for multiplication.',
+    mathSolution: "Multiply numerators and denominators.",
+    codeSolution:
+      'class Fraction:\n    def __init__(self, num, den):\n        self.num = num\n        self.den = den\n    \n    def __mul__(self, other):\n        return Fraction(self.num * other.num, self.den * other.den)\n    \n    def __str__(self):\n        return f"{self.num}/{self.den}"\n\nf1 = Fraction(2, 3)\nf2 = Fraction(3, 4)\nprint(f1 * f2)  # 6/12',
+    hint: "Multiply numerator×numerator, denominator×denominator",
   },
   {
-    Id: "py_oop_45",
+    id: "py_oop_45",
     topicId: "py_oop",
-    question: "Create a class 'TicTacToe' for playing the game with AI opponent.",
-    mathSolution: "Use minimax algorithm for AI opponent",
-    codeSolution: "class TicTacToe:\n    def __init__(self):\n        self.board = [' ' for _ in range(9)]\n        self.current_winner = None\n    \n    def display(self):\n        for i in range(0, 9, 3):\n            print('|'.join(self.board[i:i+3]))\n            if i < 6:\n                print('-----')\n    \n    def available_moves(self):\n        return [i for i, spot in enumerate(self.board) if spot == ' ']\n    \n    def make_move(self, position, player):\n        if self.board[position] == ' ':\n            self.board[position] = player\n            if self.check_winner(position, player):\n                self.current_winner = player\n            return True\n        return False\n    \n    def check_winner(self, position, player):\n        # Check row\n        row = position // 3\n        if all(self.board[row*3 + i] == player for i in range(3)):\n            return True\n        \n        # Check column\n        col = position % 3\n        if all(self.board[col + i*3] == player for i in range(3)):\n            return True\n        \n        # Check diagonals\n        if position % 2 == 0:\n            # Check main diagonal\n            if all(self.board[i*4] == player for i in range(3)):\n                return True\n            # Check anti-diagonal\n            if all(self.board[2 + i*2] == player for i in range(3)):\n                return True\n        return False\n    \n    def minimax(self, player, alpha=-float('inf'), beta=float('inf')):\n        # Returns position, score\n        if self.current_winner == 'X':\n            return None, -1 if player == 'O' else 1\n        elif self.current_winner == 'O':\n            return None, 1 if player == 'O' else -1\n        elif not self.available_moves():\n            return None, 0\n        \n        if player == 'O':  # Maximizing player (AI)\n            best_score = -float('inf')\n            best_move = None\n            for move in self.available_moves():\n                self.make_move(move, 'O')\n                _, score = self.minimax('X', alpha, beta)\n                self.board[move] = ' '\n                self.current_winner = None\n                \n                if score > best_score:\n                    best_score = score\n                    best_move = move\n                \n                alpha = max(alpha, score)\n                if beta <= alpha:\n                    break\n            return best_move, best_score\n        else:  # Minimizing player (X)\n            best_score = float('inf')\n            best_move = None\n            for move in self.available_moves():\n                self.make_move(move, 'X')\n                _, score = self.minimax('O', alpha, beta)\n                self.board[move] = ' '\n                self.current_winner = None\n                \n                if score < best_score:\n                    best_score = score\n                    best_move = move\n                \n                beta = min(beta, score)\n                if beta <= alpha:\n                    break\n            return best_move, best_score\n    \n    def play(self, vs_ai=True):\n        print('Welcome to Tic-Tac-Toe!')\n        print('Positions are 0-8, left to right, top to bottom')\n        self.display()\n        \n        player = 'X'  # Human plays X\n        while self.available_moves():\n            if player == 'X' or not vs_ai:\n                # Human move\n                while True:\n                    try:\n                        move = int(input(f'Player {player}, enter position (0-8): '))\n                        if move in self.available_moves():\n                            break\n                        else:\n                            print('Invalid position')\n                    except ValueError:\n                        print('Enter a number')\n            else:\n                # AI move\n                print('AI thinking...')\n                move, _ = self.minimax('O')\n                print(f'AI plays position {move}')\n            \n            self.make_move(move, player)\n            self.display()\n            \n            if self.current_winner:\n                print(f'Player {self.current_winner} wins!')\n                return\n            \n            player = 'O' if player == 'X' else 'X'\n        \n        print(\"It's a tie!\")\n\n# Play against AI\ngame = TicTacToe()\ngame.play(vs_ai=True)",
-    hint: "Implement minimax algorithm for unbeatable AI"
+    question:
+      'Create a class "Student" with class method from_string() that creates student from "name-age" format.',
+    mathSolution: "Class method as alternative constructor.",
+    codeSolution:
+      'class Student:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    @classmethod\n    def from_string(cls, data):\n        name, age = data.split("-")\n        return cls(name, int(age))\n    \n    def __str__(self):\n        return f"{self.name} ({self.age})"\n\ns = Student.from_string("John-20")\nprint(s)  # John (20)',
+    hint: "Split string and return cls()",
   },
   {
-    Id: "py_oop_46",
+    id: "py_oop_46",
     topicId: "py_oop",
-    question: "Create a class 'Hangman' for the word guessing game.",
-    mathSolution: "Track guessed letters, display word with blanks, count wrong guesses",
-    codeSolution: "import random\n\nclass Hangman:\n    words = ['python', 'programming', 'computer', 'algorithm', 'database',\n             'network', 'software', 'developer', 'interface', 'function']\n    \n    stages = [\n        '''\n           -----\n           |   |\n               |\n               |\n               |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n               |\n               |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n           |   |\n               |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n          /|   |\n               |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n          /|\\  |\n               |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n          /|\\  |\n          /    |\n               |\n        =========''',\n        '''\n           -----\n           |   |\n           O   |\n          /|\\  |\n          / \\  |\n               |\n        ========='''\n    ]\n    \n    def __init__(self):\n        self.word = random.choice(self.words).upper()\n        self.guessed = set()\n        self.wrong_guesses = 0\n        self.max_wrong = len(self.stages) - 1\n    \n    def display(self):\n        print(self.stages[self.wrong_guesses])\n        \n        # Display word with blanks\n        display_word = ''\n        for letter in self.word:\n            if letter in self.guessed:\n                display_word += letter + ' '\n            else:\n                display_word += '_ '\n        print('\\nWord: ' + display_word)\n        \n        # Display guessed letters\n        if self.guessed:\n            print(f'Guessed letters: {\", \".join(sorted(self.guessed))}')\n        print(f'Wrong guesses left: {self.max_wrong - self.wrong_guesses}')\n    \n    def guess(self, letter):\n        letter = letter.upper()\n        if len(letter) != 1 or not letter.isalpha():\n            print('Please enter a single letter')\n            return False\n        \n        if letter in self.guessed:\n            print(f'You already guessed {letter}')\n            return False\n        \n        self.guessed.add(letter)\n        if letter in self.word:\n            print(f'Good guess! {letter} is in the word')\n            return True\n        else:\n            print(f'Sorry, {letter} is not in the word')\n            self.wrong_guesses += 1\n            return False\n    \n    def is_won(self):\n        return all(letter in self.guessed for letter in self.word)\n    \n    def is_lost(self):\n        return self.wrong_guesses >= self.max_wrong\n    \n    def play(self):\n        print('Welcome to Hangman!')\n        print(f'The word has {len(self.word)} letters')\n        \n        while not self.is_won() and not self.is_lost():\n            self.display()\n            guess = input('Enter a letter: ').strip()\n            self.guess(guess)\n            print()\n        \n        self.display()\n        if self.is_won():\n            print(f'Congratulations! You guessed the word: {self.word}')\n        else:\n            print(f'Game over! The word was: {self.word}')\n\n# Play game\nif __name__ == '__main__':\n    game = Hangman()\n    game.play()",
-    hint: "Use ASCII art for hangman stages, track guessed letters in set"
+    question:
+      "Demonstrate diamond problem in multiple inheritance and how MRO resolves it.",
+    mathSolution: "Diamond: A → B, A → C, B,C → D. MRO determines resolution.",
+    codeSolution:
+      'class A:\n    def method(self):\n        return "A"\n\nclass B(A):\n    def method(self):\n        return "B"\n\nclass C(A):\n    def method(self):\n        return "C"\n\nclass D(B, C):\n    pass\n\nd = D()\nprint(d.method())  # B (MRO: D -> B -> C -> A)\nprint(D.__mro__)',
+    hint: "Check `ClassName.__mro__` for resolution order",
   },
   {
-    Id: "py_oop_47",
+    id: "py_oop_47",
     topicId: "py_oop",
-    question: "Create a class 'Blackjack' for a simplified card game.",
-    mathSolution: "Cards have values, player vs dealer, closest to 21 without going over wins",
-    codeSolution: "import random\n\nclass Card:\n    def __init__(self, suit, rank):\n        self.suit = suit\n        self.rank = rank\n    \n    def value(self):\n        if self.rank in ['J', 'Q', 'K']:\n            return 10\n        elif self.rank == 'A':\n            return 11\n        else:\n            return int(self.rank)\n    \n    def __str__(self):\n        return f'{self.rank} of {self.suit}'\n\nclass Deck:\n    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']\n    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']\n    \n    def __init__(self):\n        self.cards = [Card(suit, rank) for suit in self.suits for rank in self.ranks]\n        random.shuffle(self.cards)\n    \n    def deal(self):\n        return self.cards.pop() if self.cards else None\n\nclass Hand:\n    def __init__(self):\n        self.cards = []\n    \n    def add_card(self, card):\n        self.cards.append(card)\n    \n    def value(self):\n        total = 0\n        aces = 0\n        for card in self.cards:\n            if card.rank == 'A':\n                aces += 1\n            total += card.value()\n        \n        # Adjust aces if over 21\n        while total > 21 and aces > 0:\n            total -= 10\n            aces -= 1\n        return total\n    \n    def is_blackjack(self):\n        return len(self.cards) == 2 and self.value() == 21\n    \n    def is_busted(self):\n        return self.value() > 21\n    \n    def __str__(self):\n        return ', '.join(str(card) for card in self.cards)\n\nclass Blackjack:\n    def __init__(self):\n        self.deck = Deck()\n        self.player_hand = Hand()\n        self.dealer_hand = Hand()\n        self.balance = 100\n    \n    def deal_initial(self):\n        self.player_hand.add_card(self.deck.deal())\n        self.dealer_hand.add_card(self.deck.deal())\n        self.player_hand.add_card(self.deck.deal())\n        self.dealer_hand.add_card(self.deck.deal())\n    \n    def display(self, show_dealer=False):\n        print('\\n' + '='*40)\n        print('DEALER:')\n        if show_dealer:\n            print(self.dealer_hand)\n            print(f'Value: {self.dealer_hand.value()}')\n        else:\n            print(f'{self.dealer_hand.cards[0]}, [Hidden]')\n        \n        print('\\nPLAYER:')\n        print(self.player_hand)\n        print(f'Value: {self.player_hand.value()}')\n        print(f'Balance: ${self.balance}')\n    \n    def player_turn(self):\n        while not self.player_hand.is_busted():\n            choice = input('\\nHit or Stand? (h/s): ').lower()\n            if choice == 'h':\n                self.player_hand.add_card(self.deck.deal())\n                self.display()\n                if self.player_hand.is_busted():\n                    print('Busted! You lose.')\n                    return False\n            elif choice == 's':\n                return True\n        return False\n    \n    def dealer_turn(self):\n        while self.dealer_hand.value() < 17:\n            self.dealer_hand.add_card(self.deck.deal())\n        self.display(show_dealer=True)\n        \n        if self.dealer_hand.is_busted():\n            print('Dealer busted! You win!')\n            return True\n        return False\n    \n    def determine_winner(self):\n        player_val = self.player_hand.value()\n        dealer_val = self.dealer_hand.value()\n        \n        if player_val > dealer_val:\n            print(f'You win! {player_val} vs {dealer_val}')\n            return True\n        elif player_val < dealer_val:\n            print(f'Dealer wins! {dealer_val} vs {player_val}')\n            return False\n        else:\n            print(f'Push! {player_val} each')\n            return None\n    \n    def play_round(self, bet):\n        self.balance -= bet\n        self.deal_initial()\n        self.display()\n        \n        # Check for blackjack\n        if self.player_hand.is_blackjack():\n            print('Blackjack! You win!')\n            self.balance += bet * 2.5\n            return True\n        \n        # Player turn\n        if not self.player_turn():\n            return False\n        \n        # Dealer turn\n        if not self.dealer_turn():\n            self.balance += bet * 2\n            return True\n        \n        # Determine winner\n        winner = self.determine_winner()\n        if winner:\n            self.balance += bet * 2\n        elif winner is None:\n            self.balance += bet\n        return winner\n    \n    def play(self):\n        print('Welcome to Blackjack!')\n        while self.balance > 0:\n            print(f'\\nBalance: ${self.balance}')\n            bet = int(input('Enter bet amount: '))\n            if bet > self.balance:\n                print('Insufficient funds!')\n                continue\n            \n            self.play_round(bet)\n            self.__init__()  # Reset for next round\n            \n            if input('Play again? (y/n): ').lower() != 'y':\n                break\n        \n        print(f'Final balance: ${self.balance}')\n\n# Play game\ngame = Blackjack()\ngame.play()",
-    hint: "Track hand value, handle Ace as 1 or 11, dealer hits on 16 stands on 17"
+    question:
+      'Create a class "Cache" with __getitem__, __setitem__, and __delitem__ to behave like dictionary.',
+    mathSolution: "Implement mapping protocol methods.",
+    codeSolution:
+      'class Cache:\n    def __init__(self):\n        self._data = {}\n    \n    def __getitem__(self, key):\n        return self._data[key]\n    \n    def __setitem__(self, key, value):\n        self._data[key] = value\n    \n    def __delitem__(self, key):\n        del self._data[key]\n    \n    def __len__(self):\n        return len(self._data)\n\ncache = Cache()\ncache["key1"] = "value1"\nprint(cache["key1"])  # value1\nprint(len(cache))  # 1\ndel cache["key1"]',
+    hint: "Implement __getitem__, __setitem__, __delitem__",
   },
   {
-    Id: "py_oop_48",
+    id: "py_oop_48",
     topicId: "py_oop",
-    question: "Create a class 'Graph' with methods for BFS and DFS traversal.",
-    mathSolution: "BFS uses queue, DFS uses stack (or recursion)",
-    codeSolution: "from collections import deque\n\nclass Graph:\n    def __init__(self):\n        self.graph = {}\n    \n    def add_edge(self, u, v):\n        if u not in self.graph:\n            self.graph[u] = []\n        if v not in self.graph:\n            self.graph[v] = []\n        self.graph[u].append(v)\n        self.graph[v].append(u)  # For undirected graph\n    \n    def bfs(self, start):\n        visited = set()\n        queue = deque([start])\n        visited.add(start)\n        result = []\n        \n        while queue:\n            vertex = queue.popleft()\n            result.append(vertex)\n            \n            for neighbor in self.graph.get(vertex, []):\n                if neighbor not in visited:\n                    visited.add(neighbor)\n                    queue.append(neighbor)\n        \n        return result\n    \n    def dfs_iterative(self, start):\n        visited = set()\n        stack = [start]\n        result = []\n        \n        while stack:\n            vertex = stack.pop()\n            if vertex not in visited:\n                visited.add(vertex)\n                result.append(vertex)\n                \n                for neighbor in reversed(self.graph.get(vertex, [])):\n                    if neighbor not in visited:\n                        stack.append(neighbor)\n        \n        return result\n    \n    def dfs_recursive(self, start, visited=None, result=None):\n        if visited is None:\n            visited = set()\n        if result is None:\n            result = []\n        \n        visited.add(start)\n        result.append(start)\n        \n        for neighbor in self.graph.get(start, []):\n            if neighbor not in visited:\n                self.dfs_recursive(neighbor, visited, result)\n        \n        return result\n    \n    def find_path(self, start, end, path=None):\n        if path is None:\n            path = []\n        \n        path = path + [start]\n        if start == end:\n            return path\n        \n        if start not in self.graph:\n            return None\n        \n        for neighbor in self.graph[start]:\n            if neighbor not in path:\n                new_path = self.find_path(neighbor, end, path)\n                if new_path:\n                    return new_path\n        return None\n    \n    def find_all_paths(self, start, end, path=None):\n        if path is None:\n            path = []\n        \n        path = path + [start]\n        if start == end:\n            return [path]\n        \n        if start not in self.graph:\n            return []\n        \n        paths = []\n        for neighbor in self.graph[start]:\n            if neighbor not in path:\n                new_paths = self.find_all_paths(neighbor, end, path)\n                paths.extend(new_paths)\n        return paths\n    \n    def display(self):\n        for vertex, neighbors in self.graph.items():\n            print(f'{vertex}: {neighbors}')\n\n# Create graph\ng = Graph()\nedges = [\n    ('A', 'B'), ('A', 'C'), ('B', 'D'), ('B', 'E'),\n    ('C', 'F'), ('E', 'F'), ('E', 'G'), ('F', 'H')\n]\n\nfor u, v in edges:\n    g.add_edge(u, v)\n\nprint('Graph:')\ng.display()\n\nprint('\\nBFS from A:', g.bfs('A'))\nprint('DFS (iterative) from A:', g.dfs_iterative('A'))\nprint('DFS (recursive) from A:', g.dfs_recursive('A'))\n\nprint('\\nPath from A to H:', g.find_path('A', 'H'))\nprint('All paths from A to H:')\npaths = g.find_all_paths('A', 'H')\nfor path in paths:\n    print('  ', path)",
-    hint: "Use dictionary for adjacency list, deque for BFS queue"
+    question:
+      'Create a base class "Polygon" and derived classes "Triangle", "Rectangle" with area calculation.',
+    mathSolution: "Polymorphism: each subclass implements area differently.",
+    codeSolution:
+      "class Polygon:\n    def area(self):\n        pass\n\nclass Triangle(Polygon):\n    def __init__(self, base, height):\n        self.base = base\n        self.height = height\n    \n    def area(self):\n        return 0.5 * self.base * self.height\n\nclass Rectangle(Polygon):\n    def __init__(self, length, width):\n        self.length = length\n        self.width = width\n    \n    def area(self):\n        return self.length * self.width\n\nshapes = [Triangle(10, 5), Rectangle(4, 6)]\nfor shape in shapes:\n    print(shape.area())  # 25.0, 24",
+    hint: "Override area() in each subclass",
   },
   {
-    Id: "py_oop_49",
+    id: "py_oop_49",
     topicId: "py_oop",
-    question: "Create a class 'Tree' for binary tree operations.",
-    mathSolution: "Binary tree has left and right children, traverse in-order, pre-order, post-order",
-    codeSolution: "class TreeNode:\n    def __init__(self, value):\n        self.value = value\n        self.left = None\n        self.right = None\n\nclass BinaryTree:\n    def __init__(self):\n        self.root = None\n    \n    def insert(self, value):\n        if not self.root:\n            self.root = TreeNode(value)\n            return\n        \n        self._insert_recursive(self.root, value)\n    \n    def _insert_recursive(self, node, value):\n        if value < node.value:\n            if node.left:\n                self._insert_recursive(node.left, value)\n            else:\n                node.left = TreeNode(value)\n        else:\n            if node.right:\n                self._insert_recursive(node.right, value)\n            else:\n                node.right = TreeNode(value)\n    \n    def search(self, value):\n        return self._search_recursive(self.root, value)\n    \n    def _search_recursive(self, node, value):\n        if not node or node.value == value:\n            return node\n        if value < node.value:\n            return self._search_recursive(node.left, value)\n        return self._search_recursive(node.right, value)\n    \n    def inorder(self, node=None, result=None):\n        if result is None:\n            result = []\n        if node is None:\n            node = self.root\n        \n        if node:\n            self.inorder(node.left, result)\n            result.append(node.value)\n            self.inorder(node.right, result)\n        return result\n    \n    def preorder(self, node=None, result=None):\n        if result is None:\n            result = []\n        if node is None:\n            node = self.root\n        \n        if node:\n            result.append(node.value)\n            self.preorder(node.left, result)\n            self.preorder(node.right, result)\n        return result\n    \n    def postorder(self, node=None, result=None):\n        if result is None:\n            result = []\n        if node is None:\n            node = self.root\n        \n        if node:\n            self.postorder(node.left, result)\n            self.postorder(node.right, result)\n            result.append(node.value)\n        return result\n    \n    def height(self, node=None):\n        if node is None:\n            node = self.root\n        if not node:\n            return 0\n        return 1 + max(self.height(node.left), self.height(node.right))\n    \n    def size(self, node=None):\n        if node is None:\n            node = self.root\n        if not node:\n            return 0\n        return 1 + self.size(node.left) + self.size(node.right)\n    \n    def display(self, node=None, level=0, prefix='Root: '):\n        if node is None:\n            node = self.root\n        if node:\n            print(' ' * (level*4) + prefix + str(node.value))\n            if node.left:\n                self.display(node.left, level + 1, 'L--- ')\n            if node.right:\n                self.display(node.right, level + 1, 'R--- ')\n\n# Create tree\ntree = BinaryTree()\nvalues = [5, 3, 7, 2, 4, 6, 8, 1, 9]\n\nfor value in values:\n    tree.insert(value)\n\nprint('Tree structure:')\ntree.display()\n\nprint('\\nTraversals:')\nprint(f'Inorder: {tree.inorder()}')\nprint(f'Preorder: {tree.preorder()}')\nprint(f'Postorder: {tree.postorder()}')\n\nprint(f'\\nSearch:')\nprint(f'Find 6: {tree.search(6) is not None}')\nprint(f'Find 10: {tree.search(10) is not None}')\n\nprint(f'\\nProperties:')\nprint(f'Height: {tree.height()}')\nprint(f'Size: {tree.size()}')",
-    hint: "Use recursion for tree traversal, node has left and right children"
+    question:
+      'Create a class "Person" with __lt__ method to compare by age, enabling sorting.',
+    mathSolution: "__lt__ defines behavior for < operator.",
+    codeSolution:
+      'class Person:\n    def __init__(self, name, age):\n        self.name = name\n        self.age = age\n    \n    def __lt__(self, other):\n        return self.age < other.age\n    \n    def __str__(self):\n        return f"{self.name} ({self.age})"\n\npeople = [Person("Alice", 30), Person("Bob", 25), Person("Charlie", 35)]\npeople.sort()\nfor p in people:\n    print(p)  # Bob (25), Alice (30), Charlie (35)',
+    hint: "Define __lt__ for custom comparison",
   },
   {
-    Id: "py_oop_50",
+    id: "py_oop_50",
     topicId: "py_oop",
-    question: "Create a class 'FileManager' for reading, writing, and analyzing text files.",
-    mathSolution: "Handle file operations with context managers, analyze text statistics",
-    codeSolution: "import os\nimport json\nfrom datetime import datetime\n\nclass FileManager:\n    def __init__(self, directory='.'):\n        self.directory = directory\n        self.current_file = None\n    \n    def write_file(self, filename, content, mode='w'):\n        filepath = os.path.join(self.directory, filename)\n        try:\n            with open(filepath, mode, encoding='utf-8') as f:\n                f.write(content)\n            print(f'Successfully wrote to {filename}')\n            self.current_file = filepath\n            return True\n        except Exception as e:\n            print(f'Error writing file: {e}')\n            return False\n    \n    def read_file(self, filename):\n        filepath = os.path.join(self.directory, filename)\n        try:\n            with open(filepath, 'r', encoding='utf-8') as f:\n                content = f.read()\n            self.current_file = filepath\n            return content\n        except FileNotFoundError:\n            print(f'File {filename} not found')\n            return None\n        except Exception as e:\n            print(f'Error reading file: {e}')\n            return None\n    \n    def append_file(self, filename, content):\n        return self.write_file(filename, content, 'a')\n    \n    def delete_file(self, filename):\n        filepath = os.path.join(self.directory, filename)\n        try:\n            os.remove(filepath)\n            print(f'Deleted {filename}')\n            return True\n        except FileNotFoundError:\n            print(f'File {filename} not found')\n            return False\n    \n    def copy_file(self, source, destination):\n        content = self.read_file(source)\n        if content:\n            return self.write_file(destination, content)\n        return False\n    \n    def file_info(self, filename):\n        filepath = os.path.join(self.directory, filename)\n        try:\n            stat = os.stat(filepath)\n            info = {\n                'name': filename,\n                'size': stat.st_size,\n                'created': datetime.fromtimestamp(stat.st_ctime),\n                'modified': datetime.fromtimestamp(stat.st_mtime),\n                'accessed': datetime.fromtimestamp(stat.st_atime)\n            }\n            return info\n        except FileNotFoundError:\n            print(f'File {filename} not found')\n            return None\n    \n    def list_files(self, extension=None):\n        try:\n            files = os.listdir(self.directory)\n            if extension:\n                files = [f for f in files if f.endswith(extension)]\n            return files\n        except Exception as e:\n            print(f'Error listing files: {e}')\n            return []\n    \n    def analyze_text(self, content):\n        lines = content.split('\\n')\n        words = content.split()\n        chars = len(content)\n        \n        return {\n            'lines': len(lines),\n            'words': len(words),\n            'characters': chars,\n            'average_word_length': sum(len(w) for w in words) / len(words) if words else 0\n        }\n    \n    def search_in_files(self, pattern, extension='.txt'):\n        results = {}\n        files = self.list_files(extension)\n        \n        for filename in files:\n            content = self.read_file(filename)\n            if content and pattern in content:\n                lines = content.split('\\n')\n                matches = []\n                for i, line in enumerate(lines, 1):\n                    if pattern in line:\n                        matches.append((i, line.strip()))\n                if matches:\n                    results[filename] = matches\n        \n        return results\n\n# Test FileManager\nfm = FileManager()\n\n# Write file\ncontent = \"\"\"Hello World!\nThis is a test file.\nIt has multiple lines.\nWe can analyze it.\"\"\"\n\nfm.write_file('test.txt', content)\n\n# Read file\nread_content = fm.read_file('test.txt')\nprint('\\nFile content:')\nprint(read_content)\n\n# File info\ninfo = fm.file_info('test.txt')\nif info:\n    print('\\nFile info:')\n    for key, value in info.items():\n        print(f'  {key}: {value}')\n\n# Analyze text\nanalysis = fm.analyze_text(read_content)\nprint('\\nText analysis:')\nfor key, value in analysis.items():\n    print(f'  {key}: {value}')\n\n# Append to file\nfm.append_file('test.txt', '\\nThis line was appended.')\n\n# Read updated file\nprint('\\nUpdated file:')\nprint(fm.read_file('test.txt'))\n\n# List files\nprint('\\nText files:', fm.list_files('.txt'))\n\n# Search in files\nresults = fm.search_in_files('line')\nprint('\\nSearch results for \"line\":')\nfor file, matches in results.items():\n    print(f'  {file}:')\n    for line_num, line in matches:\n        print(f'    Line {line_num}: {line}')\n\n# Clean up\nfm.delete_file('test.txt')",
-    hint: "Use os module for file operations, context managers for file handling"
-  }
+    question:
+      'Create a class "EventEmitter" with methods on(), emit(), and off() for event handling.',
+    mathSolution: "Store callbacks in dictionary keyed by event name.",
+    codeSolution:
+      'class EventEmitter:\n    def __init__(self):\n        self._events = {}\n    \n    def on(self, event, callback):\n        if event not in self._events:\n            self._events[event] = []\n        self._events[event].append(callback)\n    \n    def emit(self, event, *args, **kwargs):\n        if event in self._events:\n            for callback in self._events[event]:\n                callback(*args, **kwargs)\n    \n    def off(self, event, callback=None):\n        if event in self._events:\n            if callback is None:\n                del self._events[event]\n            else:\n                self._events[event].remove(callback)\n\ndef on_click():\n    print("Button clicked!")\n\nemitter = EventEmitter()\nemitter.on("click", on_click)\nemitter.emit("click")  # Button clicked!',
+    hint: "Use dictionary with event names as keys",
+  },
 );

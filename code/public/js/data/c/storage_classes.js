@@ -1,841 +1,413 @@
 QuizData.questions.push(
-  // ============ LEVEL 1: AUTO STORAGE CLASS (1-5) ============
+  // ========== AUTO STORAGE CLASS (1-10) ==========
   {
     id: 'c_storage_01',
     topicId: 'c_storage_classes',
-    question: 'Declare an automatic integer variable inside function',
-    mathSolution: 'auto is default for local variables',
-    codeSolution: 'void func() {\n    auto int x = 10;\n}',
-    hint: 'auto keyword is optional'
+    question: 'Write a program to demonstrate auto storage class (default for local variables).',
+    mathSolution: 'auto variables are created on stack and destroyed when function ends',
+    codeSolution: '#include <stdio.h>\n\nvoid func() {\n    auto int x = 10;\n    int y = 20;  // auto is default\n    printf("x = %d, y = %d\\n", x, y);\n}\n\nint main() {\n    func();\n    return 0;\n}',
+    hint: 'auto is optional, all local variables are auto by default'
   },
   {
     id: 'c_storage_02',
     topicId: 'c_storage_classes',
-    question: 'Declare automatic variable without auto keyword',
-    mathSolution: 'All local variables are auto by default',
-    codeSolution: 'void func() {\n    int x = 10;\n}',
-    hint: 'auto is rarely used explicitly'
+    question: 'Write a program to show that auto variables contain garbage if uninitialized.',
+    mathSolution: 'Uninitialized auto variables have indeterminate values',
+    codeSolution: '#include <stdio.h>\n\nvoid func() {\n    int x;  // uninitialized auto variable\n    printf("Uninitialized value: %d\\n", x);\n}\n\nint main() {\n    func();\n    return 0;\n}',
+    hint: 'Always initialize local variables to avoid garbage values'
   },
   {
     id: 'c_storage_03',
     topicId: 'c_storage_classes',
-    question: 'Create multiple automatic variables in same scope',
-    mathSolution: 'Each gets separate stack memory',
-    codeSolution: 'void func() {\n    int a = 5;\n    float b = 3.14;\n    char c = \'A\';\n}',
-    hint: 'Destroyed when function exits'
+    question: 'Write a program to show that auto variables are destroyed after function ends.',
+    mathSolution: 'Local variables lose their values after function returns',
+    codeSolution: '#include <stdio.h>\n\nvoid setValue() {\n    int x = 100;\n    printf("Inside setValue: x = %d\\n", x);\n}\n\nint main() {\n    setValue();\n    // x is not accessible here\n    printf("After function call\\n");\n    return 0;\n}',
+    hint: 'Auto variables have automatic storage duration'
   },
   {
     id: 'c_storage_04',
     topicId: 'c_storage_classes',
-    question: 'Declare automatic array',
-    mathSolution: 'Array allocated on stack',
-    codeSolution: 'void func() {\n    int arr[10] = {0};\n}',
-    hint: 'Size must be known at compile time'
+    question: 'Write a program to declare multiple auto variables of different types.',
+    mathSolution: 'Auto variables can be any data type',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    auto int a = 5;\n    auto float b = 3.14;\n    auto char c = \'A\';\n    printf("int: %d, float: %.2f, char: %c\\n", a, b, c);\n    return 0;\n}',
+    hint: 'Different types can be declared as auto'
   },
   {
     id: 'c_storage_05',
     topicId: 'c_storage_classes',
-    question: 'Show that auto variables are not initialized by default',
-    mathSolution: 'auto variables contain garbage if uninitialized',
-    codeSolution: 'void func() {\n    int x;\n    printf("%d", x); // Garbage value\n}',
-    hint: 'Always initialize local variables'
+    question: 'Write a program to declare auto array.',
+    mathSolution: 'Arrays can also be auto storage class',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    auto int arr[5] = {10, 20, 30, 40, 50};\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", arr[i]);\n    }\n    return 0;\n}',
+    hint: 'Array elements are also stored on stack'
   },
-
-  // ============ LEVEL 2: REGISTER STORAGE CLASS (6-10) ============
   {
     id: 'c_storage_06',
     topicId: 'c_storage_classes',
-    question: 'Declare register variable for loop counter',
-    mathSolution: 'Suggests storing in CPU register',
-    codeSolution: 'void func() {\n    register int i;\n    for(i = 0; i < 1000; i++) { }\n}',
-    hint: 'Compiler may ignore'
+    question: 'Write a program to demonstrate register storage class.',
+    mathSolution: 'register suggests storing variable in CPU register for faster access',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    register int counter = 0;\n    for(register int i = 0; i < 1000; i++) {\n        counter++;\n    }\n    printf("Counter = %d\\n", counter);\n    return 0;\n}',
+    hint: 'Compiler may ignore register keyword'
   },
   {
     id: 'c_storage_07',
     topicId: 'c_storage_classes',
-    question: 'Attempt to take address of register variable',
-    mathSolution: 'Cannot get address of register variable',
-    codeSolution: 'void func() {\n    register int x = 10;\n    int *p = &x; // Error\n}',
+    question: 'Write a program to show that address of register variable cannot be taken.',
+    mathSolution: 'Register variables may not have memory addresses',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    register int x = 10;\n    // int *p = &x;  // Error: cannot take address of register variable\n    printf("Register variable x = %d\\n", x);\n    return 0;\n}',
     hint: 'Registers don\'t have memory addresses'
   },
   {
     id: 'c_storage_08',
     topicId: 'c_storage_classes',
-    question: 'Use register variable for frequently accessed data',
-    mathSolution: 'Speed up critical loops',
-    codeSolution: 'void sumArray(int arr[], int n) {\n    register int sum = 0;\n    for(register int i = 0; i < n; i++)\n        sum += arr[i];\n}',
-    hint: 'Good for counters and accumulators'
+    question: 'Write a program to use register variable for frequently accessed data.',
+    mathSolution: 'Register is often used for loop counters',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    register int sum = 0;\n    for(register int i = 1; i <= 100; i++) {\n        sum += i;\n    }\n    printf("Sum = %d\\n", sum);\n    return 0;\n}',
+    hint: 'Good for counters and accumulators in loops'
   },
   {
     id: 'c_storage_09',
     topicId: 'c_storage_classes',
-    question: 'Declare multiple register variables',
-    mathSolution: 'Limited number of CPU registers',
-    codeSolution: 'void func() {\n    register int a, b, c; // May be ignored if too many\n}',
-    hint: 'Only suggestion to compiler'
+    question: 'Write a program to declare multiple register variables.',
+    mathSolution: 'Limited number of CPU registers available',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    register int a = 1, b = 2, c = 3;\n    register int result = a + b + c;\n    printf("Sum = %d\\n", result);\n    return 0;\n}',
+    hint: 'Only suggestion to compiler, may be ignored if too many'
   },
   {
     id: 'c_storage_10',
     topicId: 'c_storage_classes',
-    question: 'Register variable with initializer',
-    mathSolution: 'Can initialize register variables',
-    codeSolution: 'void func() {\n    register int x = 100;\n}',
-    hint: 'Initialization allowed'
+    question: 'Write a program to initialize register variable.',
+    mathSolution: 'Register variables can be initialized like normal variables',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    register int x = 100;\n    printf("Initialized register value = %d\\n", x);\n    return 0;\n}',
+    hint: 'Initialization is allowed for register variables'
   },
 
-  // ============ LEVEL 3: STATIC LOCAL VARIABLES (11-15) ============
+  // ========== STATIC LOCAL VARIABLES (11-20) ==========
   {
     id: 'c_storage_11',
     topicId: 'c_storage_classes',
-    question: 'Declare static local variable',
-    mathSolution: 'Retains value between function calls',
-    codeSolution: 'void counter() {\n    static int count = 0;\n    count++;\n    printf("%d", count);\n}',
-    hint: 'Initialized only once'
+    question: 'Write a program to demonstrate static local variable retains value between calls.',
+    mathSolution: 'Static local variables persist across function calls',
+    codeSolution: '#include <stdio.h>\n\nvoid counter() {\n    static int count = 0;\n    count++;\n    printf("Call count = %d\\n", count);\n}\n\nint main() {\n    counter();\n    counter();\n    counter();\n    return 0;\n}',
+    hint: 'Static variables are initialized only once'
   },
   {
     id: 'c_storage_12',
     topicId: 'c_storage_classes',
-    question: 'Demonstrate static variable persistence',
-    mathSolution: 'Value preserved across calls',
-    codeSolution: 'void func() {\n    static int x = 5;\n    x++;\n    printf("%d ", x);\n} // Call 3 times: 6 7 8',
-    hint: 'Not destroyed after function ends'
+    question: 'Write a program to show static local variable is zero-initialized by default.',
+    mathSolution: 'Static variables are automatically initialized to zero',
+    codeSolution: '#include <stdio.h>\n\nvoid func() {\n    static int x;  // automatically initialized to 0\n    printf("Static value = %d\\n", x);\n    x++;\n}\n\nint main() {\n    func();\n    func();\n    func();\n    return 0;\n}',
+    hint: 'Static variables are zero-initialized unlike auto variables'
   },
   {
     id: 'c_storage_13',
     topicId: 'c_storage_classes',
-    question: 'Static local variable without explicit initialization',
-    mathSolution: 'Automatically initialized to 0',
-    codeSolution: 'void func() {\n    static int count; // Initialized to 0\n}',
-    hint: 'Static variables are zero-initialized'
+    question: 'Write a program to use static array inside function.',
+    mathSolution: 'Static array persists between function calls',
+    codeSolution: '#include <stdio.h>\n\nint* getArray() {\n    static int arr[5] = {1, 2, 3, 4, 5};\n    return arr;\n}\n\nint main() {\n    int *ptr = getArray();\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", ptr[i]);\n    }\n    return 0;\n}',
+    hint: 'Safe to return pointer to static array'
   },
   {
     id: 'c_storage_14',
     topicId: 'c_storage_classes',
-    question: 'Static array inside function',
-    mathSolution: 'Array persists between calls',
-    codeSolution: 'int* getFibonacci() {\n    static int fib[10] = {0, 1};\n    return fib;\n}',
-    hint: 'Safe to return pointer to static array, unlike auto array'
+    question: 'Write a program to generate unique IDs using static variable.',
+    mathSolution: 'Static counter increments each time function is called',
+    codeSolution: '#include <stdio.h>\n\nint getNextID() {\n    static int id = 1000;\n    return id++;\n}\n\nint main() {\n    printf("ID1 = %d\\n", getNextID());\n    printf("ID2 = %d\\n", getNextID());\n    printf("ID3 = %d\\n", getNextID());\n    return 0;\n}',
+    hint: 'Static variable preserves state between calls'
   },
   {
     id: 'c_storage_15',
     topicId: 'c_storage_classes',
-    question: 'Static pointer variable in function',
-    mathSolution: 'Pointer retains its value',
-    codeSolution: 'void addNode(int data) {\n    static struct Node* head = NULL; // Head persists\n}',
-    hint: 'Useful for linked lists'
+    question: 'Write a program to implement one-time initialization using static flag.',
+    mathSolution: 'Static flag ensures initialization happens only once',
+    codeSolution: '#include <stdio.h>\n\nvoid initialize() {\n    static int done = 0;\n    if(!done) {\n        printf("Initializing resources...\\n");\n        done = 1;\n    }\n    printf("Function called\\n");\n}\n\nint main() {\n    initialize();\n    initialize();\n    initialize();\n    return 0;\n}',
+    hint: 'Common pattern for lazy initialization'
   },
-
-  // ============ LEVEL 4: STATIC GLOBAL VARIABLES (16-20) ============
   {
     id: 'c_storage_16',
     topicId: 'c_storage_classes',
-    question: 'Declare static global variable',
-    mathSolution: 'Variable limited to this file',
-    codeSolution: 'static int fileScopeCounter = 0;',
-    hint: 'Cannot be accessed from other files'
+    question: 'Write a program to declare static global variable.',
+    mathSolution: 'Static global variable is visible only within the file',
+    codeSolution: '#include <stdio.h>\n\nstatic int fileCounter = 0;\n\nvoid increment() {\n    fileCounter++;\n}\n\nint getCount() {\n    return fileCounter;\n}\n\nint main() {\n    increment();\n    increment();\n    printf("Count = %d\\n", getCount());\n    return 0;\n}',
+    hint: 'Static global has internal linkage'
   },
   {
     id: 'c_storage_17',
     topicId: 'c_storage_classes',
-    question: 'Static function in C',
-    mathSolution: 'Function only visible in this file',
-    codeSolution: 'static void helperFunction() {\n    // Only called from this file\n}',
-    hint: 'Information hiding'
+    question: 'Write a program to declare static function.',
+    mathSolution: 'Static function is visible only within the file',
+    codeSolution: '#include <stdio.h>\n\nstatic void helper() {\n    printf("Helper function called\\n");\n}\n\nint main() {\n    helper();\n    return 0;\n}',
+    hint: 'Static functions are used for information hiding'
   },
   {
     id: 'c_storage_18',
     topicId: 'c_storage_classes',
-    question: 'Multiple files with static global',
-    mathSolution: 'Each file has its own copy',
-    codeSolution: '// file1.c: static int x = 10;\n// file2.c: static int x = 20; // Different variable',
-    hint: 'No name collision'
+    question: 'Write a program to demonstrate static const combination.',
+    mathSolution: 'Static const for file-scoped constants',
+    codeSolution: '#include <stdio.h>\n\nstatic const double PI = 3.14159;\n\nint main() {\n    double radius = 5.0;\n    double area = PI * radius * radius;\n    printf("Area = %.2f\\n", area);\n    return 0;\n}',
+    hint: 'Constant and private to the file'
   },
   {
     id: 'c_storage_19',
     topicId: 'c_storage_classes',
-    question: 'Static global array',
-    mathSolution: 'File-scoped array',
-    codeSolution: 'static int lookupTable[256];',
-    hint: 'Private to the file'
+    question: 'Write a program to use static for memoization (caching).',
+    mathSolution: 'Cache computed results in static array',
+    codeSolution: '#include <stdio.h>\n\nint factorial(int n) {\n    static int cache[10] = {1, 1, 2, 6, 24, 0};\n    if(n < 0 || n > 9) return -1;\n    if(cache[n] != 0) return cache[n];\n    cache[n] = n * factorial(n-1);\n    return cache[n];\n}\n\nint main() {\n    printf("5! = %d\\n", factorial(5));\n    printf("6! = %d\\n", factorial(6));\n    return 0;\n}',
+    hint: 'Memoization pattern for optimization'
   },
   {
     id: 'c_storage_20',
     topicId: 'c_storage_classes',
-    question: 'Static const combination',
-    mathSolution: 'File-scoped constant',
-    codeSolution: 'static const double PI = 3.14159;',
-    hint: 'Constant and private'
-  },
-
-  // ============ LEVEL 5: EXTERN STORAGE CLASS (21-25) ============
-  {
-    id: 'c_storage_21',
-    topicId: 'c_storage_classes',
-    question: 'Declare external variable (defined elsewhere)',
-    mathSolution: 'Refers to variable in another file',
-    codeSolution: 'extern int globalCounter;',
-    hint: 'No memory allocation here'
-  },
-  {
-    id: 'c_storage_22',
-    topicId: 'c_storage_classes',
-    question: 'Use extern to access global variable',
-    mathSolution: 'Linker resolves reference',
-    codeSolution: '// file1.c: int shared = 100;\n// file2.c: extern int shared;\nvoid func() { printf("%d", shared); }',
-    hint: 'Must be defined exactly once'
-  },
-  {
-    id: 'c_storage_23',
-    topicId: 'c_storage_classes',
-    question: 'Extern function declaration',
-    mathSolution: 'Function defined in another file',
-    codeSolution: 'extern int calculate(int a, int b);',
-    hint: 'extern is optional for functions'
-  },
-  {
-    id: 'c_storage_24',
-    topicId: 'c_storage_classes',
-    question: 'Extern array declaration',
-    mathSolution: 'Array defined elsewhere',
-    codeSolution: 'extern int scores[]; // Size not needed',
-    hint: 'Compiler only needs name'
-  },
-  {
-    id: 'c_storage_25',
-    topicId: 'c_storage_classes',
-    question: 'Extern with header files',
-    mathSolution: 'Declare in header, define in source',
-    codeSolution: '// global.h: extern int errno;\n// global.c: int errno = 0;',
-    hint: 'Common pattern for globals'
-  },
-
-  // ============ LEVEL 6: MULTIPLE FILES EXAMPLES (26-30) ============
-  {
-    id: 'c_storage_26',
-    topicId: 'c_storage_classes',
-    question: 'Create counter across multiple files',
-    mathSolution: 'Shared global variable',
-    codeSolution: '// counter.h: extern int count;\n// counter.c: int count = 0;\n// main.c: #include "counter.h"\nvoid inc() { count++; }',
-    hint: 'One definition, multiple declarations'
-  },
-  {
-    id: 'c_storage_27',
-    topicId: 'c_storage_classes',
-    question: 'Static variable hiding global',
-    mathSolution: 'Static overrides global in file',
-    codeSolution: 'int x = 100; // Global\nstatic int x = 50; // File-static hides global',
-    hint: 'Different scope, same name'
-  },
-  {
-    id: 'c_storage_28',
-    topicId: 'c_storage_classes',
-    question: 'Extern variable initialized in declaration',
-    mathSolution: 'Cannot initialize extern (unless definition)',
-    codeSolution: 'extern int x = 10; // Warning or error in C',
-    hint: 'extern declares, doesn\'t define'
-  },
-  {
-    id: 'c_storage_29',
-    topicId: 'c_storage_classes',
-    question: 'Multiple extern declarations',
-    mathSolution: 'Can declare same variable many times',
-    codeSolution: 'extern int x; extern int x; extern int x; // OK',
-    hint: 'Only one definition allowed'
-  },
-  {
-    id: 'c_storage_30',
-    topicId: 'c_storage_classes',
-    question: 'Extern with array size',
-    mathSolution: 'Size can be omitted in declaration',
-    codeSolution: 'extern int arr[]; // In header\nint arr[10]; // In source file',
-    hint: 'Array size known to linker'
-  },
-
-  // ============ LEVEL 7: COMPLEX COMBINATIONS (31-35) ============
-  {
-    id: 'c_storage_31',
-    topicId: 'c_storage_classes',
-    question: 'Static variable inside nested blocks',
-    mathSolution: 'Same variable across block entries',
-    codeSolution: 'void func() {\n    for(int i = 0; i < 3; i++) {\n        static int x = 0;\n        x++;\n        printf("%d", x);\n    }\n} // Prints 1 2 3',
-    hint: 'Static scope is function, not block'
-  },
-  {
-    id: 'c_storage_32',
-    topicId: 'c_storage_classes',
-    question: 'Register with static (invalid)',
-    mathSolution: 'Cannot combine register and static',
-    codeSolution: 'void func() {\n    static register int x; // Error\n}',
-    hint: 'Mutually exclusive storage classes'
-  },
-  {
-    id: 'c_storage_33',
-    topicId: 'c_storage_classes',
-    question: 'Auto with extern (invalid)',
-    mathSolution: 'Cannot combine auto and extern',
-    codeSolution: 'void func() {\n    auto extern int x; // Error\n}',
-    hint: 'Only one storage class'
-  },
-  {
-    id: 'c_storage_34',
-    topicId: 'c_storage_classes',
-    question: 'Static array of function pointers',
-    mathSolution: 'Persistent function table',
-    codeSolution: 'static int (*operations[])(int, int) = {add, sub, mul, div};',
-    hint: 'Jump table stays in memory'
-  },
-  {
-    id: 'c_storage_35',
-    topicId: 'c_storage_classes',
-    question: 'Extern pointer to static variable',
-    mathSolution: 'Access static from other file via pointer',
-    codeSolution: '// file1.c: static int hidden = 42;\nint* getHidden() { return &hidden; }\n// file2.c: extern int* getHidden();\nvoid use() { int *p = getHidden(); }',
-    hint: 'Controlled access to static'
-  },
-
-  // ============ LEVEL 8: THREAD LOCAL STORAGE (C11) (36-40) ============
-  {
-    id: 'c_storage_36',
-    topicId: 'c_storage_classes',
-    question: 'Declare thread-local variable (C11)',
-    mathSolution: 'Each thread gets its own copy',
-    codeSolution: '_Thread_local int tls_var = 0;',
-    hint: 'C11 feature, need <threads.h>'
-  },
-  {
-    id: 'c_storage_37',
-    topicId: 'c_storage_classes',
-    question: 'Thread-local with static',
-    mathSolution: 'Static thread-local storage',
-    codeSolution: 'static _Thread_local int perThreadCache;',
-    hint: 'File-scoped thread-local'
-  },
-  {
-    id: 'c_storage_38',
-    topicId: 'c_storage_classes',
-    question: 'Thread-local in header file',
-    mathSolution: 'Each including file gets thread-local',
-    codeSolution: '// config.h: extern _Thread_local int threadID;',
-    hint: 'Declare extern, define in source'
-  },
-  {
-    id: 'c_storage_39',
-    topicId: 'c_storage_classes',
-    question: 'Thread-local array',
-    mathSolution: 'Per-thread array',
-    codeSolution: '_Thread_local char threadBuffer[1024];',
-    hint: 'Each thread has own buffer'
-  },
-  {
-    id: 'c_storage_40',
-    topicId: 'c_storage_classes',
-    question: 'Combine thread_local with const',
-    mathSolution: 'Constant thread-local data',
-    codeSolution: '_Thread_local const int MAX = 100;',
-    hint: 'Read-only per thread'
-  },
-
-  // ============ LEVEL 9: STORAGE CLASS WITH POINTERS (41-45) ============
-  {
-    id: 'c_storage_41',
-    topicId: 'c_storage_classes',
-    question: 'Static pointer to dynamic memory',
-    mathSolution: 'Pointer persists, memory persists',
-    codeSolution: 'void* getBuffer() {\n    static void* buffer = NULL;\n    if(!buffer) buffer = malloc(1024);\n    return buffer;\n}',
-    hint: 'Lazy allocation'
-  },
-  {
-    id: 'c_storage_42',
-    topicId: 'c_storage_classes',
-    question: 'Extern pointer to function',
-    mathSolution: 'Function pointer from another file',
-    codeSolution: 'extern int (*callback)(int);',
-    hint: 'Defined in another file'
-  },
-  {
-    id: 'c_storage_43',
-    topicId: 'c_storage_classes',
-    question: 'Register pointer variable',
-    mathSolution: 'Suggests pointer in register',
-    codeSolution: 'void process(char* str) {\n    register char* p = str;\n    while(*p) p++;\n}',
-    hint: 'May speed up pointer iteration'
-  },
-  {
-    id: 'c_storage_44',
-    topicId: 'c_storage_classes',
-    question: 'Static pointer to string literal',
-    mathSolution: 'Persistent string reference',
-    codeSolution: 'const char* getMessage() {\n    static const char* msg = "Hello";\n    return msg;\n}',
-    hint: 'String literal has static duration'
-  },
-  {
-    id: 'c_storage_45',
-    topicId: 'c_storage_classes',
-    question: 'Auto pointer to static data',
-    mathSolution: 'Local pointer to persistent data',
-    codeSolution: 'void func() {\n    static int data = 42;\n    int* p = &data; // Auto pointer to static\n}',
-    hint: 'Safe to return p?'
-  },
-
-  // ============ LEVEL 10: STATIC IN RECURSIVE FUNCTIONS (46-50) ============
-  {
-    id: 'c_storage_46',
-    topicId: 'c_storage_classes',
-    question: 'Static variable in recursive function',
-    mathSolution: 'Shared across all recursive calls',
-    codeSolution: 'void recurse(int n) {\n    static int calls = 0;\n    calls++;\n    if(n > 0) recurse(n-1);\n    printf("%d ", calls);\n}',
-    hint: 'All calls share same variable'
-  },
-  {
-    id: 'c_storage_47',
-    topicId: 'c_storage_classes',
-    question: 'Static counter for recursion depth',
-    mathSolution: 'Track maximum recursion depth',
-    codeSolution: 'int factorial(int n) {\n    static int depth = 0;\n    static int maxDepth = 0;\n    depth++;\n    if(depth > maxDepth) maxDepth = depth;\n    int result = (n <= 1) ? 1 : n * factorial(n-1);\n    depth--;\n    return result;\n}',
-    hint: 'Monitor recursion'
-  },
-  {
-    id: 'c_storage_48',
-    topicId: 'c_storage_classes',
-    question: 'Static variable for memoization',
-    mathSolution: 'Cache results in recursive function',
-    codeSolution: 'int fib(int n) {\n    static int cache[100] = {0};\n    if(n <= 1) return n;\n    if(cache[n]) return cache[n];\n    cache[n] = fib(n-1) + fib(n-2);\n    return cache[n];\n}',
-    hint: 'Optimize recursive Fibonacci'
-  },
-  {
-    id: 'c_storage_49',
-    topicId: 'c_storage_classes',
-    question: 'Static in recursion vs auto',
-    mathSolution: 'Auto creates new copy each call',
-    codeSolution: 'void printDepths(int n) {\n    int autoDepth = 0;\n    static int staticDepth = 0;\n    autoDepth++;\n    staticDepth++;\n    printf("auto=%d static=%d\\n", autoDepth, staticDepth);\n    if(n > 0) printDepths(n-1);\n}',
-    hint: 'Auto resets, static accumulates'
-  },
-  {
-    id: 'c_storage_50',
-    topicId: 'c_storage_classes',
-    question: 'Static pointer for recursion stack',
-    mathSolution: 'Build list of visited nodes',
-    codeSolution: 'typedef struct Node { int val; struct Node* next; } Node;\nvoid traverse(Node* root) {\n    static Node* visited = NULL;\n    // Add current node to visited list\n    // Recursive traversal\n}',
-    hint: 'Track recursion path'
-  },
-
-  // ============ LEVEL 11: INITIALIZATION RULES (51-55) ============
-  {
-    id: 'c_storage_51',
-    topicId: 'c_storage_classes',
-    question: 'Default initialization of static',
-    mathSolution: 'Static variables zero-initialized',
-    codeSolution: 'static int x; // x = 0\nstatic float y; // y = 0.0\nstatic char* p; // p = NULL',
-    hint: 'Unlike auto variables'
-  },
-  {
-    id: 'c_storage_52',
-    topicId: 'c_storage_classes',
-    question: 'Extern variable initialization',
-    mathSolution: 'Cannot initialize in extern declaration',
-    codeSolution: 'extern int x = 5; // Warning or error',
-    hint: 'Remove extern if defining'
-  },
-  {
-    id: 'c_storage_53',
-    topicId: 'c_storage_classes',
-    question: 'Static initialization with function call',
-    mathSolution: 'Initialized at runtime once',
-    codeSolution: 'static int x = rand(); // Called once at program start',
-    hint: 'Not compile-time constant'
-  },
-  {
-    id: 'c_storage_54',
-    topicId: 'c_storage_classes',
-    question: 'Complex static initialization',
-    mathSolution: 'Static struct initialization',
-    codeSolution: 'static struct Point origin = {0, 0};',
-    hint: 'Initialized before main()'
-  },
-  {
-    id: 'c_storage_55',
-    topicId: 'c_storage_classes',
-    question: 'Static array initialization',
-    mathSolution: 'Array initialized once',
-    codeSolution: 'static int primes[] = {2, 3, 5, 7, 11, 13};',
-    hint: 'Persistent lookup table'
-  },
-
-  // ============ LEVEL 12: SCOPE AND LIFETIME (56-60) ============
-  {
-    id: 'c_storage_56',
-    topicId: 'c_storage_classes',
-    question: 'Block scope static visibility',
-    mathSolution: 'Visible only in block, lives forever',
-    codeSolution: 'if(condition) {\n    static int x = 0;\n    x++;\n    printf("%d", x);\n} // x persists across if statements',
-    hint: 'Lifetime ≠ scope'
-  },
-  {
-    id: 'c_storage_57',
-    topicId: 'c_storage_classes',
-    question: 'Static in nested functions (GCC extension)',
-    mathSolution: 'Static variable in nested function',
-    codeSolution: 'void outer() {\n    void inner() {\n        static int count = 0;\n        count++;\n    }\n    inner();\n    inner();\n}',
-    hint: 'Not standard C'
-  },
-  {
-    id: 'c_storage_58',
-    topicId: 'c_storage_classes',
-    question: 'Extern and static conflict',
-    mathSolution: 'Cannot be both extern and static',
-    codeSolution: 'static extern int x; // Error',
-    hint: 'Choose one'
-  },
-  {
-    id: 'c_storage_59',
-    topicId: 'c_storage_classes',
-    question: 'Auto variable hiding static',
-    mathSolution: 'Local auto hides static in scope',
-    codeSolution: 'static int x = 10;\nvoid func() {\n    int x = 20; // Hides static x\n    printf("%d", x); // Prints 20\n}',
-    hint: 'Scope resolution'
-  },
-  {
-    id: 'c_storage_60',
-    topicId: 'c_storage_classes',
-    question: 'Static global vs static local naming',
-    mathSolution: 'Different variables, same name',
-    codeSolution: 'static int x = 5; // File scope\nvoid func() {\n    static int x = 10; // Function scope\n    printf("%d %d", x, x);\n}',
-    hint: 'Two different variables'
-  },
-
-  // ============ LEVEL 13: PRACTICAL EXAMPLES (61-65) ============
-  {
-    id: 'c_storage_61',
-    topicId: 'c_storage_classes',
-    question: 'Generate unique IDs with static',
-    mathSolution: 'Counter that persists',
-    codeSolution: 'int getNextID() {\n    static int id = 1000;\n    return id++;\n}',
-    hint: 'Thread-safe? Not without sync'
-  },
-  {
-    id: 'c_storage_62',
-    topicId: 'c_storage_classes',
-    question: 'Singleton pattern with static',
-    mathSolution: 'Single instance of object',
-    codeSolution: 'struct Database* getDB() {\n    static struct Database* db = NULL;\n    if(!db) db = createDB();\n    return db;\n}',
-    hint: 'Lazy initialization'
-  },
-  {
-    id: 'c_storage_63',
-    topicId: 'c_storage_classes',
-    question: 'Static variable for random seed',
-    mathSolution: 'Seed persists across calls',
-    codeSolution: 'int myRand() {\n    static unsigned int seed = 1;\n    seed = seed * 1103515245 + 12345;\n    return (unsigned int)(seed/65536) % 32768;\n}',
-    hint: 'Simple PRNG'
-  },
-  {
-    id: 'c_storage_64',
-    topicId: 'c_storage_classes',
-    question: 'State machine with static',
-    mathSolution: 'Persistent state variable',
-    codeSolution: 'int processChar(char c) {\n    static enum { START, IN_NUM, IN_WORD } state = START;\n    // Process based on state\n}',
-    hint: 'Parser state'
-  },
-  {
-    id: 'c_storage_65',
-    topicId: 'c_storage_classes',
-    question: 'Static variable for error count',
-    mathSolution: 'Accumulate errors across calls',
-    codeSolution: 'void logError(const char* msg) {\n    static int errorCount = 0;\n    errorCount++;\n    printf("Error %d: %s\\n", errorCount, msg);\n}',
-    hint: 'Error tracking'
-  },
-
-  // ============ LEVEL 14: STORAGE CLASS WITH STRUCTURES (66-70) ============
-  {
-    id: 'c_storage_66',
-    topicId: 'c_storage_classes',
-    question: 'Static structure variable',
-    mathSolution: 'Persistent structure',
-    codeSolution: 'static struct Config config = {9600, 8, "N", 1};',
-    hint: 'Configuration data'
-  },
-  {
-    id: 'c_storage_67',
-    topicId: 'c_storage_classes',
-    question: 'Extern structure declaration',
-    mathSolution: 'Structure defined elsewhere',
-    codeSolution: 'extern struct Point origin;',
-    hint: 'Definition in another file'
-  },
-  {
-    id: 'c_storage_68',
-    topicId: 'c_storage_classes',
-    question: 'Register structure? Not possible',
-    mathSolution: 'Cannot have register struct',
-    codeSolution: 'void func() {\n    register struct Point p; // Usually error\n}',
-    hint: 'Structure too large for register'
-  },
-  {
-    id: 'c_storage_69',
-    topicId: 'c_storage_classes',
-    question: 'Static array of structures',
-    mathSolution: 'Persistent database',
-    codeSolution: 'static struct Employee employees[100];',
-    hint: 'File-scoped employee records'
-  },
-  {
-    id: 'c_storage_70',
-    topicId: 'c_storage_classes',
-    question: 'Static pointer to structure',
-    mathSolution: 'Persistent reference',
-    codeSolution: 'static struct Node* head = NULL;',
-    hint: 'Linked list head'
-  },
-
-  // ============ LEVEL 15: FUNCTION-LEVEL STORAGE (71-75) ============
-  {
-    id: 'c_storage_71',
-    topicId: 'c_storage_classes',
-    question: 'Static function returning static data',
-    mathSolution: 'Controlled access to static',
-    codeSolution: 'static int* getCounter() {\n    static int c = 0;\n    return &c;\n}',
-    hint: 'Returns pointer to static'
-  },
-  {
-    id: 'c_storage_72',
-    topicId: 'c_storage_classes',
-    question: 'Extern function with static local',
-    mathSolution: 'External function with internal state',
-    codeSolution: '// In file.c: int counter() { static int c=0; return c++; }\n// In main.c: extern int counter();',
-    hint: 'State hidden in function'
-  },
-  {
-    id: 'c_storage_73',
-    topicId: 'c_storage_classes',
-    question: 'Function pointer to static function',
-    mathSolution: 'Call static function via pointer',
-    codeSolution: 'static void helper() {}\nvoid* getHelper() { return helper; }',
-    hint: 'Static can be called via pointer'
-  },
-  {
-    id: 'c_storage_74',
-    topicId: 'c_storage_classes',
-    question: 'Inline function with static variable',
-    mathSolution: 'Static in inline function',
-    codeSolution: 'inline int nextID() {\n    static int id = 0;\n    return id++;\n}',
-    hint: 'Each translation unit has own static'
-  },
-  {
-    id: 'c_storage_75',
-    topicId: 'c_storage_classes',
-    question: 'Recursive static function',
-    mathSolution: 'Static function calling itself',
-    codeSolution: 'static void quicksort(int arr[], int low, int high) {\n    if(low < high) {\n        int pi = partition(arr, low, high);\n        quicksort(arr, low, pi-1);\n        quicksort(arr, pi+1, high);\n    }\n}',
-    hint: 'Static recursion works fine'
-  },
-
-  // ============ LEVEL 16: STORAGE CLASS AND LINKAGE (76-80) ============
-  {
-    id: 'c_storage_76',
-    topicId: 'c_storage_classes',
-    question: 'External linkage with extern',
-    mathSolution: 'Visible across files',
-    codeSolution: 'int global = 10; // External linkage\nvoid func() { extern int global; }',
-    hint: 'Default for globals is external'
-  },
-  {
-    id: 'c_storage_77',
-    topicId: 'c_storage_classes',
-    question: 'Internal linkage with static',
-    mathSolution: 'Visible only in this file',
-    codeSolution: 'static int fileOnly = 20;',
-    hint: 'Cannot be accessed from other files'
-  },
-  {
-    id: 'c_storage_78',
-    topicId: 'c_storage_classes',
-    question: 'No linkage (auto and register)',
-    mathSolution: 'Visible only in block',
-    codeSolution: 'void func() { int x; // No linkage }',
-    hint: 'Cannot be referenced outside'
-  },
-  {
-    id: 'c_storage_79',
-    topicId: 'c_storage_classes',
-    question: 'Extern with no linkage variable',
-    mathSolution: 'Cannot refer to no-linkage variable',
-    codeSolution: 'void func() { int x; extern int x; // Error or refers to different x }',
-    hint: 'extern looks for file scope'
-  },
-  {
-    id: 'c_storage_80',
-    topicId: 'c_storage_classes',
-    question: 'Static function with external call',
-    mathSolution: 'Static can call external',
-    codeSolution: 'static void process(int x) { externalFunc(x); }',
-    hint: 'Static can use external functions'
-  },
-
-  // ============ LEVEL 17: ADVANCED USE CASES (81-85) ============
-  {
-    id: 'c_storage_81',
-    topicId: 'c_storage_classes',
-    question: 'Static variable in header file',
-    mathSolution: 'Each including file gets its own copy',
-    codeSolution: '// header.h: static int version = 1;\n// file1.c: #include "header.h"\n// file2.c: #include "header.h" // Different version variable',
-    hint: 'Usually not intended'
-  },
-  {
-    id: 'c_storage_82',
-    topicId: 'c_storage_classes',
-    question: 'Extern inline static workaround',
-    mathSolution: 'C99 inline rules',
-    codeSolution: '// header.h: inline int max(int a, int b) { return a>b?a:b; }\n// file.c: extern int max(int,int); // External definition',
-    hint: 'Inline with external linkage'
-  },
-  {
-    id: 'c_storage_83',
-    topicId: 'c_storage_classes',
-    question: 'Static const vs #define',
-    mathSolution: 'Static const has type, address',
-    codeSolution: 'static const int MAX_SIZE = 100; // Has address\n#define MAX_SIZE 100 // No address',
-    hint: 'Static const can be debugged'
-  },
-  {
-    id: 'c_storage_84',
-    topicId: 'c_storage_classes',
-    question: 'Static variable in macro',
-    mathSolution: 'Macro expanding to static',
-    codeSolution: '#define CREATE_COUNTER(name) static int name = 0\nCREATE_COUNTER(counter1);\nCREATE_COUNTER(counter2);',
-    hint: 'Creates multiple static vars'
-  },
-  {
-    id: 'c_storage_85',
-    topicId: 'c_storage_classes',
-    question: 'Register with array indexing',
-    mathSolution: 'Register array index',
-    codeSolution: 'void sum(int arr[], int n) {\n    register int i;\n    register int sum = 0;\n    for(i = 0; i < n; i++) sum += arr[i];\n}',
-    hint: 'Common optimization'
-  },
-
-  // ============ LEVEL 18: STORAGE CLASS AND CONST/VOLATILE (86-90) ============
-  {
-    id: 'c_storage_86',
-    topicId: 'c_storage_classes',
-    question: 'Static const volatile',
-    mathSolution: 'Read-only hardware register',
-    codeSolution: 'static const volatile uint32_t* STATUS_REG = (uint32_t*)0x40021000;',
-    hint: 'Const means don\'t write, volatile means may change'
-  },
-  {
-    id: 'c_storage_87',
-    topicId: 'c_storage_classes',
-    question: 'Extern const variable',
-    mathSolution: 'Constant defined elsewhere',
-    codeSolution: '// consts.h: extern const double PI;\n// consts.c: const double PI = 3.14159;',
-    hint: 'Const has external linkage by default'
-  },
-  {
-    id: 'c_storage_88',
-    topicId: 'c_storage_classes',
-    question: 'Static volatile for interrupt',
-    mathSolution: 'Variable modified by ISR',
-    codeSolution: 'static volatile int buttonPressed = 0;',
-    hint: 'Prevents compiler optimization'
-  },
-  {
-    id: 'c_storage_89',
-    topicId: 'c_storage_classes',
-    question: 'Register volatile (valid?)',
-    mathSolution: 'Can combine register and volatile',
-    codeSolution: 'void wait() {\n    register volatile int i;\n    for(i = 0; i < 1000; i++); // Delay loop\n}',
-    hint: 'volatile prevents optimization'
-  },
-  {
-    id: 'c_storage_90',
-    topicId: 'c_storage_classes',
-    question: 'Extern volatile for shared memory',
-    mathSolution: 'Shared memory between processes',
-    codeSolution: 'extern volatile int* sharedBuffer;',
-    hint: 'May change asynchronously'
-  },
-
-  // ============ LEVEL 19: ERROR SCENARIOS (91-95) ============
-  {
-    id: 'c_storage_91',
-    topicId: 'c_storage_classes',
-    question: 'Using static in function parameter',
-    mathSolution: 'Cannot use static on parameters',
-    codeSolution: 'void func(static int x) { } // Error',
-    hint: 'Parameters are auto'
-  },
-  {
-    id: 'c_storage_92',
-    topicId: 'c_storage_classes',
-    question: 'Multiple storage classes',
-    mathSolution: 'Only one storage class allowed',
-    codeSolution: 'extern static int x; // Error',
-    hint: 'Choose one'
-  },
-  {
-    id: 'c_storage_93',
-    topicId: 'c_storage_classes',
-    question: 'Register variable with array',
-    mathSolution: 'Cannot have register array',
-    codeSolution: 'void func() {\n    register int arr[10]; // Usually error\n}',
-    hint: 'Array too large for register'
-  },
-  {
-    id: 'c_storage_94',
-    topicId: 'c_storage_classes',
-    question: 'Static variable in inline function in header',
-    mathSolution: 'Each inclusion gets different static',
-    codeSolution: '// header.h: inline int counter() { static int c=0; return c++; }\n// file1.c and file2.c have separate counters',
-    hint: 'Multiple copies in different files'
-  },
-  {
-    id: 'c_storage_95',
-    topicId: 'c_storage_classes',
-    question: 'Extern typedef (invalid)',
-    mathSolution: 'Cannot use extern with typedef',
-    codeSolution: 'extern typedef int INT; // Error',
-    hint: 'typedef is storage class? No, it\'s different'
-  },
-
-  // ============ LEVEL 20: PRACTICAL APPLICATIONS (96-100) ============
-  {
-    id: 'c_storage_96',
-    topicId: 'c_storage_classes',
-    question: 'Static variable for caching',
-    mathSolution: 'Cache expensive computation',
-    codeSolution: 'double computeExpensive(int n) {\n    static double cache[100] = {0};\n    if(cache[n] != 0) return cache[n];\n    cache[n] = slowCompute(n);\n    return cache[n];\n}',
-    hint: 'Memoization pattern'
-  },
-  {
-    id: 'c_storage_97',
-    topicId: 'c_storage_classes',
-    question: 'Static for one-time initialization',
-    mathSolution: 'Initialize only once',
-    codeSolution: 'void initialize() {\n    static int done = 0;\n    if(!done) {\n        initResources();\n        done = 1;\n    }\n}',
-    hint: 'Thread-safe? Not in C'
-  },
-  {
-    id: 'c_storage_98',
-    topicId: 'c_storage_classes',
-    question: 'Static variable for logging',
-    mathSolution: 'Log file handle persists',
-    codeSolution: 'void logMessage(const char* msg) {\n    static FILE* logFile = NULL;\n    if(!logFile) logFile = fopen("log.txt", "a");\n    fprintf(logFile, "%s\\n", msg);\n}',
-    hint: 'Open file once'
-  },
-  {
-    id: 'c_storage_99',
-    topicId: 'c_storage_classes',
-    question: 'Static for random number generator state',
-    mathSolution: 'RNG state between calls',
-    codeSolution: 'unsigned int fastRand() {\n    static unsigned int state = 1;\n    state = state * 1103515245 + 12345;\n    return (state >> 16) & 0x7FFF;\n}',
+    question: 'Write a program to use static for random number generator state.',
+    mathSolution: 'Static variable preserves RNG state between calls',
+    codeSolution: '#include <stdio.h>\n\nunsigned int simpleRand() {\n    static unsigned int seed = 1;\n    seed = seed * 1103515245 + 12345;\n    return (seed >> 16) & 0x7FFF;\n}\n\nint main() {\n    for(int i = 0; i < 5; i++) {\n        printf("Random %d = %u\\n", i+1, simpleRand());\n    }\n    return 0;\n}',
     hint: 'Linear congruential generator'
   },
-  {
-    id: 'c_storage_100',
-    topicId: 'c_storage_classes',
-    question: 'Combine all storage classes in one program',
-    mathSolution: 'Demonstrate auto, register, static, extern, _Thread_local',
-    codeSolution: '#include <stdio.h>\n#include <threads.h>\n\nint global = 100; // extern by default\nstatic int fileStatic = 50;\n_Thread_local int tlsVar = 0;\n\nstatic void staticFunc() {\n    static int funcStatic = 0; // static local\n    auto int autoVar = 10;      // auto\n    register int regVar = 20;   // register suggestion\n    funcStatic++;\n    printf("%d %d %d\\n", funcStatic, autoVar, regVar);\n}\n\nint main() {\n    extern int global;          // extern declaration\n    staticFunc();\n    return 0;\n}',
-    hint: 'All storage classes in action'
-  }
+
+  // ========== EXTERN STORAGE CLASS (21-30) ==========
+// ========== EXTERN STORAGE CLASS (21-30) - CORRECTED ==========
+{
+  id: 'c_storage_21',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate that static global variable is file-scoped.',
+  mathSolution: 'Static global variable is visible only within the file',
+  codeSolution: '#include <stdio.h>\n\nstatic int fileStatic = 100;\n\nvoid showFileStatic() {\n    printf("File static value = %d\\n", fileStatic);\n}\n\nint main() {\n    showFileStatic();\n    return 0;\n}',
+  hint: 'Static global has internal linkage'
+},
+{
+  id: 'c_storage_22',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate static function (internal linkage).',
+  mathSolution: 'Static function is visible only within the file',
+  codeSolution: '#include <stdio.h>\n\nstatic void internalHelper() {\n    printf("Internal helper function called\\n");\n}\n\nint main() {\n    internalHelper();\n    return 0;\n}',
+  hint: 'Static functions cannot be called from other files'
+},
+{
+  id: 'c_storage_23',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to show that global variables have external linkage by default.',
+  mathSolution: 'Global variables can be accessed from other files',
+  codeSolution: '#include <stdio.h>\n\nint globalVar = 500;\n\nvoid showGlobal() {\n    printf("Global variable = %d\\n", globalVar);\n}\n\nint main() {\n    showGlobal();\n    return 0;\n}',
+  hint: 'Global variables are extern by default'
+},
+{
+  id: 'c_storage_24',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate multiple extern declarations of same variable.',
+  mathSolution: 'Same variable can be declared extern multiple times',
+  codeSolution: '#include <stdio.h>\n\nextern int shared;\nextern int shared;\nextern int shared;\n\nint shared = 250;\n\nint main() {\n    printf("Shared value = %d\\n", shared);\n    return 0;\n}',
+  hint: 'Only one definition allowed, multiple declarations fine'
+},
+{
+  id: 'c_storage_25',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static variable in recursion to count calls.',
+  mathSolution: 'Static variable shared across all recursive calls',
+  codeSolution: '#include <stdio.h>\n\nint factorial(int n) {\n    static int callCount = 0;\n    callCount++;\n    printf("Call #%d, n=%d\\n", callCount, n);\n    if(n <= 1) return 1;\n    return n * factorial(n-1);\n}\n\nint main() {\n    int result = factorial(4);\n    printf("4! = %d\\n", result);\n    return 0;\n}',
+  hint: 'Static variable persists across all recursive calls'
+},
+{
+  id: 'c_storage_26',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to track maximum recursion depth using static.',
+  mathSolution: 'Static variables can track depth across recursive calls',
+  codeSolution: '#include <stdio.h>\n\nvoid recurse(int n) {\n    static int depth = 0;\n    static int maxDepth = 0;\n    depth++;\n    if(depth > maxDepth) maxDepth = depth;\n    if(n > 0) recurse(n-1);\n    depth--;\n    if(depth == 0) {\n        printf("Max recursion depth = %d\\n", maxDepth);\n    }\n}\n\nint main() {\n    recurse(5);\n    return 0;\n}',
+  hint: 'Monitor recursion depth with static variables'
+},
+{
+  id: 'c_storage_27',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static pointer for lazy allocation.',
+  mathSolution: 'Static pointer allocated only once',
+  codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint* getBuffer() {\n    static int* buffer = NULL;\n    if(!buffer) {\n        buffer = (int*)malloc(5 * sizeof(int));\n        for(int i = 0; i < 5; i++) buffer[i] = (i + 1) * 10;\n        printf("Buffer initialized\\n");\n    }\n    return buffer;\n}\n\nint main() {\n    int *buf = getBuffer();\n    int *buf2 = getBuffer();\n    for(int i = 0; i < 5; i++) {\n        printf("%d ", buf[i]);\n    }\n    free(buf);\n    return 0;\n}',
+  hint: 'Lazy initialization pattern'
+},
+{
+  id: 'c_storage_28',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate static variable in block scope.',
+  mathSolution: 'Static variable persists across block entries',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    for(int i = 1; i <= 5; i++) {\n        static int x = 0;\n        x++;\n        printf("Iteration %d: static x = %d\\n", i, x);\n    }\n    return 0;\n}',
+  hint: 'Static in block has function lifetime, block visibility'
+},
+{
+  id: 'c_storage_29',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to combine auto, register, and static variables.',
+  mathSolution: 'Different storage classes for different purposes',
+  codeSolution: '#include <stdio.h>\n\nstatic int globalStatic = 0;\n\nvoid demo() {\n    static int localStatic = 0;\n    auto int autoVar = 5;\n    register int regVar = 10;\n    localStatic++;\n    globalStatic++;\n    printf("Local static=%d, Global static=%d, Auto=%d, Register=%d\\n", \n           localStatic, globalStatic, autoVar, regVar);\n}\n\nint main() {\n    demo();\n    demo();\n    demo();\n    return 0;\n}',
+  hint: 'Different storage classes have different behaviors'
+},
+{
+  id: 'c_storage_30',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to implement singleton pattern using static.',
+  mathSolution: 'Single instance of object using static pointer',
+  codeSolution: '#include <stdio.h>\n\ntypedef struct {\n    int data;\n} Singleton;\n\nSingleton* getInstance() {\n    static Singleton instance = {99};\n    return &instance;\n}\n\nint main() {\n    Singleton *s1 = getInstance();\n    Singleton *s2 = getInstance();\n    printf("s1 data = %d, s2 data = %d\\n", s1->data, s2->data);\n    return 0;\n}',
+  hint: 'Singleton ensures only one instance'
+},
+
+// ========== PRACTICAL APPLICATIONS (31-40) ==========
+{
+  id: 'c_storage_31',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for error counter.',
+  mathSolution: 'Accumulate errors across function calls',
+  codeSolution: '#include <stdio.h>\n\nvoid logError(const char* msg) {\n    static int errorCount = 0;\n    errorCount++;\n    printf("Error #%d: %s\\n", errorCount, msg);\n}\n\nint main() {\n    logError("File not found");\n    logError("Memory allocation failed");\n    logError("Network timeout");\n    return 0;\n}',
+  hint: 'Static tracks error count across calls'
+},
+{
+  id: 'c_storage_32',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for parser state machine.',
+  mathSolution: 'Static variable stores parser state between calls',
+  codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nchar processChar(char c) {\n    static int inWord = 0;\n    if(isalpha(c)) {\n        if(!inWord) {\n            inWord = 1;\n            return \'W\';\n        }\n    } else {\n        if(inWord) {\n            inWord = 0;\n            return \'S\';\n        }\n    }\n    return 0;\n}\n\nint main() {\n    char str[] = "hello world test";\n    for(int i = 0; str[i]; i++) {\n        char r = processChar(str[i]);\n        if(r) printf("%c ", r);\n    }\n    return 0;\n}',
+  hint: 'Parser state preserved between calls'
+},
+{
+  id: 'c_storage_33',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for log file handle.',
+  mathSolution: 'Static FILE pointer opened once',
+  codeSolution: '#include <stdio.h>\n\nvoid logMessage(const char* msg) {\n    static int logged = 0;\n    if(!logged) {\n        printf("Log file opened (simulated)\\n");\n        logged = 1;\n    }\n    printf("LOG: %s\\n", msg);\n}\n\nint main() {\n    logMessage("Program started");\n    logMessage("Processing data");\n    logMessage("Program ended");\n    return 0;\n}',
+  hint: 'Resource opened only once'
+},
+{
+  id: 'c_storage_34',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for lookup table initialization.',
+  mathSolution: 'Static array initialized once',
+  codeSolution: '#include <stdio.h>\n\nconst char* getMonthName(int month) {\n    static const char* months[] = {\n        "Jan", "Feb", "Mar", "Apr", "May", "Jun",\n        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"\n    };\n    if(month >= 1 && month <= 12) return months[month-1];\n    return "Invalid";\n}\n\nint main() {\n    for(int i = 1; i <= 12; i++) {\n        printf("%d = %s\\n", i, getMonthName(i));\n    }\n    return 0;\n}',
+  hint: 'Static lookup table initialized once'
+},
+{
+  id: 'c_storage_35',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to compare auto vs static in recursion.',
+  mathSolution: 'Auto creates new copy each call, static shared across calls',
+  codeSolution: '#include <stdio.h>\n\nvoid compareDepth(int n) {\n    static int staticDepth = 0;\n    int autoDepth = 0;\n    staticDepth++;\n    autoDepth++;\n    printf("n=%d, static=%d, auto=%d\\n", n, staticDepth, autoDepth);\n    if(n > 0) compareDepth(n-1);\n}\n\nint main() {\n    compareDepth(3);\n    return 0;\n}',
+  hint: 'Static accumulates, auto resets'
+},
+{
+  id: 'c_storage_36',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for function call counter.',
+  mathSolution: 'Count how many times function is called',
+  codeSolution: '#include <stdio.h>\n\nint getCallCount() {\n    static int calls = 0;\n    calls++;\n    return calls;\n}\n\nint main() {\n    printf("Call 1: %d\\n", getCallCount());\n    printf("Call 2: %d\\n", getCallCount());\n    printf("Call 3: %d\\n", getCallCount());\n    return 0;\n}',
+  hint: 'Simple function call counter'
+},
+{
+  id: 'c_storage_37',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate external linkage with global variable.',
+  mathSolution: 'Variables with external linkage can be accessed across functions',
+  codeSolution: '#include <stdio.h>\n\nint sharedCounter = 0;\n\nvoid increment() {\n    sharedCounter++;\n}\n\nvoid display() {\n    printf("Counter = %d\\n", sharedCounter);\n}\n\nint main() {\n    increment();\n    increment();\n    display();\n    return 0;\n}',
+  hint: 'Global variables have external linkage by default'
+},
+{
+  id: 'c_storage_38',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate internal linkage with static global.',
+  mathSolution: 'Static global variables visible only within file',
+  codeSolution: '#include <stdio.h>\n\nstatic int filePrivate = 50;\n\nvoid showPrivate() {\n    printf("Private value = %d\\n", filePrivate);\n}\n\nint main() {\n    showPrivate();\n    return 0;\n}',
+  hint: 'Static global has internal linkage'
+},
+{
+  id: 'c_storage_39',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for default argument simulation.',
+  mathSolution: 'Static variable can simulate default parameters',
+  codeSolution: '#include <stdio.h>\n\nint multiply(int a, int b) {\n    static int defaultCalled = 0;\n    if(!defaultCalled) {\n        printf("Default multiplier set to 2\\n");\n        defaultCalled = 1;\n    }\n    return a * b;\n}\n\nint main() {\n    printf("10 * 2 = %d\\n", multiply(10, 2));\n    printf("5 * 2 = %d\\n", multiply(5, 2));\n    return 0;\n}',
+  hint: 'Static can simulate default arguments'
+},
+{
+  id: 'c_storage_40',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for Fibonacci memoization.',
+  mathSolution: 'Cache Fibonacci results in static array',
+  codeSolution: '#include <stdio.h>\n\nint fib(int n) {\n    static int cache[100] = {0, 1, 1};\n    if(n <= 2) return cache[n];\n    if(cache[n] != 0) return cache[n];\n    cache[n] = fib(n-1) + fib(n-2);\n    return cache[n];\n}\n\nint main() {\n    for(int i = 0; i <= 10; i++) {\n        printf("fib(%d) = %d\\n", i, fib(i));\n    }\n    return 0;\n}',
+  hint: 'Memoization optimizes recursive Fibonacci'
+},
+
+// ========== ADVANCED STATIC APPLICATIONS (41-50) ==========
+{
+  id: 'c_storage_41',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for configuration cache.',
+  mathSolution: 'Cache configuration values',
+  codeSolution: '#include <stdio.h>\n\nint getConfig(const char* key) {\n    static int configLoaded = 0;\n    static int value = 0;\n    if(!configLoaded) {\n        value = 100;\n        configLoaded = 1;\n        printf("Config loaded\\n");\n    }\n    return value;\n}\n\nint main() {\n    printf("Config1 = %d\\n", getConfig("key1"));\n    printf("Config2 = %d\\n", getConfig("key2"));\n    printf("Config3 = %d\\n", getConfig("key3"));\n    return 0;\n}',
+  hint: 'Static tracks configuration loading state'
+},
+{
+  id: 'c_storage_42',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for performance monitoring.',
+  mathSolution: 'Static accumulates performance metrics',
+  codeSolution: '#include <stdio.h>\n\nvoid processItem(int item) {\n    static int processed = 0;\n    static int totalValue = 0;\n    processed++;\n    totalValue += item;\n    if(processed % 2 == 0) {\n        printf("Average of last 2: %.1f\\n", totalValue / 2.0);\n        totalValue = 0;\n    }\n}\n\nint main() {\n    for(int i = 1; i <= 6; i++) {\n        processItem(i * 5);\n    }\n    return 0;\n}',
+  hint: 'Static for rolling statistics'
+},
+{
+  id: 'c_storage_43',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for circular buffer index.',
+  mathSolution: 'Static index wraps around',
+  codeSolution: '#include <stdio.h>\n\nvoid addToBuffer(int value) {\n    static int buffer[4] = {0};\n    static int index = 0;\n    buffer[index] = value;\n    printf("Added %d at position %d\\n", value, index);\n    index = (index + 1) % 4;\n}\n\nint main() {\n    for(int i = 1; i <= 6; i++) {\n        addToBuffer(i * 10);\n    }\n    return 0;\n}',
+  hint: 'Static maintains circular buffer state'
+},
+{
+  id: 'c_storage_44',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use register for optimized loop.',
+  mathSolution: 'Register suggests compiler to use CPU register',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    register int sum = 0;\n    for(register int i = 1; i <= 1000; i++) {\n        sum += i;\n    }\n    printf("Sum = %d\\n", sum);\n    return 0;\n}',
+  hint: 'Register for frequently accessed variables'
+},
+{
+  id: 'c_storage_45',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to show auto vs static scope difference.',
+  mathSolution: 'Auto dies after block, static persists',
+  codeSolution: '#include <stdio.h>\n\nint* getStaticPointer() {\n    static int staticVar = 100;\n    return &staticVar;\n}\n\nint main() {\n    int *p1 = getStaticPointer();\n    int *p2 = getStaticPointer();\n    printf("p1 = %d, p2 = %d\\n", *p1, *p2);\n    *p1 = 200;\n    printf("After change: p1 = %d, p2 = %d\\n", *p1, *p2);\n    return 0;\n}',
+  hint: 'Static persists between calls'
+},
+{
+  id: 'c_storage_46',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate storage class for string literals.',
+  mathSolution: 'String literals have static storage duration',
+  codeSolution: '#include <stdio.h>\n\nconst char* getMessage(int n) {\n    if(n == 1) return "First Message\";\n    return \"Second Message\";\n}\n\nint main() {\n    const char *msg1 = getMessage(1);\n    const char *msg2 = getMessage(2);\n    printf("%s\\n\", msg1);\n    printf(\"%s\\n\", msg2);\n    return 0;\n}',
+  hint: 'String literals are static'
+},
+{
+  id: 'c_storage_47',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to combine static and auto variables in nested blocks.',
+  mathSolution: 'Static persists, auto reinitializes',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    for(int i = 0; i < 3; i++) {\n        static int staticX = 0;\n        int autoX = 0;\n        staticX++;\n        autoX++;\n        printf("Iteration %d: staticX=%d, autoX=%d\\n\", i+1, staticX, autoX);\n    }\n    return 0;\n}',
+  hint: 'Static retains value, auto reinitializes'
+},
+{
+  id: 'c_storage_48',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to use static for unique ID generator.',
+  mathSolution: 'Static counter generates unique IDs',
+  codeSolution: '#include <stdio.h>\n\nint getUniqueID() {\n    static int nextID = 1;\n    return nextID++;\n}\n\nint main() {\n    printf("ID1 = %d\\n", getUniqueID());\n    printf("ID2 = %d\\n", getUniqueID());\n    printf("ID3 = %d\\n", getUniqueID());\n    printf("ID4 = %d\\n", getUniqueID());\n    return 0;\n}',
+  hint: 'Static retains counter value'
+},
+{
+  id: 'c_storage_49',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to demonstrate register variable in local scope.',
+  mathSolution: 'Register variable can be used like normal variable',
+  codeSolution: '#include <stdio.h>\n\nint main() {\n    register int x = 42;\n    register int y = 58;\n    register int z = x + y;\n    printf("x = %d, y = %d, sum = %d\\n\", x, y, z);\n    return 0;\n}',
+  hint: 'Register suggests fast access, but cannot take address'
+},
+{
+  id: 'c_storage_50',
+  topicId: 'c_storage_classes',
+  question: 'Write a program to combine all storage class concepts.',
+  mathSolution: 'Demonstration of auto, register, static, extern',
+  codeSolution: '#include <stdio.h>\n\nstatic int globalStatic = 0;\nint globalExtern = 50;\n\nvoid demo() {\n    static int staticLocal = 10;\n    auto int autoLocal = 20;\n    register int regLocal = 30;\n    \n    staticLocal++;\n    globalStatic++;\n    globalExtern++;\n    \n    printf("Static local: %d, Auto: %d, Register: %d\\n\", \n           staticLocal, autoLocal, regLocal);\n    printf(\"Global static: %d, Global extern: %d\\n\", \n           globalStatic, globalExtern);\n}\n\nint main() {\n    demo();\n    demo();\n    demo();\n    return 0;\n}',
+  hint: 'All storage classes demonstrate different behaviors'
+}
+
 );

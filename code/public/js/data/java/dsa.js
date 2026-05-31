@@ -5,8 +5,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find the largest element in an array.",
     mathSolution: "Traverse array keeping track of maximum",
-    codeSolution:
-      'int[] arr = {3, 7, 2, 9, 5};\nint max = arr[0];\nfor(int i=1; i<arr.length; i++) {\n    if(arr[i] > max) max = arr[i];\n}\nSystem.out.println("Largest: " + max);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 7, 2, 9, 5};\n        int max = arr[0];\n        for(int i=1; i<arr.length; i++) if(arr[i] > max) max = arr[i];\n        System.out.println("Largest: " + max);\n    }\n}',
     hint: "Initialize max with first element",
   },
   {
@@ -14,8 +13,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find the smallest element in an array.",
     mathSolution: "Traverse array keeping track of minimum",
-    codeSolution:
-      'int[] arr = {3, 7, 2, 9, 5};\nint min = arr[0];\nfor(int i=1; i<arr.length; i++) {\n    if(arr[i] < min) min = arr[i];\n}\nSystem.out.println("Smallest: " + min);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 7, 2, 9, 5};\n        int min = arr[0];\n        for(int i=1; i<arr.length; i++) if(arr[i] < min) min = arr[i];\n        System.out.println("Smallest: " + min);\n    }\n}',
     hint: "Initialize min with first element",
   },
   {
@@ -23,8 +21,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate sum of all elements in array.",
     mathSolution: "Add each element to running total",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 4, 5};\nint sum = 0;\nfor(int num : arr) {\n    sum += num;\n}\nSystem.out.println("Sum: " + sum);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int sum = 0;\n        for(int num : arr) sum += num;\n        System.out.println("Sum: " + sum);\n    }\n}',
     hint: "Use enhanced for loop",
   },
   {
@@ -32,8 +29,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate average of array elements.",
     mathSolution: "Sum divided by length",
-    codeSolution:
-      'int[] arr = {10, 20, 30, 40, 50};\nint sum = 0;\nfor(int num : arr) sum += num;\ndouble avg = (double)sum / arr.length;\nSystem.out.println("Average: " + avg);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        int sum = 0;\n        for(int num : arr) sum += num;\n        double avg = (double)sum / arr.length;\n        System.out.println("Average: " + avg);\n    }\n}',
     hint: "Cast to double for decimal result",
   },
   {
@@ -41,8 +37,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Reverse an array in-place.",
     mathSolution: "Swap first with last, second with second-last, etc.",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 4, 5};\nint left = 0, right = arr.length-1;\nwhile(left < right) {\n    int temp = arr[left];\n    arr[left] = arr[right];\n    arr[right] = temp;\n    left++; right--;\n}\nSystem.out.println("Reversed: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int left = 0, right = arr.length-1;\n        while(left < right) {\n            int temp = arr[left];\n            arr[left] = arr[right];\n            arr[right] = temp;\n            left++; right--;\n        }\n        System.out.println("Reversed: " + Arrays.toString(arr));\n    }\n}',
     hint: "Two-pointer approach",
   },
   {
@@ -50,8 +45,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if array is sorted in ascending order.",
     mathSolution: "Compare each element with next",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 4, 5};\nboolean sorted = true;\nfor(int i=0; i<arr.length-1; i++) {\n    if(arr[i] > arr[i+1]) {\n        sorted = false;\n        break;\n    }\n}\nSystem.out.println("Is sorted: " + sorted);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        boolean sorted = true;\n        for(int i=0; i<arr.length-1; i++) {\n            if(arr[i] > arr[i+1]) { sorted = false; break; }\n        }\n        System.out.println("Is sorted: " + sorted);\n    }\n}',
     hint: "If any element > next, not sorted",
   },
   {
@@ -59,8 +53,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find second largest element in array.",
     mathSolution: "Track largest and second largest",
-    codeSolution:
-      'int[] arr = {12, 35, 1, 10, 34, 1};\nint first = Integer.MIN_VALUE;\nint second = Integer.MIN_VALUE;\nfor(int num : arr) {\n    if(num > first) {\n        second = first;\n        first = num;\n    } else if(num > second && num != first) {\n        second = num;\n    }\n}\nSystem.out.println("Second largest: " + second);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {12, 35, 1, 10, 34, 1};\n        int first = Integer.MIN_VALUE, second = Integer.MIN_VALUE;\n        for(int num : arr) {\n            if(num > first) { second = first; first = num; }\n            else if(num > second && num != first) second = num;\n        }\n        System.out.println("Second largest: " + second);\n    }\n}',
     hint: "Initialize with minimum values",
   },
   {
@@ -68,8 +61,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Remove duplicates from sorted array.",
     mathSolution: "Use two-pointer technique",
-    codeSolution:
-      'int[] arr = {1, 1, 2, 2, 2, 3, 4, 4, 5};\nint j = 0;\nfor(int i=0; i<arr.length; i++) {\n    if(i==0 || arr[i] != arr[i-1]) {\n        arr[j++] = arr[i];\n    }\n}\nSystem.out.println("Unique count: " + j);\nSystem.out.println("Array: " + Arrays.toString(Arrays.copyOf(arr, j)));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 1, 2, 2, 2, 3, 4, 4, 5};\n        int j = 0;\n        for(int i=0; i<arr.length; i++) {\n            if(i==0 || arr[i] != arr[i-1]) arr[j++] = arr[i];\n        }\n        System.out.println("Unique count: " + j);\n        System.out.println("Array: " + Arrays.toString(Arrays.copyOf(arr, j)));\n    }\n}',
     hint: "j tracks position for unique elements",
   },
   {
@@ -77,8 +69,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Rotate array left by one position.",
     mathSolution: "Store first, shift left, place first at end",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 4, 5};\nint first = arr[0];\nfor(int i=0; i<arr.length-1; i++) {\n    arr[i] = arr[i+1];\n}\narr[arr.length-1] = first;\nSystem.out.println("Left rotated: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int first = arr[0];\n        for(int i=0; i<arr.length-1; i++) arr[i] = arr[i+1];\n        arr[arr.length-1] = first;\n        System.out.println("Left rotated: " + Arrays.toString(arr));\n    }\n}',
     hint: "Shift elements left",
   },
   {
@@ -86,8 +77,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Rotate array right by one position.",
     mathSolution: "Store last, shift right, place last at front",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 4, 5};\nint last = arr[arr.length-1];\nfor(int i=arr.length-1; i>0; i--) {\n    arr[i] = arr[i-1];\n}\narr[0] = last;\nSystem.out.println("Right rotated: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int last = arr[arr.length-1];\n        for(int i=arr.length-1; i>0; i--) arr[i] = arr[i-1];\n        arr[0] = last;\n        System.out.println("Right rotated: " + Arrays.toString(arr));\n    }\n}',
     hint: "Shift from end",
   },
   {
@@ -95,8 +85,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find missing number in array of 1 to n.",
     mathSolution: "Sum of n numbers minus array sum",
-    codeSolution:
-      'int[] arr = {1, 2, 4, 5, 6};\nint n = arr.length + 1;\nint expectedSum = n * (n + 1) / 2;\nint actualSum = 0;\nfor(int num : arr) actualSum += num;\nint missing = expectedSum - actualSum;\nSystem.out.println("Missing number: " + missing);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 4, 5, 6};\n        int n = arr.length + 1;\n        int expected = n * (n + 1) / 2;\n        int actual = 0;\n        for(int num : arr) actual += num;\n        System.out.println("Missing number: " + (expected - actual));\n    }\n}',
     hint: "Use formula n*(n+1)/2",
   },
   {
@@ -104,8 +93,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find duplicate in array (one duplicate).",
     mathSolution: "XOR all elements with 1..n",
-    codeSolution:
-      'int[] arr = {1, 3, 4, 2, 2};\nint xor = 0;\nfor(int num : arr) xor ^= num;\nfor(int i=1; i<=arr.length-1; i++) xor ^= i;\nSystem.out.println("Duplicate: " + xor);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 3, 4, 2, 2};\n        int xor = 0;\n        for(int num : arr) xor ^= num;\n        for(int i=1; i<=arr.length-1; i++) xor ^= i;\n        System.out.println("Duplicate: " + xor);\n    }\n}',
     hint: "a ^ a = 0, a ^ 0 = a",
   },
   {
@@ -113,8 +101,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Move all zeros to end of array.",
     mathSolution: "Shift non-zero elements left, fill remaining with zeros",
-    codeSolution:
-      'int[] arr = {0, 1, 0, 3, 12};\nint index = 0;\nfor(int num : arr) {\n    if(num != 0) arr[index++] = num;\n}\nwhile(index < arr.length) arr[index++] = 0;\nSystem.out.println("After moving zeros: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {0, 1, 0, 3, 12};\n        int index = 0;\n        for(int num : arr) if(num != 0) arr[index++] = num;\n        while(index < arr.length) arr[index++] = 0;\n        System.out.println("After moving zeros: " + Arrays.toString(arr));\n    }\n}',
     hint: "First move non-zeros, then fill zeros",
   },
   {
@@ -122,8 +109,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find intersection of two sorted arrays.",
     mathSolution: "Use two pointers to find common elements",
-    codeSolution:
-      'int[] arr1 = {1, 2, 4, 5, 6};\nint[] arr2 = {2, 3, 5, 7};\nList<Integer> result = new ArrayList<>();\nint i=0, j=0;\nwhile(i<arr1.length && j<arr2.length) {\n    if(arr1[i] == arr2[j]) {\n        result.add(arr1[i]);\n        i++; j++;\n    } else if(arr1[i] < arr2[j]) i++;\n    else j++;\n}\nSystem.out.println("Intersection: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr1 = {1, 2, 4, 5, 6};\n        int[] arr2 = {2, 3, 5, 7};\n        List<Integer> result = new ArrayList<>();\n        int i=0, j=0;\n        while(i<arr1.length && j<arr2.length) {\n            if(arr1[i] == arr2[j]) { result.add(arr1[i]); i++; j++; }\n            else if(arr1[i] < arr2[j]) i++;\n            else j++;\n        }\n        System.out.println("Intersection: " + result);\n    }\n}',
     hint: "Advance pointer of smaller element",
   },
   {
@@ -131,8 +117,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find union of two sorted arrays.",
     mathSolution: "Merge arrays without duplicates",
-    codeSolution:
-      'int[] arr1 = {1, 2, 4, 5, 6};\nint[] arr2 = {2, 3, 5, 7};\nList<Integer> result = new ArrayList<>();\nint i=0, j=0;\nwhile(i<arr1.length && j<arr2.length) {\n    if(arr1[i] < arr2[j]) result.add(arr1[i++]);\n    else if(arr1[i] > arr2[j]) result.add(arr2[j++]);\n    else { result.add(arr1[i]); i++; j++; }\n}\nwhile(i<arr1.length) result.add(arr1[i++]);\nwhile(j<arr2.length) result.add(arr2[j++]);\nSystem.out.println("Union: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr1 = {1, 2, 4, 5, 6};\n        int[] arr2 = {2, 3, 5, 7};\n        List<Integer> result = new ArrayList<>();\n        int i=0, j=0;\n        while(i<arr1.length && j<arr2.length) {\n            if(arr1[i] < arr2[j]) result.add(arr1[i++]);\n            else if(arr1[i] > arr2[j]) result.add(arr2[j++]);\n            else { result.add(arr1[i]); i++; j++; }\n        }\n        while(i<arr1.length) result.add(arr1[i++]);\n        while(j<arr2.length) result.add(arr2[j++]);\n        System.out.println("Union: " + result);\n    }\n}',
     hint: "Merge like in merge sort",
   },
 
@@ -142,8 +127,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Reverse a string.",
     mathSolution: "Swap characters from both ends",
-    codeSolution:
-      'String str = "hello";\nchar[] chars = str.toCharArray();\nint left = 0, right = chars.length-1;\nwhile(left < right) {\n    char temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n    left++; right--;\n}\nString reversed = new String(chars);\nSystem.out.println("Reversed: " + reversed);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "hello";\n        char[] chars = str.toCharArray();\n        int left = 0, right = chars.length-1;\n        while(left < right) {\n            char temp = chars[left];\n            chars[left] = chars[right];\n            chars[right] = temp;\n            left++; right--;\n        }\n        String reversed = new String(chars);\n        System.out.println("Reversed: " + reversed);\n    }\n}',
     hint: "Convert to char array for manipulation",
   },
   {
@@ -151,8 +135,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if string is palindrome.",
     mathSolution: "Compare characters from start and end",
-    codeSolution:
-      'String str = "madam";\nboolean isPalindrome = true;\nfor(int i=0; i<str.length()/2; i++) {\n    if(str.charAt(i) != str.charAt(str.length()-1-i)) {\n        isPalindrome = false;\n        break;\n    }\n}\nSystem.out.println("Is palindrome: " + isPalindrome);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "madam";\n        boolean isPalindrome = true;\n        for(int i=0; i<str.length()/2; i++) {\n            if(str.charAt(i) != str.charAt(str.length()-1-i)) {\n                isPalindrome = false;\n                break;\n            }\n        }\n        System.out.println("Is palindrome: " + isPalindrome);\n    }\n}',
     hint: "Compare i with length-1-i",
   },
   {
@@ -160,8 +143,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Count vowels and consonants in a string.",
     mathSolution: "Check each character for vowel/consonant",
-    codeSolution:
-      "String str = \"Hello World\";\nint vowels = 0, consonants = 0;\nstr = str.toLowerCase();\nfor(char c : str.toCharArray()) {\n    if(c >= 'a' && c <= 'z') {\n        if(c=='a'||c=='e'||c=='i'||c=='o'||c=='u') vowels++;\n        else consonants++;\n    }\n}\nSystem.out.println(\"Vowels: \" + vowels + \", Consonants: \" + consonants);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "Hello World";\n        int vowels = 0, consonants = 0;\n        str = str.toLowerCase();\n        for(char c : str.toCharArray()) {\n            if(c >= \'a\' && c <= \'z\') {\n                if(c==\'a\'||c==\'e\'||c==\'i\'||c==\'o\'||c==\'u\') vowels++;\n                else consonants++;\n            }\n        }\n        System.out.println("Vowels: " + vowels + ", Consonants: " + consonants);\n    }\n}',
     hint: "Ignore non-alphabets",
   },
   {
@@ -169,8 +151,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find frequency of each character in string.",
     mathSolution: "Use array of size 256 for ASCII",
-    codeSolution:
-      'String str = "hello world";\nint[] freq = new int[256];\nfor(char c : str.toCharArray()) {\n    freq[c]++;\n}\nfor(int i=0; i<256; i++) {\n    if(freq[i] > 0) {\n        System.out.println((char)i + ": " + freq[i]);\n    }\n}',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "hello world";\n        int[] freq = new int[256];\n        for(char c : str.toCharArray()) freq[c]++;\n        for(int i=0; i<256; i++) {\n            if(freq[i] > 0) System.out.println((char)i + ": " + freq[i]);\n        }\n    }\n}',
     hint: "Character as index",
   },
   {
@@ -178,8 +159,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Remove duplicates from string.",
     mathSolution: "Use boolean array to track seen characters",
-    codeSolution:
-      'String str = "programming";\nboolean[] seen = new boolean[256];\nStringBuilder sb = new StringBuilder();\nfor(char c : str.toCharArray()) {\n    if(!seen[c]) {\n        seen[c] = true;\n        sb.append(c);\n    }\n}\nSystem.out.println("After removing duplicates: " + sb);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "programming";\n        boolean[] seen = new boolean[256];\n        StringBuilder sb = new StringBuilder();\n        for(char c : str.toCharArray()) {\n            if(!seen[c]) { seen[c] = true; sb.append(c); }\n        }\n        System.out.println("After removing duplicates: " + sb);\n    }\n}',
     hint: "Track seen characters",
   },
   {
@@ -187,8 +167,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if two strings are anagrams.",
     mathSolution: "Sort and compare or count characters",
-    codeSolution:
-      'String s1 = "listen";\nString s2 = "silent";\nchar[] arr1 = s1.toCharArray();\nchar[] arr2 = s2.toCharArray();\nArrays.sort(arr1);\nArrays.sort(arr2);\nboolean isAnagram = Arrays.equals(arr1, arr2);\nSystem.out.println("Are anagrams: " + isAnagram);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s1 = "listen", s2 = "silent";\n        char[] arr1 = s1.toCharArray();\n        char[] arr2 = s2.toCharArray();\n        Arrays.sort(arr1);\n        Arrays.sort(arr2);\n        boolean isAnagram = Arrays.equals(arr1, arr2);\n        System.out.println("Are anagrams: " + isAnagram);\n    }\n}',
     hint: "Sorted strings should be equal",
   },
   {
@@ -196,8 +175,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find first non-repeating character in string.",
     mathSolution: "Count frequencies, then find first with count 1",
-    codeSolution:
-      'String str = "swiss";\nint[] freq = new int[256];\nfor(char c : str.toCharArray()) freq[c]++;\nchar result = 0;\nfor(char c : str.toCharArray()) {\n    if(freq[c] == 1) {\n        result = c;\n        break;\n    }\n}\nSystem.out.println("First non-repeating: " + result);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "swiss";\n        int[] freq = new int[256];\n        for(char c : str.toCharArray()) freq[c]++;\n        char result = 0;\n        for(char c : str.toCharArray()) {\n            if(freq[c] == 1) { result = c; break; }\n        }\n        System.out.println("First non-repeating: " + result);\n    }\n}',
     hint: "Two traversals",
   },
   {
@@ -205,8 +183,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Convert string to integer (atoi).",
     mathSolution: "Parse digit by digit",
-    codeSolution:
-      "String str = \"123\";\nint num = 0;\nfor(char c : str.toCharArray()) {\n    if(c < '0' || c > '9') break;\n    num = num * 10 + (c - '0');\n}\nSystem.out.println(\"Integer: \" + num);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "123";\n        int num = 0;\n        for(char c : str.toCharArray()) {\n            if(c < \'0\' || c > \'9\') break;\n            num = num * 10 + (c - \'0\');\n        }\n        System.out.println("Integer: " + num);\n    }\n}',
     hint: "c - '0' gives digit value",
   },
   {
@@ -214,8 +191,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if string contains only digits.",
     mathSolution: "Check each character between '0' and '9'",
-    codeSolution:
-      "String str = \"12345\";\nboolean isDigits = true;\nfor(char c : str.toCharArray()) {\n    if(c < '0' || c > '9') {\n        isDigits = false;\n        break;\n    }\n}\nSystem.out.println(\"Contains only digits: \" + isDigits);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "12345";\n        boolean isDigits = true;\n        for(char c : str.toCharArray()) {\n            if(c < \'0\' || c > \'9\') { isDigits = false; break; }\n        }\n        System.out.println("Contains only digits: " + isDigits);\n    }\n}',
     hint: "ASCII range for digits",
   },
   {
@@ -223,8 +199,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Count words in a string.",
     mathSolution: "Split by spaces or count transitions",
-    codeSolution:
-      'String str = "Hello world from Java";\nString[] words = str.trim().split("\\\\s+");\nint count = words.length;\nSystem.out.println("Word count: " + count);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "Hello world from Java";\n        String[] words = str.trim().split("\\\\s+");\n        System.out.println("Word count: " + words.length);\n    }\n}',
     hint: "Use split with regex",
   },
   {
@@ -232,8 +207,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Capitalize first letter of each word.",
     mathSolution: "Split, capitalize first char, join",
-    codeSolution:
-      'String str = "hello world from java";\nString[] words = str.split(" ");\nStringBuilder result = new StringBuilder();\nfor(String word : words) {\n    if(word.length() > 0) {\n        result.append(Character.toUpperCase(word.charAt(0)))\n              .append(word.substring(1)).append(" ");\n    }\n}\nSystem.out.println("Capitalized: " + result.toString().trim());',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "hello world from java";\n        String[] words = str.split(" ");\n        StringBuilder result = new StringBuilder();\n        for(String word : words) {\n            if(word.length()>0) {\n                result.append(Character.toUpperCase(word.charAt(0)))\n                      .append(word.substring(1)).append(" ");\n            }\n        }\n        System.out.println("Capitalized: " + result.toString().trim());\n    }\n}',
     hint: "Use Character.toUpperCase()",
   },
   {
@@ -241,8 +215,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find longest word in a sentence.",
     mathSolution: "Split and track max length",
-    codeSolution:
-      'String str = "The quick brown fox jumps";\nString[] words = str.split(" ");\nString longest = "";\nfor(String word : words) {\n    if(word.length() > longest.length()) longest = word;\n}\nSystem.out.println("Longest word: " + longest);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "The quick brown fox jumps";\n        String[] words = str.split(" ");\n        String longest = "";\n        for(String word : words) if(word.length() > longest.length()) longest = word;\n        System.out.println("Longest word: " + longest);\n    }\n}',
     hint: "Compare lengths",
   },
   {
@@ -250,8 +223,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if strings are rotations of each other.",
     mathSolution: "Concatenate one with itself and check contains",
-    codeSolution:
-      'String s1 = "waterbottle";\nString s2 = "erbottlewat";\nboolean isRotation = (s1.length() == s2.length()) && \n                     (s1 + s1).contains(s2);\nSystem.out.println("Is rotation: " + isRotation);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String s1 = "waterbottle", s2 = "erbottlewat";\n        boolean isRotation = (s1.length() == s2.length()) && (s1 + s1).contains(s2);\n        System.out.println("Is rotation: " + isRotation);\n    }\n}',
     hint: "s1+s1 contains all rotations",
   },
   {
@@ -259,17 +231,15 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Remove all whitespaces from string.",
     mathSolution: "Replace or use StringBuilder",
-    codeSolution:
-      'String str = "Hello World Java";\nString result = str.replaceAll("\\\\s", "");\nSystem.out.println("Without spaces: " + result);\n\n// Without regex\nStringBuilder sb = new StringBuilder();\nfor(char c : str.toCharArray()) {\n    if(!Character.isWhitespace(c)) sb.append(c);\n}\nSystem.out.println("Without spaces: " + sb);',
-    hint: "\\\\s matches whitespace",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String str = "Hello World Java";\n        String result = str.replaceAll("\\\\s", "");\n        System.out.println("Without spaces: " + result);\n        StringBuilder sb = new StringBuilder();\n        for(char c : str.toCharArray()) if(!Character.isWhitespace(c)) sb.append(c);\n        System.out.println("Without spaces: " + sb);\n    }\n}',
+    hint: "\\s matches whitespace",
   },
   {
     id: "dsa_30",
     topicId: "java_dsa",
     question: "Find all substrings of a string.",
     mathSolution: "Nested loops for start and end",
-    codeSolution:
-      'String str = "abc";\nList<String> substrings = new ArrayList<>();\nfor(int i=0; i<str.length(); i++) {\n    for(int j=i+1; j<=str.length(); j++) {\n        substrings.add(str.substring(i, j));\n    }\n}\nSystem.out.println("Substrings: " + substrings);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String str = "abc";\n        List<String> substrings = new ArrayList<>();\n        for(int i=0; i<str.length(); i++) {\n            for(int j=i+1; j<=str.length(); j++) {\n                substrings.add(str.substring(i, j));\n            }\n        }\n        System.out.println("Substrings: " + substrings);\n    }\n}',
     hint: "substring(i,j) includes i, excludes j",
   },
 
@@ -279,8 +249,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement a singly linked list node.",
     mathSolution: "Node with data and next pointer",
-    codeSolution:
-      "class Node {\n    int data;\n    Node next;\n    Node(int data) { this.data = data; this.next = null; }\n}\n\nNode head = new Node(10);\nhead.next = new Node(20);\nhead.next.next = new Node(30);",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; next=null; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        System.out.println("LinkedList created with 10->20->30");\n    }\n}',
     hint: "Each node points to next node",
   },
   {
@@ -288,8 +257,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Traverse and print linked list.",
     mathSolution: "Start from head, move until null",
-    codeSolution:
-      'Node current = head;\nwhile(current != null) {\n    System.out.print(current.data + " -> ");\n    current = current.next;\n}\nSystem.out.println("null");',
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        Node current = head;\n        while(current != null) { System.out.print(current.data + " -> "); current = current.next; }\n        System.out.println("null");\n    }\n}',
     hint: "Stop when current becomes null",
   },
   {
@@ -297,8 +265,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Insert node at beginning of linked list.",
     mathSolution: "New node points to head, update head",
-    codeSolution:
-      "Node newNode = new Node(5);\nnewNode.next = head;\nhead = newNode;",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        Node newNode = new Node(5);\n        newNode.next = head;\n        head = newNode;\n        Node curr = head;\n        while(curr != null) { System.out.print(curr.data + " "); curr = curr.next; }\n    }\n}',
     hint: "Update head to new node",
   },
   {
@@ -306,8 +273,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Insert node at end of linked list.",
     mathSolution: "Traverse to last, update last's next",
-    codeSolution:
-      "Node newNode = new Node(40);\nif(head == null) head = newNode;\nelse {\n    Node temp = head;\n    while(temp.next != null) temp = temp.next;\n    temp.next = newNode;\n}",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        Node newNode = new Node(40);\n        if(head == null) head = newNode;\n        else {\n            Node temp = head;\n            while(temp.next != null) temp = temp.next;\n            temp.next = newNode;\n        }\n        Node curr = head;\n        while(curr != null) { System.out.print(curr.data + " "); curr = curr.next; }\n    }\n}',
     hint: "Find last node with temp.next == null",
   },
   {
@@ -315,7 +281,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Delete node from beginning.",
     mathSolution: "Move head to next node",
-    codeSolution: "if(head != null) head = head.next;",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        if(head != null) head = head.next;\n        Node curr = head;\n        while(curr != null) { System.out.print(curr.data + " "); curr = curr.next; }\n    }\n}',
     hint: "head = head.next",
   },
   {
@@ -323,8 +289,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Delete node from end.",
     mathSolution: "Traverse to second last, set next to null",
-    codeSolution:
-      "if(head == null || head.next == null) head = null;\nelse {\n    Node temp = head;\n    while(temp.next.next != null) temp = temp.next;\n    temp.next = null;\n}",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        if(head == null || head.next == null) head = null;\n        else {\n            Node temp = head;\n            while(temp.next.next != null) temp = temp.next;\n            temp.next = null;\n        }\n        Node curr = head;\n        while(curr != null) { System.out.print(curr.data + " "); curr = curr.next; }\n    }\n}',
     hint: "Stop at second last node",
   },
   {
@@ -332,8 +297,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find length of linked list.",
     mathSolution: "Count nodes while traversing",
-    codeSolution:
-      'int count = 0;\nNode temp = head;\nwhile(temp != null) {\n    count++;\n    temp = temp.next;\n}\nSystem.out.println("Length: " + count);',
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        int count = 0;\n        Node temp = head;\n        while(temp != null) { count++; temp = temp.next; }\n        System.out.println("Length: " + count);\n    }\n}',
     hint: "Increment counter for each node",
   },
   {
@@ -341,8 +305,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Search for element in linked list.",
     mathSolution: "Traverse and compare data",
-    codeSolution:
-      'int key = 20;\nNode temp = head;\nboolean found = false;\nwhile(temp != null) {\n    if(temp.data == key) {\n        found = true;\n        break;\n    }\n    temp = temp.next;\n}\nSystem.out.println("Found: " + found);',
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        int key = 20;\n        Node temp = head;\n        boolean found = false;\n        while(temp != null) {\n            if(temp.data == key) { found = true; break; }\n            temp = temp.next;\n        }\n        System.out.println("Found: " + found);\n    }\n}',
     hint: "Linear search",
   },
   {
@@ -350,8 +313,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Reverse a linked list.",
     mathSolution: "Change next pointers to reverse direction",
-    codeSolution:
-      "Node prev = null;\nNode current = head;\nNode next = null;\nwhile(current != null) {\n    next = current.next;\n    current.next = prev;\n    prev = current;\n    current = next;\n}\nhead = prev;",
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        Node prev = null, current = head, next = null;\n        while(current != null) {\n            next = current.next;\n            current.next = prev;\n            prev = current;\n            current = next;\n        }\n        head = prev;\n        Node curr = head;\n        while(curr != null) { System.out.print(curr.data + " "); curr = curr.next; }\n    }\n}',
     hint: "Three-pointer technique",
   },
   {
@@ -359,8 +321,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find middle node of linked list.",
     mathSolution: "Slow and fast pointer technique",
-    codeSolution:
-      'Node slow = head;\nNode fast = head;\nwhile(fast != null && fast.next != null) {\n    slow = slow.next;\n    fast = fast.next.next;\n}\nSystem.out.println("Middle: " + slow.data);',
+    codeSolution: 'public class Main {\n    static class Node { int data; Node next; Node(int d) { data=d; } }\n    public static void main(String[] args) {\n        Node head = new Node(10);\n        head.next = new Node(20);\n        head.next.next = new Node(30);\n        head.next.next.next = new Node(40);\n        Node slow = head, fast = head;\n        while(fast != null && fast.next != null) {\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n        System.out.println("Middle: " + slow.data);\n    }\n}',
     hint: "Fast moves twice as fast as slow",
   },
 
@@ -370,8 +331,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement stack using array.",
     mathSolution: "Array with top pointer",
-    codeSolution:
-      'class Stack {\n    int[] arr;\n    int top;\n    int capacity;\n    \n    Stack(int size) { \n        arr = new int[size]; \n        capacity = size; \n        top = -1; \n    }\n    \n    void push(int x) { \n        if(top < capacity-1) arr[++top] = x; \n        else System.out.println("Stack overflow");\n    }\n    \n    int pop() { \n        if(top >= 0) return arr[top--];\n        System.out.println("Stack underflow");\n        return -1;\n    }\n    \n    int peek() { \n        return top >= 0 ? arr[top] : -1; \n    }\n    \n    boolean isEmpty() { return top == -1; }\n}',
+    codeSolution: 'public class Main {\n    static class Stack {\n        int[] arr; int top; int capacity;\n        Stack(int size) { arr = new int[size]; capacity = size; top = -1; }\n        void push(int x) { if(top < capacity-1) arr[++top] = x; else System.out.println("Overflow"); }\n        int pop() { if(top >= 0) return arr[top--]; System.out.println("Underflow"); return -1; }\n        int peek() { return top >= 0 ? arr[top] : -1; }\n        boolean isEmpty() { return top == -1; }\n    }\n    public static void main(String[] args) {\n        Stack s = new Stack(5);\n        s.push(10); s.push(20); s.push(30);\n        System.out.println("Pop: " + s.pop());\n        System.out.println("Peek: " + s.peek());\n    }\n}',
     hint: "top starts at -1",
   },
   {
@@ -379,8 +339,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check balanced parentheses using stack.",
     mathSolution: "Push opening, pop on closing, check match",
-    codeSolution:
-      "String s = \"{[()]}\";\nStack<Character> stack = new Stack<>();\nboolean balanced = true;\nfor(char c : s.toCharArray()) {\n    if(c == '(' || c == '{' || c == '[') stack.push(c);\n    else {\n        if(stack.isEmpty()) { balanced = false; break; }\n        char top = stack.pop();\n        if((c == ')' && top != '(') ||\n           (c == '}' && top != '{') ||\n           (c == ']' && top != '[')) {\n            balanced = false;\n            break;\n        }\n    }\n}\nbalanced = balanced && stack.isEmpty();\nSystem.out.println(\"Balanced: \" + balanced);",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = "{[()]}";\n        Stack<Character> stack = new Stack<>();\n        boolean balanced = true;\n        for(char c : s.toCharArray()) {\n            if(c == \'(\' || c == \'{\' || c == \'[\') stack.push(c);\n            else {\n                if(stack.isEmpty()) { balanced = false; break; }\n                char top = stack.pop();\n                if((c == \')\' && top != \'(\') || (c == \'}\' && top != \'{\') || (c == \']\' && top != \'[\')) {\n                    balanced = false; break;\n                }\n            }\n        }\n        balanced = balanced && stack.isEmpty();\n        System.out.println("Balanced: " + balanced);\n    }\n}',
     hint: "Match closing with correct opening",
   },
   {
@@ -388,8 +347,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement stack using LinkedList.",
     mathSolution: "Linked list with head as top",
-    codeSolution:
-      "class StackNode {\n    int data;\n    StackNode next;\n    StackNode(int data) { this.data = data; }\n}\n\nclass LinkedListStack {\n    StackNode top;\n    \n    void push(int x) {\n        StackNode node = new StackNode(x);\n        node.next = top;\n        top = node;\n    }\n    \n    int pop() {\n        if(top == null) return -1;\n        int data = top.data;\n        top = top.next;\n        return data;\n    }\n    \n    int peek() { return top != null ? top.data : -1; }\n    \n    boolean isEmpty() { return top == null; }\n}",
+    codeSolution: 'public class Main {\n    static class StackNode { int data; StackNode next; StackNode(int d) { data=d; } }\n    static class LinkedListStack {\n        StackNode top;\n        void push(int x) { StackNode node = new StackNode(x); node.next = top; top = node; }\n        int pop() { if(top == null) return -1; int data = top.data; top = top.next; return data; }\n        int peek() { return top != null ? top.data : -1; }\n        boolean isEmpty() { return top == null; }\n    }\n    public static void main(String[] args) {\n        LinkedListStack stack = new LinkedListStack();\n        stack.push(10); stack.push(20); stack.push(30);\n        System.out.println("Pop: " + stack.pop());\n        System.out.println("Peek: " + stack.peek());\n    }\n}',
     hint: "Push and pop at head",
   },
   {
@@ -397,8 +355,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Evaluate postfix expression using stack.",
     mathSolution: "Push operands, pop two for operator",
-    codeSolution:
-      "String expr = \"23*54*+9-\"; // (2*3 + 5*4 - 9)\nStack<Integer> stack = new Stack<>();\nfor(char c : expr.toCharArray()) {\n    if(Character.isDigit(c)) stack.push(c - '0');\n    else {\n        int b = stack.pop();\n        int a = stack.pop();\n        switch(c) {\n            case '+': stack.push(a + b); break;\n            case '-': stack.push(a - b); break;\n            case '*': stack.push(a * b); break;\n            case '/': stack.push(a / b); break;\n        }\n    }\n}\nSystem.out.println(\"Result: \" + stack.pop());",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String expr = "23*54*+9-";\n        Stack<Integer> stack = new Stack<>();\n        for(char c : expr.toCharArray()) {\n            if(Character.isDigit(c)) stack.push(c - \'0\');\n            else {\n                int b = stack.pop(), a = stack.pop();\n                switch(c) {\n                    case \'+\': stack.push(a+b); break;\n                    case \'-\': stack.push(a-b); break;\n                    case \'*\': stack.push(a*b); break;\n                    case \'/\': stack.push(a/b); break;\n                }\n            }\n        }\n        System.out.println("Result: " + stack.pop());\n    }\n}',
     hint: "Operand order matters for - and /",
   },
   {
@@ -406,8 +363,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Convert infix to postfix expression.",
     mathSolution: "Use operator precedence and stack",
-    codeSolution:
-      "String infix = \"a+b*c-d/e\";\nStringBuilder postfix = new StringBuilder();\nStack<Character> stack = new Stack<>();\nMap<Character, Integer> precedence = new HashMap<>();\nprecedence.put('+', 1); precedence.put('-', 1);\nprecedence.put('*', 2); precedence.put('/', 2);\n\nfor(char c : infix.toCharArray()) {\n    if(Character.isLetterOrDigit(c)) postfix.append(c);\n    else if(c == '(') stack.push(c);\n    else if(c == ')') {\n        while(!stack.isEmpty() && stack.peek() != '(')\n            postfix.append(stack.pop());\n        stack.pop(); // remove '('\n    } else { // operator\n        while(!stack.isEmpty() && stack.peek() != '(' && \n              precedence.getOrDefault(stack.peek(), 0) >= precedence.get(c))\n            postfix.append(stack.pop());\n        stack.push(c);\n    }\n}\nwhile(!stack.isEmpty()) postfix.append(stack.pop());\nSystem.out.println(\"Postfix: \" + postfix);",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String infix = "a+b*c-d/e";\n        StringBuilder postfix = new StringBuilder();\n        Stack<Character> stack = new Stack<>();\n        java.util.Map<Character,Integer> prec = new java.util.HashMap<>();\n        prec.put(\'+\',1); prec.put(\'-\',1); prec.put(\'*\',2); prec.put(\'/\',2);\n        for(char c : infix.toCharArray()) {\n            if(Character.isLetterOrDigit(c)) postfix.append(c);\n            else if(c == \'(\') stack.push(c);\n            else if(c == \')\') {\n                while(!stack.isEmpty() && stack.peek() != \'(\') postfix.append(stack.pop());\n                stack.pop();\n            } else {\n                while(!stack.isEmpty() && stack.peek() != \'(\' && prec.getOrDefault(stack.peek(),0) >= prec.get(c))\n                    postfix.append(stack.pop());\n                stack.push(c);\n            }\n        }\n        while(!stack.isEmpty()) postfix.append(stack.pop());\n        System.out.println("Postfix: " + postfix);\n    }\n}',
     hint: "Higher precedence operators come first",
   },
   {
@@ -415,8 +371,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find next greater element using stack.",
     mathSolution: "Monotonic decreasing stack",
-    codeSolution:
-      'int[] arr = {4, 5, 2, 25};\nint[] result = new int[arr.length];\nStack<Integer> stack = new Stack<>();\nfor(int i=arr.length-1; i>=0; i--) {\n    while(!stack.isEmpty() && stack.peek() <= arr[i]) stack.pop();\n    result[i] = stack.isEmpty() ? -1 : stack.peek();\n    stack.push(arr[i]);\n}\nSystem.out.println("Next greater: " + Arrays.toString(result));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {4, 5, 2, 25};\n        int[] result = new int[arr.length];\n        Stack<Integer> stack = new Stack<>();\n        for(int i=arr.length-1; i>=0; i--) {\n            while(!stack.isEmpty() && stack.peek() <= arr[i]) stack.pop();\n            result[i] = stack.isEmpty() ? -1 : stack.peek();\n            stack.push(arr[i]);\n        }\n        System.out.println("Next greater: " + Arrays.toString(result));\n    }\n}',
     hint: "Traverse from right",
   },
   {
@@ -424,8 +379,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Sort a stack using recursion.",
     mathSolution: "Use recursion and temporary stack",
-    codeSolution:
-      'void sortStack(Stack<Integer> stack) {\n    if(!stack.isEmpty()) {\n        int temp = stack.pop();\n        sortStack(stack);\n        insertSorted(stack, temp);\n    }\n}\n\nvoid insertSorted(Stack<Integer> stack, int x) {\n    if(stack.isEmpty() || x > stack.peek()) stack.push(x);\n    else {\n        int temp = stack.pop();\n        insertSorted(stack, x);\n        stack.push(temp);\n    }\n}\n\nStack<Integer> stack = new Stack<>();\nstack.push(30); stack.push(10); stack.push(50); stack.push(20);\nsortStack(stack);\nSystem.out.println("Sorted: " + stack);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static void insertSorted(Stack<Integer> s, int x) {\n        if(s.isEmpty() || x > s.peek()) s.push(x);\n        else {\n            int temp = s.pop();\n            insertSorted(s, x);\n            s.push(temp);\n        }\n    }\n    static void sortStack(Stack<Integer> s) {\n        if(!s.isEmpty()) {\n            int temp = s.pop();\n            sortStack(s);\n            insertSorted(s, temp);\n        }\n    }\n    public static void main(String[] args) {\n        Stack<Integer> stack = new Stack<>();\n        stack.push(30); stack.push(10); stack.push(50); stack.push(20);\n        sortStack(stack);\n        System.out.println("Sorted: " + stack);\n    }\n}',
     hint: "Insert in sorted order",
   },
   {
@@ -433,8 +387,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement two stacks in one array.",
     mathSolution: "One from left, one from right",
-    codeSolution:
-      "class TwoStacks {\n    int[] arr;\n    int top1, top2;\n    int size;\n    \n    TwoStacks(int n) {\n        size = n;\n        arr = new int[n];\n        top1 = -1;\n        top2 = size;\n    }\n    \n    void push1(int x) {\n        if(top1 < top2 - 1) arr[++top1] = x;\n    }\n    \n    void push2(int x) {\n        if(top1 < top2 - 1) arr[--top2] = x;\n    }\n    \n    int pop1() { return top1 >= 0 ? arr[top1--] : -1; }\n    int pop2() { return top2 < size ? arr[top2++] : -1; }\n}",
+    codeSolution: 'public class Main {\n    static class TwoStacks {\n        int[] arr; int top1, top2, size;\n        TwoStacks(int n) { size=n; arr=new int[n]; top1=-1; top2=size; }\n        void push1(int x) { if(top1 < top2-1) arr[++top1]=x; }\n        void push2(int x) { if(top1 < top2-1) arr[--top2]=x; }\n        int pop1() { return top1>=0 ? arr[top1--] : -1; }\n        int pop2() { return top2<size ? arr[top2++] : -1; }\n    }\n    public static void main(String[] args) {\n        TwoStacks ts = new TwoStacks(10);\n        ts.push1(1); ts.push1(2); ts.push2(100); ts.push2(200);\n        System.out.println("pop1: " + ts.pop1());\n        System.out.println("pop2: " + ts.pop2());\n    }\n}',
     hint: "Stacks grow towards each other",
   },
 
@@ -444,8 +397,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement queue using array.",
     mathSolution: "Circular array with front and rear",
-    codeSolution:
-      "class Queue {\n    int[] arr;\n    int front, rear, size, capacity;\n    \n    Queue(int cap) {\n        capacity = cap;\n        arr = new int[capacity];\n        front = 0;\n        size = 0;\n        rear = capacity - 1;\n    }\n    \n    void enqueue(int x) {\n        if(size == capacity) return;\n        rear = (rear + 1) % capacity;\n        arr[rear] = x;\n        size++;\n    }\n    \n    int dequeue() {\n        if(size == 0) return -1;\n        int item = arr[front];\n        front = (front + 1) % capacity;\n        size--;\n        return item;\n    }\n    \n    int front() { return size == 0 ? -1 : arr[front]; }\n    int rear() { return size == 0 ? -1 : arr[rear]; }\n    boolean isEmpty() { return size == 0; }\n}",
+    codeSolution: 'public class Main {\n    static class Queue {\n        int[] arr; int front, rear, size, cap;\n        Queue(int c) { cap=c; arr=new int[cap]; front=0; size=0; rear=cap-1; }\n        void enqueue(int x) { if(size==cap) return; rear=(rear+1)%cap; arr[rear]=x; size++; }\n        int dequeue() { if(size==0) return -1; int item=arr[front]; front=(front+1)%cap; size--; return item; }\n        int front() { return size==0?-1:arr[front]; }\n        int rear() { return size==0?-1:arr[rear]; }\n        boolean isEmpty() { return size==0; }\n    }\n    public static void main(String[] args) {\n        Queue q = new Queue(3);\n        q.enqueue(10); q.enqueue(20); q.enqueue(30);\n        System.out.println("Dequeue: " + q.dequeue());\n        System.out.println("Front: " + q.front());\n    }\n}',
     hint: "Use modulo for circular",
   },
   {
@@ -453,8 +405,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement queue using LinkedList.",
     mathSolution: "Linked list with front and rear pointers",
-    codeSolution:
-      "class QueueNode {\n    int data;\n    QueueNode next;\n    QueueNode(int data) { this.data = data; }\n}\n\nclass LinkedListQueue {\n    QueueNode front, rear;\n    \n    void enqueue(int x) {\n        QueueNode node = new QueueNode(x);\n        if(rear == null) front = rear = node;\n        else {\n            rear.next = node;\n            rear = node;\n        }\n    }\n    \n    int dequeue() {\n        if(front == null) return -1;\n        int data = front.data;\n        front = front.next;\n        if(front == null) rear = null;\n        return data;\n    }\n    \n    int peek() { return front != null ? front.data : -1; }\n    boolean isEmpty() { return front == null; }\n}",
+    codeSolution: 'public class Main {\n    static class QueueNode { int data; QueueNode next; QueueNode(int d) { data=d; } }\n    static class LinkedListQueue {\n        QueueNode front, rear;\n        void enqueue(int x) {\n            QueueNode node = new QueueNode(x);\n            if(rear==null) front=rear=node;\n            else { rear.next=node; rear=node; }\n        }\n        int dequeue() {\n            if(front==null) return -1;\n            int data=front.data;\n            front=front.next;\n            if(front==null) rear=null;\n            return data;\n        }\n        int peek() { return front!=null?front.data:-1; }\n        boolean isEmpty() { return front==null; }\n    }\n    public static void main(String[] args) {\n        LinkedListQueue q = new LinkedListQueue();\n        q.enqueue(10); q.enqueue(20); q.enqueue(30);\n        System.out.println("Dequeue: " + q.dequeue());\n        System.out.println("Peek: " + q.peek());\n    }\n}',
     hint: "front for dequeue, rear for enqueue",
   },
   {
@@ -462,8 +413,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement circular queue.",
     mathSolution: "Queue that reuses empty spaces",
-    codeSolution:
-      "class CircularQueue {\n    int[] arr;\n    int front, rear, size, capacity;\n    \n    CircularQueue(int cap) {\n        capacity = cap;\n        arr = new int[capacity];\n        front = 0;\n        rear = -1;\n        size = 0;\n    }\n    \n    void enqueue(int x) {\n        if(size == capacity) return;\n        rear = (rear + 1) % capacity;\n        arr[rear] = x;\n        size++;\n    }\n    \n    int dequeue() {\n        if(size == 0) return -1;\n        int item = arr[front];\n        front = (front + 1) % capacity;\n        size--;\n        return item;\n    }\n}",
+    codeSolution: 'public class Main {\n    static class CircularQueue {\n        int[] arr; int front, rear, size, cap;\n        CircularQueue(int c) { cap=c; arr=new int[cap]; front=0; rear=-1; size=0; }\n        void enqueue(int x) { if(size==cap) return; rear=(rear+1)%cap; arr[rear]=x; size++; }\n        int dequeue() { if(size==0) return -1; int item=arr[front]; front=(front+1)%cap; size--; return item; }\n    }\n    public static void main(String[] args) {\n        CircularQueue cq = new CircularQueue(3);\n        cq.enqueue(1); cq.enqueue(2); cq.enqueue(3);\n        System.out.println("Dequeue: " + cq.dequeue());\n        cq.enqueue(4); // reuses space\n        System.out.println("Enqueued 4");\n    }\n}',
     hint: "Wrap around using modulo",
   },
   {
@@ -471,8 +421,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement deque (double-ended queue).",
     mathSolution: "Insert/delete from both ends",
-    codeSolution:
-      "class Deque {\n    int[] arr;\n    int front, rear, size, capacity;\n    \n    Deque(int cap) {\n        capacity = cap;\n        arr = new int[capacity];\n        front = 0;\n        rear = 0;\n        size = 0;\n    }\n    \n    void insertFront(int x) {\n        if(size == capacity) return;\n        front = (front - 1 + capacity) % capacity;\n        arr[front] = x;\n        size++;\n    }\n    \n    void insertRear(int x) {\n        if(size == capacity) return;\n        arr[rear] = x;\n        rear = (rear + 1) % capacity;\n        size++;\n    }\n    \n    int deleteFront() {\n        if(size == 0) return -1;\n        int item = arr[front];\n        front = (front + 1) % capacity;\n        size--;\n        return item;\n    }\n    \n    int deleteRear() {\n        if(size == 0) return -1;\n        rear = (rear - 1 + capacity) % capacity;\n        size--;\n        return arr[rear];\n    }\n}",
+    codeSolution: 'public class Main {\n    static class Deque {\n        int[] arr; int front, rear, size, cap;\n        Deque(int c) { cap=c; arr=new int[cap]; front=0; rear=0; size=0; }\n        void insertFront(int x) { if(size==cap) return; front=(front-1+cap)%cap; arr[front]=x; size++; }\n        void insertRear(int x) { if(size==cap) return; arr[rear]=x; rear=(rear+1)%cap; size++; }\n        int deleteFront() { if(size==0) return -1; int item=arr[front]; front=(front+1)%cap; size--; return item; }\n        int deleteRear() { if(size==0) return -1; rear=(rear-1+cap)%cap; size--; return arr[rear]; }\n    }\n    public static void main(String[] args) {\n        Deque dq = new Deque(5);\n        dq.insertFront(10); dq.insertRear(20); dq.insertFront(5);\n        System.out.println("DeleteFront: " + dq.deleteFront());\n        System.out.println("DeleteRear: " + dq.deleteRear());\n    }\n}',
     hint: "Manage both ends carefully",
   },
   {
@@ -480,8 +429,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Generate binary numbers from 1 to n using queue.",
     mathSolution: "Use queue to generate binary numbers",
-    codeSolution:
-      'int n = 5;\nQueue<String> queue = new LinkedList<>();\nqueue.add("1");\nList<String> result = new ArrayList<>();\nfor(int i=0; i<n; i++) {\n    String current = queue.poll();\n    result.add(current);\n    queue.add(current + "0");\n    queue.add(current + "1");\n}\nSystem.out.println("Binary numbers: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int n = 5;\n        Queue<String> queue = new LinkedList<>();\n        queue.add("1");\n        List<String> result = new ArrayList<>();\n        for(int i=0; i<n; i++) {\n            String cur = queue.poll();\n            result.add(cur);\n            queue.add(cur + "0");\n            queue.add(cur + "1");\n        }\n        System.out.println("Binary numbers: " + result);\n    }\n}',
     hint: "Append 0 and 1 to each",
   },
   {
@@ -489,8 +437,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement stack using queues.",
     mathSolution: "Use two queues for stack operations",
-    codeSolution:
-      "class StackUsingQueues {\n    Queue<Integer> q1 = new LinkedList<>();\n    Queue<Integer> q2 = new LinkedList<>();\n    \n    void push(int x) {\n        q2.add(x);\n        while(!q1.isEmpty()) q2.add(q1.poll());\n        Queue<Integer> temp = q1;\n        q1 = q2;\n        q2 = temp;\n    }\n    \n    int pop() { return q1.isEmpty() ? -1 : q1.poll(); }\n    int top() { return q1.isEmpty() ? -1 : q1.peek(); }\n    boolean isEmpty() { return q1.isEmpty(); }\n}",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static class StackUsingQueues {\n        Queue<Integer> q1 = new LinkedList<>();\n        Queue<Integer> q2 = new LinkedList<>();\n        void push(int x) {\n            q2.add(x);\n            while(!q1.isEmpty()) q2.add(q1.poll());\n            Queue<Integer> temp = q1; q1 = q2; q2 = temp;\n        }\n        int pop() { return q1.isEmpty() ? -1 : q1.poll(); }\n        int top() { return q1.isEmpty() ? -1 : q1.peek(); }\n        boolean isEmpty() { return q1.isEmpty(); }\n    }\n    public static void main(String[] args) {\n        StackUsingQueues s = new StackUsingQueues();\n        s.push(10); s.push(20); s.push(30);\n        System.out.println("Pop: " + s.pop());\n        System.out.println("Top: " + s.top());\n    }\n}',
     hint: "Keep elements in reverse order",
   },
   {
@@ -498,8 +445,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement queue using stacks.",
     mathSolution: "Use two stacks for queue operations",
-    codeSolution:
-      "class QueueUsingStacks {\n    Stack<Integer> s1 = new Stack<>();\n    Stack<Integer> s2 = new Stack<>();\n    \n    void enqueue(int x) { s1.push(x); }\n    \n    int dequeue() {\n        if(s2.isEmpty()) {\n            while(!s1.isEmpty()) s2.push(s1.pop());\n        }\n        return s2.isEmpty() ? -1 : s2.pop();\n    }\n    \n    int front() {\n        if(s2.isEmpty()) {\n            while(!s1.isEmpty()) s2.push(s1.pop());\n        }\n        return s2.isEmpty() ? -1 : s2.peek();\n    }\n    \n    boolean isEmpty() { return s1.isEmpty() && s2.isEmpty(); }\n}",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static class QueueUsingStacks {\n        Stack<Integer> s1 = new Stack<>();\n        Stack<Integer> s2 = new Stack<>();\n        void enqueue(int x) { s1.push(x); }\n        int dequeue() {\n            if(s2.isEmpty()) {\n                while(!s1.isEmpty()) s2.push(s1.pop());\n            }\n            return s2.isEmpty() ? -1 : s2.pop();\n        }\n        int front() {\n            if(s2.isEmpty()) {\n                while(!s1.isEmpty()) s2.push(s1.pop());\n            }\n            return s2.isEmpty() ? -1 : s2.peek();\n        }\n        boolean isEmpty() { return s1.isEmpty() && s2.isEmpty(); }\n    }\n    public static void main(String[] args) {\n        QueueUsingStacks q = new QueueUsingStacks();\n        q.enqueue(1); q.enqueue(2); q.enqueue(3);\n        System.out.println("Dequeue: " + q.dequeue());\n        System.out.println("Front: " + q.front());\n    }\n}',
     hint: "s2 holds elements in queue order",
   },
 
@@ -509,8 +455,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate factorial using recursion.",
     mathSolution: "n! = n * (n-1)! with base case 0! = 1",
-    codeSolution:
-      'int factorial(int n) {\n    if(n <= 1) return 1;\n    return n * factorial(n-1);\n}\nSystem.out.println("Factorial of 5: " + factorial(5));',
+    codeSolution: 'public class Main {\n    static int factorial(int n) { return (n <= 1) ? 1 : n * factorial(n-1); }\n    public static void main(String[] args) {\n        System.out.println("Factorial of 5: " + factorial(5));\n    }\n}',
     hint: "Base case n <= 1",
   },
   {
@@ -518,8 +463,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate Fibonacci number using recursion.",
     mathSolution: "fib(n) = fib(n-1) + fib(n-2) with base cases",
-    codeSolution:
-      'int fibonacci(int n) {\n    if(n <= 1) return n;\n    return fibonacci(n-1) + fibonacci(n-2);\n}\nSystem.out.println("Fibonacci(6): " + fibonacci(6));',
+    codeSolution: 'public class Main {\n    static int fib(int n) { return (n <= 1) ? n : fib(n-1) + fib(n-2); }\n    public static void main(String[] args) {\n        System.out.println("Fibonacci(6): " + fib(6));\n    }\n}',
     hint: "Base cases: fib(0)=0, fib(1)=1",
   },
   {
@@ -527,8 +471,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate sum of digits using recursion.",
     mathSolution: "n%10 + sum(n/10)",
-    codeSolution:
-      'int sumOfDigits(int n) {\n    if(n == 0) return 0;\n    return (n % 10) + sumOfDigits(n / 10);\n}\nSystem.out.println("Sum of digits 12345: " + sumOfDigits(12345));',
+    codeSolution: 'public class Main {\n    static int sumDigits(int n) { return (n==0) ? 0 : n%10 + sumDigits(n/10); }\n    public static void main(String[] args) {\n        System.out.println("Sum of digits 12345: " + sumDigits(12345));\n    }\n}',
     hint: "Add last digit and recurse",
   },
   {
@@ -536,8 +479,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Reverse a string using recursion.",
     mathSolution: "Reverse substring + first char",
-    codeSolution:
-      'String reverseString(String s) {\n    if(s.isEmpty()) return s;\n    return reverseString(s.substring(1)) + s.charAt(0);\n}\nSystem.out.println("Reverse of \'hello\': " + reverseString("hello"));',
+    codeSolution: 'public class Main {\n    static String reverse(String s) { return s.isEmpty() ? s : reverse(s.substring(1)) + s.charAt(0); }\n    public static void main(String[] args) {\n        System.out.println("Reverse of \'hello\': " + reverse("hello"));\n    }\n}',
     hint: "Move first char to end",
   },
   {
@@ -545,8 +487,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if string is palindrome using recursion.",
     mathSolution: "Check first and last, recurse on middle",
-    codeSolution:
-      'boolean isPalindrome(String s, int left, int right) {\n    if(left >= right) return true;\n    if(s.charAt(left) != s.charAt(right)) return false;\n    return isPalindrome(s, left+1, right-1);\n}\nString s = "madam";\nSystem.out.println("Is palindrome: " + isPalindrome(s, 0, s.length()-1));',
+    codeSolution: 'public class Main {\n    static boolean isPal(String s, int l, int r) {\n        if(l>=r) return true;\n        if(s.charAt(l)!=s.charAt(r)) return false;\n        return isPal(s, l+1, r-1);\n    }\n    public static void main(String[] args) {\n        String s = "madam";\n        System.out.println("Is palindrome: " + isPal(s, 0, s.length()-1));\n    }\n}',
     hint: "Compare ends and move inward",
   },
   {
@@ -554,8 +495,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Calculate power using recursion.",
     mathSolution: "x^n = x * x^(n-1) with base case",
-    codeSolution:
-      'int power(int x, int n) {\n    if(n == 0) return 1;\n    return x * power(x, n-1);\n}\nSystem.out.println("2^5 = " + power(2, 5));',
+    codeSolution: 'public class Main {\n    static int power(int x, int n) { return (n==0) ? 1 : x * power(x, n-1); }\n    public static void main(String[] args) {\n        System.out.println("2^5 = " + power(2,5));\n    }\n}',
     hint: "Base case n=0 returns 1",
   },
   {
@@ -563,8 +503,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find GCD using Euclidean algorithm recursively.",
     mathSolution: "gcd(a,b) = gcd(b, a%b) with base case",
-    codeSolution:
-      'int gcd(int a, int b) {\n    if(b == 0) return a;\n    return gcd(b, a % b);\n}\nSystem.out.println("GCD of 48 and 18: " + gcd(48, 18));',
+    codeSolution: 'public class Main {\n    static int gcd(int a, int b) { return (b==0) ? a : gcd(b, a%b); }\n    public static void main(String[] args) {\n        System.out.println("GCD of 48 and 18: " + gcd(48,18));\n    }\n}',
     hint: "Base case when b=0",
   },
   {
@@ -572,8 +511,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Tower of Hanoi problem.",
     mathSolution: "Move n-1 disks, then largest, then n-1 disks",
-    codeSolution:
-      'void towerOfHanoi(int n, char from, char to, char aux) {\n    if(n == 1) {\n        System.out.println("Move disk 1 from " + from + " to " + to);\n        return;\n    }\n    towerOfHanoi(n-1, from, aux, to);\n    System.out.println("Move disk " + n + " from " + from + " to " + to);\n    towerOfHanoi(n-1, aux, to, from);\n}\ntowerOfHanoi(3, \'A\', \'C\', \'B\');',
+    codeSolution: 'public class Main {\n    static void toh(int n, char from, char to, char aux) {\n        if(n==1) System.out.println("Move disk 1 from " + from + " to " + to);\n        else {\n            toh(n-1, from, aux, to);\n            System.out.println("Move disk " + n + " from " + from + " to " + to);\n            toh(n-1, aux, to, from);\n        }\n    }\n    public static void main(String[] args) {\n        toh(3, \'A\', \'C\', \'B\');\n    }\n}',
     hint: "Classic recursion problem",
   },
 
@@ -583,8 +521,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Bubble Sort.",
     mathSolution: "Repeatedly swap adjacent elements if out of order",
-    codeSolution:
-      'int[] arr = {64, 34, 25, 12, 22, 11, 90};\nfor(int i=0; i<arr.length-1; i++) {\n    for(int j=0; j<arr.length-1-i; j++) {\n        if(arr[j] > arr[j+1]) {\n            int temp = arr[j];\n            arr[j] = arr[j+1];\n            arr[j+1] = temp;\n        }\n    }\n}\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {64, 34, 25, 12, 22, 11, 90};\n        for(int i=0; i<arr.length-1; i++)\n            for(int j=0; j<arr.length-1-i; j++)\n                if(arr[j] > arr[j+1]) { int t=arr[j]; arr[j]=arr[j+1]; arr[j+1]=t; }\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Largest bubbles to end",
   },
   {
@@ -592,8 +529,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Selection Sort.",
     mathSolution: "Find minimum and swap with current position",
-    codeSolution:
-      'int[] arr = {64, 25, 12, 22, 11};\nfor(int i=0; i<arr.length-1; i++) {\n    int minIdx = i;\n    for(int j=i+1; j<arr.length; j++) {\n        if(arr[j] < arr[minIdx]) minIdx = j;\n    }\n    int temp = arr[i];\n    arr[i] = arr[minIdx];\n    arr[minIdx] = temp;\n}\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {64, 25, 12, 22, 11};\n        for(int i=0; i<arr.length-1; i++) {\n            int minIdx=i;\n            for(int j=i+1; j<arr.length; j++) if(arr[j]<arr[minIdx]) minIdx=j;\n            int t=arr[i]; arr[i]=arr[minIdx]; arr[minIdx]=t;\n        }\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Select minimum and swap",
   },
   {
@@ -601,8 +537,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Insertion Sort.",
     mathSolution: "Insert each element into sorted portion",
-    codeSolution:
-      'int[] arr = {12, 11, 13, 5, 6};\nfor(int i=1; i<arr.length; i++) {\n    int key = arr[i];\n    int j = i-1;\n    while(j >= 0 && arr[j] > key) {\n        arr[j+1] = arr[j];\n        j--;\n    }\n    arr[j+1] = key;\n}\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {12, 11, 13, 5, 6};\n        for(int i=1; i<arr.length; i++) {\n            int key = arr[i], j = i-1;\n            while(j>=0 && arr[j] > key) { arr[j+1] = arr[j]; j--; }\n            arr[j+1] = key;\n        }\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Shift elements to insert key",
   },
   {
@@ -610,8 +545,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Merge Sort.",
     mathSolution: "Divide array, sort halves, merge",
-    codeSolution:
-      'void mergeSort(int[] arr, int l, int r) {\n    if(l < r) {\n        int m = (l + r) / 2;\n        mergeSort(arr, l, m);\n        mergeSort(arr, m+1, r);\n        merge(arr, l, m, r);\n    }\n}\n\nvoid merge(int[] arr, int l, int m, int r) {\n    int[] left = Arrays.copyOfRange(arr, l, m+1);\n    int[] right = Arrays.copyOfRange(arr, m+1, r+1);\n    int i=0, j=0, k=l;\n    while(i < left.length && j < right.length) {\n        if(left[i] <= right[j]) arr[k++] = left[i++];\n        else arr[k++] = right[j++];\n    }\n    while(i < left.length) arr[k++] = left[i++];\n    while(j < right.length) arr[k++] = right[j++];\n}\n\nint[] arr = {38, 27, 43, 3, 9, 82, 10};\nmergeSort(arr, 0, arr.length-1);\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static void merge(int[] a, int l, int m, int r) {\n        int[] left = Arrays.copyOfRange(a, l, m+1);\n        int[] right = Arrays.copyOfRange(a, m+1, r+1);\n        int i=0, j=0, k=l;\n        while(i<left.length && j<right.length) a[k++] = (left[i]<=right[j]) ? left[i++] : right[j++];\n        while(i<left.length) a[k++] = left[i++];\n        while(j<right.length) a[k++] = right[j++];\n    }\n    static void sort(int[] a, int l, int r) {\n        if(l<r) { int m = (l+r)/2; sort(a,l,m); sort(a,m+1,r); merge(a,l,m,r); }\n    }\n    public static void main(String[] args) {\n        int[] arr = {38, 27, 43, 3, 9, 82, 10};\n        sort(arr, 0, arr.length-1);\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Divide and conquer",
   },
   {
@@ -619,8 +553,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Quick Sort.",
     mathSolution: "Choose pivot, partition, recursively sort",
-    codeSolution:
-      'void quickSort(int[] arr, int low, int high) {\n    if(low < high) {\n        int pi = partition(arr, low, high);\n        quickSort(arr, low, pi-1);\n        quickSort(arr, pi+1, high);\n    }\n}\n\nint partition(int[] arr, int low, int high) {\n    int pivot = arr[high];\n    int i = low - 1;\n    for(int j=low; j<high; j++) {\n        if(arr[j] <= pivot) {\n            i++;\n            int temp = arr[i];\n            arr[i] = arr[j];\n            arr[j] = temp;\n        }\n    }\n    int temp = arr[i+1];\n    arr[i+1] = arr[high];\n    arr[high] = temp;\n    return i+1;\n}\n\nint[] arr = {10, 7, 8, 9, 1, 5};\nquickSort(arr, 0, arr.length-1);\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static int partition(int[] a, int l, int h) {\n        int pivot = a[h], i = l-1;\n        for(int j=l; j<h; j++) if(a[j]<=pivot) { i++; int t=a[i]; a[i]=a[j]; a[j]=t; }\n        int t=a[i+1]; a[i+1]=a[h]; a[h]=t;\n        return i+1;\n    }\n    static void sort(int[] a, int l, int h) {\n        if(l<h) { int pi = partition(a,l,h); sort(a,l,pi-1); sort(a,pi+1,h); }\n    }\n    public static void main(String[] args) {\n        int[] arr = {10, 7, 8, 9, 1, 5};\n        sort(arr, 0, arr.length-1);\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Last element as pivot",
   },
   {
@@ -628,8 +561,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Counting Sort (for small range).",
     mathSolution: "Count frequencies, then reconstruct",
-    codeSolution:
-      'int[] arr = {4, 2, 2, 8, 3, 3, 1};\nint max = Arrays.stream(arr).max().getAsInt();\nint[] count = new int[max+1];\nfor(int num : arr) count[num]++;\nint index = 0;\nfor(int i=0; i<=max; i++) {\n    while(count[i] > 0) {\n        arr[index++] = i;\n        count[i]--;\n    }\n}\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {4, 2, 2, 8, 3, 3, 1};\n        int max = Arrays.stream(arr).max().getAsInt();\n        int[] count = new int[max+1];\n        for(int num : arr) count[num]++;\n        int idx=0;\n        for(int i=0; i<=max; i++) while(count[i]-->0) arr[idx++]=i;\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "Works for small range of integers",
   },
   {
@@ -637,8 +569,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Sort array of 0s, 1s, and 2s (Dutch flag).",
     mathSolution: "Three-pointer technique",
-    codeSolution:
-      'int[] arr = {0, 1, 2, 0, 1, 2, 1, 0};\nint low = 0, mid = 0, high = arr.length-1;\nwhile(mid <= high) {\n    switch(arr[mid]) {\n        case 0:\n            int temp = arr[low];\n            arr[low] = arr[mid];\n            arr[mid] = temp;\n            low++; mid++;\n            break;\n        case 1:\n            mid++;\n            break;\n        case 2:\n            temp = arr[mid];\n            arr[mid] = arr[high];\n            arr[high] = temp;\n            high--;\n            break;\n    }\n}\nSystem.out.println("Sorted: " + Arrays.toString(arr));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {0,1,2,0,1,2,1,0};\n        int low=0, mid=0, high=arr.length-1;\n        while(mid<=high) {\n            switch(arr[mid]) {\n                case 0: { int t=arr[low]; arr[low]=arr[mid]; arr[mid]=t; low++; mid++; break; }\n                case 1: mid++; break;\n                case 2: { int t=arr[mid]; arr[mid]=arr[high]; arr[high]=t; high--; break; }\n            }\n        }\n        System.out.println("Sorted: " + Arrays.toString(arr));\n    }\n}',
     hint: "low for 0, high for 2",
   },
   {
@@ -646,8 +577,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Check if array is sorted and rotated.",
     mathSolution: "Count inversions, should be at most 1",
-    codeSolution:
-      'int[] arr = {3, 4, 5, 1, 2};\nint count = 0;\nfor(int i=0; i<arr.length; i++) {\n    if(arr[i] > arr[(i+1)%arr.length]) count++;\n}\nboolean isSortedRotated = count <= 1;\nSystem.out.println("Is sorted and rotated: " + isSortedRotated);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 4, 5, 1, 2};\n        int count = 0;\n        for(int i=0; i<arr.length; i++) if(arr[i] > arr[(i+1)%arr.length]) count++;\n        System.out.println("Is sorted and rotated: " + (count <= 1));\n    }\n}',
     hint: "At most one break in sorted order",
   },
 
@@ -657,8 +587,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Linear Search.",
     mathSolution: "Traverse array until element found",
-    codeSolution:
-      'int[] arr = {2, 5, 8, 12, 16, 23, 38};\nint key = 16;\nint index = -1;\nfor(int i=0; i<arr.length; i++) {\n    if(arr[i] == key) {\n        index = i;\n        break;\n    }\n}\nSystem.out.println("Element found at index: " + index);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 5, 8, 12, 16, 23, 38};\n        int key = 16, index = -1;\n        for(int i=0; i<arr.length; i++) if(arr[i]==key) { index=i; break; }\n        System.out.println("Element found at index: " + index);\n    }\n}',
     hint: "Simple loop",
   },
   {
@@ -666,8 +595,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Binary Search (iterative).",
     mathSolution: "Divide search space in half",
-    codeSolution:
-      'int[] arr = {2, 5, 8, 12, 16, 23, 38};\nint key = 23;\nint left = 0, right = arr.length-1;\nint index = -1;\nwhile(left <= right) {\n    int mid = left + (right - left) / 2;\n    if(arr[mid] == key) { index = mid; break; }\n    else if(arr[mid] < key) left = mid + 1;\n    else right = mid - 1;\n}\nSystem.out.println("Element found at index: " + index);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 5, 8, 12, 16, 23, 38};\n        int key = 23, left = 0, right = arr.length-1, index = -1;\n        while(left <= right) {\n            int mid = left + (right-left)/2;\n            if(arr[mid] == key) { index=mid; break; }\n            else if(arr[mid] < key) left = mid+1;\n            else right = mid-1;\n        }\n        System.out.println("Element found at index: " + index);\n    }\n}',
     hint: "Array must be sorted",
   },
   {
@@ -675,8 +603,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Implement Binary Search (recursive).",
     mathSolution: "Recursive divide and conquer",
-    codeSolution:
-      'int binarySearch(int[] arr, int left, int right, int key) {\n    if(left > right) return -1;\n    int mid = left + (right - left) / 2;\n    if(arr[mid] == key) return mid;\n    if(arr[mid] < key) return binarySearch(arr, mid+1, right, key);\n    return binarySearch(arr, left, mid-1, key);\n}\n\nint[] arr = {2, 5, 8, 12, 16, 23, 38};\nint index = binarySearch(arr, 0, arr.length-1, 16);\nSystem.out.println("Element found at index: " + index);',
+    codeSolution: 'public class Main {\n    static int bs(int[] a, int l, int r, int key) {\n        if(l>r) return -1;\n        int m = l+(r-l)/2;\n        if(a[m]==key) return m;\n        return (a[m]<key) ? bs(a,m+1,r,key) : bs(a,l,m-1,key);\n    }\n    public static void main(String[] args) {\n        int[] arr = {2, 5, 8, 12, 16, 23, 38};\n        int idx = bs(arr, 0, arr.length-1, 16);\n        System.out.println("Element found at index: " + idx);\n    }\n}',
     hint: "Recursive version",
   },
   {
@@ -684,8 +611,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find first and last occurrence in sorted array.",
     mathSolution: "Binary search with left and right bias",
-    codeSolution:
-      'int[] arr = {1, 2, 2, 2, 3, 4, 4, 5};\nint key = 2;\nint first = -1, last = -1;\n\n// First occurrence\nint left = 0, right = arr.length-1;\nwhile(left <= right) {\n    int mid = left + (right - left) / 2;\n    if(arr[mid] == key) { first = mid; right = mid-1; }\n    else if(arr[mid] < key) left = mid+1;\n    else right = mid-1;\n}\n\n// Last occurrence\nleft = 0; right = arr.length-1;\nwhile(left <= right) {\n    int mid = left + (right - left) / 2;\n    if(arr[mid] == key) { last = mid; left = mid+1; }\n    else if(arr[mid] < key) left = mid+1;\n    else right = mid-1;\n}\n\nSystem.out.println("First: " + first + ", Last: " + last);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,2,2,2,3,4,4,5};\n        int key = 2, first=-1, last=-1;\n        int l=0, r=arr.length-1;\n        while(l<=r) { int m=l+(r-l)/2; if(arr[m]==key) { first=m; r=m-1; } else if(arr[m]<key) l=m+1; else r=m-1; }\n        l=0; r=arr.length-1;\n        while(l<=r) { int m=l+(r-l)/2; if(arr[m]==key) { last=m; l=m+1; } else if(arr[m]<key) l=m+1; else r=m-1; }\n        System.out.println("First: " + first + ", Last: " + last);\n    }\n}',
     hint: "Move left after finding for first, right for last",
   },
   {
@@ -693,8 +619,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Search in rotated sorted array.",
     mathSolution: "Find which half is sorted and search accordingly",
-    codeSolution:
-      'int[] arr = {4, 5, 6, 7, 0, 1, 2};\nint key = 0;\nint left = 0, right = arr.length-1;\nint index = -1;\nwhile(left <= right) {\n    int mid = left + (right - left) / 2;\n    if(arr[mid] == key) { index = mid; break; }\n    \n    if(arr[left] <= arr[mid]) { // left half sorted\n        if(key >= arr[left] && key < arr[mid]) right = mid-1;\n        else left = mid+1;\n    } else { // right half sorted\n        if(key > arr[mid] && key <= arr[right]) left = mid+1;\n        else right = mid-1;\n    }\n}\nSystem.out.println("Element found at: " + index);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {4,5,6,7,0,1,2};\n        int key = 0, left=0, right=arr.length-1, idx=-1;\n        while(left<=right) {\n            int mid=left+(right-left)/2;\n            if(arr[mid]==key) { idx=mid; break; }\n            if(arr[left]<=arr[mid]) { // left sorted\n                if(key>=arr[left] && key<arr[mid]) right=mid-1;\n                else left=mid+1;\n            } else { // right sorted\n                if(key>arr[mid] && key<=arr[right]) left=mid+1;\n                else right=mid-1;\n            }\n        }\n        System.out.println("Element found at: " + idx);\n    }\n}',
     hint: "Check which half is sorted",
   },
   {
@@ -702,8 +627,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find peak element in mountain array.",
     mathSolution: "Binary search to find peak",
-    codeSolution:
-      'int[] arr = {1, 3, 5, 7, 6, 4, 2};\nint left = 0, right = arr.length-1;\nwhile(left < right) {\n    int mid = left + (right - left) / 2;\n    if(arr[mid] < arr[mid+1]) left = mid+1;\n    else right = mid;\n}\nSystem.out.println("Peak element: " + arr[left] + " at index " + left);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,3,5,7,6,4,2};\n        int l=0, r=arr.length-1;\n        while(l<r) {\n            int m=l+(r-l)/2;\n            if(arr[m] < arr[m+1]) l=m+1;\n            else r=m;\n        }\n        System.out.println("Peak element: " + arr[l] + " at index " + l);\n    }\n}',
     hint: "Compare mid with mid+1",
   },
 
@@ -713,8 +637,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Print matrix in spiral order.",
     mathSolution: "Traverse boundaries and shrink",
-    codeSolution:
-      'int[][] matrix = {\n    {1, 2, 3, 4},\n    {5, 6, 7, 8},\n    {9, 10, 11, 12}\n};\nint top = 0, bottom = matrix.length-1;\nint left = 0, right = matrix[0].length-1;\nList<Integer> result = new ArrayList<>();\n\nwhile(top <= bottom && left <= right) {\n    for(int i=left; i<=right; i++) result.add(matrix[top][i]);\n    top++;\n    \n    for(int i=top; i<=bottom; i++) result.add(matrix[i][right]);\n    right--;\n    \n    if(top <= bottom) {\n        for(int i=right; i>=left; i--) result.add(matrix[bottom][i]);\n        bottom--;\n    }\n    \n    if(left <= right) {\n        for(int i=bottom; i>=top; i--) result.add(matrix[i][left]);\n        left++;\n    }\n}\nSystem.out.println("Spiral order: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[][] matrix = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};\n        int top=0, bottom=matrix.length-1, left=0, right=matrix[0].length-1;\n        List<Integer> res = new ArrayList<>();\n        while(top<=bottom && left<=right) {\n            for(int i=left;i<=right;i++) res.add(matrix[top][i]); top++;\n            for(int i=top;i<=bottom;i++) res.add(matrix[i][right]); right--;\n            if(top<=bottom) for(int i=right;i>=left;i--) res.add(matrix[bottom][i]); bottom--;\n            if(left<=right) for(int i=bottom;i>=top;i--) res.add(matrix[i][left]); left++;\n        }\n        System.out.println("Spiral order: " + res);\n    }\n}',
     hint: "Shrink boundaries after each traversal",
   },
   {
@@ -722,8 +645,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Transpose of a matrix.",
     mathSolution: "Swap rows and columns",
-    codeSolution:
-      'int[][] matrix = {\n    {1, 2, 3},\n    {4, 5, 6},\n    {7, 8, 9}\n};\nint[][] transpose = new int[matrix[0].length][matrix.length];\nfor(int i=0; i<matrix.length; i++) {\n    for(int j=0; j<matrix[0].length; j++) {\n        transpose[j][i] = matrix[i][j];\n    }\n}\nSystem.out.println("Transpose: " + Arrays.deepToString(transpose));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[][] mat = {{1,2,3},{4,5,6},{7,8,9}};\n        int[][] trans = new int[mat[0].length][mat.length];\n        for(int i=0; i<mat.length; i++) for(int j=0; j<mat[0].length; j++) trans[j][i] = mat[i][j];\n        System.out.println("Transpose: " + Arrays.deepToString(trans));\n    }\n}',
     hint: "Result[i][j] = original[j][i]",
   },
   {
@@ -731,8 +653,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Rotate matrix 90 degrees clockwise.",
     mathSolution: "Transpose then reverse each row",
-    codeSolution:
-      'int[][] matrix = {\n    {1, 2, 3},\n    {4, 5, 6},\n    {7, 8, 9}\n};\nint n = matrix.length;\n// Transpose\nfor(int i=0; i<n; i++) {\n    for(int j=i+1; j<n; j++) {\n        int temp = matrix[i][j];\n        matrix[i][j] = matrix[j][i];\n        matrix[j][i] = temp;\n    }\n}\n// Reverse each row\nfor(int i=0; i<n; i++) {\n    for(int j=0; j<n/2; j++) {\n        int temp = matrix[i][j];\n        matrix[i][j] = matrix[i][n-1-j];\n        matrix[i][n-1-j] = temp;\n    }\n}\nSystem.out.println("Rotated: " + Arrays.deepToString(matrix));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[][] mat = {{1,2,3},{4,5,6},{7,8,9}};\n        int n=mat.length;\n        for(int i=0;i<n;i++) for(int j=i+1;j<n;j++) { int t=mat[i][j]; mat[i][j]=mat[j][i]; mat[j][i]=t; }\n        for(int i=0;i<n;i++) for(int j=0;j<n/2;j++) { int t=mat[i][j]; mat[i][j]=mat[i][n-1-j]; mat[i][n-1-j]=t; }\n        System.out.println("Rotated: " + Arrays.deepToString(mat));\n    }\n}',
     hint: "Transpose + reverse rows",
   },
   {
@@ -740,18 +661,15 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Search in row-wise and column-wise sorted matrix.",
     mathSolution: "Start from top-right or bottom-left",
-    codeSolution:
-      'int[][] matrix = {\n    {10, 20, 30, 40},\n    {15, 25, 35, 45},\n    {27, 29, 37, 48},\n    {32, 33, 39, 50}\n};\nint target = 29;\nint i = 0, j = matrix[0].length-1;\nboolean found = false;\nwhile(i < matrix.length && j >= 0) {\n    if(matrix[i][j] == target) { found = true; break; }\n    else if(matrix[i][j] > target) j--;\n    else i++;\n}\nSystem.out.println("Found: " + found);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[][] mat = {{10,20,30,40},{15,25,35,45},{27,29,37,48},{32,33,39,50}};\n        int target=29, i=0, j=mat[0].length-1;\n        boolean found=false;\n        while(i<mat.length && j>=0) {\n            if(mat[i][j]==target) { found=true; break; }\n            else if(mat[i][j]>target) j--;\n            else i++;\n        }\n        System.out.println("Found: " + found);\n    }\n}',
     hint: "Move left if greater, down if smaller",
   },
   {
     id: "dsa_82",
     topicId: "java_dsa",
-    question:
-      "Set matrix zeros (if element is 0, set entire row and column to 0).",
+    question: "Set matrix zeros (if element is 0, set entire row and column to 0).",
     mathSolution: "Mark rows and columns to be zeroed",
-    codeSolution:
-      'int[][] matrix = {\n    {1, 1, 1},\n    {1, 0, 1},\n    {1, 1, 1}\n};\nboolean[] rows = new boolean[matrix.length];\nboolean[] cols = new boolean[matrix[0].length];\n\nfor(int i=0; i<matrix.length; i++) {\n    for(int j=0; j<matrix[0].length; j++) {\n        if(matrix[i][j] == 0) {\n            rows[i] = true;\n            cols[j] = true;\n        }\n    }\n}\n\nfor(int i=0; i<matrix.length; i++) {\n    for(int j=0; j<matrix[0].length; j++) {\n        if(rows[i] || cols[j]) matrix[i][j] = 0;\n    }\n}\n\nSystem.out.println("After setting zeros: " + Arrays.deepToString(matrix));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[][] mat = {{1,1,1},{1,0,1},{1,1,1}};\n        boolean[] rows = new boolean[mat.length];\n        boolean[] cols = new boolean[mat[0].length];\n        for(int i=0;i<mat.length;i++) for(int j=0;j<mat[0].length;j++) if(mat[i][j]==0) { rows[i]=true; cols[j]=true; }\n        for(int i=0;i<mat.length;i++) for(int j=0;j<mat[0].length;j++) if(rows[i]||cols[j]) mat[i][j]=0;\n        System.out.println("After setting zeros: " + Arrays.deepToString(mat));\n    }\n}',
     hint: "Mark rows/cols to zero, then update",
   },
   {
@@ -759,8 +677,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find row with maximum number of 1s in binary matrix.",
     mathSolution: "Start from top-right, move left for 1s",
-    codeSolution:
-      'int[][] matrix = {\n    {0, 0, 1, 1},\n    {0, 1, 1, 1},\n    {1, 1, 1, 1},\n    {0, 0, 0, 1}\n};\nint maxRow = -1, maxCount = -1;\nint j = matrix[0].length-1;\nfor(int i=0; i<matrix.length; i++) {\n    while(j >= 0 && matrix[i][j] == 1) j--;\n    int count = matrix[0].length-1 - j;\n    if(count > maxCount) {\n        maxCount = count;\n        maxRow = i;\n    }\n}\nSystem.out.println("Row with max 1s: " + maxRow);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[][] mat = {{0,0,1,1},{0,1,1,1},{1,1,1,1},{0,0,0,1}};\n        int maxRow=-1, maxCount=-1, j=mat[0].length-1;\n        for(int i=0;i<mat.length;i++) {\n            while(j>=0 && mat[i][j]==1) j--;\n            int count = mat[0].length-1 - j;\n            if(count>maxCount) { maxCount=count; maxRow=i; }\n        }\n        System.out.println("Row with max 1s: " + maxRow);\n    }\n}',
     hint: "Start from top-right, move left",
   },
 
@@ -770,8 +687,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find frequency of each element in array.",
     mathSolution: "Use HashMap to count occurrences",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 2, 1, 3, 3, 4};\nMap<Integer, Integer> freq = new HashMap<>();\nfor(int num : arr) {\n    freq.put(num, freq.getOrDefault(num, 0) + 1);\n}\nSystem.out.println("Frequencies: " + freq);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,2,3,2,1,3,3,4};\n        Map<Integer,Integer> freq = new HashMap<>();\n        for(int num : arr) freq.put(num, freq.getOrDefault(num,0)+1);\n        System.out.println("Frequencies: " + freq);\n    }\n}',
     hint: "Use getOrDefault",
   },
   {
@@ -779,8 +695,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find first repeating element in array.",
     mathSolution: "Use HashSet to track seen elements",
-    codeSolution:
-      'int[] arr = {1, 2, 3, 2, 1};\nSet<Integer> seen = new HashSet<>();\nint firstRepeat = -1;\nfor(int num : arr) {\n    if(seen.contains(num)) {\n        firstRepeat = num;\n        break;\n    }\n    seen.add(num);\n}\nSystem.out.println("First repeating: " + firstRepeat);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,2,3,2,1};\n        Set<Integer> seen = new HashSet<>();\n        int firstRepeat = -1;\n        for(int num : arr) {\n            if(seen.contains(num)) { firstRepeat=num; break; }\n            seen.add(num);\n        }\n        System.out.println("First repeating: " + firstRepeat);\n    }\n}',
     hint: "Check before adding",
   },
   {
@@ -788,8 +703,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find two numbers that sum to target (Two Sum).",
     mathSolution: "Use HashMap to store complements",
-    codeSolution:
-      'int[] arr = {2, 7, 11, 15};\nint target = 9;\nMap<Integer, Integer> map = new HashMap<>();\nint[] result = new int[2];\nfor(int i=0; i<arr.length; i++) {\n    int complement = target - arr[i];\n    if(map.containsKey(complement)) {\n        result[0] = map.get(complement);\n        result[1] = i;\n        break;\n    }\n    map.put(arr[i], i);\n}\nSystem.out.println("Indices: " + Arrays.toString(result));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {2,7,11,15};\n        int target = 9;\n        Map<Integer,Integer> map = new HashMap<>();\n        int[] res = new int[2];\n        for(int i=0;i<arr.length;i++) {\n            int comp = target - arr[i];\n            if(map.containsKey(comp)) { res[0]=map.get(comp); res[1]=i; break; }\n            map.put(arr[i], i);\n        }\n        System.out.println("Indices: " + Arrays.toString(res));\n    }\n}',
     hint: "Store value -> index",
   },
   {
@@ -797,8 +711,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find subarray with sum zero.",
     mathSolution: "Use HashSet of prefix sums",
-    codeSolution:
-      'int[] arr = {4, 2, -3, 1, 6};\nSet<Integer> set = new HashSet<>();\nint sum = 0;\nboolean found = false;\nfor(int num : arr) {\n    sum += num;\n    if(sum == 0 || set.contains(sum)) {\n        found = true;\n        break;\n    }\n    set.add(sum);\n}\nSystem.out.println("Subarray with sum zero: " + found);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {4,2,-3,1,6};\n        Set<Integer> set = new HashSet<>();\n        int sum=0;\n        boolean found=false;\n        for(int num:arr) {\n            sum+=num;\n            if(sum==0 || set.contains(sum)) { found=true; break; }\n            set.add(sum);\n        }\n        System.out.println("Subarray with sum zero: " + found);\n    }\n}',
     hint: "Same prefix sum means zero subarray",
   },
   {
@@ -806,8 +719,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find majority element (appears more than n/2 times).",
     mathSolution: "Boyer-Moore voting algorithm",
-    codeSolution:
-      'int[] arr = {2, 2, 1, 1, 1, 2, 2};\nint candidate = arr[0];\nint count = 1;\nfor(int i=1; i<arr.length; i++) {\n    if(arr[i] == candidate) count++;\n    else count--;\n    if(count == 0) {\n        candidate = arr[i];\n        count = 1;\n    }\n}\ncount = 0;\nfor(int num : arr) if(num == candidate) count++;\nif(count > arr.length/2) System.out.println("Majority: " + candidate);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2,2,1,1,1,2,2};\n        int candidate = arr[0], count = 1;\n        for(int i=1;i<arr.length;i++) {\n            if(arr[i]==candidate) count++;\n            else count--;\n            if(count==0) { candidate=arr[i]; count=1; }\n        }\n        count=0; for(int n:arr) if(n==candidate) count++;\n        if(count>arr.length/2) System.out.println("Majority: " + candidate);\n    }\n}',
     hint: "Cancel pairs, candidate remains",
   },
   {
@@ -815,8 +727,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find longest consecutive subsequence.",
     mathSolution: "Use HashSet for O(1) lookup",
-    codeSolution:
-      'int[] arr = {100, 4, 200, 1, 3, 2};\nSet<Integer> set = new HashSet<>();\nfor(int num : arr) set.add(num);\nint longest = 0;\nfor(int num : arr) {\n    if(!set.contains(num-1)) {\n        int current = num;\n        int count = 1;\n        while(set.contains(current+1)) {\n            current++;\n            count++;\n        }\n        longest = Math.max(longest, count);\n    }\n}\nSystem.out.println("Longest consecutive: " + longest);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {100,4,200,1,3,2};\n        Set<Integer> set = new HashSet<>();\n        for(int n:arr) set.add(n);\n        int longest=0;\n        for(int n:arr) {\n            if(!set.contains(n-1)) {\n                int cur=n, len=1;\n                while(set.contains(cur+1)) { cur++; len++; }\n                longest=Math.max(longest,len);\n            }\n        }\n        System.out.println("Longest consecutive: " + longest);\n    }\n}',
     hint: "Start from smallest in sequence",
   },
 
@@ -826,8 +737,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find pair with given sum in sorted array.",
     mathSolution: "Two pointers from both ends",
-    codeSolution:
-      'int[] arr = {2, 5, 8, 12, 16, 23, 38};\nint target = 28;\nint left = 0, right = arr.length-1;\nboolean found = false;\nwhile(left < right) {\n    int sum = arr[left] + arr[right];\n    if(sum == target) { found = true; break; }\n    else if(sum < target) left++;\n    else right--;\n}\nSystem.out.println("Pair found: " + found);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2,5,8,12,16,23,38};\n        int target = 28, left=0, right=arr.length-1;\n        boolean found=false;\n        while(left<right) {\n            int sum = arr[left]+arr[right];\n            if(sum==target) { found=true; break; }\n            else if(sum<target) left++;\n            else right--;\n        }\n        System.out.println("Pair found: " + found);\n    }\n}',
     hint: "Move left if sum too small, right if too large",
   },
   {
@@ -835,8 +745,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find triplets with sum zero.",
     mathSolution: "Sort and use two pointers for each i",
-    codeSolution:
-      'int[] arr = {-1, 0, 1, 2, -1, -4};\nArrays.sort(arr);\nList<List<Integer>> result = new ArrayList<>();\nfor(int i=0; i<arr.length-2; i++) {\n    if(i>0 && arr[i] == arr[i-1]) continue;\n    int left = i+1, right = arr.length-1;\n    while(left < right) {\n        int sum = arr[i] + arr[left] + arr[right];\n        if(sum == 0) {\n            result.add(Arrays.asList(arr[i], arr[left], arr[right]));\n            while(left < right && arr[left] == arr[left+1]) left++;\n            while(left < right && arr[right] == arr[right-1]) right--;\n            left++; right--;\n        } else if(sum < 0) left++;\n        else right--;\n    }\n}\nSystem.out.println("Triplets: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {-1,0,1,2,-1,-4};\n        Arrays.sort(arr);\n        List<List<Integer>> res = new ArrayList<>();\n        for(int i=0;i<arr.length-2;i++) {\n            if(i>0 && arr[i]==arr[i-1]) continue;\n            int left=i+1, right=arr.length-1;\n            while(left<right) {\n                int sum = arr[i]+arr[left]+arr[right];\n                if(sum==0) {\n                    res.add(Arrays.asList(arr[i],arr[left],arr[right]));\n                    while(left<right && arr[left]==arr[left+1]) left++;\n                    while(left<right && arr[right]==arr[right-1]) right--;\n                    left++; right--;\n                } else if(sum<0) left++;\n                else right--;\n            }\n        }\n        System.out.println("Triplets: " + res);\n    }\n}',
     hint: "Skip duplicates",
   },
   {
@@ -844,8 +753,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Container with most water.",
     mathSolution: "Two pointers, move shorter line",
-    codeSolution:
-      'int[] height = {1, 8, 6, 2, 5, 4, 8, 3, 7};\nint left = 0, right = height.length-1;\nint maxArea = 0;\nwhile(left < right) {\n    int area = Math.min(height[left], height[right]) * (right - left);\n    maxArea = Math.max(maxArea, area);\n    if(height[left] < height[right]) left++;\n    else right--;\n}\nSystem.out.println("Max area: " + maxArea);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] height = {1,8,6,2,5,4,8,3,7};\n        int left=0, right=height.length-1, maxArea=0;\n        while(left<right) {\n            int area = Math.min(height[left],height[right])*(right-left);\n            maxArea = Math.max(maxArea, area);\n            if(height[left]<height[right]) left++;\n            else right--;\n        }\n        System.out.println("Max area: " + maxArea);\n    }\n}',
     hint: "Move the smaller height",
   },
   {
@@ -853,8 +761,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Trapping rain water problem.",
     mathSolution: "Two pointers with leftMax and rightMax",
-    codeSolution:
-      'int[] height = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};\nint left = 0, right = height.length-1;\nint leftMax = 0, rightMax = 0;\nint water = 0;\nwhile(left < right) {\n    if(height[left] < height[right]) {\n        if(height[left] >= leftMax) leftMax = height[left];\n        else water += leftMax - height[left];\n        left++;\n    } else {\n        if(height[right] >= rightMax) rightMax = height[right];\n        else water += rightMax - height[right];\n        right--;\n    }\n}\nSystem.out.println("Trapped water: " + water);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] height = {0,1,0,2,1,0,1,3,2,1,2,1};\n        int left=0, right=height.length-1, leftMax=0, rightMax=0, water=0;\n        while(left<right) {\n            if(height[left] < height[right]) {\n                if(height[left] >= leftMax) leftMax = height[left];\n                else water += leftMax - height[left];\n                left++;\n            } else {\n                if(height[right] >= rightMax) rightMax = height[right];\n                else water += rightMax - height[right];\n                right--;\n            }\n        }\n        System.out.println("Trapped water: " + water);\n    }\n}',
     hint: "Water trapped = min(leftMax,rightMax) - height",
   },
   {
@@ -862,8 +769,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Remove duplicates from sorted array in-place.",
     mathSolution: "Two pointers, one for unique position",
-    codeSolution:
-      'int[] arr = {1, 1, 2, 2, 3, 3, 4};\nint j = 0;\nfor(int i=1; i<arr.length; i++) {\n    if(arr[i] != arr[j]) {\n        j++;\n        arr[j] = arr[i];\n    }\n}\nSystem.out.println("Unique count: " + (j+1));\nSystem.out.println("Array: " + Arrays.toString(Arrays.copyOf(arr, j+1)));',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,1,2,2,3,3,4};\n        int j=0;\n        for(int i=1;i<arr.length;i++) if(arr[i]!=arr[j]) arr[++j]=arr[i];\n        System.out.println("Unique count: " + (j+1));\n        System.out.println("Array: " + Arrays.toString(Arrays.copyOf(arr, j+1)));\n    }\n}',
     hint: "j tracks last unique position",
   },
   {
@@ -871,8 +777,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find subarray with given sum (positive numbers).",
     mathSolution: "Sliding window",
-    codeSolution:
-      'int[] arr = {1, 4, 20, 3, 10, 5};\nint target = 33;\nint left = 0, sum = 0;\nboolean found = false;\nfor(int right=0; right<arr.length; right++) {\n    sum += arr[right];\n    while(sum > target && left <= right) {\n        sum -= arr[left];\n        left++;\n    }\n    if(sum == target) {\n        found = true;\n        System.out.println("Subarray from " + left + " to " + right);\n        break;\n    }\n}\nif(!found) System.out.println("No subarray found");',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1,4,20,3,10,5};\n        int target = 33, left=0, sum=0;\n        boolean found=false;\n        for(int right=0;right<arr.length;right++) {\n            sum += arr[right];\n            while(sum>target && left<=right) sum -= arr[left++];\n            if(sum==target) { System.out.println("Subarray from " + left + " to " + right); found=true; break; }\n        }\n        if(!found) System.out.println("No subarray found");\n    }\n}',
     hint: "Expand right, shrink left when sum too large",
   },
 
@@ -882,8 +787,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Maximum sum subarray of size k.",
     mathSolution: "Sliding window to maintain window sum",
-    codeSolution:
-      'int[] arr = {2, 1, 5, 1, 3, 2};\nint k = 3;\nint windowSum = 0;\nfor(int i=0; i<k; i++) windowSum += arr[i];\nint maxSum = windowSum;\nfor(int i=k; i<arr.length; i++) {\n    windowSum += arr[i] - arr[i-k];\n    maxSum = Math.max(maxSum, windowSum);\n}\nSystem.out.println("Max sum of size " + k + ": " + maxSum);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {2,1,5,1,3,2};\n        int k=3, sum=0;\n        for(int i=0;i<k;i++) sum+=arr[i];\n        int max=sum;\n        for(int i=k;i<arr.length;i++) { sum+=arr[i]-arr[i-k]; max=Math.max(max,sum); }\n        System.out.println("Max sum of size " + k + ": " + max);\n    }\n}',
     hint: "Add new, remove old",
   },
   {
@@ -891,8 +795,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Longest substring without repeating characters.",
     mathSolution: "Sliding window with HashSet",
-    codeSolution:
-      'String s = "abcabcbb";\nSet<Character> set = new HashSet<>();\nint left = 0, maxLength = 0;\nfor(int right=0; right<s.length(); right++) {\n    while(set.contains(s.charAt(right))) {\n        set.remove(s.charAt(left));\n        left++;\n    }\n    set.add(s.charAt(right));\n    maxLength = Math.max(maxLength, right - left + 1);\n}\nSystem.out.println("Longest substring length: " + maxLength);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = "abcabcbb";\n        Set<Character> set = new HashSet<>();\n        int left=0, maxLen=0;\n        for(int right=0;right<s.length();right++) {\n            while(set.contains(s.charAt(right))) set.remove(s.charAt(left++));\n            set.add(s.charAt(right));\n            maxLen = Math.max(maxLen, right-left+1);\n        }\n        System.out.println("Longest substring length: " + maxLen);\n    }\n}',
     hint: "Remove from left when duplicate found",
   },
   {
@@ -900,8 +803,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Minimum window substring containing all characters of pattern.",
     mathSolution: "Sliding window with character counts",
-    codeSolution:
-      'String s = "ADOBECODEBANC";\nString t = "ABC";\nMap<Character, Integer> need = new HashMap<>();\nfor(char c : t.toCharArray()) need.put(c, need.getOrDefault(c,0)+1);\nint left = 0, matched = 0, minLen = s.length()+1, start = 0;\nMap<Character, Integer> window = new HashMap<>();\n\nfor(int right=0; right<s.length(); right++) {\n    char c = s.charAt(right);\n    window.put(c, window.getOrDefault(c,0)+1);\n    if(need.containsKey(c) && window.get(c).equals(need.get(c))) matched++;\n    \n    while(matched == need.size()) {\n        if(right-left+1 < minLen) {\n            minLen = right-left+1;\n            start = left;\n        }\n        char leftChar = s.charAt(left);\n        window.put(leftChar, window.get(leftChar)-1);\n        if(need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) matched--;\n        left++;\n    }\n}\nString result = minLen <= s.length() ? s.substring(start, start+minLen) : "";\nSystem.out.println("Min window: " + result);',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = "ADOBECODEBANC", t = "ABC";\n        Map<Character,Integer> need = new HashMap<>();\n        for(char c:t.toCharArray()) need.put(c, need.getOrDefault(c,0)+1);\n        int left=0, matched=0, minLen=s.length()+1, start=0;\n        Map<Character,Integer> window = new HashMap<>();\n        for(int right=0;right<s.length();right++) {\n            char c = s.charAt(right);\n            window.put(c, window.getOrDefault(c,0)+1);\n            if(need.containsKey(c) && window.get(c).equals(need.get(c))) matched++;\n            while(matched == need.size()) {\n                if(right-left+1 < minLen) { minLen=right-left+1; start=left; }\n                char leftChar = s.charAt(left);\n                window.put(leftChar, window.get(leftChar)-1);\n                if(need.containsKey(leftChar) && window.get(leftChar) < need.get(leftChar)) matched--;\n                left++;\n            }\n        }\n        String res = (minLen<=s.length()) ? s.substring(start, start+minLen) : "";\n        System.out.println("Min window: " + res);\n    }\n}',
     hint: "Expand right, shrink left when valid",
   },
   {
@@ -909,8 +811,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find all anagrams of pattern in string.",
     mathSolution: "Sliding window with character frequency",
-    codeSolution:
-      "String s = \"cbaebabacd\";\nString p = \"abc\";\nList<Integer> result = new ArrayList<>();\nint[] need = new int[26];\nint[] window = new int[26];\nfor(char c : p.toCharArray()) need[c-'a']++;\n\nint left = 0;\nfor(int right=0; right<s.length(); right++) {\n    window[s.charAt(right)-'a']++;\n    \n    if(right - left + 1 == p.length()) {\n        if(Arrays.equals(need, window)) result.add(left);\n        window[s.charAt(left)-'a']--;\n        left++;\n    }\n}\nSystem.out.println(\"Anagram start indices: \" + result);",
+    codeSolution: 'import java.util.*;\npublic class Main {\n    public static void main(String[] args) {\n        String s = "cbaebabacd", p = "abc";\n        List<Integer> res = new ArrayList<>();\n        int[] need = new int[26], window = new int[26];\n        for(char c:p.toCharArray()) need[c-\'a\']++;\n        int left=0;\n        for(int right=0;right<s.length();right++) {\n            window[s.charAt(right)-\'a\']++;\n            if(right-left+1 == p.length()) {\n                if(Arrays.equals(need, window)) res.add(left);\n                window[s.charAt(left)-\'a\']--;\n                left++;\n            }\n        }\n        System.out.println("Anagram start indices: " + res);\n    }\n}',
     hint: "Compare frequency arrays",
   },
 
@@ -920,8 +821,7 @@ QuizData.questions.push(
     topicId: "java_dsa",
     question: "Find single number in array where others appear twice.",
     mathSolution: "XOR all elements",
-    codeSolution:
-      'int[] arr = {4, 1, 2, 1, 2};\nint result = 0;\nfor(int num : arr) result ^= num;\nSystem.out.println("Single number: " + result);',
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {4,1,2,1,2};\n        int result = 0;\n        for(int num : arr) result ^= num;\n        System.out.println("Single number: " + result);\n    }\n}',
     hint: "a ^ a = 0, a ^ 0 = a",
   },
 );

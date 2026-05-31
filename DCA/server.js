@@ -24,8 +24,8 @@ router.get("/admissions", (req, res) => {
 router.get("/certificates", (req, res) => {
     res.render("certificates.ejs");
 });
-router.get("/courses", (req, res) => {
-    res.render("courses");
+router.get("/coursess", (req, res) => {
+    res.render("courses.ejs");
 });
 router.get("/test", (req, res) => {
     res.render("Create_Test.ejs");

@@ -1,841 +1,411 @@
 QuizData.questions.push(
-  // ============ LEVEL 1: STRING BASICS - DECLARATION AND INITIALIZATION (1-5) ============
+  // ========== STRING BASICS (1-10) ==========
   {
     id: 'c_str_01',
     topicId: 'c_strings',
-    question: 'Declare a character array to store the string "Hello"',
+    question: 'Write a program to declare and print a string "Hello".',
     mathSolution: 'Array needs 6 characters (5 letters + null terminator)',
-    codeSolution: 'char str[6] = "Hello";',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello";\n    printf("%s\\n", str);\n    return 0;\n}',
     hint: 'Don\'t forget space for null character \\0'
   },
   {
     id: 'c_str_02',
     topicId: 'c_strings',
-    question: 'Initialize a string pointer to point to "World"',
-    mathSolution: 'Pointer points to string literal in read-only memory',
-    codeSolution: 'char *str = "World";',
+    question: 'Write a program to print string "World" using pointer.',
+    mathSolution: 'Pointer points to string literal',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *str = "World";\n    printf("%s\\n", str);\n    return 0;\n}',
     hint: 'String literals are arrays of characters'
   },
   {
     id: 'c_str_03',
     topicId: 'c_strings',
-    question: 'Create an empty string of size 20',
-    mathSolution: 'Can store up to 19 characters + null terminator',
-    codeSolution: 'char str[20] = "";',
-    hint: 'Empty string still needs null terminator'
+    question: 'Write a program to find length of "Hello" using strlen.',
+    mathSolution: 'Length is 5 (excludes null terminator)',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    int len = strlen("Hello");\n    printf("Length = %d\\n", len);\n    return 0;\n}',
+    hint: 'strlen returns number of characters before \\0'
   },
   {
     id: 'c_str_04',
     topicId: 'c_strings',
-    question: 'Declare a string without specifying size',
-    mathSolution: 'Compiler automatically allocates exact size needed',
-    codeSolution: 'char str[] = "Programming";',
-    hint: 'Size is determined by the initializer'
+    question: 'Write a program to manually calculate length of "Hello".',
+    mathSolution: 'Iterate until null terminator found',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello";\n    int len = 0;\n    while(str[len] != \'\\0\') {\n        len++;\n    }\n    printf("Length = %d\\n", len);\n    return 0;\n}',
+    hint: 'Stop when character is \\0'
   },
   {
     id: 'c_str_05',
     topicId: 'c_strings',
-    question: 'Create an array of 5 strings',
-    mathSolution: '2D array with 5 rows, each can hold strings',
-    codeSolution: 'char names[5][20];',
-    hint: 'First dimension is number of strings, second is max length'
+    question: 'Write a program to copy string "Hello" to another using strcpy.',
+    mathSolution: 'Copies including null terminator',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char src[] = "Hello";\n    char dest[20];\n    strcpy(dest, src);\n    printf("Copied: %s\\n", dest);\n    return 0;\n}',
+    hint: 'Ensure destination has enough space'
   },
-
-  // ============ LEVEL 2: STRING INPUT/OUTPUT (6-10) ============
   {
     id: 'c_str_06',
     topicId: 'c_strings',
-    question: 'Read a string using scanf (without spaces)',
-    mathSolution: 'scanf stops at first whitespace',
-    codeSolution: 'scanf("%s", str);',
-    hint: 'No & operator needed for character arrays'
+    question: 'Write a program to manually copy string "Hello".',
+    mathSolution: 'Copy character by character',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char src[] = "Hello";\n    char dest[20];\n    int i = 0;\n    while((dest[i] = src[i]) != \'\\0\') {\n        i++;\n    }\n    printf("Copied: %s\\n", dest);\n    return 0;\n}',
+    hint: 'Copy character by character until null'
   },
   {
     id: 'c_str_07',
     topicId: 'c_strings',
-    question: 'Read a line of text including spaces',
-    mathSolution: 'fgets reads until newline or size-1 characters',
-    codeSolution: 'fgets(str, sizeof(str), stdin);',
-    hint: 'fgets includes newline if space allows'
+    question: 'Write a program to concatenate "Hello " and "World" using strcat.',
+    mathSolution: 'Appends second string to first',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[20] = "Hello ";\n    char str2[] = "World";\n    strcat(str1, str2);\n    printf("Concatenated: %s\\n", str1);\n    return 0;\n}',
+    hint: 'Destination must have enough space'
   },
   {
     id: 'c_str_08',
     topicId: 'c_strings',
-    question: 'Print a string using printf',
-    mathSolution: 'Prints characters until null terminator',
-    codeSolution: 'printf("%s", str);',
-    hint: '%s format specifier for strings'
+    question: 'Write a program to manually concatenate "Hello " and "World".',
+    mathSolution: 'Find end of first, then copy second',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[20] = "Hello ";\n    char str2[] = "World";\n    int i = 0, j = 0;\n    while(str1[i] != \'\\0\') i++;\n    while((str1[i++] = str2[j++]) != \'\\0\');\n    printf("Concatenated: %s\\n", str1);\n    return 0;\n}',
+    hint: 'First find null of dest, then copy src'
   },
   {
     id: 'c_str_09',
     topicId: 'c_strings',
-    question: 'Print first 5 characters of a string',
-    mathSolution: 'Use precision specifier in printf',
-    codeSolution: 'printf("%.5s", str);',
-    hint: '%.*s allows dynamic precision'
+    question: 'Write a program to compare "Hello" and "Hello" using strcmp.',
+    mathSolution: 'Returns 0 if equal',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[] = "Hello";\n    char str2[] = "Hello";\n    if(strcmp(str1, str2) == 0)\n        printf("Strings are equal\\n");\n    else\n        printf("Strings are not equal\\n");\n    return 0;\n}',
+    hint: 'strcmp returns 0 for equality'
   },
   {
     id: 'c_str_10',
     topicId: 'c_strings',
-    question: 'Read string with gets() (deprecated)',
-    mathSolution: 'Dangerous - no bounds checking',
-    codeSolution: 'gets(str); // Never use this',
-    hint: 'Use fgets() instead for safety'
+    question: 'Write a program to manually compare "Hello" and "Hello".',
+    mathSolution: 'Compare character by character',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[] = "Hello";\n    char str2[] = "Hello";\n    int i = 0, equal = 1;\n    while(str1[i] != \'\\0\' || str2[i] != \'\\0\') {\n        if(str1[i] != str2[i]) {\n            equal = 0;\n            break;\n        }\n        i++;\n    }\n    if(equal) printf("Strings are equal\\n");\n    else printf("Strings are not equal\\n");\n    return 0;\n}',
+    hint: 'Compare char by char until mismatch'
   },
 
-  // ============ LEVEL 3: STRING LENGTH (11-15) ============
+  // ========== STRING SEARCHING AND CONVERSION (11-20) ==========
   {
     id: 'c_str_11',
     topicId: 'c_strings',
-    question: 'Find length of string "Hello" using strlen',
-    mathSolution: 'Length is 5 (excludes null terminator)',
-    codeSolution: 'int len = strlen("Hello");',
-    hint: 'strlen returns number of characters before \\0'
+    question: 'Write a program to find first occurrence of \'l\' in "Hello".',
+    mathSolution: 'Search linearly for character',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello";\n    char *pos = strchr(str, \'l\');\n    if(pos != NULL)\n        printf("First \'l\' at index %ld\\n", pos - str);\n    else\n        printf("Not found\\n");\n    return 0;\n}',
+    hint: 'strchr returns pointer to first match'
   },
   {
     id: 'c_str_12',
     topicId: 'c_strings',
-    question: 'Calculate string length manually',
-    mathSolution: 'Iterate until null terminator found',
-    codeSolution: 'for(len = 0; str[len] != \'\\0\'; len++);',
-    hint: 'Stop when character is \\0'
+    question: 'Write a program to find last occurrence of \'l\' in "Hello".',
+    mathSolution: 'Search from end backwards',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello";\n    char *pos = strrchr(str, \'l\');\n    if(pos != NULL)\n        printf("Last \'l\' at index %ld\\n", pos - str);\n    else\n        printf("Not found\\n");\n    return 0;\n}',
+    hint: 'strrchr finds last occurrence'
   },
   {
     id: 'c_str_13',
     topicId: 'c_strings',
-    question: 'Find length of empty string',
-    mathSolution: 'Empty string length is 0',
-    codeSolution: 'int len = strlen("");',
-    hint: 'String with just null terminator'
+    question: 'Write a program to find substring "World" in "Hello World".',
+    mathSolution: 'Search for substring pattern',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello World";\n    char *pos = strstr(str, "World");\n    if(pos != NULL)\n        printf("Found at index %ld\\n", pos - str);\n    else\n        printf("Not found\\n");\n    return 0;\n}',
+    hint: 'strstr returns pointer to start of match'
   },
   {
     id: 'c_str_14',
     topicId: 'c_strings',
-    question: 'Compare string lengths of two strings',
-    mathSolution: 'Use strlen() and compare results',
-    codeSolution: 'if(strlen(s1) > strlen(s2))',
-    hint: 'Length comparison is numeric'
+    question: 'Write a program to convert "hello" to uppercase.',
+    mathSolution: 'Loop through and convert each char',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "hello";\n    for(int i = 0; str[i]; i++) {\n        str[i] = toupper(str[i]);\n    }\n    printf("Uppercase: %s\\n", str);\n    return 0;\n}',
+    hint: 'Use toupper() function from ctype.h'
   },
   {
     id: 'c_str_15',
     topicId: 'c_strings',
-    question: 'Get size of character array (not string length)',
-    mathSolution: 'sizeof gives total bytes allocated',
-    codeSolution: 'int size = sizeof(str);',
-    hint: 'Different from strlen for arrays'
+    question: 'Write a program to convert "HELLO" to lowercase.',
+    mathSolution: 'Loop through and convert each char',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "HELLO";\n    for(int i = 0; str[i]; i++) {\n        str[i] = tolower(str[i]);\n    }\n    printf("Lowercase: %s\\n", str);\n    return 0;\n}',
+    hint: 'Use tolower() function from ctype.h'
   },
-
-  // ============ LEVEL 4: STRING COPY (16-20) ============
   {
     id: 'c_str_16',
     topicId: 'c_strings',
-    question: 'Copy string using strcpy',
-    mathSolution: 'Copies including null terminator',
-    codeSolution: 'strcpy(dest, src);',
-    hint: 'Ensure destination has enough space'
+    question: 'Write a program to reverse string "Hello".',
+    mathSolution: 'Swap first with last, move inward',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello";\n    int len = strlen(str);\n    for(int i = 0, j = len-1; i < j; i++, j--) {\n        char temp = str[i];\n        str[i] = str[j];\n        str[j] = temp;\n    }\n    printf("Reversed: %s\\n", str);\n    return 0;\n}',
+    hint: 'Swap characters from ends'
   },
   {
     id: 'c_str_17',
     topicId: 'c_strings',
-    question: 'Copy first n characters using strncpy',
-    mathSolution: 'Copies n chars, may not add null terminator',
-    codeSolution: 'strncpy(dest, src, n);',
-    hint: 'Manually add null terminator if needed'
+    question: 'Write a program to count vowels in "Hello World".',
+    mathSolution: 'Count vowels using vowel check',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello World";\n    int count = 0;\n    for(int i = 0; str[i]; i++) {\n        char ch = tolower(str[i]);\n        if(ch == \'a\' || ch == \'e\' || ch == \'i\' || ch == \'o\' || ch == \'u\')\n            count++;\n    }\n    printf("Vowels = %d\\n", count);\n    return 0;\n}',
+    hint: 'Check each character for vowels'
   },
   {
     id: 'c_str_18',
     topicId: 'c_strings',
-    question: 'Copy string manually without library functions',
-    mathSolution: 'Loop until null terminator from source',
-    codeSolution: 'while((dest[i] = src[i]) != \'\\0\') i++;',
-    hint: 'Copy character by character'
+    question: 'Write a program to count consonants in "Hello World".',
+    mathSolution: 'Count alphabets that are not vowels',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello World";\n    int count = 0;\n    for(int i = 0; str[i]; i++) {\n        char ch = tolower(str[i]);\n        if(isalpha(ch)) {\n            if(!(ch == \'a\' || ch == \'e\' || ch == \'i\' || ch == \'o\' || ch == \'u\'))\n                count++;\n        }\n    }\n    printf("Consonants = %d\\n", count);\n    return 0;\n}',
+    hint: 'Alphabets that are not vowels'
   },
   {
     id: 'c_str_19',
     topicId: 'c_strings',
-    question: 'Create duplicate of string using strdup',
-    mathSolution: 'Allocates memory and copies string',
-    codeSolution: 'char *copy = strdup(original);',
-    hint: 'Must free() the allocated memory'
+    question: 'Write a program to check if "madam" is palindrome.',
+    mathSolution: 'Compare first with last, etc',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "madam";\n    int len = strlen(str);\n    int is_palindrome = 1;\n    for(int i = 0, j = len-1; i < j; i++, j--) {\n        if(str[i] != str[j]) {\n            is_palindrome = 0;\n            break;\n        }\n    }\n    if(is_palindrome) printf("%s is palindrome\\n", str);\n    else printf("%s is not palindrome\\n", str);\n    return 0;\n}',
+    hint: 'Compare characters from both ends'
   },
   {
     id: 'c_str_20',
     topicId: 'c_strings',
-    question: 'Safe string copy with bounds checking',
-    mathSolution: 'Use strlcpy or snprintf for safety',
-    codeSolution: 'snprintf(dest, dest_size, "%s", src);',
-    hint: 'snprintf guarantees null termination'
+    question: 'Write a program to split "Hello World from C" into words using strtok.',
+    mathSolution: 'Tokenize based on spaces',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello World from C";\n    char *token = strtok(str, " ");\n    while(token != NULL) {\n        printf("%s\\n", token);\n        token = strtok(NULL, " ");\n    }\n    return 0;\n}',
+    hint: 'First call with string, subsequent with NULL'
   },
 
-  // ============ LEVEL 5: STRING CONCATENATION (21-25) ============
+  // ========== STRING VALIDATION (21-30) ==========
   {
     id: 'c_str_21',
     topicId: 'c_strings',
-    question: 'Concatenate two strings using strcat',
-    mathSolution: 'Appends src to end of dest',
-    codeSolution: 'strcat(dest, src);',
-    hint: 'Dest must have enough space'
+    question: 'Write a program to check if string "Hello123" contains only alphabets.',
+    mathSolution: 'Use isalpha for each character',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello123";\n    int only_alpha = 1;\n    for(int i = 0; str[i]; i++) {\n        if(!isalpha(str[i])) {\n            only_alpha = 0;\n            break;\n        }\n    }\n    if(only_alpha) printf("Only alphabets\\n");\n    else printf("Contains non-alphabets\\n");\n    return 0;\n}',
+    hint: 'isalpha returns non-zero for letters'
   },
   {
     id: 'c_str_22',
     topicId: 'c_strings',
-    question: 'Concatenate with limit using strncat',
-    mathSolution: 'Appends up to n characters',
-    codeSolution: 'strncat(dest, src, n);',
-    hint: 'Always adds null terminator'
+    question: 'Write a program to check if string "12345" contains only digits.',
+    mathSolution: 'Use isdigit for each character',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "12345";\n    int only_digits = 1;\n    for(int i = 0; str[i]; i++) {\n        if(!isdigit(str[i])) {\n            only_digits = 0;\n            break;\n        }\n    }\n    if(only_digits) printf("Only digits\\n");\n    else printf("Contains non-digits\\n");\n    return 0;\n}',
+    hint: 'isdigit returns non-zero for 0-9'
   },
   {
     id: 'c_str_23',
     topicId: 'c_strings',
-    question: 'Manually concatenate two strings',
-    mathSolution: 'Find end of first, then copy second',
-    codeSolution: 'while(dest[i]) i++; while((dest[i++] = src[j++]));',
-    hint: 'First find null of dest, then copy src'
+    question: 'Write a program to check if string "HELLO" contains only uppercase letters.',
+    mathSolution: 'Check using isupper for each char',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "HELLO";\n    int all_upper = 1;\n    for(int i = 0; str[i]; i++) {\n        if(!isupper(str[i])) {\n            all_upper = 0;\n            break;\n        }\n    }\n    if(all_upper) printf("All uppercase\\n");\n    else printf("Not all uppercase\\n");\n    return 0;\n}',
+    hint: 'isupper returns non-zero for uppercase'
   },
   {
     id: 'c_str_24',
     topicId: 'c_strings',
-    question: 'Append character to string',
-    mathSolution: 'Find end, add char, add null terminator',
-    codeSolution: 'int len = strlen(str); str[len] = ch; str[len+1] = \'\\0\';',
-    hint: 'Need space for 2 more characters'
+    question: 'Write a program to check if string "hello" contains only lowercase letters.',
+    mathSolution: 'Check using islower for each char',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "hello";\n    int all_lower = 1;\n    for(int i = 0; str[i]; i++) {\n        if(!islower(str[i])) {\n            all_lower = 0;\n            break;\n        }\n    }\n    if(all_lower) printf("All lowercase\\n");\n    else printf("Not all lowercase\\n");\n    return 0;\n}',
+    hint: 'islower returns non-zero for lowercase'
   },
   {
     id: 'c_str_25',
     topicId: 'c_strings',
-    question: 'Combine multiple strings into one',
-    mathSolution: 'Calculate total length, allocate, concatenate',
-    codeSolution: 'strcpy(result, s1); strcat(result, s2); strcat(result, s3);',
-    hint: 'Ensure result buffer is large enough'
+    question: 'Write a program to replace all spaces with underscores in "Hello World".',
+    mathSolution: 'Replace character if space found',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello World";\n    for(int i = 0; str[i]; i++) {\n        if(str[i] == \' \') {\n            str[i] = \'_\';\n        }\n    }\n    printf("Modified: %s\\n", str);\n    return 0;\n}',
+    hint: 'Replace space with underscore'
   },
-
-  // ============ LEVEL 6: STRING COMPARISON (26-30) ============
   {
     id: 'c_str_26',
     topicId: 'c_strings',
-    question: 'Compare two strings using strcmp',
-    mathSolution: 'Returns 0 if equal, negative if s1<s2, positive if s1>s2',
-    codeSolution: 'int result = strcmp(s1, s2);',
-    hint: 'Compares lexicographically'
+    question: 'Write a program to remove all spaces from "Hello World".',
+    mathSolution: 'Shift characters left when space found',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello World";\n    int j = 0;\n    for(int i = 0; str[i]; i++) {\n        if(str[i] != \' \') {\n            str[j++] = str[i];\n        }\n    }\n    str[j] = \'\\0\';\n    printf("Without spaces: %s\\n", str);\n    return 0;\n}',
+    hint: 'Use two indices - read and write'
   },
   {
     id: 'c_str_27',
     topicId: 'c_strings',
-    question: 'Compare first n characters using strncmp',
-    mathSolution: 'Compare only first n chars',
-    codeSolution: 'int result = strncmp(s1, s2, n);',
-    hint: 'Useful for prefixes'
+    question: 'Write a program to count words in "Hello World from C".',
+    mathSolution: 'Count transitions from space to non-space',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello World from C";\n    int count = 0, in_word = 0;\n    for(int i = 0; str[i]; i++) {\n        if(!isspace(str[i])) {\n            if(!in_word) {\n                count++;\n                in_word = 1;\n            }\n        } else {\n            in_word = 0;\n        }\n    }\n    printf("Word count = %d\\n", count);\n    return 0;\n}',
+    hint: 'Count when entering a word'
   },
   {
     id: 'c_str_28',
     topicId: 'c_strings',
-    question: 'Case-insensitive string comparison',
-    mathSolution: 'Convert to same case before comparing',
-    codeSolution: 'int result = strcasecmp(s1, s2);',
-    hint: 'strcasecmp on Unix, stricmp on Windows'
+    question: 'Write a program to convert string "123" to integer using atoi.',
+    mathSolution: 'Convert numeric string to integer',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    char str[] = "123";\n    int num = atoi(str);\n    printf("Integer: %d\\n", num);\n    return 0;\n}',
+    hint: 'atoi returns 0 if conversion fails'
   },
   {
     id: 'c_str_29',
     topicId: 'c_strings',
-    question: 'Check if two strings are equal',
-    mathSolution: 'strcmp returns 0 for equality',
-    codeSolution: 'if(strcmp(s1, s2) == 0)',
-    hint: 'Not if(!strcmp(s1,s2)) which is common'
+    question: 'Write a program to convert integer 456 to string using sprintf.',
+    mathSolution: 'Format integer into string',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    int num = 456;\n    char str[20];\n    sprintf(str, "%d", num);\n    printf("String: %s\\n", str);\n    return 0;\n}',
+    hint: 'Ensure buffer is large enough'
   },
   {
     id: 'c_str_30',
     topicId: 'c_strings',
-    question: 'Manually compare two strings',
-    mathSolution: 'Compare char by char until mismatch or end',
-    codeSolution: 'while(*s1 && *s1 == *s2) { s1++; s2++; } return *s1 - *s2;',
-    hint: 'Return difference of first mismatching chars'
+    question: 'Write a program to convert float 3.14159 to string with 2 decimal places.',
+    mathSolution: 'Use sprintf with format specifier',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    float pi = 3.14159;\n    char str[20];\n    sprintf(str, "%.2f", pi);\n    printf("String: %s\\n", str);\n    return 0;\n}',
+    hint: '%.2f shows 2 decimal places'
   },
 
-  // ============ LEVEL 7: STRING SEARCHING (31-35) ============
+  // ========== STRING ADVANCED OPERATIONS (31-40) ==========
   {
     id: 'c_str_31',
     topicId: 'c_strings',
-    question: 'Find first occurrence of character in string',
-    mathSolution: 'Search linearly for character',
-    codeSolution: 'char *pos = strchr(str, ch);',
-    hint: 'Returns pointer to first match or NULL'
+    question: 'Write a program to check if string "Hello" starts with "He".',
+    mathSolution: 'Compare first n characters',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello";\n    if(strncmp(str, "He", 2) == 0)\n        printf("Starts with \\"He\\"\\n");\n    else\n        printf("Does not start with \\"He\\"\\n");\n    return 0;\n}',
+    hint: 'strncmp compares first n characters'
   },
   {
     id: 'c_str_32',
     topicId: 'c_strings',
-    question: 'Find last occurrence of character in string',
-    mathSolution: 'Search from end backwards',
-    codeSolution: 'char *pos = strrchr(str, ch);',
-    hint: 'r stands for reverse'
+    question: 'Write a program to check if string "Hello World" ends with "World".',
+    mathSolution: 'Compare from end backwards',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello World";\n    int len = strlen(str);\n    if(len >= 5 && strcmp(str + len - 5, "World") == 0)\n        printf("Ends with \\"World\\"\\n");\n    else\n        printf("Does not end with \\"World\\"\\n");\n    return 0;\n}',
+    hint: 'Move pointer to possible start of suffix'
   },
   {
     id: 'c_str_33',
     topicId: 'c_strings',
-    question: 'Find first occurrence of substring',
-    mathSolution: 'Search for substring pattern',
-    codeSolution: 'char *pos = strstr(str, substr);',
-    hint: 'Returns pointer to start of match'
+    question: 'Write a program to create array of strings and print them.',
+    mathSolution: 'Array of pointers to strings',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char *colors[] = {"Red", "Green", "Blue"};\n    for(int i = 0; i < 3; i++) {\n        printf("%s\\n", colors[i]);\n    }\n    return 0;\n}',
+    hint: 'Strings may be in read-only memory'
   },
   {
     id: 'c_str_34',
     topicId: 'c_strings',
-    question: 'Find any character from set in string',
-    mathSolution: 'Search for first char that matches any in set',
-    codeSolution: 'char *pos = strpbrk(str, charset);',
-    hint: 'Returns pointer to first matching char'
+    question: 'Write a program to find longest string in array {"Apple","Banana","Cherry"}.',
+    mathSolution: 'Iterate and track maximum length',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char *fruits[] = {"Apple", "Banana", "Cherry"};\n    int max_len = strlen(fruits[0]);\n    int max_index = 0;\n    for(int i = 1; i < 3; i++) {\n        int len = strlen(fruits[i]);\n        if(len > max_len) {\n            max_len = len;\n            max_index = i;\n        }\n    }\n    printf("Longest: %s (length %d)\\n", fruits[max_index], max_len);\n    return 0;\n}',
+    hint: 'Track both maximum length and index'
   },
-  {
+ {
     id: 'c_str_35',
     topicId: 'c_strings',
-    question: 'Find first non-matching character',
-    mathSolution: 'Skip characters that match the set',
-    codeSolution: 'size_t len = strspn(str, charset);',
-    hint: 'Returns number of matching chars at start'
-  },
-
-  // ============ LEVEL 8: STRING TOKENIZATION (36-40) ============
+    question: 'Write a program to find most frequent character in "Hello World".',
+    mathSolution: 'Count all characters, find max',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello World";\n    int freq[256] = {0};\n    int i, max = 0;\n    char result;\n    \n    for(i = 0; str[i]; i++) {\n        freq[str[i]]++;\n    }\n    \n    for(i = 0; i < 256; i++) {\n        if(freq[i] > max) {\n            max = freq[i];\n            result = i;\n        }\n    }\n    \n    printf("Character \'%c\' appears %d times (most frequent)\\n", result, max);\n    return 0;\n}',
+    hint: 'Use character as array index'
+},
   {
     id: 'c_str_36',
     topicId: 'c_strings',
-    question: 'Split string into tokens using strtok',
-    mathSolution: 'Tokenizes based on delimiters',
-    codeSolution: 'char *token = strtok(str, delimiters);',
-    hint: 'First call with string, subsequent with NULL'
+    question: 'Write a program to check if "listen" and "silent" are anagrams.',
+    mathSolution: 'Count characters and compare',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str1[] = "listen";\n    char str2[] = "silent";\n    int count[256] = {0};\n    int anagram = 1;\n    for(int i = 0; str1[i]; i++) count[(unsigned char)str1[i]]++;\n    for(int i = 0; str2[i]; i++) count[(unsigned char)str2[i]]--;\n    for(int i = 0; i < 256; i++) {\n        if(count[i] != 0) {\n            anagram = 0;\n            break;\n        }\n    }\n    if(anagram) printf("Anagrams\\n");\n    else printf("Not anagrams\\n");\n    return 0;\n}',
+    hint: 'Count characters, then subtract'
   },
   {
     id: 'c_str_37',
     topicId: 'c_strings',
-    question: 'Continue tokenizing with strtok',
-    mathSolution: 'Pass NULL for subsequent tokens',
-    codeSolution: 'token = strtok(NULL, delimiters);',
-    hint: 'Function maintains internal state'
+    question: 'Write a program to toggle case of "Hello World".',
+    mathSolution: 'Uppercase to lowercase and vice versa',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello World";\n    for(int i = 0; str[i]; i++) {\n        if(isupper(str[i]))\n            str[i] = tolower(str[i]);\n        else if(islower(str[i]))\n            str[i] = toupper(str[i]);\n    }\n    printf("Toggled: %s\\n", str);\n    return 0;\n}',
+    hint: 'Check case before converting'
   },
   {
     id: 'c_str_38',
     topicId: 'c_strings',
-    question: 'Thread-safe tokenization',
-    mathSolution: 'Use strtok_r or strtok_s for reentrancy',
-    codeSolution: 'char *saveptr; token = strtok_r(str, delim, &saveptr);',
-    hint: 'Pass save pointer for context'
+    question: 'Write a program to compress consecutive spaces in "Hello   World" to single space.',
+    mathSolution: 'Skip multiple spaces while copying',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "Hello   World";\n    char result[100];\n    int j = 0;\n    for(int i = 0; str[i]; i++) {\n        if(!isspace(str[i]) || (j > 0 && !isspace(result[j-1]))) {\n            result[j++] = str[i];\n        }\n    }\n    result[j] = \'\\0\';\n    printf("Compressed: %s\\n", result);\n    return 0;\n}',
+    hint: 'Keep track of last character written'
   },
   {
     id: 'c_str_39',
     topicId: 'c_strings',
-    question: 'Count tokens in a string',
-    mathSolution: 'Tokenize and count until NULL',
-    codeSolution: 'while(strtok(NULL, delim)) count++;',
-    hint: 'Make a copy before tokenizing'
+    question: 'Write a program to extract first word from "Hello World".',
+    mathSolution: 'Copy until space encountered',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello World";\n    char word[50];\n    int i = 0;\n    while(str[i] != \' \' && str[i] != \'\\0\') {\n        word[i] = str[i];\n        i++;\n    }\n    word[i] = \'\\0\';\n    printf("First word: %s\\n", word);\n    return 0;\n}',
+    hint: 'Copy until space or end of string'
   },
   {
     id: 'c_str_40',
     topicId: 'c_strings',
-    question: 'Extract first word from sentence',
-    mathSolution: 'Tokenize with space as delimiter',
-    codeSolution: 'char *word = strtok(sentence, " ");',
-    hint: 'Modifies original string'
+    question: 'Write a program to remove trailing newline from string "Hello\\n".',
+    mathSolution: 'Find newline and replace with null',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "Hello\\n";\n    str[strcspn(str, "\\n")] = \'\\0\';\n    printf("After removing newline: %s\\n", str);\n    return 0;\n}',
+    hint: 'strcspn finds first occurrence of character'
   },
 
-  // ============ LEVEL 9: CHARACTER CLASSIFICATION (41-45) ============
+  // ========== POINTERS WITH STRINGS (41-50) ==========
   {
     id: 'c_str_41',
     topicId: 'c_strings',
-    question: 'Check if character is uppercase',
-    mathSolution: 'Use isupper() from ctype.h',
-    codeSolution: 'if(isupper(ch))',
-    hint: 'Include <ctype.h>'
+    question: 'Write a program to convert string to uppercase using pointers.',
+    mathSolution: 'Use pointer to traverse string',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "hello";\n    char *ptr = str;\n    while(*ptr) {\n        *ptr = toupper(*ptr);\n        ptr++;\n    }\n    printf("Uppercase: %s\\n", str);\n    return 0;\n}',
+    hint: 'Dereference pointer to modify characters'
   },
   {
     id: 'c_str_42',
     topicId: 'c_strings',
-    question: 'Check if character is lowercase',
-    mathSolution: 'Use islower() function',
-    codeSolution: 'if(islower(ch))',
-    hint: 'Returns non-zero if true'
+    question: 'Write a program to find length of string using pointers.',
+    mathSolution: 'Increment pointer until null',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello";\n    char *ptr = str;\n    int len = 0;\n    while(*ptr) {\n        len++;\n        ptr++;\n    }\n    printf("Length = %d\\n", len);\n    return 0;\n}',
+    hint: 'Move pointer until null terminator'
   },
   {
     id: 'c_str_43',
     topicId: 'c_strings',
-    question: 'Check if character is digit',
-    mathSolution: 'Use isdigit() function',
-    codeSolution: 'if(isdigit(ch))',
-    hint: 'Digits are 0-9'
+    question: 'Write a program to copy string using pointers.',
+    mathSolution: 'Copy character by character using pointers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char src[] = "Hello";\n    char dest[20];\n    char *s = src;\n    char *d = dest;\n    while(*s) {\n        *d = *s;\n        s++;\n        d++;\n    }\n    *d = \'\\0\';\n    printf("Copied: %s\\n", dest);\n    return 0;\n}',
+    hint: 'Use two pointers - source and destination'
   },
   {
     id: 'c_str_44',
     topicId: 'c_strings',
-    question: 'Check if character is alphabetic',
-    mathSolution: 'Use isalpha() function',
-    codeSolution: 'if(isalpha(ch))',
-    hint: 'Both uppercase and lowercase'
+    question: 'Write a program to compare strings using pointers.',
+    mathSolution: 'Compare characters using pointers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[] = "Hello";\n    char str2[] = "Hello";\n    char *s1 = str1;\n    char *s2 = str2;\n    int equal = 1;\n    while(*s1 || *s2) {\n        if(*s1 != *s2) {\n            equal = 0;\n            break;\n        }\n        s1++;\n        s2++;\n    }\n    if(equal) printf("Strings are equal\\n");\n    else printf("Strings are not equal\\n");\n    return 0;\n}',
+    hint: 'Compare character by character using pointers'
   },
   {
     id: 'c_str_45',
     topicId: 'c_strings',
-    question: 'Check if character is alphanumeric',
-    mathSolution: 'Use isalnum() function',
-    codeSolution: 'if(isalnum(ch))',
-    hint: 'Letters or digits'
+    question: 'Write a program to concatenate strings using pointers.',
+    mathSolution: 'Find end of first, then copy second using pointers',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str1[20] = "Hello ";\n    char str2[] = "World";\n    char *ptr = str1;\n    char *src = str2;\n    while(*ptr) ptr++;\n    while((*ptr++ = *src++));\n    printf("Concatenated: %s\\n", str1);\n    return 0;\n}',
+    hint: 'Move pointer to end of first string'
   },
-
-  // ============ LEVEL 10: CHARACTER CONVERSION (46-50) ============
   {
     id: 'c_str_46',
     topicId: 'c_strings',
-    question: 'Convert character to uppercase',
-    mathSolution: 'Use toupper() function',
-    codeSolution: 'char upper = toupper(ch);',
-    hint: 'Returns uppercase version if lowercase'
+    question: 'Write a program to generate all substrings of "abc".',
+    mathSolution: 'Nested loops for start and end positions',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "abc";\n    int len = strlen(str);\n    printf("All substrings:\\n");\n    for(int i = 0; i < len; i++) {\n        for(int j = i; j < len; j++) {\n            for(int k = i; k <= j; k++) {\n                printf("%c", str[k]);\n            }\n            printf("\\n");\n        }\n    }\n    return 0;\n}',
+    hint: 'Number of substrings = n*(n+1)/2'
   },
   {
     id: 'c_str_47',
     topicId: 'c_strings',
-    question: 'Convert character to lowercase',
-    mathSolution: 'Use tolower() function',
-    codeSolution: 'char lower = tolower(ch);',
-    hint: 'Returns lowercase version if uppercase'
+    question: 'Write a program to convert string to uppercase using for loop.',
+    mathSolution: 'Iterate through string and convert each character',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "hello world";\n    for(int i = 0; str[i]; i++) {\n        str[i] = toupper(str[i]);\n    }\n    printf("Uppercase: %s\\n", str);\n    return 0;\n}',
+    hint: 'Use toupper() for each character'
   },
   {
     id: 'c_str_48',
     topicId: 'c_strings',
-    question: 'Convert entire string to uppercase',
-    mathSolution: 'Loop through and convert each char',
-    codeSolution: 'for(i = 0; str[i]; i++) str[i] = toupper(str[i]);',
-    hint: 'Modifies string in place'
+    question: 'Write a program to check if string "HELLO" contains only uppercase letters.',
+    mathSolution: 'Check using isupper for each character',
+    codeSolution: '#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char str[] = "HELLO";\n    int all_upper = 1;\n    for(int i = 0; str[i]; i++) {\n        if(!isupper(str[i])) {\n            all_upper = 0;\n            break;\n        }\n    }\n    if(all_upper) printf("All uppercase\\n");\n    else printf("Not all uppercase\\n");\n    return 0;\n}',
+    hint: 'isupper returns non-zero for uppercase characters'
   },
   {
     id: 'c_str_49',
     topicId: 'c_strings',
-    question: 'Convert entire string to lowercase',
-    mathSolution: 'Loop through and convert each char',
-    codeSolution: 'for(i = 0; str[i]; i++) str[i] = tolower(str[i]);',
-    hint: 'Non-alphabetic chars unchanged'
+    question: 'Write a program to replace all spaces with underscores in "Hello World from C".',
+    mathSolution: 'Replace each space character with underscore',
+    codeSolution: '#include <stdio.h>\n\nint main() {\n    char str[] = "Hello World from C";\n    for(int i = 0; str[i]; i++) {\n        if(str[i] == \' \') {\n            str[i] = \'_\';\n        }\n    }\n    printf("Modified: %s\\n", str);\n    return 0;\n}',
+    hint: 'Replace character if space found'
   },
   {
     id: 'c_str_50',
     topicId: 'c_strings',
-    question: 'Toggle case of string',
-    mathSolution: 'Uppercase to lowercase and vice versa',
-    codeSolution: 'if(isupper(str[i])) str[i] = tolower(str[i]); else if(islower(str[i])) str[i] = toupper(str[i]);',
-    hint: 'Check case before converting'
-  },
-
-  // ============ LEVEL 11: STRING TO NUMBER CONVERSION (51-55) ============
-  {
-    id: 'c_str_51',
-    topicId: 'c_strings',
-    question: 'Convert string to integer',
-    mathSolution: 'Use atoi() function',
-    codeSolution: 'int num = atoi("123");',
-    hint: 'Returns 0 if conversion fails'
-  },
-  {
-    id: 'c_str_52',
-    topicId: 'c_strings',
-    question: 'Convert string to long integer',
-    mathSolution: 'Use strtol() for better error handling',
-    codeSolution: 'long num = strtol(str, NULL, 10);',
-    hint: 'Base 10 for decimal'
-  },
-  {
-    id: 'c_str_53',
-    topicId: 'c_strings',
-    question: 'Convert string to double',
-    mathSolution: 'Use atof() or strtod()',
-    codeSolution: 'double val = atof("3.14");',
-    hint: 'Handles decimal points'
-  },
-  {
-    id: 'c_str_54',
-    topicId: 'c_strings',
-    question: 'Convert string to float with error checking',
-    mathSolution: 'Use strtof() and check end pointer',
-    codeSolution: 'char *end; float f = strtof(str, &end);',
-    hint: 'end points to first invalid character'
-  },
-  {
-    id: 'c_str_55',
-    topicId: 'c_strings',
-    question: 'Convert hexadecimal string to integer',
-    mathSolution: 'Use strtol with base 16',
-    codeSolution: 'long val = strtol("1A", NULL, 16);',
-    hint: 'Handles 0x prefix optionally'
-  },
-
-  // ============ LEVEL 12: NUMBER TO STRING CONVERSION (56-60) ============
-  {
-    id: 'c_str_56',
-    topicId: 'c_strings',
-    question: 'Convert integer to string',
-    mathSolution: 'Use sprintf() function',
-    codeSolution: 'sprintf(str, "%d", num);',
-    hint: 'Ensure buffer is large enough'
-  },
-  {
-    id: 'c_str_57',
-    topicId: 'c_strings',
-    question: 'Convert float to string with precision',
-    mathSolution: 'Use sprintf with format specifier',
-    codeSolution: 'sprintf(str, "%.2f", 3.14159);',
-    hint: '%.2f shows 2 decimal places'
-  },
-  {
-    id: 'c_str_58',
-    topicId: 'c_strings',
-    question: 'Safe integer to string conversion',
-    mathSolution: 'Use snprintf to prevent overflow',
-    codeSolution: 'snprintf(str, sizeof(str), "%d", num);',
-    hint: 'Writes at most size bytes'
-  },
-  {
-    id: 'c_str_59',
-    topicId: 'c_strings',
-    question: 'Convert integer to binary string',
-    mathSolution: 'Manually convert or use bit operations',
-    codeSolution: 'itoa(num, str, 2); // Not standard C',
-    hint: 'Non-standard, implement manually'
-  },
-  {
-    id: 'c_str_60',
-    topicId: 'c_strings',
-    question: 'Convert integer to hexadecimal string',
-    mathSolution: 'Use %x format specifier',
-    codeSolution: 'sprintf(str, "%x", num);',
-    hint: '%X for uppercase hex'
-  },
-
-  // ============ LEVEL 13: MEMORY OPERATIONS (61-65) ============
-  {
-    id: 'c_str_61',
-    topicId: 'c_strings',
-    question: 'Copy memory block (may contain nulls)',
-    mathSolution: 'memcpy copies n bytes regardless of content',
-    codeSolution: 'memcpy(dest, src, n);',
-    hint: 'For non-string binary data'
-  },
-  {
-    id: 'c_str_62',
-    topicId: 'c_strings',
-    question: 'Compare memory blocks',
-    mathSolution: 'memcmp compares byte by byte',
-    codeSolution: 'int result = memcmp(ptr1, ptr2, n);',
-    hint: 'Useful for binary data'
-  },
-  {
-    id: 'c_str_63',
-    topicId: 'c_strings',
-    question: 'Set memory block to specific value',
-    mathSolution: 'memset fills with byte value',
-    codeSolution: 'memset(str, 0, sizeof(str));',
-    hint: 'Commonly used to initialize'
-  },
-  {
-    id: 'c_str_64',
-    topicId: 'c_strings',
-    question: 'Move overlapping memory blocks',
-    mathSolution: 'memmove handles overlap safely',
-    codeSolution: 'memmove(dest, src, n);',
-    hint: 'Safer than memcpy for overlap'
-  },
-  {
-    id: 'c_str_65',
-    topicId: 'c_strings',
-    question: 'Search for byte in memory',
-    mathSolution: 'memchr finds first occurrence',
-    codeSolution: 'void *pos = memchr(ptr, byte, n);',
-    hint: 'Works with any data type'
-  },
-
-  // ============ LEVEL 14: STRING MANIPULATION - ADVANCED (66-70) ============
-  {
-    id: 'c_str_66',
-    topicId: 'c_strings',
-    question: 'Reverse a string in place',
-    mathSolution: 'Swap first with last, move inward',
-    codeSolution: 'for(i = 0, j = len-1; i < j; i++, j--) {\n    char temp = str[i];\n    str[i] = str[j];\n    str[j] = temp;\n}',
-    hint: 'Stop when indices cross'
-  },
-  {
-    id: 'c_str_67',
-    topicId: 'c_strings',
-    question: 'Remove trailing newline from fgets input',
-    mathSolution: 'Find newline and replace with null',
-    codeSolution: 'str[strcspn(str, "\\n")] = 0;',
-    hint: 'strcspn finds first occurrence'
-  },
-  {
-    id: 'c_str_68',
-    topicId: 'c_strings',
-    question: 'Trim leading whitespace',
-    mathSolution: 'Move pointer past whitespace',
-    codeSolution: 'while(isspace(*str)) str++;',
-    hint: 'Returns pointer inside original string'
-  },
-  {
-    id: 'c_str_69',
-    topicId: 'c_strings',
-    question: 'Trim trailing whitespace',
-    mathSolution: 'Find end and move back over whitespace',
-    codeSolution: 'int len = strlen(str);\nwhile(len > 0 && isspace(str[len-1]))\n    str[--len] = 0;',
-    hint: 'Modifies string by adding nulls'
-  },
-  {
-    id: 'c_str_70',
-    topicId: 'c_strings',
-    question: 'Remove all occurrences of character',
-    mathSolution: 'Shift characters left when match found',
-    codeSolution: 'int j = 0;\nfor(int i = 0; str[i]; i++)\n    if(str[i] != ch) str[j++] = str[i];\nstr[j] = 0;',
-    hint: 'Use two indices - read and write'
-  },
-
-  // ============ LEVEL 15: STRING VALIDATION (71-75) ============
-  {
-    id: 'c_str_71',
-    topicId: 'c_strings',
-    question: 'Check if string is palindrome',
-    mathSolution: 'Compare first with last, etc',
-    codeSolution: 'for(i = 0, j = len-1; i < j; i++, j--)\n    if(str[i] != str[j]) return 0;',
-    hint: 'Ignore case for flexibility'
-  },
-  {
-    id: 'c_str_72',
-    topicId: 'c_strings',
-    question: 'Check if string contains only digits',
-    mathSolution: 'Verify each character is digit',
-    codeSolution: 'for(i = 0; str[i]; i++)\n    if(!isdigit(str[i])) return 0;',
-    hint: 'Empty string? Handle accordingly'
-  },
-  {
-    id: 'c_str_73',
-    topicId: 'c_strings',
-    question: 'Validate email format (simple)',
-    mathSolution: 'Check for @ and . after @',
-    codeSolution: 'char *at = strchr(email, \'@\');\nchar *dot = strrchr(email, \'.\');',
-    hint: 'Very basic validation only'
-  },
-  {
-    id: 'c_str_74',
-    topicId: 'c_strings',
-    question: 'Check if string starts with prefix',
-    mathSolution: 'Compare first n characters',
-    codeSolution: 'if(strncmp(str, prefix, strlen(prefix)) == 0)',
-    hint: 'n is length of prefix'
-  },
-  {
-    id: 'c_str_75',
-    topicId: 'c_strings',
-    question: 'Check if string ends with suffix',
-    mathSolution: 'Compare from end backwards',
-    codeSolution: 'int len = strlen(str);\nint slen = strlen(suffix);\nif(len >= slen && !strcmp(str + len - slen, suffix))',
-    hint: 'Move pointer to possible start of suffix'
-  },
-
-  // ============ LEVEL 16: DYNAMIC STRING ALLOCATION (76-80) ============
-  {
-    id: 'c_str_76',
-    topicId: 'c_strings',
-    question: 'Allocate memory for string dynamically',
-    mathSolution: 'Use malloc to allocate space',
-    codeSolution: 'char *str = (char*)malloc(size);',
-    hint: 'Remember to free later'
-  },
-  {
-    id: 'c_str_77',
-    topicId: 'c_strings',
-    question: 'Create dynamic copy of string',
-    mathSolution: 'Allocate and copy',
-    codeSolution: 'char *copy = malloc(strlen(orig) + 1);\nstrcpy(copy, orig);',
-    hint: '+1 for null terminator'
-  },
-  {
-    id: 'c_str_78',
-    topicId: 'c_strings',
-    question: 'Resize dynamically allocated string',
-    mathSolution: 'Use realloc to change size',
-    codeSolution: 'str = (char*)realloc(str, new_size);',
-    hint: 'May move to new location'
-  },
-  {
-    id: 'c_str_79',
-    topicId: 'c_strings',
-    question: 'Free dynamically allocated string',
-    mathSolution: 'Use free() to deallocate',
-    codeSolution: 'free(str); str = NULL;',
-    hint: 'Avoid double free'
-  },
-  {
-    id: 'c_str_80',
-    topicId: 'c_strings',
-    question: 'Concatenate using dynamic allocation',
-    mathSolution: 'Allocate new space for result',
-    codeSolution: 'char *result = malloc(strlen(s1) + strlen(s2) + 1);\nsprintf(result, "%s%s", s1, s2);',
-    hint: 'sprintf does concatenation'
-  },
-
-  // ============ LEVEL 17: WIDE CHARACTERS AND UNICODE (81-85) ============
-  {
-    id: 'c_str_81',
-    topicId: 'c_strings',
-    question: 'Declare wide character string',
-    mathSolution: 'Use wchar_t type for Unicode',
-    codeSolution: 'wchar_t wstr[] = L"Hello";',
-    hint: 'L prefix for wide literals'
-  },
-  {
-    id: 'c_str_82',
-    topicId: 'c_strings',
-    question: 'Print wide character string',
-    mathSolution: 'Use wprintf or %ls with printf',
-    codeSolution: 'wprintf(L"%ls", wstr);',
-    hint: 'Set locale for proper output'
-  },
-  {
-    id: 'c_str_83',
-    topicId: 'c_strings',
-    question: 'Get length of wide string',
-    mathSolution: 'Use wcslen() function',
-    codeSolution: 'int len = wcslen(wstr);',
-    hint: 'Similar to strlen for wide chars'
-  },
-  {
-    id: 'c_str_84',
-    topicId: 'c_strings',
-    question: 'Convert multibyte to wide character',
-    mathSolution: 'Use mbstowcs() function',
-    codeSolution: 'mbstowcs(wstr, mbstr, size);',
-    hint: 'Depends on current locale'
-  },
-  {
-    id: 'c_str_85',
-    topicId: 'c_strings',
-    question: 'Convert wide to multibyte string',
-    mathSolution: 'Use wcstombs() function',
-    codeSolution: 'wcstombs(mbstr, wstr, size);',
-    hint: 'May lose information'
-  },
-
-  // ============ LEVEL 18: STRING ARRAYS (86-90) ============
-  {
-    id: 'c_str_86',
-    topicId: 'c_strings',
-    question: 'Create array of string literals',
-    mathSolution: 'Array of pointers to strings',
-    codeSolution: 'char *colors[] = {"Red", "Green", "Blue"};',
-    hint: 'Strings may be in read-only memory'
-  },
-  {
-    id: 'c_str_87',
-    topicId: 'c_strings',
-    question: 'Create mutable array of strings',
-    mathSolution: '2D character array',
-    codeSolution: 'char colors[3][10] = {"Red", "Green", "Blue"};',
-    hint: 'Each row can be modified'
-  },
-  {
-    id: 'c_str_88',
-    topicId: 'c_strings',
-    question: 'Sort array of strings alphabetically',
-    mathSolution: 'Use qsort with strcmp',
-    codeSolution: 'qsort(arr, n, sizeof(char*), strcmp);',
-    hint: 'Compare function receives pointers to pointers'
-  },
-  {
-    id: 'c_str_89',
-    topicId: 'c_strings',
-    question: 'Find longest string in array',
-    mathSolution: 'Iterate and track maximum length',
-    codeSolution: 'int max = strlen(arr[0]);\nfor(i = 1; i < n; i++)\n    if(strlen(arr[i]) > max) max = strlen(arr[i]);',
-    hint: 'Store index of longest too'
-  },
-  {
-    id: 'c_str_90',
-    topicId: 'c_strings',
-    question: 'Concatenate all strings in array',
-    mathSolution: 'Calculate total length, allocate, concatenate',
-    codeSolution: 'for(i = 0; i < n; i++)\n    strcat(result, arr[i]);',
-    hint: 'Ensure result is large enough'
-  },
-
-  // ============ LEVEL 19: COMMAND LINE ARGUMENTS (91-95) ============
-  {
-    id: 'c_str_91',
-    topicId: 'c_strings',
-    question: 'Access command line arguments',
-    mathSolution: 'argv[0] is program name, argv[1] first argument',
-    codeSolution: 'int main(int argc, char *argv[])',
-    hint: 'argc is argument count'
-  },
-  {
-    id: 'c_str_92',
-    topicId: 'c_strings',
-    question: 'Convert command line argument to number',
-    mathSolution: 'Use atoi or strtol on argv[1]',
-    codeSolution: 'int num = atoi(argv[1]);',
-    hint: 'Check argc first'
-  },
-  {
-    id: 'c_str_93',
-    topicId: 'c_strings',
-    question: 'Check if enough arguments provided',
-    mathSolution: 'Compare argc with required count',
-    codeSolution: 'if(argc < 3) {\n    printf("Usage: ...");\n    exit(1);\n}',
-    hint: 'Program name counts as argc=1'
-  },
-  {
-    id: 'c_str_94',
-    topicId: 'c_strings',
-    question: 'Process all command line arguments',
-    mathSolution: 'Loop through argv[1] to argv[argc-1]',
-    codeSolution: 'for(i = 1; i < argc; i++)\n    printf("%s\\n", argv[i]);',
-    hint: 'Start from index 1'
-  },
-  {
-    id: 'c_str_95',
-    topicId: 'c_strings',
-    question: 'Concatenate all command line arguments',
-    mathSolution: 'Calculate total length, allocate, concatenate',
-    codeSolution: 'for(i = 1; i < argc; i++) {\n    strcat(result, argv[i]);\n    if(i < argc-1) strcat(result, " ");\n}',
-    hint: 'Add spaces between arguments'
-  },
-
-  // ============ LEVEL 20: COMMON ALGORITHMS (96-100) ============
-  {
-    id: 'c_str_96',
-    topicId: 'c_strings',
-    question: 'Count word frequency in string',
-    mathSolution: 'Tokenize and count occurrences',
-    codeSolution: 'char *token = strtok(str, " ");\nwhile(token) {\n    if(strcmp(token, word) == 0) count++;\n    token = strtok(NULL, " ");\n}',
-    hint: 'Make a copy before tokenizing'
-  },
-  {
-    id: 'c_str_97',
-    topicId: 'c_strings',
-    question: 'Replace substring in string',
-    mathSolution: 'Find occurrence, then replace',
-    codeSolution: '// Complex - need to shift or allocate new\nchar *pos = strstr(str, old);\nif(pos) {\n    memmove(pos + strlen(new), pos + strlen(old), strlen(pos + strlen(old)) + 1);\n    memcpy(pos, new, strlen(new));\n}',
-    hint: 'Consider using dynamic allocation'
-  },
-  {
-    id: 'c_str_98',
-    topicId: 'c_strings',
-    question: 'Compress consecutive spaces to single space',
-    mathSolution: 'Skip multiple spaces while copying',
-    codeSolution: 'int j = 0;\nfor(int i = 0; str[i]; i++) {\n    if(!isspace(str[i]) || (j > 0 && !isspace(result[j-1])))\n        result[j++] = str[i];\n}\nresult[j] = 0;',
-    hint: 'Keep track of last character written'
-  },
-  {
-    id: 'c_str_99',
-    topicId: 'c_strings',
-    question: 'Find most frequent character',
-    mathSolution: 'Count all characters, find max',
-    codeSolution: 'int count[256] = {0};\nfor(i = 0; str[i]; i++)\n    count[(unsigned char)str[i]]++;',
-    hint: 'Array index by ASCII value'
-  },
-  {
-    id: 'c_str_100',
-    topicId: 'c_strings',
-    question: 'Generate all substrings of a string',
-    mathSolution: 'Nested loops for start and end positions',
-    codeSolution: 'for(int i = 0; i < len; i++)\n    for(int j = i; j < len; j++) {\n        for(int k = i; k <= j; k++) putchar(str[k]);\n        printf("\\n");\n    }',
+    question: 'Write a program to generate all substrings of "abc".',
+    mathSolution: 'Generate all possible combinations of characters',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char str[] = "abc";\n    int len = strlen(str);\n    printf("All substrings:\\n");\n    for(int i = 0; i < len; i++) {\n        for(int j = i; j < len; j++) {\n            for(int k = i; k <= j; k++) {\n                printf("%c", str[k]);\n            }\n            printf("\\n");\n        }\n    }\n    return 0;\n}',
     hint: 'Number of substrings = n*(n+1)/2'
   }
 );

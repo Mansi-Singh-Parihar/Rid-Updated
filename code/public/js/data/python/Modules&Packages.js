@@ -44,8 +44,8 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Create a custom module named mymath.py with add and subtract functions.',
   mathSolution: 'Create separate file with functions, then import.',
-  codeSolution: '# mymath.py file\n\ndef add(a, b):\n    return a + b\n\ndef subtract(a, b):\n    return a - b\n\n# main.py file\nimport mymath\nprint(mymath.add(10, 5))      # Output: 15\nprint(mymath.subtract(10, 5)) # Output: 5',
-  hint: 'Module file must be in same directory or Python path.'
+  codeSolution: '# Method 1: Simulate module using SimpleNamespace\nfrom types import SimpleNamespace\n\n# Create a module simulation\nmymath = SimpleNamespace()\n\n# Add functions to the module\ndef add(a, b):\n    return a + b\n\ndef subtract(a, b):\n    return a - b\n\nmymath.add = add\nmymath.subtract = subtract\n\n# Test the module\nprint("=== Custom Module Demo ===\\n")\nprint(f"add(10, 5) = {mymath.add(10, 5)}")      # Output: 15\nprint(f"subtract(10, 5) = {mymath.subtract(10, 5)}") # Output: 5\n\n# Method 2: Using a class as module alternative\nprint("\\n--- Alternative Method ---\\n")\n\nclass MyMath:\n    @staticmethod\n    def add(a, b):\n        return a + b\n    \n    @staticmethod\n    def subtract(a, b):\n        return a - b\n\nprint(f"add(20, 8) = {MyMath.add(20, 8)}")\nprint(f"subtract(20, 8) = {MyMath.subtract(20, 8)}")',
+  hint: 'Module file must be in same directory or Python path. In single-file environment, use SimpleNamespace or class to simulate module.'
 },
 {
   id: 'py_mod_7',
@@ -184,27 +184,27 @@ QuizData.questions.push(
   hint: 'lru_cache stores function results in a cache.'
 },
 {
-  id: 'py_mod_24',
+  id: 'py_mod_19',
   topicId: 'py_modules_packages',
-  question: 'Create a package with multiple modules.',
-  mathSolution: 'Create directory with __init__.py and module files.',
-  codeSolution: '# Directory structure:\n# mypackage/\n#   __init__.py\n#   math_ops.py\n#   string_ops.py\n\n# mypackage/math_ops.py\ndef add(a, b):\n    return a + b\n\n# mypackage/string_ops.py\ndef capitalize(text):\n    return text.upper()\n\n# main.py\nfrom mypackage import math_ops, string_ops\nprint(math_ops.add(5, 3))           # Output: 8\nprint(string_ops.capitalize("hello")) # Output: HELLO',
-  hint: '__init__.py can be empty or import modules.'
+  question: 'Use itertools.cycle to cycle through elements infinitely.',
+  mathSolution: 'cycle creates infinite iterator that repeats the iterable.',
+  codeSolution: 'from itertools import cycle\ncolors = cycle(["red", "green", "blue"])\nfor i, color in enumerate(colors):\n    print(color)\n    if i == 5:  # Stop after 6 items\n        break\n# Output: red, green, blue, red, green, blue',
+  hint: 'Be careful with infinite iterators - always have break condition.'
 },
 {
   id: 'py_mod_25',
   topicId: 'py_modules_packages',
   question: 'Use argparse module to parse command line arguments.',
   mathSolution: 'argparse creates command-line interfaces with argument parsing.',
-  codeSolution: 'import argparse\n\nparser = argparse.ArgumentParser(description="Process some integers.")\nparser.add_argument("numbers", metavar="N", type=int, nargs="+", help="an integer for the accumulator")\nparser.add_argument("--sum", dest="accumulate", action="store_const", const=sum, default=max, help="sum the integers (default: find the max)")\n\nargs = parser.parse_args()\nprint(args.accumulate(args.numbers))\n\n# Command line: python program.py 1 2 3 4 --sum\n# Output: 10',
-  hint: 'Run with --help to see automatically generated help.'
+  codeSolution: 'import argparse\n\nprint("=== Argparse Module Demonstration ===\\n")\n\n# Method 1: Simulating command line arguments\nprint("Method 1: Using parse_args() with simulated arguments\\n")\n\nparser = argparse.ArgumentParser(description="Process some integers.")\nparser.add_argument("numbers", metavar="N", type=int, nargs="+", help="an integer for the accumulator")\nparser.add_argument("--sum", dest="accumulate", action="store_const", const=sum, default=max, help="sum the integers (default: find the max)")\n\n# Simulate command line arguments\nprint("Simulating: python program.py 1 2 3 4 --sum")\nargs = parser.parse_args(["1", "2", "3", "4", "--sum"])\nprint(f"Result with --sum: {args.accumulate(args.numbers)}")\n\n# Simulate without --sum\nprint("\\nSimulating: python program.py 1 2 3 4")\nargs = parser.parse_args(["1", "2", "3", "4"])\nprint(f"Result without --sum (default max): {args.accumulate(args.numbers)}\")\n\n# Method 2: Show the help text\nprint("\\nMethod 2: Help text (use --help to see)\")\nprint(\"=\" * 50)\nparser.print_help()\n\nprint("\\n\\n=== How to use in real command line ===\")\nprint("python myprogram.py 1 2 3 4 --sum    # Output: 10\")\nprint(\"python myprogram.py 1 2 3 4         # Output: 4 (max)\")\nprint(\"python myprogram.py --help          # Shows help\")',
+  hint: 'Run with --help to see automatically generated help. This demo simulates command line arguments.'
 },
 {
   id: 'py_mod_26',
   topicId: 'py_modules_packages',
   question: 'Use logging module to log messages with different severity levels.',
   mathSolution: 'logging provides flexible logging system.',
-  codeSolution: 'import logging\n\nlogging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")\n\nlogging.debug("Debug message")    # Won\'t appear (level=INFO)\nlogging.info("Info message")       # Will appear\nlogging.warning("Warning message") # Will appear\nlogging.error("Error message")     # Will appear',
+  codeSolution: 'import logging\n\nprint("=== Logging Module Tutorial ===\\n")\n\n# Configure logging\nlogging.basicConfig(\n    level=logging.INFO,\n    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",\n    datefmt="%H:%M:%S"\n)\n\nprint("Log messages being generated:\\n\")\n\n# Log different levels\nlogging.info("Application started\")\nlogging.warning("Low disk space warning\")\nlogging.error("Failed to connect to database\")\n\nprint(\"\\nOnly INFO, WARNING, and ERROR appear because level=INFO\")\nprint(\"DEBUG messages are ignored at this level\\n\")\n\nprint("To see DEBUG messages, change level=logging.DEBUG\")\nprint("Example: logging.basicConfig(level=logging.DEBUG)\")\n\nprint("\\n--- Log Format Components ---\")\nprint("%(asctime)s - Timestamp\")\nprint(\"%(name)s - Logger name\")\nprint(\"%(levelname)s - Severity level\")\nprint(\"%(message)s - The log message\")',
   hint: 'Levels: DEBUG, INFO, WARNING, ERROR, CRITICAL.'
 },
 {
@@ -228,7 +228,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Use shutil module for high-level file operations.',
   mathSolution: 'shutil provides functions for copying, moving, and deleting files.',
-  codeSolution: 'import shutil\nimport os\n\n# Copy file\nshutil.copy("source.txt", "destination.txt")\n\n# Copy entire directory tree\nshutil.copytree("source_dir", "backup_dir")\n\n# Move file\nshutil.move("old.txt", "new.txt")\n\n# Remove directory tree\nshutil.rmtree("temp_dir")',
+  codeSolution: 'import shutil\n\nprint("=== Shutil Module Tutorial ===\\n")\n\nprint("What is shutil?\")\nprint("shutil (shell utility) provides high-level file operations.\\n\")\n\nprint("Common shutil functions and their usage:\\n\")\n\n# Function 1: copy\ndef demo_copy():\n    print("1. shutil.copy(source, destination)\")\n    print("   Purpose: Copy file from source to destination\")\n    print("   Example: shutil.copy(\\"report.pdf\\", \\"backup/report.pdf\\")\")\n    print("   Result: File copied successfully\\n\")\n    return "Copied"\n\n# Function 2: copytree\ndef demo_copytree():\n    print("2. shutil.copytree(src, dst)\")\n    print(\"   Purpose: Recursively copy entire directory tree\")\n    print(\"   Example: shutil.copytree(\\"project/\\", \\"backup/project/\\")\")\n    print(\"   Result: All files and subdirectories copied\\n\")\n    return "Copied tree"\n\n# Function 3: move\ndef demo_move():\n    print("3. shutil.move(src, dst)\")\n    print(\"   Purpose: Move or rename file/directory\")\n    print(\"   Example: shutil.move(\\"old_name.txt\\", \\"new_name.txt\\")\")\n    print(\"   Result: File moved/renamed\\n\")\n    return "Moved"\n\n# Function 4: rmtree\ndef demo_rmtree():\n    print("4. shutil.rmtree(path)\")\n    print(\"   Purpose: Delete entire directory tree\")\n    print(\"   Example: shutil.rmtree(\\"temp_folder\\")\")\n    print(\"   Result: Directory and all contents removed\\n\")\n    return "Removed"\n\n# Function 5: disk_usage\ndef demo_disk_usage():\n    print(\"5. shutil.disk_usage(path)\")\n    print(\"   Purpose: Get disk usage statistics\")\n    print(\"   Example: usage = shutil.disk_usage(\\"/\\")\")\n    print(\"   Returns: (total, used, free) bytes\\n\")\n    return "Usage info"\n\n# Run demonstrations\ndemo_copy()\ndemo_copytree()\ndemo_move()\ndemo_rmtree()\ndemo_disk_usage()\n\nprint("=== Real World Example ===\")\nprint(\"\"\"\nimport shutil\n\n# Backup a file\nshutil.copy2(\"important.txt\", \"important_backup.txt\")\n\n# Archive a project\nshutil.make_archive(\"project_backup\", \"zip\", \"project_folder\")\n\n# Find executable\npython_path = shutil.which(\"python\")\nprint(f\"Python location: {python_path}\")\n\"\"\")',
   hint: 'shutil operations are more powerful than basic os functions.'
 },
 {
@@ -312,51 +312,27 @@ QuizData.questions.push(
   hint: 'Use parameterized queries to prevent SQL injection.'
 },
 {
-  id: 'py_mod_40',
-  topicId: 'py_modules_packages',
-  question: 'Use hashlib module to create MD5 hash of a string.',
-  mathSolution: 'hashlib implements secure hash functions.',
-  codeSolution: 'import hashlib\n\ndef md5_hash(text):\n    return hashlib.md5(text.encode()).hexdigest()\n\npassword = "mysecretpassword"\nhash_value = md5_hash(password)\nprint(f"MD5: {hash_value}")',
-  hint: 'encode() converts string to bytes, hexdigest() returns hex string.'
-},
-{
-  id: 'py_mod_41',
-  topicId: 'py_modules_packages',
-  question: 'Use secrets module to generate cryptographically strong random numbers.',
-  mathSolution: 'secrets provides secure random functions for security-sensitive apps.',
-  codeSolution: 'import secrets\nimport string\n\n# Generate secure random token\ntoken = secrets.token_hex(16)\nprint(f"Token: {token}")\n\n# Generate random password\nalphabet = string.ascii_letters + string.digits\npassword = "".join(secrets.choice(alphabet) for _ in range(12))\nprint(f"Password: {password}")\n\n# Secure random integer\nsecure_num = secrets.randbelow(100)\nprint(f"Secure random (0-99): {secure_num}")',
-  hint: 'secrets should be used for passwords, tokens, etc., not random module.'
-},
-{
-  id: 'py_mod_42',
-  topicId: 'py_modules_packages',
-  question: 'Use statistics module for basic statistical operations.',
-  mathSolution: 'statistics provides functions for mean, median, mode, etc.',
-  codeSolution: 'import statistics\n\ndata = [2, 5, 3, 8, 9, 5, 2, 7]\n\nprint(f"Mean: {statistics.mean(data)}")      # Average\nprint(f"Median: {statistics.median(data)}")    # Middle value\nprint(f"Mode: {statistics.mode(data)}")        # Most common\nprint(f"Stdev: {statistics.stdev(data):.2f}") # Sample standard deviation',
-  hint: 'stdev() uses sample variance (n-1 denominator).'
-},
-{
   id: 'py_mod_43',
   topicId: 'py_modules_packages',
   question: 'Use zipfile module to create and extract ZIP archives.',
   mathSolution: 'zipfile provides tools for working with ZIP files.',
-  codeSolution: 'import zipfile\n\n# Create ZIP file\nwith zipfile.ZipFile("archive.zip", "w") as zipf:\n    zipf.write("file1.txt")\n    zipf.write("file2.txt")\n    zipf.write("file3.txt")\n\n# Extract ZIP file\nwith zipfile.ZipFile("archive.zip", "r") as zipf:\n    zipf.extractall("extracted_files")\n    # List contents\n    print(zipf.namelist())\n    # Get info about a file\n    info = zipf.getinfo("file1.txt")\n    print(f"Size: {info.file_size} bytes")',
-  hint: 'Use ZIP_DEFLATED for compression (requires zlib).'
+  codeSolution: 'import zipfile\nfrom io import BytesIO\n\nprint("=== Zipfile Module Demo ===\\n")\n\n# Create ZIP in memory\nzip_buffer = BytesIO()\nwith zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zipf:\n    zipf.writestr("file1.txt", "Content of file 1")\n    zipf.writestr("file2.txt", "Content of file 2")\n    zipf.writestr("file3.txt", "Content of file 3")\n\nprint("ZIP archive created in memory")\n\n# Read from the ZIP\nzip_buffer.seek(0)\nwith zipfile.ZipFile(zip_buffer, "r") as zipf:\n    print(f"Files in archive: {zipf.namelist()}")\n    for filename in zipf.namelist():\n        content = zipf.read(filename).decode()\n        print(f"  {filename}: {content}")\n        info = zipf.getinfo(filename)\n        print(f"    Size: {info.file_size} bytes")',
+  hint: 'Use ZIP_DEFLATED for compression (requires zlib). This example uses BytesIO to work without real files.'
 },
 {
   id: 'py_mod_44',
   topicId: 'py_modules_packages',
   question: 'Use tarfile module to work with tar archives.',
   mathSolution: 'tarfile handles .tar, .tar.gz, .tar.bz2 files.',
-  codeSolution: 'import tarfile\n\n# Create tar.gz archive\nwith tarfile.open("archive.tar.gz", "w:gz") as tar:\n    tar.add("file1.txt")\n    tar.add("file2.txt")\n    tar.add("directory", recursive=True)\n\n# Extract tar.gz\nwith tarfile.open("archive.tar.gz", "r:gz") as tar:\n    tar.extractall("extracted")\n    # List contents\n    for member in tar.getmembers():\n        print(f"{member.name} ({member.size} bytes)")',
-  hint: 'Mode: w:gz for gzip compression, w:bz2 for bzip2.'
+  codeSolution: 'import tarfile\nfrom io import BytesIO\n\nprint("=== Tarfile Module Demo ===\\n")\n\n# Create TAR in memory\ntar_buffer = BytesIO()\nwith tarfile.open(fileobj=tar_buffer, mode="w:gz") as tar:\n    # Add files from strings\n    import io\n    file1 = io.BytesIO(b"Content of file 1")\n    file1.name = "file1.txt"\n    tarinfo = tarfile.TarInfo(name="file1.txt")\n    tarinfo.size = len(file1.getvalue())\n    file1.seek(0)\n    tar.addfile(tarinfo, file1)\n    \n    file2 = io.BytesIO(b"Content of file 2")\n    file2.name = "file2.txt"\n    tarinfo = tarfile.TarInfo(name="file2.txt")\n    tarinfo.size = len(file2.getvalue())\n    file2.seek(0)\n    tar.addfile(tarinfo, file2)\n\nprint("TAR archive created in memory\\n")\n\n# Read from the TAR\ntar_buffer.seek(0)\nwith tarfile.open(fileobj=tar_buffer, mode="r:gz") as tar:\n    print("Files in archive:")\n    for member in tar.getmembers():\n        print(f"  {member.name} ({member.size} bytes)")',
+  hint: 'Mode: w:gz for gzip compression, w:bz2 for bzip2. This example uses BytesIO to work without real files.'
 },
 {
   id: 'py_mod_45',
   topicId: 'py_modules_packages',
   question: 'Use tempfile module to create temporary files and directories.',
   mathSolution: 'tempfile creates files that are automatically deleted.',
-  codeSolution: 'import tempfile\nimport os\n\n# Temporary file (deleted when closed)\nwith tempfile.TemporaryFile(mode="w+") as temp:\n    temp.write("Temporary data")\n    temp.seek(0)\n    print(temp.read())\n\n# Temporary named file (can be accessed by name)\nwith tempfile.NamedTemporaryFile(mode="w+", delete=True) as temp:\n    print(f"Temp file: {temp.name}")\n    temp.write("Data")\n    temp.flush()\n\n# Temporary directory\nwith tempfile.TemporaryDirectory() as temp_dir:\n    print(f"Temp dir: {temp_dir}")\n    file_path = os.path.join(temp_dir, "test.txt")\n    with open(file_path, "w") as f:\n        f.write("Hello")\n    # Directory and contents deleted when exiting context',
+  codeSolution: 'import tempfile\nimport os\n\nprint("=== Tempfile Module Demo ===\\n")\n\nprint("Demonstrating tempfile functionality:\\n")\n\n# Simulated TemporaryFile\nprint("1. TemporaryFile (in-memory simulation):\")\nwith tempfile.SpooledTemporaryFile(mode="w+", max_size=1000) as temp:\n    temp.write("Temporary data written to file\")\n    temp.seek(0)\n    print(f"   Read back: {temp.read()}\")\n\n# NamedTemporaryFile\nprint("\\n2. NamedTemporaryFile:\")\nwith tempfile.NamedTemporaryFile(mode="w+", delete=True) as temp:\n    print(f"   Temp file name: {temp.name}\")\n    temp.write("Sample data\")\n    temp.flush()\n    print(f"   Data written to named temporary file\")\n\n# TemporaryDirectory\nprint("\\n3. TemporaryDirectory:\")\nwith tempfile.TemporaryDirectory() as temp_dir:\n    print(f"   Temp directory: {temp_dir}\")\n    file_path = os.path.join(temp_dir, \"test.txt\")\n    print(f\"   Created: {file_path}\")\n    with open(file_path, \"w\") as f:\n        f.write(\"Hello World\")\n    print(\"   File created and written\")\n    print(\"   Directory and contents will be deleted automatically\")\n\nprint(\"\\n=== Benefits of tempfile ===\")\nprint(\"- Automatic cleanup\")\nprint(\"- Secure (random names)\")\nprint(\"- Cross-platform\")',
   hint: 'Files are automatically cleaned up when closed.'
 },
 {
@@ -364,7 +340,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Use contextlib module to create context managers.',
   mathSolution: 'contextlib provides utilities for working with context managers.',
-  codeSolution: 'from contextlib import contextmanager\n\n@contextmanager\ndef managed_resource(*args, **kwargs):\n    # Setup (enter)\n    resource = acquire_resource(*args, **kwargs)\n    try:\n        yield resource\n    finally:\n        # Cleanup (exit)\n        release_resource(resource)\n\n# Usage\nwith managed_resource() as res:\n    # Use resource\n    res.do_something()\n\n# Example: timing context manager\nimport time\n\n@contextmanager\ndef timer(name):\n    start = time.time()\n    try:\n        yield\n    finally:\n        elapsed = time.time() - start\n        print(f"{name} took {elapsed:.4f} seconds")\n\nwith timer("Sleep operation"):\n    time.sleep(1.5)',
+  codeSolution: 'from contextlib import contextmanager\nimport time\n\nprint("=== Contextlib Module Demo ===\\n")\n\n# Example 1: Timer context manager\n@contextmanager\ndef timer(name):\n    print(f"Starting {name}...\")\n    start = time.time()\n    try:\n        yield\n    finally:\n        elapsed = time.time() - start\n        print(f"{name} took {elapsed:.4f} seconds\\n\")\n\nprint("1. Timer context manager:\")\nwith timer("Sleep operation"):\n    time.sleep(1)\n\n# Example 2: Redirect output context manager\nfrom contextlib import redirect_stdout\nimport io\n\nprint("2. Redirect output context manager:\")\nf = io.StringIO()\nwith redirect_stdout(f):\n    print("This text goes to the buffer\")\n    print("Instead of the console\")\n\noutput = f.getvalue()\nprint(f"Captured output: {output.strip()}\")\n\n# Example 3: Suppress exceptions\nfrom contextlib import suppress\n\nprint("\\n3. Suppress exceptions:\")\nwith suppress(ValueError):\n    result = int("not a number\")\n    print(\"This line won\'t execute\")\nprint("Exception was suppressed\\n\")\n\n# Example 4: ExitStack for multiple resources\nfrom contextlib import ExitStack\n\nprint(\"4. ExitStack for multiple resources:\")\nwith ExitStack() as stack:\n    files = []\n    for i in range(3):\n        f = stack.enter_context(open(\"temp.txt\", \"w\"))\n        f.write(f\"File {i}\")\n        files.append(f)\n    print(f\"Managed {len(files)} files, all will auto-close\")',
   hint: 'contextmanager turns generator into context manager.'
 },
 {
@@ -372,7 +348,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Use importlib to import modules dynamically.',
   mathSolution: 'importlib allows programmatic module loading.',
-  codeSolution: 'import importlib\n\n# Import module by name string\nmodule_name = "math"\ntry:\n    math_module = importlib.import_module(module_name)\n    print(math_module.sqrt(25))  # Output: 5.0\nexcept ImportError:\n    print(f"Module {module_name} not found")\n\n# Reload a module (useful during development)\nimport mymodule\nimportlib.reload(mymodule)\n\n# Check if module exists\nimport importlib.util\nspec = importlib.util.find_spec("numpy")\nif spec is not None:\n    print("NumPy is installed")\nelse:\n    print("NumPy not installed")',
+  codeSolution: 'import importlib\nimport math\n\nprint("=== Importlib Module Demo ===\\n")\n\n# Example 1: Import module by name string\nprint("1. Dynamically importing module:\")\nmodule_name = "math"\nmath_module = importlib.import_module(module_name)\nprint(f"   Imported {module_name}.sqrt(25) = {math_module.sqrt(25)}\")\n\n# Example 2: Check if module exists before importing\nprint("\\n2. Check module existence:\")\nimport importlib.util\n\nmodules_to_check = ["math", "numpy", "json", "requests"]\nfor mod_name in modules_to_check:\n    spec = importlib.util.find_spec(mod_name)\n    if spec is not None:\n        print(f"   ✓ {mod_name} is installed\")\n    else:\n        print(f"   ✗ {mod_name} is not installed\")\n\n# Example 3: Reload a module\nprint("\\n3. Reloading a module:\")\nimport sys\n# Create a simple module dynamically\nsimple_module = importlib.util.module_from_spec(importlib.machinery.ModuleSpec("simple", None))\nsys.modules["simple"] = simple_module\nsimple_module.value = 10\nprint(f"   Initial value: {simple_module.value}\")\n\n# Reload would update the module (but we need a real module for reload)\nprint("   Note: reload() works on previously imported modules\")\n\nprint("\\n=== Common uses of importlib ===\")\nprint("- Plugin systems\")\nprint("- Dynamic configuration loading\")\nprint("- Module hot-reloading during development\")',
   hint: 'Useful for plugins and dynamic code loading.'
 },
 {
@@ -380,7 +356,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Use pkgutil to discover and work with packages.',
   mathSolution: 'pkgutil provides utilities for package discovery.',
-  codeSolution: 'import pkgutil\n\n# List all installed packages\nfor module_info in pkgutil.iter_modules():\n    print(f"{module_info.name} (package: {module_info.ispkg})")\n\n# Get data from package\nimport mypackage\ndata = pkgutil.get_data("mypackage", "data/config.json")\nif data:\n    print(data.decode())\n\n# Walk through packages\nfor finder, name, ispkg in pkgutil.walk_packages():\n    print(f"Found {name}: package if ispkg else module")',
+  codeSolution: 'import pkgutil\n\nprint("=== Pkgutil - Package Discovery Tool ===\\n\")\n\nprint("What pkgutil can do:\")\nprint("1. List all installed packages\\n\")\n\nprint("Available packages on this system:\")\nprint("-" * 30)\nfor i, (_, name, ispkg) in enumerate(pkgutil.iter_modules()[:8], 1):\n    print(f"{i}. {name}\")\n\nprint("\\n2. Check if a package exists\\n\")\n\ndef package_exists(name):\n    for _, pkg_name, _ in pkgutil.iter_modules():\n        if pkg_name == name:\n            return True\n    return False\n\ntest_packages = ["math", "random", "json", "requests\"]\nfor pkg in test_packages:\n    if package_exists(pkg):\n        print(f"✓ {pkg} is installed\")\n    else:\n        print(f"✗ {pkg} is not installed\")\n\nprint("\\nUse pkgutil when you need to:\")\nprint("- Discover available plugins\")\nprint("- Find all packages in a directory\")\nprint("- Work with dynamic imports\")',
   hint: 'get_data() works even for modules in ZIP files.'
 },
 {
@@ -388,7 +364,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Create an __init__.py file to define package exports.',
   mathSolution: '__init__.py controls what gets imported from package.',
-  codeSolution: '# mypackage/__init__.py\n"""My package documentation."""\n\n# Control what gets imported with *\n__all__ = ["public_function", "PublicClass"]\n\n# Import commonly used modules\nfrom . import module1\nfrom .module2 import public_function, PublicClass\n\n# Package-level initialization\nprint("Initializing mypackage")\n\n# Define package version\n__version__ = "1.0.0"\n\n# main.py\nimport mypackage\nprint(mypackage.__version__)  # Access package version\nprint(mypackage.public_function())  # Use imported function',
+  codeSolution: 'print("=== __init__.py Package Structure ===\\n\")\n\nprint("What is __init__.py?\")\nprint("It\'s a special file that makes a directory a Python package.\\n\")\n\nprint("Example package structure:\")\nprint(\"\"\"\nmypackage/\n    __init__.py\n    module1.py\n    module2.py\n\"\"\")\n\nprint("Example __init__.py content:\")\nprint(\"\"\"\n# mypackage/__init__.py\n\"\"\"My package documentation.\"\"\"\n\n# Control what gets imported with *\n__all__ = [\"public_function\", \"PublicClass\"]\n\n# Import commonly used modules\nfrom .module2 import public_function, PublicClass\n\n# Package-level initialization\nprint(\"Initializing mypackage\")\n\n# Define package version\n__version__ = \"1.0.0\"\n\"\"\")\n\nprint("\\nHow to use the package:\")\nprint(\"\"\"\n# main.py\nimport mypackage\n\nprint(mypackage.__version__)      # Access package version\nprint(mypackage.PublicClass())    # Use imported class\nmypackage.public_function()       # Use imported function\n\"\"\")\n\nprint("\\n=== Key Features of __init__.py ===\")\nprint(\"1. Makes directory a Python package\")\nprint(\"2. Controls package imports\")\nprint(\"3. Runs package initialization\")\nprint(\"4. Defines package __all__ variable\")\nprint(\"5. Can be empty (just to indicate package)\")',
   hint: '__init__.py runs when package is first imported.'
 },
 {
@@ -396,7 +372,7 @@ QuizData.questions.push(
   topicId: 'py_modules_packages',
   question: 'Use pip programmatically to install packages.',
   mathSolution: 'Use subprocess or pip module to install packages.',
-  codeSolution: 'import subprocess\nimport sys\n\ndef install_package(package_name):\n    """Install package using pip."""\n    try:\n        subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])\n        print(f"Successfully installed {package_name}")\n        return True\n    except subprocess.CalledProcessError as e:\n        print(f"Failed to install {package_name}: {e}")\n        return False\n\n# Alternative using pip module (if available)\ntry:\n    import pip\n    # For newer pip versions\n    from pip._internal import main as pip_main\n    pip_main(["install", "requests"])\nexcept ImportError:\n    print("Pip module not available")\n\n# Check if package is installed\nimport importlib.util\n\ndef is_package_installed(package_name):\n    spec = importlib.util.find_spec(package_name)\n    return spec is not None\n\n# Usage\nprint(f"Requests installed: {is_package_installed(requests)}")',
+  codeSolution: 'import subprocess\nimport sys\nimport importlib.util\n\nprint("=== Pip Programmatic Usage Demo ===\\n\")\n\nprint("1. Checking if packages are installed:\")\n\ndef is_package_installed(package_name):\n    \"\"\"Check if a package is installed\"\"\"\n    spec = importlib.util.find_spec(package_name)\n    return spec is not None\n\npackages_to_check = [\"requests\", \"numpy\", \"pandas\"]\nfor package in packages_to_check:\n    installed = is_package_installed(package)\n    status = "✓ installed" if installed else "✗ not installed"\n    print(f"   {package}: {status}\")\n\nprint("\\n2. Installing packages programmatically:\")\nprint(\"\"\"\n   # Using subprocess (recommended)\n   subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", \"package_name\"])\n   \n   # For multiple packages\n   subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", \"pkg1\", \"pkg2\"])\n   \n   # Upgrade a package\n   subprocess.check_call([sys.executable, \"-m\", \"pip\", \"install\", \"--upgrade\", \"package_name\"])\n\"\"\")\n\nprint("3. Uninstalling packages:\")\nprint(\"\"\"\n   subprocess.check_call([sys.executable, \"-m\", \"pip\", \"uninstall\", \"-y\", \"package_name\"])\n\"\"\")\n\nprint("4. Listing installed packages:\")\nprint(\"\"\"\n   result = subprocess.run([sys.executable, \"-m\", \"pip\", \"list\"], \n                           capture_output=True, text=True)\n   print(result.stdout)\n\"\"\")\n\nprint("\\n=== Important Notes ===\")\nprint("- Use sys.executable for current Python interpreter\")\nprint("- subprocess is more reliable than pip module directly\")\nprint("- -y flag for automatic yes in uninstall\")\nprint("- May require admin/sudo permissions for system installs\")',
   hint: 'Using subprocess is more reliable than pip module directly.'
 }
 );

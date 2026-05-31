@@ -1,841 +1,412 @@
 QuizData.questions.push(
-  // ============ LEVEL 1: UNION BASICS - DECLARATION AND DEFINITION (1-5) ============
+  // ========== UNION BASICS (1-10) ==========
   {
     id: 'c_union_01',
     topicId: 'c_unions',
-    question: 'Declare a simple union with int and float members',
-    mathSolution: 'All members share same memory location',
-    codeSolution: 'union Data { int i; float f; };',
-    hint: 'Size equals largest member'
+    question: 'Write a program to declare a union with int and float members and show the size.',
+    mathSolution: 'All members share same memory location, size equals largest member',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d;\n    printf("Size of union: %zu bytes\\n", sizeof(d));\n    printf("Size of int: %zu, Size of float: %zu\\n", sizeof(int), sizeof(float));\n    return 0;\n}',
+    hint: 'Union size equals largest member size'
   },
   {
     id: 'c_union_02',
     topicId: 'c_unions',
-    question: 'Create a union variable',
-    mathSolution: 'Memory allocated for union',
-    codeSolution: 'union Data d;',
-    hint: 'Use union keyword'
+    question: 'Write a program to create union variable and access integer member.',
+    mathSolution: 'Store integer in union and display',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d;\n    d.i = 42;\n    printf("Integer value: %d\\n", d.i);\n    return 0;\n}',
+    hint: 'Use dot operator to access members'
   },
   {
     id: 'c_union_03',
     topicId: 'c_unions',
-    question: 'Initialize union with first member',
-    mathSolution: 'Only first member can be initialized',
-    codeSolution: 'union Data d = {10};',
-    hint: 'Initializes int member i'
+    question: 'Write a program to store and retrieve float value from union.',
+    mathSolution: 'Store float and display',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d;\n    d.f = 3.14159f;\n    printf("Float value: %.5f\\n", d.f);\n    return 0;\n}',
+    hint: 'Union can store different types at different times'
   },
   {
     id: 'c_union_04',
     topicId: 'c_unions',
-    question: 'Initialize union using designated initializer',
-    mathSolution: 'Specify which member to initialize',
-    codeSolution: 'union Data d = {.f = 3.14};',
-    hint: 'C99 designated initializers'
+    question: 'Write a program to show that union shares memory between members.',
+    mathSolution: 'Store int, then float overwrites',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d;\n    d.i = 42;\n    printf("Integer: %d\\n", d.i);\n    d.f = 3.14f;\n    printf("Float: %.2f\\n", d.f);\n    printf("Integer after float overwrite: %d (garbage)\\n", d.i);\n    return 0;\n}',
+    hint: 'Writing one member affects the other'
   },
   {
     id: 'c_union_05',
     topicId: 'c_unions',
-    question: 'Create typedef for union',
-    mathSolution: 'Alias for easier use',
-    codeSolution: 'typedef union { int i; float f; } Data;',
-    hint: 'Now use Data directly'
+    question: 'Write a program to compare struct and union memory usage.',
+    mathSolution: 'Struct uses sum of members, union uses max',
+    codeSolution: '#include <stdio.h>\n\nstruct StructData {\n    int i;\n    float f;\n    char c;\n};\n\nunion UnionData {\n    int i;\n    float f;\n    char c;\n};\n\nint main() {\n    printf("Size of struct: %zu bytes\\n", sizeof(struct StructData));\n    printf("Size of union: %zu bytes\\n", sizeof(union UnionData));\n    return 0;\n}',
+    hint: 'Union saves memory compared to struct'
   },
-
-  // ============ LEVEL 2: MEMBER ACCESS (6-10) ============
   {
     id: 'c_union_06',
     topicId: 'c_unions',
-    question: 'Access union member using dot operator',
-    mathSolution: 'Store value in union',
-    codeSolution: 'd.i = 42;',
-    hint: 'Only one member active at a time'
+    question: 'Write a program to create typedef for union.',
+    mathSolution: 'Use typedef for easier syntax',
+    codeSolution: '#include <stdio.h>\n\ntypedef union {\n    int i;\n    float f;\n} Data;\n\nint main() {\n    Data d;\n    d.i = 100;\n    printf("Value: %d\\n", d.i);\n    return 0;\n}',
+    hint: 'typedef creates alias for union'
   },
   {
     id: 'c_union_07',
     topicId: 'c_unions',
-    question: 'Read value from union member',
-    mathSolution: 'Retrieve stored value',
-    codeSolution: 'printf("%d", d.i);',
-    hint: 'May get garbage if wrong member used'
+    question: 'Write a program to initialize union with first member.',
+    mathSolution: 'Only first member can be initialized directly',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d = {42};\n    printf("Initialized integer: %d\\n", d.i);\n    return 0;\n}',
+    hint: 'Initialization sets first member'
   },
   {
     id: 'c_union_08',
     topicId: 'c_unions',
-    question: 'Store different types in same union',
-    mathSolution: 'Overwrite previous value',
-    codeSolution: 'd.i = 10; d.f = 3.14; // Now d.i is corrupted',
-    hint: 'Last write determines active member'
+    question: 'Write a program to initialize union using designated initializer (C99).',
+    mathSolution: 'Specify which member to initialize',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d = {.f = 3.14159f};\n    printf("Initialized float: %.5f\\n", d.f);\n    return 0;\n}',
+    hint: 'Designated initializers specify member name'
   },
   {
     id: 'c_union_09',
     topicId: 'c_unions',
-    question: 'Check size of union',
-    mathSolution: 'Size is max of member sizes',
-    codeSolution: 'printf("%zu", sizeof(union Data));',
-    hint: 'May include padding for alignment'
+    question: 'Write a program to create union with array and structure members.',
+    mathSolution: 'Union can contain complex types',
+    codeSolution: '#include <stdio.h>\n\nunion Mixed {\n    int arr[4];\n    struct {\n        int a;\n        int b;\n        int c;\n        int d;\n    };\n};\n\nint main() {\n    union Mixed u;\n    u.arr[0] = 10;\n    u.arr[1] = 20;\n    u.arr[2] = 30;\n    u.arr[3] = 40;\n    printf("a=%d, b=%d, c=%d, d=%d\\n", u.a, u.b, u.c, u.d);\n    return 0;\n}',
+    hint: 'Array and structure share same memory'
   },
   {
     id: 'c_union_10',
     topicId: 'c_unions',
-    question: 'Compare union with structure of same members',
-    mathSolution: 'Union saves memory, structure separates',
-    codeSolution: 'struct { int i; float f; } s; // Size = 8+ bytes\nunion { int i; float f; } u; // Size = 4 bytes',
-    hint: 'Union shares memory'
+    question: 'Write a program to embed union inside structure.',
+    mathSolution: 'Structure containing union for variant data',
+    codeSolution: '#include <stdio.h>\n\nstruct Variant {\n    int type;\n    union {\n        int i;\n        float f;\n        char c;\n    } data;\n};\n\nint main() {\n    struct Variant v;\n    v.type = 1;\n    v.data.i = 42;\n    printf("Type: %d, Value: %d\\n", v.type, v.data.i);\n    return 0;\n}',
+    hint: 'Structure member dot then union dot'
   },
 
-  // ============ LEVEL 3: UNIONS WITH DIFFERENT TYPES (11-15) ============
+  // ========== TYPE PUNNING AND BYTE ACCESS (11-20) ==========
   {
     id: 'c_union_11',
     topicId: 'c_unions',
-    question: 'Create union with int, float, char array',
-    mathSolution: 'Mix different data types',
-    codeSolution: 'union Mixed { int i; float f; char str[20]; };',
-    hint: 'Largest member determines size'
+    question: 'Write a program to check system endianness using union.',
+    mathSolution: 'Store int, check first byte',
+    codeSolution: '#include <stdio.h>\n\nunion Endian {\n    int i;\n    char c[4];\n};\n\nint main() {\n    union Endian u;\n    u.i = 1;\n    if(u.c[0] == 1)\n        printf("Little Endian\\n");\n    else\n        printf("Big Endian\\n");\n    return 0;\n}',
+    hint: 'First byte (LSB) tells endianness'
   },
   {
     id: 'c_union_12',
     topicId: 'c_unions',
-    question: 'Store string in union',
-    mathSolution: 'Copy string into union',
-    codeSolution: 'strcpy(u.str, "Hello");',
-    hint: 'Ensure array is large enough'
+    question: 'Write a program to split 32-bit integer into bytes using union.',
+    mathSolution: 'Union with int and byte array',
+    codeSolution: '#include <stdio.h>\n\nunion IntBytes {\n    unsigned int i;\n    unsigned char bytes[4];\n};\n\nint main() {\n    union IntBytes u;\n    u.i = 0x12345678;\n    printf("Integer: 0x%x\\n", u.i);\n    printf("Bytes: %02x %02x %02x %02x\\n", u.bytes[0], u.bytes[1], u.bytes[2], u.bytes[3]);\n    return 0;\n}',
+    hint: 'Bytes appear in memory order'
   },
   {
     id: 'c_union_13',
     topicId: 'c_unions',
-    question: 'Union with pointer members',
-    mathSolution: 'Store different pointer types',
-    codeSolution: 'union Pointers { int *ip; float *fp; void *vp; };',
-    hint: 'All pointers same size typically'
+    question: 'Write a program to get IEEE representation of float using union.',
+    mathSolution: 'Store float, read as int',
+    codeSolution: '#include <stdio.h>\n\nunion FloatBits {\n    float f;\n    unsigned int i;\n};\n\nint main() {\n    union FloatBits u;\n    u.f = 3.14159f;\n    printf("Float: %f\\n", u.f);\n    printf("Hex representation: 0x%08x\\n", u.i);\n    return 0;\n}',
+    hint: 'Same bits interpreted differently'
   },
   {
     id: 'c_union_14',
     topicId: 'c_unions',
-    question: 'Union with function pointers',
-    mathSolution: 'Store different function types',
-    codeSolution: 'union FuncPtr { int (*intFunc)(int); void (*voidFunc)(void); };',
-    hint: 'Careful with type safety'
+    question: 'Write a program to store and retrieve string in union.',
+    mathSolution: 'Union with character array',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nunion StringUnion {\n    char str[20];\n    int i;\n};\n\nint main() {\n    union StringUnion u;\n    strcpy(u.str, "Hello\");\n    printf("String: %s\\n\", u.str);\n    return 0;\n}',
+    hint: 'Character array holds string'
   },
   {
     id: 'c_union_15',
     topicId: 'c_unions',
-    question: 'Union with array and structure',
-    mathSolution: 'Access same memory differently',
-    codeSolution: 'union { int arr[4]; struct { int a; int b; int c; int d; }; } u;',
-    hint: 'Array and structure share memory'
+    question: 'Write a program to create union with pointer members.',
+    mathSolution: 'Store different pointer types',
+    codeSolution: '#include <stdio.h>\n\nunion Pointers {\n    int *ip;\n    float *fp;\n    char *cp;\n};\n\nint main() {\n    union Pointers p;\n    int x = 10;\n    p.ip = &x;\n    printf("Value via int pointer: %d\\n", *p.ip);\n    return 0;\n}',
+    hint: 'Pointers stored in union share memory'
   },
-
-  // ============ LEVEL 4: TYPE PUNNING (16-20) ============
   {
     id: 'c_union_16',
     topicId: 'c_unions',
-    question: 'Use union for type punning (int to float)',
-    mathSolution: 'Same memory interpreted differently',
-    codeSolution: 'union { int i; float f; } u; u.i = 0x40490fdb; printf("%f", u.f); // ~3.14159',
-    hint: 'Undefined behavior in strict C'
+    question: 'Write a program to demonstrate union for RGB color manipulation.',
+    mathSolution: 'Access as int or separate channels',
+    codeSolution: '#include <stdio.h>\n\nunion Color {\n    unsigned int rgba;\n    struct {\n        unsigned char r;\n        unsigned char g;\n        unsigned char b;\n        unsigned char a;\n    } channels;\n};\n\nint main() {\n    union Color c;\n    c.channels.r = 255;\n    c.channels.g = 128;\n    c.channels.b = 64;\n    c.channels.a = 255;\n    printf("RGBA: #%02x%02x%02x%02x\\n", c.channels.r, c.channels.g, c.channels.b, c.channels.a);\n    return 0;\n}',
+    hint: 'Union allows different views of same data'
   },
   {
     id: 'c_union_17',
     topicId: 'c_unions',
-    question: 'Get IEEE representation of float',
-    mathSolution: 'Store float, read as int',
-    codeSolution: 'u.f = 3.14; printf("0x%x", u.i);',
-    hint: 'Shows hex representation'
+    question: 'Write a program to handle different sensor readings using union.',
+    mathSolution: 'Variant union for different sensor types',
+    codeSolution: '#include <stdio.h>\n\nstruct SensorReading {\n    int sensor_type;\n    union {\n        int int_value;\n        float float_value;\n    } data;\n};\n\nint main() {\n    struct SensorReading s1 = {1, .data.int_value = 42};\n    struct SensorReading s2 = {2, .data.float_value = 3.14f};\n    printf("Sensor1 (type %d): %d\\n", s1.sensor_type, s1.data.int_value);\n    printf("Sensor2 (type %d): %.2f\\n", s2.sensor_type, s2.data.float_value);\n    return 0;\n}',
+    hint: 'Sensor type determines which union member to use'
   },
   {
     id: 'c_union_18',
     topicId: 'c_unions',
-    question: 'Split 32-bit int into bytes',
-    mathSolution: 'Union with int and byte array',
-    codeSolution: 'union { int i; unsigned char bytes[4]; } u; u.i = 0x12345678;',
-    hint: 'Endianness affects byte order'
+    question: 'Write a program to create array of unions.',
+    mathSolution: 'Each array element is a union',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data arr[3];\n    arr[0].i = 10;\n    arr[1].f = 20.5f;\n    arr[2].i = 30;\n    printf("arr[0]: %d\\n", arr[0].i);\n    printf("arr[1]: %.1f\\n", arr[1].f);\n    printf("arr[2]: %d\\n", arr[2].i);\n    return 0;\n}',
+    hint: 'Array of unions, each holds its own value'
   },
   {
     id: 'c_union_19',
     topicId: 'c_unions',
-    question: 'Check system endianness using union',
-    mathSolution: 'Write int, read first byte',
-    codeSolution: 'union { int i; char c; } u; u.i = 1; if(u.c == 1) printf("Little endian");',
-    hint: 'LSB first on little endian'
+    question: 'Write a program to use pointer to union.',
+    mathSolution: 'Pointer can access union members',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data d;\n    union Data *ptr = &d;\n    ptr->i = 100;\n    printf("Value via pointer: %d\\n", ptr->i);\n    return 0;\n}',
+    hint: 'Arrow operator for pointer access'
   },
   {
     id: 'c_union_20',
     topicId: 'c_unions',
-    question: 'Access individual bits of float',
-    mathSolution: 'Union with float and bit fields',
-    codeSolution: 'union { float f; struct { unsigned int mant:23; unsigned int exp:8; unsigned int sign:1; } bits; } u;',
-    hint: 'IEEE 754 format'
+    question: 'Write a program to dynamically allocate union.',
+    mathSolution: 'Use malloc to allocate union on heap',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data *ptr = (union Data*)malloc(sizeof(union Data));\n    if(ptr != NULL) {\n        ptr->i = 42;\n        printf("Dynamically allocated union value: %d\\n", ptr->i);\n        free(ptr);\n    }\n    return 0;\n}',
+    hint: 'Always check malloc return value'
   },
 
-  // ============ LEVEL 5: UNIONS INSIDE STRUCTURES (21-25) ============
+  // ========== TAGGED UNIONS (21-30) ==========
   {
     id: 'c_union_21',
     topicId: 'c_unions',
-    question: 'Embed union inside structure',
-    mathSolution: 'Structure with type and union',
-    codeSolution: 'struct Variant { int type; union { int i; float f; char c; } data; };',
-    hint: 'type tracks active union member'
+    question: 'Write a program to create tagged union (discriminated union).',
+    mathSolution: 'Enum tag tracks active union member',
+    codeSolution: '#include <stdio.h>\n\nenum Type { INT_TYPE, FLOAT_TYPE };\n\nstruct TaggedUnion {\n    enum Type tag;\n    union {\n        int int_val;\n        float float_val;\n    } data;\n};\n\nint main() {\n    struct TaggedUnion v1 = {INT_TYPE, .data.int_val = 42};\n    struct TaggedUnion v2 = {FLOAT_TYPE, .data.float_val = 3.14f};\n    printf("v1: type=int, value=%d\\n", v1.data.int_val);\n    printf("v2: type=float, value=%.2f\\n", v2.data.float_val);\n    return 0;\n}',
+    hint: 'Tag tells which union member is active'
   },
   {
     id: 'c_union_22',
     topicId: 'c_unions',
-    question: 'Initialize structure containing union',
-    mathSolution: 'Initialize type and union',
-    codeSolution: 'struct Variant v = { .type = 1, .data.i = 42 };',
-    hint: 'Designated initializers'
+    question: 'Write a program to process tagged union safely.',
+    mathSolution: 'Switch on tag before accessing',
+    codeSolution: '#include <stdio.h>\n\nenum Type { INT_TYPE, FLOAT_TYPE };\n\nstruct TaggedUnion {\n    enum Type tag;\n    union {\n        int int_val;\n        float float_val;\n    } data;\n};\n\nvoid printValue(struct TaggedUnion v) {\n    switch(v.tag) {\n        case INT_TYPE:\n            printf("Integer: %d\\n", v.data.int_val);\n            break;\n        case FLOAT_TYPE:\n            printf("Float: %.2f\\n", v.data.float_val);\n            break;\n    }\n}\n\nint main() {\n    struct TaggedUnion v = {INT_TYPE, .data.int_val = 100};\n    printValue(v);\n    return 0;\n}',
+    hint: 'Always check tag before using union member'
   },
   {
     id: 'c_union_23',
     topicId: 'c_unions',
-    question: 'Access union member inside structure',
-    mathSolution: 'Dot for struct, dot for union',
-    codeSolution: 'v.data.i = 100;',
-    hint: 'Two dots in sequence'
+    question: 'Write a program to create array of tagged unions.',
+    mathSolution: 'Each array element has its own tag',
+    codeSolution: '#include <stdio.h>\n\nenum Type { INT_TYPE, FLOAT_TYPE };\n\nstruct TaggedUnion {\n    enum Type tag;\n    union {\n        int int_val;\n        float float_val;\n    } data;\n};\n\nint main() {\n    struct TaggedUnion arr[3];\n    arr[0].tag = INT_TYPE;\n    arr[0].data.int_val = 10;\n    arr[1].tag = FLOAT_TYPE;\n    arr[1].data.float_val = 20.5f;\n    arr[2].tag = INT_TYPE;\n    arr[2].data.int_val = 30;\n    for(int i = 0; i < 3; i++) {\n        if(arr[i].tag == INT_TYPE)\n            printf("arr[%d]: int %d\\n\", i, arr[i].data.int_val);\n        else\n            printf(\"arr[%d]: float %.1f\\n\", i, arr[i].data.float_val);\n    }\n    return 0;\n}',
+    hint: 'Each element can have different active member'
   },
   {
     id: 'c_union_24',
     topicId: 'c_unions',
-    question: 'Create array of structures with unions',
-    mathSolution: 'Each element has its own union',
-    codeSolution: 'struct Variant arr[10]; arr[0].type = 2; arr[0].data.f = 3.14;',
-    hint: 'Track type for each element'
+    question: 'Write a program to create union with bit fields for flag manipulation.',
+    mathSolution: 'Access individual bits via structure',
+    codeSolution: '#include <stdio.h>\n\nunion Flags {\n    unsigned int value;\n    struct {\n        unsigned int flag1:1;\n        unsigned int flag2:1;\n        unsigned int flag3:1;\n        unsigned int flag4:1;\n    } bits;\n};\n\nint main() {\n    union Flags f;\n    f.value = 0;\n    f.bits.flag1 = 1;\n    f.bits.flag3 = 1;\n    printf("Value: %u (binary: ", f.value);\n    for(int i = 3; i >= 0; i--)\n        printf("%d\", (f.value >> i) & 1);\n    printf(")\\n\");\n    return 0;\n}',
+    hint: 'Bit fields allow easy flag manipulation'
   },
   {
     id: 'c_union_25',
     topicId: 'c_unions',
-    question: 'Function to print structure with union',
-    mathSolution: 'Check type before accessing',
-    codeSolution: 'void printVariant(struct Variant v) { switch(v.type) { case 1: printf("%d", v.data.i); break; case 2: printf("%f", v.data.f); } }',
-    hint: 'Type-safe union access'
+    question: 'Write a program to demonstrate union for IP address representation.',
+    mathSolution: 'Access as 32-bit integer or 4 bytes',
+    codeSolution: '#include <stdio.h>\n\nunion IPAddress {\n    unsigned int addr;\n    unsigned char octets[4];\n};\n\nint main() {\n    union IPAddress ip;\n    ip.octets[0] = 192;\n    ip.octets[1] = 168;\n    ip.octets[2] = 1;\n    ip.octets[3] = 1;\n    printf("IP Address: %d.%d.%d.%d\\n\", ip.octets[0], ip.octets[1], ip.octets[2], ip.octets[3]);\n    printf("As integer: %u\\n\", ip.addr);\n    return 0;\n}',
+    hint: 'Different views of same 32-bit value'
   },
-
-  // ============ LEVEL 6: ARRAYS OF UNIONS (26-30) ============
   {
     id: 'c_union_26',
     topicId: 'c_unions',
-    question: 'Create array of unions',
-    mathSolution: 'Each element shares memory',
-    codeSolution: 'union Data arr[10];',
-    hint: 'Each array element is a union'
+    question: 'Write a program to pass union to function by value.',
+    mathSolution: 'Union copied to function',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nvoid printInt(union Data d) {\n    printf("Value: %d\\n", d.i);\n}\n\nint main() {\n    union Data d;\n    d.i = 42;\n    printInt(d);\n    return 0;\n}',
+    hint: 'Function receives copy of union'
   },
   {
     id: 'c_union_27',
     topicId: 'c_unions',
-    question: 'Initialize array of unions',
-    mathSolution: 'Each element initialized separately',
-    codeSolution: 'union Data arr[] = {{10}, {.f=3.14}, {20}};',
-    hint: 'Mixed initializer types'
+    question: 'Write a program to pass union to function by pointer.',
+    mathSolution: 'Modify original union',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nvoid modify(union Data *ptr) {\n    ptr->i = 100;\n}\n\nint main() {\n    union Data d;\n    d.i = 42;\n    printf("Before: %d\\n", d.i);\n    modify(&d);\n    printf("After: %d\\n", d.i);\n    return 0;\n}',
+    hint: 'Pointer allows modifying original'
   },
   {
     id: 'c_union_28',
     topicId: 'c_unions',
-    question: 'Store different types in union array',
-    mathSolution: 'Track type for each element',
-    codeSolution: 'int types[10]; union Data arr[10]; types[0] = 0; arr[0].i = 42; types[1] = 1; arr[1].f = 3.14;',
-    hint: 'Parallel array for types'
+    question: 'Write a program to return union from function.',
+    mathSolution: 'Function returns union by value',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nunion Data createInt(int val) {\n    union Data d;\n    d.i = val;\n    return d;\n}\n\nint main() {\n    union Data d = createInt(42);\n    printf("Returned value: %d\\n", d.i);\n    return 0;\n}',
+    hint: 'Return union just like other types'
   },
   {
     id: 'c_union_29',
     topicId: 'c_unions',
-    question: 'Process union array with type tags',
-    mathSolution: 'Switch on type array',
-    codeSolution: 'for(i = 0; i < n; i++) { if(types[i]==0) processInt(arr[i].i); else processFloat(arr[i].f); }',
-    hint: 'Type tags essential'
+    question: 'Write a program to demonstrate nested union.',
+    mathSolution: 'Union inside another union',
+    codeSolution: '#include <stdio.h>\n\nunion Outer {\n    int type;\n    union {\n        int i;\n        float f;\n    } inner;\n};\n\nint main() {\n    union Outer u;\n    u.inner.i = 42;\n    printf("Inner integer: %d\\n", u.inner.i);\n    return 0;\n}',
+    hint: 'Nested unions have multiple levels'
   },
   {
     id: 'c_union_30',
     topicId: 'c_unions',
-    question: '2D array of unions',
-    mathSolution: 'Matrix of variant values',
-    codeSolution: 'union Data matrix[5][5];',
-    hint: 'Multidimensional union array'
+    question: 'Write a program to use union for mathematical vector representation.',
+    mathSolution: 'Access as array or components',
+    codeSolution: '#include <stdio.h>\n\nunion Vector {\n    float v[4];\n    struct {\n        float x, y, z, w;\n    };\n};\n\nint main() {\n    union Vector vec;\n    vec.x = 1.0f;\n    vec.y = 2.0f;\n    vec.z = 3.0f;\n    vec.w = 4.0f;\n    printf("Vector components: (%.1f, %.1f, %.1f, %.1f)\\n\", vec.x, vec.y, vec.z, vec.w);\n    printf("As array: [%.1f, %.1f, %.1f, %.1f]\\n\", vec.v[0], vec.v[1], vec.v[2], vec.v[3]);\n    return 0;\n}',
+    hint: 'Same data, different access methods'
   },
 
-  // ============ LEVEL 7: POINTERS TO UNIONS (31-35) ============
+  // ========== ADVANCED UNION APPLICATIONS (31-40) ==========
   {
     id: 'c_union_31',
     topicId: 'c_unions',
-    question: 'Declare pointer to union',
-    mathSolution: 'Pointer holds union address',
-    codeSolution: 'union Data *ptr;',
-    hint: 'Can point to union variables'
+    question: 'Write a program to use union for packet header parsing.',
+    mathSolution: 'Different protocol views',
+    codeSolution: '#include <stdio.h>\n#include <stdint.h>\n\nunion PacketHeader {\n    uint32_t raw;\n    struct {\n        uint8_t version;\n        uint8_t type;\n        uint16_t length;\n    } fields;\n};\n\nint main() {\n    union PacketHeader ph;\n    ph.fields.version = 4;\n    ph.fields.type = 6;\n    ph.fields.length = 1500;\n    printf("Raw header: 0x%08x\\n\", ph.raw);\n    printf("Version: %d, Type: %d, Length: %d\\n\", ph.fields.version, ph.fields.type, ph.fields.length);\n    return 0;\n}',
+    hint: 'Different interpretations of same data'
   },
   {
     id: 'c_union_32',
     topicId: 'c_unions',
-    question: 'Make pointer point to union',
-    mathSolution: 'Use address-of operator',
-    codeSolution: 'ptr = &u;',
-    hint: '& gives address'
-  },
+    question: 'Write a program to demonstrate const union.',
+    mathSolution: 'Union cannot be modified',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    const union Data d = {42};\n    printf("Const union value: %d\\n", d.i);\n    // d.i = 100; // Error: can\'t modify const union\n    return 0;\n}',
+    hint: 'const applies to entire union'
+},
+ 
   {
     id: 'c_union_33',
     topicId: 'c_unions',
-    question: 'Access union members via pointer',
-    mathSolution: 'Use arrow operator',
-    codeSolution: 'ptr->i = 42;',
-    hint: 'Arrow for pointer access'
+    question: 'Write a program to create union for error return values.',
+    mathSolution: 'Return success or error info',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nunion Result {\n    int value;\n    struct {\n        int error_code;\n        char error_msg[50];\n    } error;\n};\n\nint main() {\n    union Result r;\n    r.error.error_code = 404;\n    strcpy(r.error.error_msg, "Not Found\");\n    printf(\"Error code: %d, Message: %s\\n\", r.error.error_code, r.error.error_msg);\n    return 0;\n}',
+    hint: 'Union can represent either success value or error info'
   },
   {
     id: 'c_union_34',
     topicId: 'c_unions',
-    question: 'Dereference pointer to union',
-    mathSolution: 'Use * then dot',
-    codeSolution: '(*ptr).i = 42;',
-    hint: 'Parentheses needed'
+    question: 'Write a program to demonstrate union alignment and packing.',
+    mathSolution: 'Size may include padding for alignment',
+    codeSolution: '#include <stdio.h>\n\nunion Mixed {\n    char c;\n    int i;\n    double d;\n};\n\nint main() {\n    printf("Size of union: %zu bytes\\n\", sizeof(union Mixed));\n    printf(\"Alignment: at least %zu\\n\", __alignof__(union Mixed));\n    return 0;\n}',
+    hint: 'Union uses largest alignment requirement'
   },
   {
     id: 'c_union_35',
     topicId: 'c_unions',
-    question: 'Array of pointers to unions',
-    mathSolution: 'Each pointer can point to different union',
-    codeSolution: 'union Data *ptrs[10];',
-    hint: 'Useful for polymorphism'
+    question: 'Write a program to use union for JSON value representation.',
+    mathSolution: 'Variant type for JSON values',
+    codeSolution: '#include <stdio.h>\n\nenum JSONType { JSON_NULL, JSON_INT, JSON_FLOAT, JSON_BOOL, JSON_STRING };\n\nstruct JSONValue {\n    enum JSONType type;\n    union {\n        int int_val;\n        float float_val;\n        int bool_val;\n        char *str_val;\n    } data;\n};\n\nint main() {\n    struct JSONValue v = {JSON_INT, .data.int_val = 42};\n    printf("JSON value: \");\n    if(v.type == JSON_INT) printf(\"%d\", v.data.int_val);\n    printf(\"\\n\");\n    return 0;\n}',
+    hint: 'Union enables variant data types'
   },
-
-  // ============ LEVEL 8: DYNAMIC ALLOCATION (36-40) ============
   {
     id: 'c_union_36',
     topicId: 'c_unions',
-    question: 'Dynamically allocate union',
-    mathSolution: 'Use malloc with sizeof',
-    codeSolution: 'union Data *ptr = (union Data*)malloc(sizeof(union Data));',
-    hint: 'Check for NULL return'
+    question: 'Write a program to demonstrate union for double exponent extraction.',
+    mathSolution: 'Access double bits via union',
+    codeSolution: '#include <stdio.h>\n\nunion DoubleBits {\n    double d;\n    struct {\n        unsigned long long mantissa:52;\n        unsigned int exponent:11;\n        unsigned int sign:1;\n    } bits;\n};\n\nint main() {\n    union DoubleBits u;\n    u.d = 3.141592653589793;\n    printf("Double: %f\\n\", u.d);\n    printf(\"Sign: %u, Exponent: %u, Mantissa: %llx\\n\", u.bits.sign, u.bits.exponent, u.bits.mantissa);\n    return 0;\n}',
+    hint: 'Extract IEEE 754 components'
   },
   {
     id: 'c_union_37',
     topicId: 'c_unions',
-    question: 'Allocate array of unions dynamically',
-    mathSolution: 'Multiply size by count',
-    codeSolution: 'union Data *arr = (union Data*)malloc(n * sizeof(union Data));',
-    hint: 'Contiguous memory'
+    question: 'Write a program to use union for fast inverse square root approximation.',
+    mathSolution: 'Bit manipulation trick',
+    codeSolution: '#include <stdio.h>\n#include <math.h>\n\nfloat fastInvSqrt(float number) {\n    union { float f; int i; } u;\n    u.f = number;\n    u.i = 0x5f3759df - (u.i >> 1);\n    return u.f * (1.5f - 0.5f * number * u.f * u.f);\n}\n\nint main() {\n    float x = 4.0f;\n    printf("Fast inverse sqrt of %.1f: %.6f\\n\", x, fastInvSqrt(x));\n    printf(\"Actual 1/sqrt: %.6f\\n\", 1.0f/sqrt(x));\n    return 0;\n}',
+    hint: 'Quake III fast inverse square root algorithm'
   },
   {
     id: 'c_union_38',
     topicId: 'c_unions',
-    question: 'Free dynamically allocated union',
-    mathSolution: 'Use free to deallocate',
-    codeSolution: 'free(ptr); ptr = NULL;',
-    hint: 'Avoid dangling pointer'
+    question: 'Write a program to use union for 3D coordinate transformation.',
+    mathSolution: 'Same memory as array or components',
+    codeSolution: '#include <stdio.h>\n#include <math.h>\n\nunion Point3D {\n    float coords[3];\n    struct { float x, y, z; };\n};\n\nfloat magnitude(union Point3D p) {\n    return sqrt(p.x * p.x + p.y * p.y + p.z * p.z);\n}\n\nint main() {\n    union Point3D pt;\n    pt.coords[0] = 3.0f;\n    pt.coords[1] = 4.0f;\n    pt.coords[2] = 0.0f;\n    printf("Point: (%.1f, %.1f, %.1f)\\n\", pt.x, pt.y, pt.z);\n    printf(\"Magnitude: %.1f\\n\", magnitude(pt));\n    return 0;\n}',
+    hint: 'Flexible access to coordinates'
   },
   {
     id: 'c_union_39',
     topicId: 'c_unions',
-    question: 'Reallocate union array',
-    mathSolution: 'Use realloc to resize',
-    codeSolution: 'arr = (union Data*)realloc(arr, new_size * sizeof(union Data));',
-    hint: 'May move memory'
+    question: 'Write a program to demonstrate union for configuration parameters.',
+    mathSolution: 'Different config value types in one struct',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nstruct ConfigParam {\n    char name[20];\n    enum { CONF_INT, CONF_FLOAT, CONF_STRING } type;\n    union {\n        int int_val;\n        float float_val;\n        char str_val[50];\n    } value;\n};\n\nint main() {\n    struct ConfigParam params[2];\n    strcpy(params[0].name, "max_users");\n    params[0].type = CONF_INT;\n    params[0].value.int_val = 100;\n    strcpy(params[1].name, "server_name");\n    params[1].type = CONF_STRING;\n    strcpy(params[1].value.str_val, "myserver\");\n    for(int i = 0; i < 2; i++) {\n        printf(\"%s = \", params[i].name);\n        if(params[i].type == CONF_INT)\n            printf(\"%d\\n\", params[i].value.int_val);\n        else if(params[i].type == CONF_STRING)\n            printf(\"%s\\n\", params[i].value.str_val);\n    }\n    return 0;\n}',
+    hint: 'Configuration values can have different types'
   },
   {
     id: 'c_union_40',
     topicId: 'c_unions',
-    question: 'Structure with dynamically allocated union',
-    mathSolution: 'Union pointer in structure',
-    codeSolution: 'struct DynamicVariant { int type; union Data *data; };',
-    hint: 'Allocate union separately'
+    question: 'Write a program to create array of pointers to unions.',
+    mathSolution: 'Each pointer can point to different union',
+    codeSolution: '#include <stdio.h>\n\nunion Data {\n    int i;\n    float f;\n};\n\nint main() {\n    union Data u1, u2, u3;\n    u1.i = 10;\n    u2.f = 20.5f;\n    u3.i = 30;\n    union Data *ptrs[] = {&u1, &u2, &u3};\n    printf("Values via pointer array: \");\n    printf(\"%d \", ptrs[0]->i);\n    printf(\"%.1f \", ptrs[1]->f);\n    printf(\"%d\\n\", ptrs[2]->i);\n    return 0;\n}',
+    hint: 'Array stores addresses of unions'
   },
 
-  // ============ LEVEL 9: UNIONS AND FUNCTIONS (41-45) ============
+  // ========== PRACTICAL APPLICATIONS (41-50) ==========
   {
     id: 'c_union_41',
     topicId: 'c_unions',
-    question: 'Pass union to function by value',
-    mathSolution: 'Entire union copied',
-    codeSolution: 'void processUnion(union Data u) { printf("%d", u.i); }',
-    hint: 'Copies all bytes'
+    question: 'Write a program to use union for event handling in GUI systems.',
+    mathSolution: 'Different event types share union data',
+    codeSolution: '#include <stdio.h>\n\nenum EventType { MOUSE_EVENT, KEYBOARD_EVENT, RESIZE_EVENT };\n\nstruct Event {\n    enum EventType type;\n    union {\n        struct { int x; int y; } mouse;\n        struct { int key; } keyboard;\n        struct { int width; int height; } resize;\n    } data;\n};\n\nint main() {\n    struct Event e = {MOUSE_EVENT, .data.mouse = {100, 200}};\n    if(e.type == MOUSE_EVENT)\n        printf("Mouse event at (%d, %d)\\n\", e.data.mouse.x, e.data.mouse.y);\n    return 0;\n}',
+    hint: 'Union saves memory for mutually exclusive event data'
   },
   {
     id: 'c_union_42',
     topicId: 'c_unions',
-    question: 'Pass union to function by pointer',
-    mathSolution: 'Only address passed',
-    codeSolution: 'void modifyUnion(union Data *u) { u->i = 100; }',
-    hint: 'Can modify original'
+    question: 'Write a program to use union for database field values.',
+    mathSolution: 'Different SQL column types share storage',
+    codeSolution: '#include <stdio.h>\n\nenum FieldType { TYPE_INT, TYPE_FLOAT, TYPE_TEXT };\n\nstruct Field {\n    enum FieldType type;\n    union {\n        int int_val;\n        float float_val;\n        char *text_val;\n    } data;\n};\n\nint main() {\n    struct Field f = {TYPE_INT, .data.int_val = 42};\n    printf("Field type: %d, value: %d\\n\", f.type, f.data.int_val);\n    return 0;\n}',
+    hint: 'Databases store different types in same column space'
   },
   {
     id: 'c_union_43',
     topicId: 'c_unions',
-    question: 'Return union from function',
-    mathSolution: 'Function returns union by value',
-    codeSolution: 'union Data createInt(int val) { union Data u; u.i = val; return u; }',
-    hint: 'Returns copy'
+    question: 'Write a program to demonstrate union for byte swapping (endian conversion).',
+    mathSolution: 'Swap bytes using union',
+    codeSolution: '#include <stdio.h>\n\nunion Word {\n    unsigned short word;\n    unsigned char bytes[2];\n};\n\nunsigned short swapBytes(unsigned short val) {\n    union Word w;\n    w.word = val;\n    unsigned char temp = w.bytes[0];\n    w.bytes[0] = w.bytes[1];\n    w.bytes[1] = temp;\n    return w.word;\n}\n\nint main() {\n    unsigned short val = 0x1234;\n    printf("Original: 0x%04x\\n\", val);\n    printf("Swapped: 0x%04x\\n\", swapBytes(val));\n    return 0;\n}',
+    hint: 'Union simplifies byte order conversion'
   },
   {
     id: 'c_union_44',
     topicId: 'c_unions',
-    question: 'Return pointer to union from function',
-    mathSolution: 'Return address of union',
-    codeSolution: 'union Data* getUnion() { static union Data u; return &u; }',
-    hint: 'Don\'t return local address'
+    question: 'Write a program to create union for network byte order conversion.',
+    mathSolution: 'Convert host to network byte order',
+    codeSolution: '#include <stdio.h>\n\nunion LongBytes {\n    unsigned long value;\n    unsigned char bytes[4];\n};\n\nvoid toNetworkOrder(unsigned long *val) {\n    union LongBytes u;\n    u.value = *val;\n    if(u.bytes[0] != 0) return;\n    unsigned char temp = u.bytes[0];\n    u.bytes[0] = u.bytes[3];\n    u.bytes[3] = temp;\n    temp = u.bytes[1];\n    u.bytes[1] = u.bytes[2];\n    u.bytes[2] = temp;\n    *val = u.value;\n}\n\nint main() {\n    unsigned long host = 0x12345678;\n    printf("Host order: 0x%08lx\\n\", host);\n    toNetworkOrder(&host);\n    printf(\"Network order: 0x%08lx\\n\", host);\n    return 0;\n}',
+    hint: 'Convert endianness for network communication'
   },
   {
     id: 'c_union_45',
     topicId: 'c_unions',
-    question: 'Function with union parameter and type tag',
-    mathSolution: 'Additional parameter for type',
-    codeSolution: 'void printUnion(union Data u, int type) { if(type==1) printf("%d",u.i); else printf("%f",u.f); }',
-    hint: 'Type tag needed for safety'
+    question: 'Write a program to use union for employee record (different employee types).',
+    mathSolution: 'Union for manager and worker data',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nenum EmpType { MANAGER, WORKER };\n\nstruct Employee {\n    char name[30];\n    enum EmpType type;\n    union {\n        float bonus;\n        int hourly_rate;\n    } salary;\n};\n\nint main() {\n    struct Employee e1 = {\"Alice\", MANAGER, .salary.bonus = 10000.0f};\n    struct Employee e2 = {\"Bob\", WORKER, .salary.hourly_rate = 25};\n    printf("%s (Manager): bonus = %.2f\\n\", e1.name, e1.salary.bonus);\n    printf(\"%s (Worker): hourly rate = %d\\n\", e2.name, e2.salary.hourly_rate);\n    return 0;\n}',
+    hint: 'Different employee types have different pay structures'
   },
-
-  // ============ LEVEL 10: TAGGED UNIONS/DISCRIMINATED UNIONS (46-50) ============
   {
     id: 'c_union_46',
     topicId: 'c_unions',
-    question: 'Create tagged union (discriminated union)',
-    mathSolution: 'Enum for type + union',
-    codeSolution: 'enum Type { INT, FLOAT, STRING };\nstruct TaggedUnion { enum Type tag; union { int i; float f; char *s; } data; };',
-    hint: 'Type-safe variant'
+    question: 'Write a program to demonstrate union for shape area calculation.',
+    mathSolution: 'Different shapes share union for dimensions',
+    codeSolution: '#include <stdio.h>\n#include <math.h>\n\nenum ShapeType { CIRCLE, RECTANGLE, TRIANGLE };\n\nstruct Shape {\n    enum ShapeType type;\n    union {\n        float radius;\n        struct { float width, height; } rect;\n        struct { float base, height; } triangle;\n    } dimensions;\n};\n\nfloat area(struct Shape s) {\n    switch(s.type) {\n        case CIRCLE: return 3.14159f * s.dimensions.radius * s.dimensions.radius;\n        case RECTANGLE: return s.dimensions.rect.width * s.dimensions.rect.height;\n        case TRIANGLE: return 0.5f * s.dimensions.triangle.base * s.dimensions.triangle.height;\n    }\n    return 0;\n}\n\nint main() {\n    struct Shape shapes[3] = {\n        {CIRCLE, .dimensions.radius = 5.0f},\n        {RECTANGLE, .dimensions.rect = {4.0f, 6.0f}},\n        {TRIANGLE, .dimensions.triangle = {3.0f, 4.0f}}\n    };\n    for(int i = 0; i < 3; i++) {\n        printf("Shape %d area: %.2f\\n\", i+1, area(shapes[i]));\n    }\n    return 0;\n}',
+    hint: 'Union stores different shape dimensions'
   },
   {
     id: 'c_union_47',
     topicId: 'c_unions',
-    question: 'Initialize tagged union',
-    mathSolution: 'Set tag and data appropriately',
-    codeSolution: 'struct TaggedUnion v = { .tag = INT, .data.i = 42 };',
-    hint: 'Match tag with data type'
+    question: 'Write a program to use union for messaging system.',
+    mathSolution: 'Different message types share union',
+    codeSolution: '#include <stdio.h>\n#include <string.h>\n\nenum MsgType { TEXT, IMAGE, VIDEO };\n\nstruct Message {\n    enum MsgType type;\n    union {\n        char text[200];\n        char image_path[100];\n        char video_path[100];\n    } content;\n};\n\nint main() {\n    struct Message msg = {TEXT, .content.text = "Hello World\"};\n    printf(\"Message type: \");\n    if(msg.type == TEXT) printf(\"Text: %s\\n\", msg.content.text);\n    return 0;\n}',
+    hint: 'Different message types have different content'
   },
   {
     id: 'c_union_48',
     topicId: 'c_unions',
-    question: 'Process tagged union safely',
-    mathSolution: 'Switch on tag',
-    codeSolution: 'switch(v.tag) { case INT: printf("%d", v.data.i); break; case FLOAT: printf("%f", v.data.f); break; }',
-    hint: 'Always check tag first'
+    question: 'Write a program to demonstrate union for register access in embedded systems.',
+    mathSolution: 'Access register as whole or individual bits',
+    codeSolution: '#include <stdio.h>\n\nunion Register {\n    unsigned char value;\n    struct {\n        unsigned char bit0:1;\n        unsigned char bit1:1;\n        unsigned char bit2:1;\n        unsigned char bit3:1;\n        unsigned char bit4:1;\n        unsigned char bit5:1;\n        unsigned char bit6:1;\n        unsigned char bit7:1;\n    } bits;\n};\n\nint main() {\n    union Register reg;\n    reg.value = 0;\n    reg.bits.bit2 = 1;\n    reg.bits.bit5 = 1;\n    printf("Register value: 0x%02x\\n\", reg.value);\n    printf(\"Individual bits: \");\n    for(int i = 7; i >= 0; i--)\n        printf(\"%d\", (reg.value >> i) & 1);\n    printf(\"\\n\");\n    return 0;\n}',
+    hint: 'Union allows accessing register as byte or bits'
   },
   {
     id: 'c_union_49',
     topicId: 'c_unions',
-    question: 'Array of tagged unions',
-    mathSolution: 'Each element has its own tag',
-    codeSolution: 'struct TaggedUnion arr[10]; arr[0].tag = INT; arr[0].data.i = 100;',
-    hint: 'Track type per element'
+    question: 'Write a program to use union for memory-efficient linked list node.',
+    mathSolution: 'Node can be internal or leaf sharing memory',
+    codeSolution: '#include <stdio.h>\n#include <stdlib.h>\n\nenum NodeType { INTERNAL, LEAF };\n\nstruct Node {\n    enum NodeType type;\n    union {\n        struct {\n            struct Node *left;\n            struct Node *right;\n        } internal;\n        int value;\n    } data;\n};\n\nint main() {\n    struct Node leaf = {LEAF, .data.value = 42};\n    printf(\"Leaf node value: %d\\n\", leaf.data.value);\n    return 0;\n}',
+    hint: 'Union saves memory in tree structures'
   },
   {
     id: 'c_union_50',
     topicId: 'c_unions',
-    question: 'Function to create tagged union',
-    mathSolution: 'Factory function for variants',
-    codeSolution: 'struct TaggedUnion makeInt(int val) { struct TaggedUnion v; v.tag = INT; v.data.i = val; return v; }',
-    hint: 'Encapsulate creation'
-  },
-
-  // ============ LEVEL 11: NESTED UNIONS (51-55) ============
-  {
-    id: 'c_union_51',
-    topicId: 'c_unions',
-    question: 'Create nested union',
-    mathSolution: 'Union inside union',
-    codeSolution: 'union Outer { int type; union { int i; float f; } inner; };',
-    hint: 'Inner union shares memory with type'
-  },
-  {
-    id: 'c_union_52',
-    topicId: 'c_unions',
-    question: 'Access nested union members',
-    mathSolution: 'Multiple dots or arrows',
-    codeSolution: 'u.inner.i = 42;',
-    hint: 'Go level by level'
-  },
-  {
-    id: 'c_union_53',
-    topicId: 'c_unions',
-    question: 'Structure containing nested unions',
-    mathSolution: 'Complex data layouts',
-    codeSolution: 'struct Config { union { int intVal; struct { char key[20]; char value[50]; } stringVal; } setting; };',
-    hint: 'Flexible configuration'
-  },
-  {
-    id: 'c_union_54',
-    topicId: 'c_unions',
-    question: 'Union with nested structure',
-    mathSolution: 'Structure inside union',
-    codeSolution: 'union Value { int i; struct { int x; int y; } point; };',
-    hint: 'Point structure overlaps with int'
-  },
-  {
-    id: 'c_union_55',
-    topicId: 'c_unions',
-    question: 'Nested tagged unions',
-    mathSolution: 'Tagged union containing tagged union',
-    codeSolution: 'struct OuterTag { enum { INNER, DIRECT } tag; union { struct TaggedUnion inner; int direct; } data; };',
-    hint: 'Multi-level variants'
-  },
-
-  // ============ LEVEL 12: UNIONS AND BIT FIELDS (56-60) ============
-  {
-    id: 'c_union_56',
-    topicId: 'c_unions',
-    question: 'Union with bit fields',
-    mathSolution: 'Bit-level access to same memory',
-    codeSolution: 'union { unsigned int value; struct { unsigned int b0:1; unsigned int b1:1; unsigned int b2:1; unsigned int b3:1; } bits; } u;',
-    hint: 'Access individual bits'
-  },
-  {
-    id: 'c_union_57',
-    topicId: 'c_unions',
-    question: 'Set individual bits via union',
-    mathSolution: 'Modify bit field members',
-    codeSolution: 'u.bits.b0 = 1; u.bits.b1 = 0;',
-    hint: 'Changes underlying value'
-  },
-  {
-    id: 'c_union_58',
-    topicId: 'c_unions',
-    question: 'Read whole value from bits',
-    mathSolution: 'Access int member after setting bits',
-    codeSolution: 'printf("Value: %u", u.value);',
-    hint: 'Bits combined into integer'
-  },
-  {
-    id: 'c_union_59',
-    topicId: 'c_unions',
-    question: 'Union for RGB color manipulation',
-    mathSolution: 'Access as int or separate channels',
-    codeSolution: 'union Color { unsigned int rgba; struct { unsigned char r; unsigned char g; unsigned char b; unsigned char a; } channels; };',
-    hint: 'Endianness matters'
-  },
-  {
-    id: 'c_union_60',
-    topicId: 'c_unions',
-    question: 'Union for IP address',
-    mathSolution: 'Access as 32-bit or 4 bytes',
-    codeSolution: 'union IP { unsigned int addr; unsigned char octets[4]; };',
-    hint: 'Network vs host byte order'
-  },
-
-  // ============ LEVEL 13: UNIONS FOR MEMORY SAVING (61-65) ============
-  {
-    id: 'c_union_61',
-    topicId: 'c_unions',
-    question: 'Use union to save memory in structure',
-    mathSolution: 'Share memory between mutually exclusive members',
-    codeSolution: 'struct Node { int type; union { struct Node *next; int data; } content; };',
-    hint: 'Different node types share space'
-  },
-  {
-    id: 'c_union_62',
-    topicId: 'c_unions',
-    question: 'Variant record for memory-constrained system',
-    mathSolution: 'Different data types share storage',
-    codeSolution: 'struct SensorReading { time_t time; union { int intVal; float floatVal; char binary[4]; } value; };',
-    hint: 'Sensor type determines interpretation'
-  },
-  {
-    id: 'c_union_63',
-    topicId: 'c_unions',
-    question: 'Union for optional fields',
-    mathSolution: 'Field present only when needed',
-    codeSolution: 'struct Message { int id; int hasPayload; union { char data[100]; } payload; };',
-    hint: 'Flag indicates if union valid'
-  },
-  {
-    id: 'c_union_64',
-    topicId: 'c_unions',
-    question: 'Compare memory usage: struct vs union',
-    mathSolution: 'Union uses max member size',
-    codeSolution: 'struct { int a; float b; char c[100]; } s; // 108+ bytes\nunion { int a; float b; char c[100]; } u; // 100 bytes',
-    hint: 'Union shares, struct sums'
-  },
-  {
-    id: 'c_union_65',
-    topicId: 'c_unions',
-    question: 'Packed union for network protocol',
-    mathSolution: 'Avoid padding in union',
-    codeSolution: '#pragma pack(1)\nunion ProtocolHeader { uint32_t raw; struct { uint8_t version; uint8_t type; uint16_t length; } fields; };',
-    hint: 'Ensure same layout across systems'
-  },
-
-  // ============ LEVEL 14: UNIONS IN FILE I/O (66-70) ============
-  {
-    id: 'c_union_66',
-    topicId: 'c_unions',
-    question: 'Write union to binary file',
-    mathSolution: 'Write entire union',
-    codeSolution: 'fwrite(&u, sizeof(union Data), 1, fp);',
-    hint: 'Writes all bytes'
-  },
-  {
-    id: 'c_union_67',
-    topicId: 'c_unions',
-    question: 'Read union from binary file',
-    mathSolution: 'Read bytes into union',
-    codeSolution: 'fread(&u, sizeof(union Data), 1, fp);',
-    hint: 'Need to know active member'
-  },
-  {
-    id: 'c_union_68',
-    topicId: 'c_unions',
-    question: 'Write tagged union to file',
-    mathSolution: 'Write tag then union',
-    codeSolution: 'fwrite(&v.tag, sizeof(v.tag), 1, fp); fwrite(&v.data, sizeof(v.data), 1, fp);',
-    hint: 'Preserve type information'
-  },
-  {
-    id: 'c_union_69',
-    topicId: 'c_unions',
-    question: 'Read tagged union from file',
-    mathSolution: 'Read tag first, then union',
-    codeSolution: 'fread(&v.tag, sizeof(v.tag), 1, fp); fread(&v.data, sizeof(v.data), 1, fp);',
-    hint: 'Tag determines interpretation'
-  },
-  {
-    id: 'c_union_70',
-    topicId: 'c_unions',
-    question: 'Union for file header parsing',
-    mathSolution: 'Different file formats',
-    codeSolution: 'union FileHeader { struct BMP bmp; struct GIF gif; struct PNG png; uint8_t raw[32]; };',
-    hint: 'Parse based on magic numbers'
-  },
-
-  // ============ LEVEL 15: ADVANCED UNION APPLICATIONS (71-75) ============
-  {
-    id: 'c_union_71',
-    topicId: 'c_unions',
-    question: 'Union for mathematical vectors',
-    mathSolution: 'Access as array or components',
-    codeSolution: 'union Vector { float v[4]; struct { float x; float y; float z; float w; }; };',
-    hint: 'Useful for SIMD operations'
-  },
-  {
-    id: 'c_union_72',
-    topicId: 'c_unions',
-    question: 'Union for matrix representation',
-    mathSolution: 'Row-major or column-major access',
-    codeSolution: 'union Matrix { float m[4][4]; struct { float row0[4]; float row1[4]; float row2[4]; float row3[4]; }; };',
-    hint: 'Same memory, different views'
-  },
-  {
-    id: 'c_union_73',
-    topicId: 'c_unions',
-    question: 'Union for 3D coordinate systems',
-    mathSolution: 'Cartesian or spherical',
-    codeSolution: 'union Coord { struct { float x; float y; float z; } cart; struct { float r; float theta; float phi; } sphere; };',
-    hint: 'Same memory, different interpretations'
-  },
-  {
-    id: 'c_union_74',
-    topicId: 'c_unions',
-    question: 'Union for pixel formats',
-    mathSolution: 'Different color depth representations',
-    codeSolution: 'union Pixel { uint32_t rgba; struct { uint8_t r; uint8_t g; uint8_t b; uint8_t a; } channels; uint16_t rgb565; };',
-    hint: 'Multiple format support'
-  },
-  {
-    id: 'c_union_75',
-    topicId: 'c_unions',
-    question: 'Union for instruction decoding',
-    mathSolution: 'CPU instruction different formats',
-    codeSolution: 'union Instruction { uint32_t raw; struct { uint32_t opcode:8; uint32_t reg:4; uint32_t addr:20; } format1; struct { uint32_t opcode:8; uint32_t imm:24; } format2; };',
-    hint: 'Different instruction types'
-  },
-
-  // ============ LEVEL 16: UNIONS AND CONST (76-80) ============
-  {
-    id: 'c_union_76',
-    topicId: 'c_unions',
-    question: 'Create const union',
-    mathSolution: 'Union cannot be modified',
-    codeSolution: 'const union Data u = {10};',
-    hint: 'Initialize at declaration'
-  },
-  {
-    id: 'c_union_77',
-    topicId: 'c_unions',
-    question: 'Pointer to const union',
-    mathSolution: 'Cannot modify via pointer',
-    codeSolution: 'const union Data *ptr = &u;',
-    hint: 'Can still change pointer'
-  },
-  {
-    id: 'c_union_78',
-    topicId: 'c_unions',
-    question: 'Const pointer to union',
-    mathSolution: 'Pointer cannot change, union can',
-    codeSolution: 'union Data *const ptr = &u;',
-    hint: 'const after *'
-  },
-  {
-    id: 'c_union_79',
-    topicId: 'c_unions',
-    question: 'Const pointer to const union',
-    mathSolution: 'Neither pointer nor union can change',
-    codeSolution: 'const union Data *const ptr = &u;',
-    hint: 'Double const'
-  },
-  {
-    id: 'c_union_80',
-    topicId: 'c_unions',
-    question: 'Array of const unions',
-    mathSolution: 'Each union element constant',
-    codeSolution: 'const union Data arr[3] = {{10}, {.f=3.14}, {20}};',
-    hint: 'Initialize all elements'
-  },
-
-  // ============ LEVEL 17: UNIONS AND PREPROCESSOR (81-85) ============
-  {
-    id: 'c_union_81',
-    topicId: 'c_unions',
-    question: 'Use #define to create union templates',
-    mathSolution: 'Macro for repeated union patterns',
-    codeSolution: '#define UNION_INT_FLOAT(name) union name { int i; float f; };\nUNION_INT_FLOAT(Data);',
-    hint: 'Macro expansion'
-  },
-  {
-    id: 'c_union_82',
-    topicId: 'c_unions',
-    question: 'Conditional compilation with unions',
-    mathSolution: 'Different union definitions per platform',
-    codeSolution: '#ifdef _WIN32\nunion IP { unsigned long addr; };\n#else\nunion IP { unsigned char octets[4]; };\n#endif',
-    hint: 'Platform-specific'
-  },
-  {
-    id: 'c_union_83',
-    topicId: 'c_unions',
-    question: 'X-Macro for union and accessors',
-    mathSolution: 'Define once, generate multiple',
-    codeSolution: '#define VARIANT_TYPES \\\n X(int, i) \\\n X(float, f) \\\n X(char*, s)\n\n#undef X\n#define X(type, name) type name;\nunion Variant { VARIANT_TYPES };\n\n#undef X\n#define X(type, name) case type: printf("%" #type, v.name); break;\nvoid print(union Variant v, int t) { switch(t) { VARIANT_TYPES }}',
-    hint: 'Metaprogramming'
-  },
-  {
-    id: 'c_union_84',
-    topicId: 'c_unions',
-    question: '#pragma pack with union',
-    mathSolution: 'Control union alignment',
-    codeSolution: '#pragma pack(1)\nunion Packed { int i; char c; };\n#pragma pack()',
-    hint: 'May affect performance'
-  },
-  {
-    id: 'c_union_85',
-    topicId: 'c_unions',
-    question: 'Union size assertion at compile time',
-    mathSolution: 'Verify expected size',
-    codeSolution: '_Static_assert(sizeof(union Data) == 4, "Unexpected union size");',
-    hint: 'C11 static assert'
-  },
-
-  // ============ LEVEL 18: ERROR HANDLING (86-90) ============
-  {
-    id: 'c_union_86',
-    topicId: 'c_unions',
-    question: 'Union for error return values',
-    mathSolution: 'Return success or error',
-    codeSolution: 'union Result { int value; struct { int error_code; char message[100]; } error; };',
-    hint: 'Success vs error union'
-  },
-  {
-    id: 'c_union_87',
-    topicId: 'c_unions',
-    question: 'Function returning result union',
-    mathSolution: 'Return success or error info',
-    codeSolution: 'union Result divide(int a, int b) { union Result r; if(b==0) { r.error.error_code = 1; strcpy(r.error.message, "Division by zero"); } else { r.value = a/b; } return r; }',
-    hint: 'Check error flag'
-  },
-  {
-    id: 'c_union_88',
-    topicId: 'c_unions',
-    question: 'Union with status flag',
-    mathSolution: 'Track if union is valid',
-    codeSolution: 'struct Maybe { int valid; union { int value; } data; };',
-    hint: 'Option type pattern'
-  },
-  {
-    id: 'c_union_89',
-    topicId: 'c_unions',
-    question: 'Validate union access',
-    mathSolution: 'Check before accessing',
-    codeSolution: 'if(v.tag == INT) { processInt(v.data.i); } else { handleError("Wrong type accessed"); }',
-    hint: 'Type safety'
-  },
-  {
-    id: 'c_union_90',
-    topicId: 'c_unions',
-    question: 'Union for exception handling',
-    mathSolution: 'Throw different exception types',
-    codeSolution: 'union Exception { int errorCode; char *errorString; struct { int line; char *file; } location; };',
-    hint: 'C has no exceptions, but can simulate'
-  },
-
-  // ============ LEVEL 19: REAL-WORLD EXAMPLES (91-95) ============
-  {
-    id: 'c_union_91',
-    topicId: 'c_unions',
-    question: 'Union for JSON value representation',
-    mathSolution: 'JSON can be string, number, bool, etc',
-    codeSolution: 'enum JSONType { JSON_NULL, JSON_BOOL, JSON_NUMBER, JSON_STRING, JSON_ARRAY, JSON_OBJECT };\nstruct JSONValue { enum JSONType type; union { int boolVal; double numVal; char *strVal; struct JSONArray *arr; struct JSONObject *obj; } data; };',
-    hint: 'Variant type for JSON'
-  },
-  {
-    id: 'c_union_92',
-    topicId: 'c_unions',
-    question: 'Union for database field values',
-    mathSolution: 'Different SQL column types',
-    codeSolution: 'union DBValue { int intVal; double doubleVal; char *stringVal; void *blobVal; };',
-    hint: 'Need type tag'
-  },
-  {
-    id: 'c_union_93',
-    topicId: 'c_unions',
-    question: 'Union for configuration parameters',
-    mathSolution: 'Different config value types',
-    codeSolution: 'struct ConfigParam { char name[50]; enum { CONF_INT, CONF_FLOAT, CONF_BOOL, CONF_STRING } type; union { int i; float f; int b; char s[100]; } value; };',
-    hint: 'Flexible configuration'
-  },
-  {
-    id: 'c_union_94',
-    topicId: 'c_unions',
-    question: 'Union for GUI event handling',
-    mathSolution: 'Different event types share data',
-    codeSolution: 'struct Event { int type; union { struct { int x; int y; } mouse; struct { int key; } keyboard; struct { int width; int height; } resize; } data; };',
-    hint: 'Event-driven programming'
-  },
-  {
-    id: 'c_union_95',
-    topicId: 'c_unions',
-    question: 'Union for network packets',
-    mathSolution: 'Different protocol headers',
-    codeSolution: 'union Packet { struct Ethernet eth; struct IP ip; struct TCP tcp; struct UDP udp; uint8_t raw[1500]; };',
-    hint: 'Parse based on protocol type'
-  },
-
-  // ============ LEVEL 20: ADVANCED TYPE PUNNING (96-100) ============
-  {
-    id: 'c_union_96',
-    topicId: 'c_unions',
-    question: 'Extract exponent from double',
-    mathSolution: 'Union with double and bit fields',
-    codeSolution: 'union { double d; struct { unsigned long long mant:52; unsigned int exp:11; unsigned int sign:1; } parts; } u; u.d = 3.14; printf("Exponent: %d", u.parts.exp);',
-    hint: 'IEEE 754 double format'
-  },
-  {
-    id: 'c_union_97',
-    topicId: 'c_unions',
-    question: 'Fast absolute value of float',
-    mathSolution: 'Clear sign bit via union',
-    codeSolution: 'union { float f; unsigned int u; } u; u.f = -3.14f; u.u &= 0x7FFFFFFF; printf("%f", u.f);',
-    hint: 'Manipulate bits directly'
-  },
-  {
-    id: 'c_union_98',
-    topicId: 'c_unions',
-    question: 'Check if float is NaN',
-    mathSolution: 'Examine exponent bits',
-    codeSolution: 'union { float f; unsigned int u; } u; u.f = nanf(""); if(((u.u & 0x7F800000) == 0x7F800000) && (u.u & 0x007FFFFF)) printf("Is NaN");',
-    hint: 'NaN detection without function'
-  },
-  {
-    id: 'c_union_99',
-    topicId: 'c_unions',
-    question: 'Fast integer square root approximation',
-    mathSolution: 'Quake III fast inverse square root',
-    codeSolution: 'union { float f; int i; } u; u.f = number; u.i = 0x5f3759df - (u.i >> 1); float y = u.f;',
-    hint: 'Bit manipulation trick'
-  },
-  {
-    id: 'c_union_100',
-    topicId: 'c_unions',
-    question: 'Union for byte order conversion',
-    mathSolution: 'Swap bytes in 16-bit value',
-    codeSolution: 'union { uint16_t word; uint8_t bytes[2]; } u; u.word = 0x1234; uint8_t temp = u.bytes[0]; u.bytes[0] = u.bytes[1]; u.bytes[1] = temp; printf("Swapped: 0x%x", u.word);',
-    hint: 'Manual endian conversion'
+    question: 'Write a program to use union for polymorphic function call simulation.',
+    mathSolution: 'Function pointers in union',
+    codeSolution: '#include <stdio.h>\n\nvoid printInt(int x) { printf("Integer: %d\\n\", x); }\nvoid printFloat(double x) { printf(\"Float: %.2f\\n\", x); }\n\nunion Printer {\n    void (*intPrinter)(int);\n    void (*floatPrinter)(double);\n};\n\nint main() {\n    union Printer p;\n    p.intPrinter = printInt;\n    p.intPrinter(42);\n    p.floatPrinter = printFloat;\n    p.floatPrinter(3.14159);\n    return 0;\n}',
+    hint: 'Union stores different function pointer types'
   }
 );

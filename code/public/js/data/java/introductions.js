@@ -1,248 +1,334 @@
 QuizData.questions.push(
-  // JAVA BASICS AND HISTORY (4)
+  // BASIC PRINT & COMMENTS (5)
   {
     id: "intro_1",
     topicId: "introduction",
-    question: "Write a simple Java program that prints 'Hello, World!'.",
-    mathSolution: "Basic Java program structure with main method",
-    codeSolution:
-      'public class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}',
-    hint: "Class name must match filename, main method is entry point",
+    question: "Write a Java program to print 'Hello, World!'.",
+    mathSolution: "Output a string to console",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}',
+    hint: "Use System.out.println()",
   },
   {
     id: "intro_2",
     topicId: "introduction",
-    question:
-      "Explain the main method signature and why it's written that way.",
-    mathSolution:
-      "Main method is public, static, void with String array parameter",
-    codeSolution:
-      'public static void main(String[] args) {\n    // public - accessible by JVM\n    // static - called without creating object\n    // void - returns nothing\n    // String[] args - command line arguments\n    System.out.println("Arguments count: " + args.length);\n    for(String arg : args) {\n        System.out.println("Arg: " + arg);\n    }\n}',
-    hint: "JVM looks for this exact signature to start program",
+    question: "Print your name on the screen.",
+    mathSolution: "Display text output",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println("John Doe");\n    }\n}',
+    hint: "Replace with your name",
   },
   {
     id: "intro_3",
     topicId: "introduction",
-    question: "Use command line arguments in a Java program.",
-    mathSolution: "Access arguments passed when running the program",
-    codeSolution:
-      'public class CommandLineDemo {\n    public static void main(String[] args) {\n        System.out.println("Number of arguments: " + args.length);\n        \n        for(int i = 0; i < args.length; i++) {\n            System.out.println("Argument " + i + ": " + args[i]);\n        }\n        \n        if(args.length > 0) {\n            System.out.println("First argument: " + args[0]);\n            System.out.println("Last argument: " + args[args.length - 1]);\n        }\n        \n        // Convert string argument to number\n        if(args.length > 0) {\n            try {\n                int num = Integer.parseInt(args[0]);\n                System.out.println("Square of " + num + ": " + (num * num));\n            } catch(NumberFormatException e) {\n                System.out.println("First argument is not a number");\n            }\n        }\n    }\n}\n\n// Run with: java CommandLineDemo Hello World 42',
-    hint: "Args are passed as strings when running java class",
+    question: "Print numbers from 1 to 5 on separate lines.",
+    mathSolution: "Multiple print statements",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        System.out.println(1);\n        System.out.println(2);\n        System.out.println(3);\n        System.out.println(4);\n        System.out.println(5);\n    }\n}',
+    hint: "One number per line",
   },
-  {
-    id: "intro_4",
-    topicId: "introduction",
-    question: "Create a program with multiple classes in one file.",
-    mathSolution:
-      "Only one public class per file, others can be package-private",
-    codeSolution:
-      '// Only one public class in file\npublic class School {\n    public static void main(String[] args) {\n        Student s = new Student("Alice", 101);\n        Teacher t = new Teacher("Mr. Smith", "Math");\n        \n        s.display();\n        t.display();\n    }\n}\n\n// Non-public classes can be in same file\nclass Student {\n    String name;\n    int id;\n    \n    Student(String name, int id) {\n        this.name = name;\n        this.id = id;\n    }\n    \n    void display() {\n        System.out.println("Student: " + name + ", ID: " + id);\n    }\n}\n\nclass Teacher {\n    String name;\n    String subject;\n    \n    Teacher(String name, String subject) {\n        this.name = name;\n        this.subject = subject;\n    }\n    \n    void display() {\n        System.out.println("Teacher: " + name + ", Subject: " + subject);\n    }\n}',
-    hint: "File name must match public class name",
-  },
+{
+  id: "intro_4",
+  topicId: "introduction",
+  question: "Print *** using a single print statement.",
+  mathSolution: "Display star characters using print statement",
+  codeSolution: 'public class Main {\n public static void main(String[] args) {\n System.out.println("***");\n }\n}',
+  hint: "Use println to print stars",
+},
 
-  // JAVA VERSIONS AND FEATURES (3)
   {
     id: "intro_5",
     topicId: "introduction",
-    question: "Demonstrate Java 8 features - lambda expression.",
-    mathSolution: "Lambda expressions provide functional programming",
-    codeSolution:
-      'import java.util.*;\nimport java.util.function.*;\n\npublic class Java8Features {\n    public static void main(String[] args) {\n        // Lambda expression\n        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");\n        \n        // Old way\n        System.out.println("Old way:");\n        for(String name : names) {\n            System.out.println(name);\n        }\n        \n        // Lambda way\n        System.out.println("\\nLambda way:");\n        names.forEach(name -> System.out.println(name));\n        \n        // Method reference\n        System.out.println("\\nMethod reference:");\n        names.forEach(System.out::println);\n        \n        // Stream API\n        System.out.println("\\nStream API:");\n        names.stream()\n            .filter(name -> name.startsWith("A"))\n            .map(String::toUpperCase)\n            .forEach(System.out::println);\n        \n        // Functional interface\n        Function<String, Integer> lengthFunc = s -> s.length();\n        System.out.println("\\nLength of \'Hello\': " + lengthFunc.apply("Hello"));\n    }\n}',
-    hint: "Java 8 introduced lambda, streams, and functional interfaces",
+    question: "Add a single-line comment in code saying 'This is my first program'.",
+    mathSolution: "Comments are ignored by compiler",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        // This is my first program\n        System.out.println("Java Program");\n    }\n}',
+    hint: "Use // for single-line comment",
   },
+
+  // VARIABLE DECLARATION (8)
   {
     id: "intro_6",
     topicId: "introduction",
-    question: "Use Java 11 features - var with lambda and new String methods.",
-    mathSolution: "Java 11 added local variable syntax for lambda parameters",
-    codeSolution:
-      'import java.util.*;\nimport java.util.function.*;\n\npublic class Java11Features {\n    public static void main(String[] args) {\n        // var with lambda parameters (Java 11)\n        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");\n        \n        Function<String, String> processor = (var s) -> s.toUpperCase();\n        names.stream()\n            .map(processor)\n            .forEach(System.out::println);\n        \n        // New String methods\n        String str = "  Hello World  ";\n        System.out.println("\'" + str + "\'");\n        System.out.println("isBlank(): " + str.isBlank());\n        System.out.println("strip(): \'" + str.strip() + "\'");\n        System.out.println("stripLeading(): \'" + str.stripLeading() + "\'");\n        System.out.println("stripTrailing(): \'" + str.stripTrailing() + "\'");\n        \n        String empty = "";\n        String blank = "   ";\n        System.out.println("empty.isBlank(): " + empty.isBlank());\n        System.out.println("blank.isBlank(): " + blank.isBlank());\n        \n        // lines() method\n        String multiline = "Line1\\nLine2\\nLine3";\n        multiline.lines().forEach(System.out::println);\n        \n        // repeat() method\n        String star = "*";\n        System.out.println(star.repeat(5));\n    }\n}',
-    hint: "Java 11 is LTS with useful String methods",
+    question: "Declare an integer variable 'age' and assign 25 to it. Print age.",
+    mathSolution: "Variable stores integer value",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int age = 25;\n        System.out.println(age);\n    }\n}',
+    hint: "int variableName = value;",
   },
   {
     id: "intro_7",
     topicId: "introduction",
-    question: "Use Java 17 features - sealed classes and pattern matching.",
-    mathSolution:
-      "Java 17 LTS introduced sealed classes and improved pattern matching",
-    codeSolution:
-      '// Sealed classes (Java 17)\nsealed interface Shape permits Circle, Rectangle, Triangle {}\n\nfinal class Circle implements Shape {\n    double radius;\n    Circle(double r) { radius = r; }\n}\n\nfinal class Rectangle implements Shape {\n    double length, width;\n    Rectangle(double l, double w) { length = l; width = w; }\n}\n\nnon-sealed class Triangle implements Shape { // non-sealed allows any subclass\n    double base, height;\n    Triangle(double b, double h) { base = b; height = h; }\n}\n\n// Pattern matching for switch (Java 17 preview, Java 21 final)\npublic class Java17Features {\n    public static void main(String[] args) {\n        Shape circle = new Circle(5);\n        Shape rectangle = new Rectangle(4, 6);\n        Shape triangle = new Triangle(3, 4);\n        \n        System.out.println("Area of circle: " + calculateArea(circle));\n        System.out.println("Area of rectangle: " + calculateArea(rectangle));\n        System.out.println("Area of triangle: " + calculateArea(triangle));\n        \n        // Text blocks (Java 13+)\n        String json = """\n            {\n                "name": "Alice",\n                "age": 25,\n                "city": "New York"\n            }\n            """;\n        System.out.println(json);\n        \n        // Switch expressions\n        String day = "MONDAY";\n        int numLetters = switch(day) {\n            case "MONDAY", "FRIDAY", "SUNDAY" -> 6;\n            case "TUESDAY" -> 7;\n            case "THURSDAY", "SATURDAY" -> 8;\n            case "WEDNESDAY" -> 9;\n            default -> 0;\n        };\n        System.out.println("Letters in " + day + ": " + numLetters);\n    }\n    \n    // Pattern matching for switch (Java 21)\n    static double calculateArea(Shape shape) {\n        return switch(shape) {\n            case Circle c -> Math.PI * c.radius * c.radius;\n            case Rectangle r -> r.length * r.width;\n            case Triangle t -> 0.5 * t.base * t.height;\n            // default not needed as sealed covers all cases\n        };\n    }\n}',
-    hint: "Java 17 is LTS with many modern features",
+    question: "Declare a double variable 'price' with value 99.99 and print.",
+    mathSolution: "Double stores decimal numbers",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        double price = 99.99;\n        System.out.println(price);\n    }\n}',
+    hint: "Use double data type",
   },
-
-  // JVM, JRE, JDK (3)
   {
     id: "intro_8",
     topicId: "introduction",
-    question: "Demonstrate class loading and JVM architecture.",
-    mathSolution: "JVM loads, verifies, and executes bytecode",
-    codeSolution:
-      'public class JVMDemo {\n    // Static block - runs when class is loaded\n    static {\n        System.out.println("Static block - class loaded");\n    }\n    \n    // Instance block - runs before constructor\n    {\n        System.out.println("Instance block - object created");\n    }\n    \n    public JVMDemo() {\n        System.out.println("Constructor called");\n    }\n    \n    public static void main(String[] args) {\n        System.out.println("Main method started");\n        \n        // Class loaded only when first referenced\n        System.out.println("\\nCreating first object:");\n        JVMDemo obj1 = new JVMDemo();\n        \n        System.out.println("\\nCreating second object:");\n        JVMDemo obj2 = new JVMDemo();\n        \n        // Demonstrate garbage collection\n        System.out.println("\\nRequesting GC");\n        obj1 = null;\n        System.gc(); // Request garbage collection\n        \n        System.out.println("Main method ending");\n    }\n    \n    // Finalize - called before garbage collection\n    @Override\n    protected void finalize() throws Throwable {\n        System.out.println("Finalize called - object being garbage collected");\n    }\n}\n\n// Check system properties\nclass SystemInfo {\n    public static void main(String[] args) {\n        System.out.println("Java Version: " + System.getProperty("java.version"));\n        System.out.println("Java Vendor: " + System.getProperty("java.vendor"));\n        System.out.println("OS Name: " + System.getProperty("os.name"));\n        System.out.println("OS Version: " + System.getProperty("os.version"));\n        System.out.println("User Home: " + System.getProperty("user.home"));\n        System.out.println("Current Directory: " + System.getProperty("user.dir"));\n    }\n}',
-    hint: "JVM includes class loader, memory areas, and execution engine",
+    question: "Declare a char variable 'grade' with value 'A' and print.",
+    mathSolution: "Char stores single character",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        char grade = \'A\';\n        System.out.println(grade);\n    }\n}',
+    hint: "Use single quotes for char",
   },
   {
     id: "intro_9",
     topicId: "introduction",
-    question: "Demonstrate JRE vs JDK differences.",
-    mathSolution: "JRE runs Java programs, JDK includes development tools",
-    codeSolution:
-      'public class JDKvsJRE {\n    public static void main(String[] args) {\n        System.out.println("=== JRE (Java Runtime Environment) ===");\n        System.out.println("Contains:");\n        System.out.println("- JVM (Java Virtual Machine)");\n        System.out.println("- Core class libraries");\n        System.out.println("- Supporting files");\n        System.out.println("Purpose: To RUN Java applications");\n        \n        System.out.println("\\n=== JDK (Java Development Kit) ===");\n        System.out.println("Contains everything in JRE plus:");\n        System.out.println("- javac (compiler)");\n        System.out.println("- jar (archiver)");\n        System.out.println("- javadoc (documentation generator)");\n        System.out.println("- debugger, etc.");\n        System.out.println("Purpose: To DEVELOP Java applications");\n        \n        // Check if running in JDK or JRE\n        System.out.println("\\n=== Current Environment ===");\n        String javaHome = System.getProperty("java.home");\n        System.out.println("Java Home: " + javaHome);\n        \n        if(javaHome.contains("jre")) {\n            System.out.println("Running in JRE");\n        } else if(javaHome.contains("jdk")) {\n            System.out.println("Running in JDK");\n        } else {\n            System.out.println("Unknown environment");\n        }\n        \n        // Classpath demonstration\n        System.out.println("\\nClasspath: " + System.getProperty("java.class.path"));\n        System.out.println("Library path: " + System.getProperty("java.library.path"));\n    }\n}',
-    hint: "JDK = JRE + Development Tools",
+    question: "Declare a boolean variable 'isJavaFun' as true and print.",
+    mathSolution: "Boolean stores true/false",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        boolean isJavaFun = true;\n        System.out.println(isJavaFun);\n    }\n}',
+    hint: "true or false only",
   },
   {
     id: "intro_10",
     topicId: "introduction",
-    question: "Compile and run Java program with package and classpath.",
-    mathSolution: "Use javac with -d and java with classpath",
-    codeSolution:
-      '// File: com/example/HelloWorld.java\npackage com.example;\n\npublic class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println("Hello from com.example package!");\n    }\n}\n\n// File: com/example/util/Helper.java\npackage com.example.util;\n\npublic class Helper {\n    public static void help() {\n        System.out.println("Helper class in util package");\n    }\n}\n\n// File: Main.java (in root directory)\nimport com.example.HelloWorld;\nimport com.example.util.Helper;\n\npublic class Main {\n    public static void main(String[] args) {\n        System.out.println("=== Compilation and Classpath Demo ===");\n        \n        // Show current directory\n        System.out.println("Current directory: " + System.getProperty("user.dir"));\n        \n        // Show classpath\n        System.out.println("Classpath: " + System.getProperty("java.class.path"));\n        \n        // Use classes from packages\n        HelloWorld.main(args);\n        Helper.help();\n        \n        System.out.println("\\n=== Compilation Commands ===");\n        System.out.println("1. Compile with package structure:");\n        System.out.println("   javac -d . com/example/HelloWorld.java com/example/util/Helper.java Main.java");\n        System.out.println("\\n2. Run:");\n        System.out.println("   java Main");\n        System.out.println("   java com.example.HelloWorld");\n        System.out.println("\\n3. Create JAR:");\n        System.out.println("   jar cf myapp.jar com Main.class");\n        System.out.println("   java -cp myapp.jar Main");\n    }\n}',
-    hint: "Use -d for destination directory, -cp for classpath",
+    question: "Declare a String variable 'name' with your name and print greeting.",
+    mathSolution: "String stores text",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        String name = "Alice";\n        System.out.println("Hello " + name);\n    }\n}',
+    hint: "Use double quotes for String",
   },
-
-  // COMMENTS AND DOCUMENTATION (3)
   {
     id: "intro_11",
     topicId: "introduction",
-    question: "Use single-line and multi-line comments.",
-    mathSolution: "Comments are ignored by compiler, for human readability",
-    codeSolution:
-      'public class CommentsDemo {\n    public static void main(String[] args) {\n        // This is a single-line comment\n        System.out.println("Single-line comments start with //");\n        \n        /* This is a \n           multi-line comment \n           that spans multiple lines */\n        System.out.println("Multi-line comments are between /* and */");\n        \n        // Comments can be used to disable code\n        // System.out.println("This line is commented out");\n        \n        /* \n        System.out.println("This block is commented out");\n        System.out.println("Multiple lines can be disabled");\n        */\n        \n        System.out.println("Comments are for developers, not for compiler");\n        \n        // TODO: Add more functionality\n        // FIXME: Fix this bug later\n        // XXX: This needs review\n    }\n}',
-    hint: "Comments improve code readability and maintainability",
+    question: "Declare multiple variables of same type in one line: int a=10, b=20.",
+    mathSolution: "Comma-separated declaration",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int a = 10, b = 20;\n        System.out.println(a + ", " + b);\n    }\n}',
+    hint: "Use commas to separate",
   },
   {
     id: "intro_12",
     topicId: "introduction",
-    question: "Create Javadoc comments for documentation.",
-    mathSolution: "Javadoc generates HTML documentation from special comments",
-    codeSolution:
-      '/**\n * This class demonstrates Javadoc comments.\n * It shows how to document classes, methods, and fields.\n * \n * @author John Doe\n * @version 1.0\n * @since Java 8\n */\npublic class JavadocDemo {\n    \n    /** The constant value of PI */\n    public static final double PI = 3.14159;\n    \n    /** The name of this instance */\n    private String name;\n    \n    /**\n     * Constructs a new JavadocDemo with the specified name.\n     *\n     * @param name the name to be assigned to this instance\n     */\n    public JavadocDemo(String name) {\n        this.name = name;\n    }\n    \n    /**\n     * Returns the name of this instance.\n     *\n     * @return the name of this instance\n     */\n    public String getName() {\n        return name;\n    }\n    \n    /**\n     * Calculates the area of a circle.\n     *\n     * @param radius the radius of the circle\n     * @return the area of the circle\n     * @throws IllegalArgumentException if radius is negative\n     */\n    public double calculateCircleArea(double radius) {\n        if(radius < 0) {\n            throw new IllegalArgumentException("Radius cannot be negative");\n        }\n        return PI * radius * radius;\n    }\n    \n    /**\n     * Calculates the sum of two integers.\n     *\n     * @param a first integer\n     * @param b second integer\n     * @return the sum of a and b\n     */\n    public static int add(int a, int b) {\n        return a + b;\n    }\n    \n    /**\n     * The main method - entry point of the program.\n     *\n     * @param args command line arguments\n     */\n    public static void main(String[] args) {\n        JavadocDemo demo = new JavadocDemo("Test");\n        System.out.println("Name: " + demo.getName());\n        System.out.println("Area: " + demo.calculateCircleArea(5));\n        System.out.println("Sum: " + add(10, 20));\n        \n        System.out.println("\\nGenerate Javadoc with:");\n        System.out.println("javadoc -d docs JavadocDemo.java");\n    }\n}',
-    hint: "Javadoc uses /** ... */ with @ tags",
+    question: "Declare a final (constant) variable PI with value 3.14159.",
+    mathSolution: "final keyword makes variable constant",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        final double PI = 3.14159;\n        System.out.println(PI);\n    }\n}',
+    hint: "Use final keyword",
   },
   {
     id: "intro_13",
     topicId: "introduction",
-    question: "Use annotation comments and marker annotations.",
-    mathSolution: "Annotations provide metadata about code",
-    codeSolution:
-      'import java.lang.annotation.*;\nimport java.util.*;\n\n// Custom annotation definition\n@Retention(RetentionPolicy.RUNTIME)\n@Target({ElementType.METHOD, ElementType.TYPE})\n@interface Author {\n    String name();\n    String date() default "unknown";\n}\n\n@Retention(RetentionPolicy.RUNTIME)\n@Target(ElementType.METHOD)\n@interface Todo {\n    String task();\n    Priority priority() default Priority.MEDIUM;\n}\n\nenum Priority {\n    LOW, MEDIUM, HIGH, CRITICAL\n}\n\n// Using annotations\n@Author(name = "Alice", date = "2024-01-15")\npublic class AnnotationDemo {\n    \n    @SuppressWarnings("unchecked")\n    @Author(name = "Bob")\n    @Todo(task = "Implement error handling", priority = Priority.HIGH)\n    public void processData() {\n        // Suppress unchecked warnings\n        List rawList = new ArrayList();\n        rawList.add("Hello");\n        \n        @SuppressWarnings("unused")\n        int unused = 42;\n        \n        System.out.println("Processing data...");\n    }\n    \n    @Deprecated\n    @Todo(task = "Remove in next version", priority = Priority.LOW)\n    public void oldMethod() {\n        System.out.println("This method is deprecated");\n    }\n    \n    @Override\n    public String toString() {\n        return "AnnotationDemo instance";\n    }\n    \n    @SafeVarargs\n    public static <T> void printAll(T... items) {\n        for(T item : items) {\n            System.out.println(item);\n        }\n    }\n    \n    @FunctionalInterface\n    interface Calculator {\n        int calculate(int a, int b);\n    }\n    \n    public static void main(String[] args) {\n        AnnotationDemo demo = new AnnotationDemo();\n        demo.processData();\n        demo.oldMethod();\n        \n        // Use functional interface with lambda\n        Calculator add = (a, b) -> a + b;\n        System.out.println("Add: " + add.calculate(5, 3));\n        \n        // Get annotation information at runtime\n        Author author = AnnotationDemo.class.getAnnotation(Author.class);\n        if(author != null) {\n            System.out.println("\\nClass author: " + author.name());\n            System.out.println("Date: " + author.date());\n        }\n    }\n}',
-    hint: "Annotations start with @, provide metadata",
+    question: "Swap values of two variables x=5 and y=10 using third variable.",
+    mathSolution: "Use temporary storage",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int x = 5, y = 10, temp;\n        temp = x; x = y; y = temp;\n        System.out.println("x=" + x + ", y=" + y);\n    }\n}',
+    hint: "Store one value temporarily",
   },
 
-  // IDEs AND DEVELOPMENT ENVIRONMENT (3)
+  // BASIC INPUT (5)
   {
     id: "intro_14",
     topicId: "introduction",
-    question: "Set up and use IDE shortcuts for productivity.",
-    mathSolution: "IDEs provide shortcuts for common operations",
-    codeSolution:
-      'public class IDEShortcuts {\n    public static void main(String[] args) {\n        System.out.println("=== Common IDE Shortcuts ===");\n        \n        System.out.println("\\n=== Eclipse ===");\n        System.out.println("Ctrl+Space - Content assist");\n        System.out.println("Ctrl+Shift+O - Organize imports");\n        System.out.println("Ctrl+Shift+F - Format code");\n        System.out.println("Ctrl+/ - Comment/uncomment line");\n        System.out.println("Alt+Shift+R - Rename");\n        System.out.println("F3 - Go to declaration");\n        System.out.println("Ctrl+O - Outline");\n        System.out.println("Ctrl+Shift+T - Open type");\n        \n        System.out.println("\\n=== IntelliJ IDEA ===");\n        System.out.println("Alt+Enter - Show intention actions");\n        System.out.println("Ctrl+Alt+L - Reformat code");\n        System.out.println("Ctrl+Shift+Enter - Complete statement");\n        System.out.println("Ctrl+Space - Basic code completion");\n        System.out.println("Ctrl+Shift+Space - Smart completion");\n        System.out.println("Ctrl+P - Parameter info");\n        System.out.println("Ctrl+Q - Quick documentation");\n        System.out.println("Shift+F6 - Rename");\n        \n        System.out.println("\\n=== VS Code ===");\n        System.out.println("Ctrl+Shift+P - Command palette");\n        System.out.println("Ctrl+, - Settings");\n        System.out.println("F12 - Go to definition");\n        System.out.println("Alt+F12 - Peek definition");\n        System.out.println("Ctrl+Shift+O - Go to symbol");\n        \n        // Demonstrate code generation in IDE\n        // In IDE, type \'main\' + Tab to generate main method\n        // Type \'sout\' + Tab for System.out.println()\n        // Type \'fori\' + Tab for for loop\n        // Type \'psvm\' + Tab for main method\n        \n        System.out.println("\\n=== Live Templates ===");\n        System.out.println("main - public static void main");\n        System.out.println("sout - System.out.println");\n        System.out.println("fori - for loop with index");\n        System.out.println("foreach - enhanced for loop");\n        System.out.println("psf - public static final");\n        System.out.println("psvm - public static void main");\n    }\n}',
-    hint: "Learn IDE shortcuts to boost productivity",
+    question: "Take integer input from user and print it.",
+    mathSolution: "Use Scanner class",
+    codeSolution: 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int num = sc.nextInt();\n        System.out.println(num);\n        sc.close();\n    }\n}',
+    hint: "import java.util.Scanner",
   },
   {
     id: "intro_15",
     topicId: "introduction",
-    question: "Use debugging features in IDE.",
-    mathSolution: "Debugging helps find and fix issues",
-    codeSolution:
-      'public class DebugDemo {\n    \n    public static int factorial(int n) {\n        // Set breakpoint here\n        System.out.println("Calculating factorial of " + n);\n        \n        if(n <= 1) {\n            return 1;\n        }\n        \n        int result = n * factorial(n - 1);\n        System.out.println("Factorial of " + n + " = " + result);\n        return result;\n    }\n    \n    public static int divide(int a, int b) {\n        // Set conditional breakpoint when b == 0\n        return a / b;\n    }\n    \n    public static void processArray(int[] arr) {\n        for(int i = 0; i < arr.length; i++) {\n            // Watch variable i and arr[i]\n            arr[i] = arr[i] * 2;\n        }\n    }\n    \n    public static void main(String[] args) {\n        System.out.println("=== Debugging Demo ===");\n        \n        // Set breakpoint here\n        int num = 5;\n        int fact = factorial(num);\n        System.out.println("Factorial of " + num + " is " + fact);\n        \n        // This will cause exception - set breakpoint\n        try {\n            int result = divide(10, 0);\n        } catch(Exception e) {\n            System.out.println("Caught exception: " + e);\n        }\n        \n        // Debug array processing\n        int[] numbers = {1, 2, 3, 4, 5};\n        processArray(numbers);\n        \n        System.out.println("Processed array: " + java.util.Arrays.toString(numbers));\n        \n        System.out.println("\\n=== Debugging Tips ===");\n        System.out.println("1. Set breakpoints - click left margin");\n        System.out.println("2. Step Over (F8) - execute current line");\n        System.out.println("3. Step Into (F7) - enter method");\n        System.out.println("4. Step Out (Shift+F8) - exit method");\n        System.out.println("5. Resume (F9) - continue to next breakpoint");\n        System.out.println("6. Evaluate expression - inspect variables");\n        System.out.println("7. Watches - monitor variables");\n        System.out.println("8. Conditional breakpoints - break when condition true");\n    }\n}',
-    hint: "Debugging is essential for finding logical errors",
+    question: "Take string input from user and print 'Hello [name]'.",
+    mathSolution: "Use nextLine() method",
+    codeSolution: 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String name = sc.nextLine();\n        System.out.println("Hello " + name);\n        sc.close();\n    }\n}',
+    hint: "sc.nextLine() reads string",
   },
   {
     id: "intro_16",
     topicId: "introduction",
-    question: "Use build tools - Maven and Gradle basics.",
-    mathSolution: "Build tools manage dependencies and build process",
-    codeSolution:
-      '// Maven pom.xml\n/*\n<project>\n    <modelVersion>4.0.0</modelVersion>\n    <groupId>com.example</groupId>\n    <artifactId>my-app</artifactId>\n    <version>1.0-SNAPSHOT</version>\n    \n    <properties>\n        <maven.compiler.source>11</maven.compiler.source>\n        <maven.compiler.target>11</maven.compiler.target>\n    </properties>\n    \n    <dependencies>\n        <dependency>\n            <groupId>org.junit.jupiter</groupId>\n            <artifactId>junit-jupiter</artifactId>\n            <version>5.9.2</version>\n            <scope>test</scope>\n        </dependency>\n    </dependencies>\n</project>\n*/\n\n// Gradle build.gradle\n/*\nplugins {\n    id \'java\'\n    id \'application\'\n}\n\nrepositories {\n    mavenCentral()\n}\n\ndependencies {\n    testImplementation \'org.junit.jupiter:junit-jupiter:5.9.2\'\n    implementation \'com.google.guava:guava:32.1.2-jre\'\n}\n\napplication {\n    mainClass = \'com.example.Main\'\n}\n\njava {\n    toolchain {\n        languageVersion = JavaLanguageVersion.of(11)\n    }\n}\n*/\n\n// Simple Java class that could be built with these tools\npublic class BuildToolDemo {\n    public static void main(String[] args) {\n        System.out.println("=== Build Tools Demo ===");\n        \n        System.out.println("\\n=== Maven Commands ===");\n        System.out.println("mvn compile - Compile source code");\n        System.out.println("mvn test - Run tests");\n        System.out.println("mvn package - Create JAR");\n        System.out.println("mvn clean - Clean target directory");\n        System.out.println("mvn install - Install to local repository");\n        System.out.println("mvn dependency:tree - Show dependencies");\n        \n        System.out.println("\\n=== Gradle Commands ===");\n        System.out.println("gradle build - Build project");\n        System.out.println("gradle clean - Clean build directory");\n        System.out.println("gradle test - Run tests");\n        System.out.println("gradle run - Run application");\n        System.out.println("gradle dependencies - Show dependencies");\n        System.out.println("gradle wrapper - Generate wrapper scripts");\n        \n        // Show classpath with dependencies\n        System.out.println("\\nClasspath: " + System.getProperty("java.class.path"));\n    }\n}',
-    hint: "Maven and Gradle automate build process and dependency management",
+    question: "Take two integers as input and print their sum.",
+    mathSolution: "Addition of two numbers",
+    codeSolution: 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int a = sc.nextInt();\n        int b = sc.nextInt();\n        System.out.println(a + b);\n        sc.close();\n    }\n}',
+    hint: "Read two ints and add",
   },
-
-  // FIRST JAVA PROGRAM STRUCTURE (4)
   {
     id: "intro_17",
     topicId: "introduction",
-    question: "Understand package declaration and imports.",
-    mathSolution: "Package organizes classes, imports bring in other classes",
-    codeSolution:
-      '// Package declaration - must be first line (except comments)\npackage com.example.myapp;\n\n// Import statements - after package, before class\nimport java.util.List;\nimport java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Scanner;\nimport static java.lang.Math.*; // static import\n\n// Multiple classes can be imported with wildcard\n// import java.util.*;\n\npublic class PackageImportDemo {\n    \n    private String name;\n    \n    public PackageImportDemo(String name) {\n        this.name = name;\n    }\n    \n    public void demonstrateImports() {\n        // Using imported classes\n        List<String> list = new ArrayList<>();\n        list.add("Hello");\n        list.add("World");\n        \n        // Using Arrays class\n        int[] numbers = {1, 2, 3, 4, 5};\n        String arrayStr = Arrays.toString(numbers);\n        \n        // Using static import - no Math. prefix\n        double sqrt = sqrt(25); // instead of Math.sqrt\n        double pi = PI; // instead of Math.PI\n        \n        // Using Scanner\n        Scanner scanner = new Scanner(System.in);\n        \n        System.out.println("Package: " + this.getClass().getPackage().getName());\n        System.out.println("Simple name: " + this.getClass().getSimpleName());\n        System.out.println("List: " + list);\n        System.out.println("Array: " + arrayStr);\n        System.out.println("Sqrt(25) = " + sqrt);\n        System.out.println("PI = " + pi);\n    }\n    \n    public static void main(String[] args) {\n        PackageImportDemo demo = new PackageImportDemo("Test");\n        demo.demonstrateImports();\n        \n        System.out.println("\\n=== Package Naming Convention ===");\n        System.out.println("com.company.project.module");\n        System.out.println("org.apache.commons.lang3");\n        System.out.println("java.util.stream");\n    }\n}',
-    hint: "Package declaration first, then imports, then class",
+    question: "Take double input and print its square.",
+    mathSolution: "number * number",
+    codeSolution: 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        double num = sc.nextDouble();\n        System.out.println(num * num);\n        sc.close();\n    }\n}',
+    hint: "Multiply number by itself",
   },
   {
     id: "intro_18",
     topicId: "introduction",
-    question: "Create a class with fields, constructor, and methods.",
-    mathSolution: "Class contains data (fields) and behavior (methods)",
-    codeSolution:
-      'public class ClassStructureDemo {\n    \n    // Fields (instance variables)\n    private String name;\n    private int age;\n    private static int objectCount = 0;\n    public static final String CLASS_NAME = "ClassStructureDemo";\n    \n    // Constructor\n    public ClassStructureDemo(String name, int age) {\n        this.name = name;\n        this.age = age;\n        objectCount++;\n        System.out.println("Object created. Total objects: " + objectCount);\n    }\n    \n    // Default constructor\n    public ClassStructureDemo() {\n        this("Unknown", 0); // Call parameterized constructor\n    }\n    \n    // Getter methods\n    public String getName() {\n        return name;\n    }\n    \n    public int getAge() {\n        return age;\n    }\n    \n    // Setter methods\n    public void setName(String name) {\n        this.name = name;\n    }\n    \n    public void setAge(int age) {\n        if(age > 0) {\n            this.age = age;\n        }\n    }\n    \n    // Instance method\n    public void display() {\n        System.out.println("Name: " + name + ", Age: " + age);\n    }\n    \n    // Static method\n    public static int getObjectCount() {\n        return objectCount;\n    }\n    \n    // Method with parameters and return value\n    public int calculateBirthYear(int currentYear) {\n        return currentYear - age;\n    }\n    \n    // Overloaded method\n    public void celebrateBirthday() {\n        age++;\n        System.out.println(name + " is now " + age);\n    }\n    \n    public void celebrateBirthday(int years) {\n        age += years;\n        System.out.println(name + " is now " + age + " after " + years + " years");\n    }\n    \n    // Override toString method\n    @Override\n    public String toString() {\n        return "Person[name=" + name + ", age=" + age + "]";\n    }\n    \n    // Main method - entry point\n    public static void main(String[] args) {\n        System.out.println("=== Class Structure Demo ===");\n        System.out.println("Class name: " + CLASS_NAME);\n        \n        // Create objects\n        ClassStructureDemo person1 = new ClassStructureDemo("Alice", 25);\n        ClassStructureDemo person2 = new ClassStructureDemo("Bob", 30);\n        ClassStructureDemo person3 = new ClassStructureDemo();\n        \n        // Call methods\n        person1.display();\n        person2.display();\n        person3.display();\n        \n        person1.setName("Alicia");\n        person1.setAge(26);\n        System.out.println("After update: " + person1);\n        \n        int birthYear = person2.calculateBirthYear(2024);\n        System.out.println(person2.getName() + " was born in " + birthYear);\n        \n        person1.celebrateBirthday();\n        person2.celebrateBirthday(5);\n        \n        System.out.println("Total objects created: " + getObjectCount());\n    }\n}',
-    hint: "Class contains fields, constructors, and methods",
+    question: "Take user's age and print 'You are X years old'.",
+    mathSolution: "String concatenation",
+    codeSolution: 'import java.util.Scanner;\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int age = sc.nextInt();\n        System.out.println("You are " + age + " years old");\n        sc.close();\n    }\n}',
+    hint: "Concatenate string and variable",
   },
+
+  // OPERATORS (8)
   {
     id: "intro_19",
     topicId: "introduction",
-    question: "Use different access modifiers.",
-    mathSolution:
-      "Access modifiers control visibility: public, protected, default, private",
-    codeSolution:
-      'package com.example.access;\n\npublic class AccessModifiersDemo {\n    \n    // Different access levels\n    public String publicField = "Public - accessible everywhere";\n    protected String protectedField = "Protected - accessible in package + subclasses";\n    String defaultField = "Default - accessible in same package";\n    private String privateField = "Private - accessible only in this class";\n    \n    public void publicMethod() {\n        System.out.println("Public method called");\n        System.out.println("  Accessing private field: " + privateField);\n    }\n    \n    protected void protectedMethod() {\n        System.out.println("Protected method called");\n    }\n    \n    void defaultMethod() {\n        System.out.println("Default method called");\n    }\n    \n    private void privateMethod() {\n        System.out.println("Private method called");\n    }\n    \n    public void demonstrateAccess() {\n        System.out.println("=== Inside same class ===");\n        System.out.println(publicField);\n        System.out.println(protectedField);\n        System.out.println(defaultField);\n        System.out.println(privateField);\n        publicMethod();\n        protectedMethod();\n        defaultMethod();\n        privateMethod();\n    }\n    \n    public static void main(String[] args) {\n        AccessModifiersDemo demo = new AccessModifiersDemo();\n        demo.demonstrateAccess();\n        \n        System.out.println("\\n=== Access Modifier Summary ===");\n        System.out.println("private   - only within class");\n        System.out.println("default   - package-private");\n        System.out.println("protected - package + subclasses");\n        System.out.println("public    - everywhere");\n    }\n}\n\n// Another class in same package to test access\nclass TestSamePackage {\n    public void test() {\n        AccessModifiersDemo demo = new AccessModifiersDemo();\n        \n        System.out.println("\\n=== From same package ===");\n        System.out.println(demo.publicField);\n        System.out.println(demo.protectedField);\n        System.out.println(demo.defaultField);\n        // System.out.println(demo.privateField); // Error\n        \n        demo.publicMethod();\n        demo.protectedMethod();\n        demo.defaultMethod();\n        // demo.privateMethod(); // Error\n    }\n}',
-    hint: "Use access modifiers to implement encapsulation",
+    question: "Perform addition, subtraction, multiplication, division on two integers.",
+    mathSolution: "Basic arithmetic operations",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int a = 20, b = 5;\n        System.out.println("Add: " + (a+b));\n        System.out.println("Sub: " + (a-b));\n        System.out.println("Mul: " + (a*b));\n        System.out.println("Div: " + (a/b));\n    }\n}',
+    hint: "Use + - * / operators",
   },
   {
     id: "intro_20",
     topicId: "introduction",
-    question: "Use static and instance members correctly.",
-    mathSolution: "Static members belong to class, instance members to objects",
-    codeSolution:
-      'public class StaticVsInstance {\n    \n    // Static members\n    private static int staticCounter = 0;\n    public static final String CLASS_NAME = "StaticVsInstance";\n    \n    // Instance members\n    private String instanceName;\n    private int instanceId;\n    \n    public StaticVsInstance(String name) {\n        this.instanceName = name;\n        this.instanceId = ++staticCounter;\n        System.out.println("Created instance " + instanceId + ": " + name);\n    }\n    \n    // Static method\n    public static int getStaticCounter() {\n        return staticCounter;\n    }\n    \n    public static void staticMethod() {\n        System.out.println("Static method called");\n        // Cannot access instance members directly\n        // System.out.println(instanceName); // Error\n    }\n    \n    // Instance method\n    public void instanceMethod() {\n        System.out.println("Instance method called by " + instanceName);\n        // Can access both static and instance members\n        System.out.println("  Instance ID: " + instanceId);\n        System.out.println("  Static counter: " + staticCounter);\n        staticMethod(); // Can call static method\n    }\n    \n    public void display() {\n        System.out.println("Instance: " + instanceName + " (ID: " + instanceId + ")");\n    }\n    \n    // Static block - runs when class is loaded\n    static {\n        System.out.println("Static block executed - class loaded");\n        System.out.println("Class name: " + CLASS_NAME);\n    }\n    \n    // Instance block - runs before constructor\n    {\n        System.out.println("Instance block executed for " + instanceName);\n    }\n    \n    public static void main(String[] args) {\n        System.out.println("=== Static vs Instance Demo ===");\n        System.out.println("Class name: " + CLASS_NAME);\n        System.out.println("Initial static counter: " + getStaticCounter());\n        \n        staticMethod();\n        \n        System.out.println("\\nCreating instances:");\n        StaticVsInstance obj1 = new StaticVsInstance("Alice");\n        StaticVsInstance obj2 = new StaticVsInstance("Bob");\n        StaticVsInstance obj3 = new StaticVsInstance("Charlie");\n        \n        System.out.println("\\nCalling instance methods:");\n        obj1.instanceMethod();\n        obj2.instanceMethod();\n        \n        System.out.println("\\nFinal static counter: " + getStaticCounter());\n        \n        // Static members accessed via class name\n        System.out.println("Class name from static: " + StaticVsInstance.CLASS_NAME);\n        \n        // Also accessible via instance but not recommended\n        System.out.println("Class name from instance: " + obj1.CLASS_NAME);\n    }\n}',
-    hint: "Static members are shared across all instances",
+    question: "Find remainder when 17 divided by 5 using modulo operator.",
+    mathSolution: "17 % 5 = 2",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int result = 17 % 5;\n        System.out.println("Remainder: " + result);\n    }\n}',
+    hint: "Use % operator",
   },
-
-  // KEYWORDS AND IDENTIFIERS (3)
   {
     id: "intro_21",
     topicId: "introduction",
-    question: "Use Java keywords and valid identifiers.",
-    mathSolution:
-      "Keywords have special meaning, identifiers are names given by programmer",
-    codeSolution:
-      'public class KeywordsAndIdentifiers {\n    \n    // Valid identifiers\n    String name;           // starts with letter\n    int _counter;          // starts with underscore\n    double $price;         // starts with dollar sign\n    String myVariable;     // camelCase convention\n    int MAX_VALUE = 100;   // UPPER_CASE for constants\n    \n    // Invalid identifiers (commented out - would cause errors)\n    // int 123abc;         // cannot start with digit\n    // String class;        // cannot use keyword\n    // int my-name;         // hyphen not allowed\n    // float my name;       // spaces not allowed\n    \n    public static void main(String[] args) {\n        System.out.println("=== Java Keywords ===");\n        System.out.println("Keywords: abstract, assert, boolean, break, byte, case, catch,");\n        System.out.println("char, class, const, continue, default, do, double, else, enum,");\n        System.out.println("extends, final, finally, float, for, goto, if, implements,");\n        System.out.println("import, instanceof, int, interface, long, native, new, package,");\n        System.out.println("private, protected, public, return, short, static, strictfp,");\n        System.out.println("super, switch, synchronized, this, throw, throws, transient,");\n        System.out.println("try, void, volatile, while");\n        \n        System.out.println("\\n=== Reserved Literals ===");\n        System.out.println("true, false, null");\n        \n        System.out.println("\\n=== Identifier Rules ===");\n        System.out.println("1. Can contain letters, digits, underscore, dollar sign");\n        System.out.println("2. Cannot start with digit");\n        System.out.println("3. Cannot be keyword");\n        System.out.println("4. Case-sensitive");\n        System.out.println("5. No length limit");\n        \n        System.out.println("\\n=== Naming Conventions ===");\n        System.out.println("Classes: PascalCase (MyClass)");\n        System.out.println("Methods: camelCase (myMethod)");\n        System.out.println("Variables: camelCase (myVariable)");\n        System.out.println("Constants: UPPER_CASE (MAX_VALUE)");\n        System.out.println("Packages: lowercase (com.example.myapp)");\n        \n        // Demonstrate valid identifiers\n        int age = 25;\n        double _price = 99.99;\n        String $name = "John";\n        final int MAX_AGE = 150;\n        \n        System.out.println("\\n=== Valid Identifiers ===");\n        System.out.println("age = " + age);\n        System.out.println("_price = " + _price);\n        System.out.println("$name = " + $name);\n        System.out.println("MAX_AGE = " + MAX_AGE);\n    }\n}',
-    hint: "Follow naming conventions for readability",
+    question: "Increment a variable from 5 to 6 using ++ operator.",
+    mathSolution: "Add 1 to value",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 5;\n        num++;\n        System.out.println(num);\n    }\n}',
+    hint: "Use ++ operator",
   },
   {
     id: "intro_22",
     topicId: "introduction",
-    question: "Use primitive data types and their wrappers.",
-    mathSolution: "Primitives store values, wrappers add object functionality",
-    codeSolution:
-      'public class DataTypesDemo {\n    public static void main(String[] args) {\n        System.out.println("=== Primitive Data Types ===");\n        \n        // Integer types\n        byte b = 127;                // 8 bits, -128 to 127\n        short s = 32767;              // 16 bits, -32,768 to 32,767\n        int i = 2147483647;           // 32 bits, -2^31 to 2^31-1\n        long l = 9223372036854775807L; // 64 bits, need L suffix\n        \n        // Floating point types\n        float f = 3.14159f;            // 32 bits, need f suffix\n        double d = 3.141592653589793; // 64 bits, default for decimals\n        \n        // Other types\n        char c = \'A\';                  // 16 bits, Unicode character\n        boolean bool = true;            // true or false\n        \n        System.out.println("byte: " + b + " (size: 1 byte)");\n        System.out.println("short: " + s + " (size: 2 bytes)");\n        System.out.println("int: " + i + " (size: 4 bytes)");\n        System.out.println("long: " + l + " (size: 8 bytes)");\n        System.out.println("float: " + f + " (size: 4 bytes)");\n        System.out.println("double: " + d + " (size: 8 bytes)");\n        System.out.println("char: " + c + " (ASCII: " + (int)c + ")");\n        System.out.println("boolean: " + bool);\n        \n        System.out.println("\\n=== Wrapper Classes ===");\n        Byte byteObj = b;\n        Short shortObj = s;\n        Integer intObj = i;\n        Long longObj = l;\n        Float floatObj = f;\n        Double doubleObj = d;\n        Character charObj = c;\n        Boolean boolObj = bool;\n        \n        System.out.println("Integer.MAX_VALUE: " + Integer.MAX_VALUE);\n        System.out.println("Double.MIN_VALUE: " + Double.MIN_VALUE);\n        System.out.println("Character.isDigit(\'5\'): " + Character.isDigit(\'5\'));\n        System.out.println("Boolean.parseBoolean(\'true\'): " + Boolean.parseBoolean("true"));\n        \n        // Autoboxing and unboxing\n        Integer num = 100; // autoboxing\n        int value = num;   // unboxing\n        System.out.println("\\nAutoboxing: " + num + ", Unboxing: " + value);\n        \n        // String to primitive conversion\n        int parsed = Integer.parseInt("123");\n        double parsedDouble = Double.parseDouble("3.14");\n        System.out.println("Parsed int: " + parsed);\n        System.out.println("Parsed double: " + parsedDouble);\n    }\n}',
-    hint: "Java has 8 primitive types: byte, short, int, long, float, double, char, boolean",
+    question: "Decrement a variable from 10 to 9 using -- operator.",
+    mathSolution: "Subtract 1 from value",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 10;\n        num--;\n        System.out.println(num);\n    }\n}',
+    hint: "Use -- operator",
   },
   {
     id: "intro_23",
     topicId: "introduction",
-    question: "Understand variable scope and lifetime.",
-    mathSolution: "Variables have different scopes: class, method, block",
-    codeSolution:
-      'public class VariableScopeDemo {\n    \n    // Class-level (instance) variable\n    private int instanceVar = 10;\n    \n    // Static variable (class variable)\n    private static int staticVar = 20;\n    \n    public void demonstrateScope() {\n        // Method-level local variable\n        int localVar = 30;\n        System.out.println("Inside method - localVar: " + localVar);\n        System.out.println("Inside method - instanceVar: " + instanceVar);\n        System.out.println("Inside method - staticVar: " + staticVar);\n        \n        // Block scope\n        for(int i = 0; i < 3; i++) {\n            // i is block-scoped - only inside for loop\n            int blockVar = i * 10;\n            System.out.println("  Inside block - i: " + i + ", blockVar: " + blockVar);\n        }\n        // System.out.println(i); // Error - i out of scope\n        // System.out.println(blockVar); // Error - blockVar out of scope\n        \n        // Another block\n        {\n            int innerBlock = 100;\n            System.out.println("Inside inner block: " + innerBlock);\n            // Can access outer scope variables\n            System.out.println("  Accessing localVar: " + localVar);\n        }\n        // System.out.println(innerBlock); // Error - out of scope\n    }\n    \n    public void shadowingDemo(int paramVar) {\n        // Parameter shadows class variable if same name\n        int instanceVar = 100; // shadows instanceVar\n        System.out.println("\\n=== Variable Shadowing ===");\n        System.out.println("Parameter paramVar: " + paramVar);\n        System.out.println("Local instanceVar (shadows): " + instanceVar);\n        System.out.println("Actual instanceVar: " + this.instanceVar);\n        System.out.println("StaticVar: " + staticVar);\n    }\n    \n    public static void main(String[] args) {\n        VariableScopeDemo demo = new VariableScopeDemo();\n        demo.demonstrateScope();\n        demo.shadowingDemo(50);\n        \n        System.out.println("\\n=== Variable Lifetime ===");\n        System.out.println("Instance variable: lives as long as object exists");\n        System.out.println("Static variable: lives as long as class is loaded");\n        System.out.println("Local variable: lives only during method execution");\n        System.out.println("Block variable: lives only during block execution");\n        \n        // Demonstrate static variable across instances\n        VariableScopeDemo obj1 = new VariableScopeDemo();\n        VariableScopeDemo obj2 = new VariableScopeDemo();\n        \n        obj1.instanceVar = 100;\n        obj2.instanceVar = 200;\n        VariableScopeDemo.staticVar = 500; // shared\n        \n        System.out.println("\\nobj1.instanceVar: " + obj1.instanceVar);\n        System.out.println("obj2.instanceVar: " + obj2.instanceVar);\n        System.out.println("obj1.staticVar: " + obj1.staticVar);\n        System.out.println("obj2.staticVar: " + obj2.staticVar);\n    }\n}',
-    hint: "Scope determines where variable is accessible, lifetime determines how long it exists",
+    question: "Use shorthand += to add 5 to a variable starting at 10.",
+    mathSolution: "variable = variable + 5",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 10;\n        num += 5;\n        System.out.println(num);\n    }\n}',
+    hint: "Use += operator",
   },
-
-  // JAVA PROGRAM EXECUTION (2)
-  {
-    id: "intro_24",
-    topicId: "introduction",
-    question: "Understand compilation and execution process.",
-    mathSolution: "Java source -> bytecode -> JVM execution",
-    codeSolution:
-      'public class CompilationProcess {\n    public static void main(String[] args) {\n        System.out.println("=== Java Compilation and Execution Process ===");\n        \n        System.out.println("\\n1. Write Source Code (.java files)");\n        System.out.println("   - Human-readable Java code");\n        \n        System.out.println("\\n2. Compile with javac");\n        System.out.println("   javac CompilationProcess.java");\n        System.out.println("   - Creates bytecode (.class files)");\n        \n        System.out.println("\\n3. Class Loader loads .class files");\n        System.out.println("   - Loading: finds and imports class files");\n        System.out.println("   - Linking: verifies, prepares, resolves");\n        System.out.println("   - Initialization: runs static initializers");\n        \n        System.out.println("\\n4. Bytecode Verifier checks code safety");\n        System.out.println("   - Ensures bytecode doesn\'t violate security");\n        \n        System.out.println("\\n5. JIT Compiler (Just-In-Time)");\n        System.out.println("   - Converts bytecode to native machine code");\n        System.out.println("   - Optimizes frequently executed code");\n        \n        System.out.println("\\n6. Execution by JVM");\n        System.out.println("   java CompilationProcess");\n        System.out.println("   - Runs the program");\n        \n        // Show class location\n        String classPath = CompilationProcess.class.getResource(\n            CompilationProcess.class.getSimpleName() + ".class").toString();\n        System.out.println("\\nCurrent class location: " + classPath);\n        \n        // Show Java version\n        System.out.println("\\nJava version: " + System.getProperty("java.version"));\n        System.out.println("Java home: " + System.getProperty("java.home"));\n        \n        System.out.println("\\n=== Platform Independence ===");\n        System.out.println("Write Once, Run Anywhere (WORA)");\n        System.out.println("Same .class file runs on any platform with JVM");\n    }\n}',
-    hint: "Java is compiled to bytecode, then interpreted/compiled by JVM",
-  },
+ {
+  id: "intro_24",
+  topicId: "introduction",
+  question: "Compare two integers 15 and 20 using relational operators.",
+  mathSolution: "Relational operators compare values",
+  codeSolution: 'public class Main {\n public static void main(String[] args) {\n int a = 15, b = 20;\n System.out.println(a > b);\n System.out.println(a < b);\n System.out.println(a == b);\n System.out.println(a != b);\n System.out.println(a >= b);\n System.out.println(a <= b);\n }\n}',
+  hint: "Use > < == != >= <=",
+},
   {
     id: "intro_25",
     topicId: "introduction",
-    question: "Understand JVM memory management and garbage collection.",
-    mathSolution: "JVM manages memory automatically with GC",
-    codeSolution:
-      'import java.util.*;\n\npublic class MemoryManagement {\n    \n    private static class BigObject {\n        private byte[] data = new byte[1024 * 1024]; // 1 MB\n        private String name;\n        \n        BigObject(String name) {\n            this.name = name;\n            System.out.println("Created: " + name);\n        }\n        \n        @Override\n        protected void finalize() throws Throwable {\n            System.out.println("Finalized: " + name);\n        }\n    }\n    \n    public static void main(String[] args) {\n        System.out.println("=== JVM Memory Management ===");\n        \n        // Get runtime instance\n        Runtime runtime = Runtime.getRuntime();\n        \n        System.out.println("\\n=== Memory Areas ===");\n        System.out.println("1. Heap - stores objects");\n        System.out.println("2. Stack - stores method calls and local variables");\n        System.out.println("3. Method Area - stores class metadata");\n        System.out.println("4. Program Counter Register");\n        System.out.println("5. Native Method Stack");\n        \n        System.out.println("\\n=== Heap Memory Statistics ===");\n        System.out.println("Max memory: " + runtime.maxMemory() / (1024*1024) + " MB");\n        System.out.println("Total memory: " + runtime.totalMemory() / (1024*1024) + " MB");\n        System.out.println("Free memory: " + runtime.freeMemory() / (1024*1024) + " MB");\n        System.out.println("Used memory: " + \n            (runtime.totalMemory() - runtime.freeMemory()) / (1024*1024) + " MB");\n        \n        System.out.println("\\n=== Creating objects...");\n        List<BigObject> objects = new ArrayList<>();\n        \n        // Create objects\n        for(int i = 0; i < 5; i++) {\n            objects.add(new BigObject("Object-" + i));\n        }\n        \n        System.out.println("\\nAfter creating 5 objects:");\n        System.out.println("Free memory: " + runtime.freeMemory() / (1024*1024) + " MB");\n        \n        // Remove references\n        System.out.println("\\n=== Removing references...");\n        objects.clear();\n        objects = null;\n        \n        // Request garbage collection\n        System.out.println("Requesting garbage collection...");\n        System.gc();\n        \n        // Give GC time to run\n        try {\n            Thread.sleep(2000);\n        } catch(InterruptedException e) {}\n        \n        System.out.println("\\nAfter garbage collection:");\n        System.out.println("Free memory: " + runtime.freeMemory() / (1024*1024) + " MB");\n        \n        System.out.println("\\n=== GC Algorithms ===");\n        System.out.println("1. Serial GC - single thread, for small apps");\n        System.out.println("2. Parallel GC - multiple threads, throughput oriented");\n        System.out.println("3. CMS - low pause times");\n        System.out.println("4. G1 - balanced, default in Java 9+");\n        System.out.println("5. ZGC - very low pause, for large heaps");\n        \n        System.out.println("\\n=== GC Generations ===");\n        System.out.println("Young Generation - Eden, S0, S1 - new objects");\n        System.out.println("Old Generation - long-lived objects");\n        System.out.println("Permanent Generation/Metaspace - class metadata");\n    }\n}',
-    hint: "JVM automatically manages memory with garbage collection",
+    question: "Use logical AND (&&) to check if 10>5 AND 20>15.",
+    mathSolution: "Both conditions true so result true",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        boolean result = (10 > 5) && (20 > 15);\n        System.out.println(result);\n    }\n}',
+    hint: "&& requires both true",
   },
+  {
+    id: "intro_26",
+    topicId: "introduction",
+    question: "Use logical OR (||) to check if 10>15 OR 20>15.",
+    mathSolution: "One condition true so result true",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        boolean result = (10 > 15) || (20 > 15);\n        System.out.println(result);\n    }\n}',
+    hint: "|| requires at least one true",
+  },
+
+  // CONTROL FLOW (6)
+  {
+    id: "intro_27",
+    topicId: "introduction",
+    question: "Check if a number is positive using if-else.",
+    mathSolution: "Compare with zero",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 10;\n        if (num > 0) {\n            System.out.println("Positive");\n        } else {\n            System.out.println("Not Positive");\n        }\n    }\n}',
+    hint: "if (num > 0)",
+  },
+  {
+    id: "intro_28",
+    topicId: "introduction",
+    question: "Print 'Even' if number divisible by 2 else 'Odd'.",
+    mathSolution: "n % 2 == 0",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int num = 7;\n        if (num % 2 == 0) {\n            System.out.println("Even");\n        } else {\n            System.out.println("Odd");\n        }\n    }\n}',
+    hint: "Use modulo operator",
+  },
+  {
+    id: "intro_29",
+    topicId: "introduction",
+    question: "Find largest of three numbers using if-else.",
+    mathSolution: "Compare each pair",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int a = 10, b = 25, c = 15;\n        if (a >= b && a >= c) System.out.println(a);\n        else if (b >= a && b >= c) System.out.println(b);\n        else System.out.println(c);\n    }\n}',
+    hint: "Compare a,b,c",
+  },
+  {
+    id: "intro_30",
+    topicId: "introduction",
+    question: "Print numbers 1 to 10 using for loop.",
+    mathSolution: "Loop from i=1 to 10",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        for (int i = 1; i <= 10; i++) {\n            System.out.println(i);\n        }\n    }\n}',
+    hint: "for(init; condition; update)",
+  },
+  {
+    id: "intro_31",
+    topicId: "introduction",
+    question: "Print sum of first 5 natural numbers using for loop.",
+    mathSolution: "1+2+3+4+5=15",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int sum = 0;\n        for (int i = 1; i <= 5; i++) {\n            sum = sum + i;\n        }\n        System.out.println(sum);\n    }\n}',
+    hint: "Accumulate sum in variable",
+  },
+  {
+    id: "intro_32",
+    topicId: "introduction",
+    question: "Print numbers 5,4,3,2,1 using while loop.",
+    mathSolution: "Decrement from 5 to 1",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int i = 5;\n        while (i >= 1) {\n            System.out.println(i);\n            i--;\n        }\n    }\n}',
+    hint: "while(condition) { }",
+  },
+
+  // METHODS (8)
+  {
+    id: "intro_33",
+    topicId: "introduction",
+    question: "Create a method that prints 'Hello from method' and call it.",
+    mathSolution: "Method definition and invocation",
+    codeSolution: 'public class Main {\n    static void greet() {\n        System.out.println("Hello from method");\n    }\n    public static void main(String[] args) {\n        greet();\n    }\n}',
+    hint: "Define method then call",
+  },
+  {
+    id: "intro_34",
+    topicId: "introduction",
+    question: "Create a method that takes integer and returns its square.",
+    mathSolution: "return n * n",
+    codeSolution: 'public class Main {\n    static int square(int n) {\n        return n * n;\n    }\n    public static void main(String[] args) {\n        System.out.println(square(5));\n    }\n}',
+    hint: "Return type int",
+  },
+  {
+    id: "intro_35",
+    topicId: "introduction",
+    question: "Create a method that takes two ints and returns their sum.",
+    mathSolution: "Addition of parameters",
+    codeSolution: 'public class Main {\n    static int add(int a, int b) {\n        return a + b;\n    }\n    public static void main(String[] args) {\n        System.out.println(add(10, 20));\n    }\n}',
+    hint: "Return sum",
+  },
+  {
+    id: "intro_36",
+    topicId: "introduction",
+    question: "Create method to check if number is even (returns boolean).",
+    mathSolution: "return n % 2 == 0",
+    codeSolution: 'public class Main {\n    static boolean isEven(int n) {\n        return n % 2 == 0;\n    }\n    public static void main(String[] args) {\n        System.out.println(isEven(4));\n    }\n}',
+    hint: "Return boolean",
+  },
+  {
+    id: "intro_37",
+    topicId: "introduction",
+    question: "Create a method with parameters and call with arguments.",
+    mathSolution: "Parameters receive values",
+    codeSolution: 'public class Main {\n    static void display(String name, int age) {\n        System.out.println(name + " is " + age + " years old");\n    }\n    public static void main(String[] args) {\n        display("Bob", 25);\n    }\n}',
+    hint: "Pass values in order",
+  },
+ {
+  id: "intro_38",
+  topicId: "introduction",
+  question: "Create a recursive method to find factorial of a number.",
+  mathSolution: "Factorial: n × (n-1) × ... × 1",
+  codeSolution: 'public class Main {\n static int factorial(int n) {\n if(n == 1) return 1;\n return n * factorial(n - 1);\n }\n public static void main(String[] args) {\n System.out.println(factorial(5));\n }\n}',
+  hint: "Use recursion with base case",
+},
+  {
+    id: "intro_39",
+    topicId: "introduction",
+    question: "Create method overloading: same name, different parameters.",
+    mathSolution: "Method overloading example",
+    codeSolution: 'public class Main {\n    static int add(int a, int b) { return a + b; }\n    static int add(int a, int b, int c) { return a + b + c; }\n    public static void main(String[] args) {\n        System.out.println(add(5, 10));\n        System.out.println(add(5, 10, 15));\n    }\n}',
+    hint: "Same name, different params",
+  },
+ {
+  id: "intro_40",
+  topicId: "introduction",
+  question: "Create a void method that modifies an array element.",
+  mathSolution: "Array reference is passed by value",
+  codeSolution: 'public class Main {\n static void change(int[] arr) {\n arr[0] = 100;\n }\n public static void main(String[] args) {\n int[] nums = {1, 2, 3};\n change(nums);\n System.out.println(nums[0]);\n }\n}',
+  hint: "Modify array inside method",
+}
 );

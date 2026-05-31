@@ -1,0 +1,559 @@
+/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}/* ============================================================
+   aiHint.css — AI Hint Progressive Styles
+   LeetCode-style 3-level hint cards
+   ============================================================ */
+
+/* ── Hint Card ─────────────────────────────────────────────── */
+.ai-hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--chip-bg);
+  border-left: 4px solid var(--hint-color, #4f6f8f);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  animation: hintSlideIn 0.35s cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes hintSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.ai-hint-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--hint-color, #4f6f8f);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.ai-hint-text {
+  font-size: 0.97rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Level-specific subtle backgrounds */
+.ai-hint-level-1 { background: rgba(79, 111, 143, 0.08);  }
+.ai-hint-level-2 { background: rgba(122, 162, 247, 0.08); }
+.ai-hint-level-3 { background: rgba(187, 154, 247, 0.08); }
+
+body.dark .ai-hint-level-1 { background: rgba(79, 111, 143, 0.15);  }
+body.dark .ai-hint-level-2 { background: rgba(122, 162, 247, 0.12); }
+body.dark .ai-hint-level-3 { background: rgba(187, 154, 247, 0.12); }
+
+/* ── Loading Spinner ───────────────────────────────────────── */
+.ai-hint-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  margin-top: 0.8rem;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  border-radius: 12px;
+  background: var(--chip-bg);
+  border: 1px dashed var(--border-light);
+}
+
+.ai-hint-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-light);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  animation: spinHint 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spinHint {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Hint Button States ────────────────────────────────────── */
+.hint-btn:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.hint-panel.show .hint-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.hint-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}

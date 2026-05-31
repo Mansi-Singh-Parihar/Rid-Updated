@@ -139,7 +139,7 @@ QuizData.questions.push(
     id: 'py_var_18',
     topicId: 'py_var',
     question: 'What is the output of `print(0.1 + 0.2 == 0.3)`?',
-    mathSolution: 'False (floating point precision)',
+    mathSolution: 'False (due to floating point precision; 0.1 + 0.2 = 0.30000000000000004)',
     codeSolution: 'print(0.1 + 0.2 == 0.3)  # False',
     hint: 'Floating point arithmetic can have small precision errors.'
   },
@@ -152,13 +152,13 @@ QuizData.questions.push(
     hint: 'The number of variables must match the list length.'
   },
   {
-    id: 'py_var_20',
-    topicId: 'py_var',
-    question: 'What does the `_` variable represent in the Python interactive shell?',
-    mathSolution: 'It holds the result of the last expression.',
-    codeSolution: '# In interactive shell:\n>>> 5 + 3\n8\n>>> _ * 2\n16',
-    hint: '`_` stores the last output in the interactive interpreter.'
-  },
+  id: 'py_var_20',
+  topicId: 'py_var',
+  question: 'How can you store and reuse the result of a previous calculation in a Python script?',
+  mathSolution: 'Assign the result of an expression to a variable and reuse it later.',
+  codeSolution: 'result = 5 + 3\nprint(result) #8\nprint(result * 2)#16',
+  hint: 'Use variables to store intermediate results in scripts instead of `_`.'
+},
   {
     id: 'py_var_21',
     topicId: 'py_var',
@@ -215,14 +215,14 @@ QuizData.questions.push(
     codeSolution: 'print(10 / 3)  # 3.3333333333333335',
     hint: '`/` always returns a float.'
   },
-  {
-    id: 'py_var_28',
-    topicId: 'py_var',
-    question: 'How do you check if a variable is defined?',
-    mathSolution: 'Use try/except or check in locals()/globals()',
-    codeSolution: 'if "my_var" in locals():\n    print("defined")',
-    hint: '`locals()` returns a dict of local variables.'
-  },
+{
+  id: 'py_var_28',
+  topicId: 'py_var',
+  question: 'How do you check if a variable is defined?',
+  mathSolution: 'Check variable existence using try/except or by searching in locals() or globals() dictionaries.',
+  codeSolution: 'try:\n    my_var\n    print("defined")\nexcept NameError:\n    print("not defined")\n\n# OR\nif "my_var" in locals() or "my_var" in globals():\n    print("defined")\nelse:\n    print("not defined")',
+  hint: '`locals()` and `globals()` return dictionaries of current variable scopes.'
+},
   {
     id: 'py_var_29',
     topicId: 'py_var',
@@ -331,18 +331,18 @@ QuizData.questions.push(
     id: 'py_var_42',
     topicId: 'py_var',
     question: 'What is the output of `x = 257; y = 257; print(x is y)`?',
-    mathSolution: 'False (beyond caching range)',
-    codeSolution: 'x = 257; y = 257\nprint(x is y)  # False (likely)',
-    hint: 'Beyond 256, integers are not cached by default.'
+    mathSolution: 'False (beyond caching range of -5 to 256)',
+    codeSolution: 'x = 257; y = 257\nprint(x is y)  # False',
+    hint: 'Beyond 256, integers are not cached by default in CPython.'
   },
   {
-    id: 'py_var_43',
-    topicId: 'py_var',
-    question: 'How do you create a variable with type hint?',
-    mathSolution: 'Use colon: name: type = value',
-    codeSolution: 'age: int = 25\nname: str = "Alice"',
-    hint: 'Type hints are optional and for documentation.'
-  },
+  id: 'py_var_43',
+  topicId: 'py_var',
+  question: 'How do you create a variable with type hint?',
+  mathSolution: 'Use colon syntax: name: type = value',
+  codeSolution: 'age: int = 25\nname: str = "Alice"\n\nprint(age)\nprint(name)',
+  hint: 'Type hints are optional and mainly used for readability and static type checking.'
+},
   {
     id: 'py_var_44',
     topicId: 'py_var',
@@ -400,13 +400,13 @@ QuizData.questions.push(
     hint: '`abs()` returns the magnitude (non-negative value).'
   },
   {
-    id: 'py_var_51',
-    topicId: 'py_var',
-    question: 'What is the output of `x = 0.0; print(x is 0.0)`?',
-    mathSolution: 'False (floats are not interned like ints)',
-    codeSolution: 'x = 0.0; print(x is 0.0)  # False',
-    hint: 'Floats are not cached, so each float literal is a new object.'
-  },
+  id: 'py_var_51',
+  topicId: 'py_var',
+  question: 'What is the output of `x = 0.0; print(x is 0.0)`?',
+  mathSolution: 'It may be True or False depending on Python implementation, because `is` checks object identity, not value equality.',
+  codeSolution: 'x = 0.0\nprint(x is 0.0)  # ⚠️ Implementation-dependent\n\n# Correct way to compare values\nprint(x == 0.0)  # ✅ True',
+  hint: 'Use `==` for value comparison and `is` only for identity (e.g., None).'
+},
   {
     id: 'py_var_52',
     topicId: 'py_var',

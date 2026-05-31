@@ -1,232 +1,402 @@
 QuizData.questions.push(
-  {
-    id: "cpp_interface_1",
-    topicId: "cpp_interfaces",
-    question: "What is an interface in C++? How is it implemented?",
-    mathSolution: "Interface concept",
-    codeSolution:
-      "In C++, an interface is implemented as an abstract class with all pure virtual functions. It defines a contract that derived classes must fulfill.\n\nclass Drawable {  // Interface\npublic:\n    virtual void draw() = 0;\n    virtual void resize(double factor) = 0;\n    virtual ~Drawable() {}\n};",
-    hint: "Interface in C++ = class with all pure virtual functions. Defines WHAT to do, not HOW.",
-  },
-  {
-    id: "cpp_interface_2",
-    topicId: "cpp_interfaces",
-    question: "How is an interface different from an abstract class in C++?",
-    mathSolution: "Interface vs Abstract class",
-    codeSolution:
-      "Interface:\n- All methods are pure virtual\n- No data members (usually)\n- No implemented methods\n- Multiple inheritance possible\n\nAbstract class:\n- Can have both pure virtual and concrete methods\n- Can have data members\n- Can have constructors\n- Can provide partial implementation\n\n// Interface\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// Abstract class\nclass Shape {\nprotected:\n    string color;\npublic:\n    virtual void draw() = 0;\n    void setColor(string c) { color = c; }  // Implemented\n};",
-    hint: "Interface = all pure virtual, no data. Abstract class = can have implementation and data.",
-  },
-  {
-    id: "cpp_interface_3",
-    topicId: "cpp_interfaces",
-    question: "Why are interfaces used in C++?",
-    mathSolution: "Purpose of interfaces",
-    codeSolution:
-      "Interfaces are used for:\n\n1. Achieving abstraction\n2. Defining contracts\n3. Supporting multiple inheritance of type\n4. Loose coupling\n5. Polymorphism\n6. Dependency injection\n7. Testing (mocking)\n\nclass Printable {\npublic:\n    virtual void print() = 0;\n};\n\nclass Report : public Printable {\n    void print() override { /* implementation */ }\n};",
-    hint: "Interfaces define contracts, enable polymorphism, and promote loose coupling.",
-  },
-  {
-    id: "cpp_interface_4",
-    topicId: "cpp_interfaces",
-    question: "Can a class implement multiple interfaces in C++?",
-    mathSolution: "Multiple interface implementation",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// First interface\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// Second interface\nclass Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\n// Third interface\nclass Colorable {\npublic:\n    virtual void setColor(string color) = 0;\n    virtual string getColor() = 0;\n    virtual ~Colorable() {}\n};\n\n// Class implementing multiple interfaces\nclass Circle : public Drawable, public Resizable, public Colorable {\nprivate:\n    double radius;\n    string color;\n    \npublic:\n    Circle(double r, string c) : radius(r), color(c) {}\n    \n    void draw() override {\n        cout << "Drawing " << color << " circle" << endl;\n    }\n    \n    void resize(double factor) override {\n        radius *= factor;\n        cout << "Circle resized to radius " << radius << endl;\n    }\n    \n    void setColor(string c) override { color = c; }\n    string getColor() override { return color; }\n};\n\nint main() {\n    Circle c(5.0, "red");\n    c.draw();\n    c.resize(2.0);\n    c.setColor("blue");\n    c.draw();\n    return 0;\n}',
-    hint: "Yes, C++ supports multiple inheritance, so a class can implement multiple interfaces.",
-  },
-  {
-    id: "cpp_interface_5",
-    topicId: "cpp_interfaces",
-    question:
-      "What is the difference between interface inheritance and implementation inheritance?",
-    mathSolution: "Interface vs Implementation inheritance",
-    codeSolution:
-      "Interface inheritance:\n- Inherit only function signatures\n- No implementation provided\n- Defines 'what' not 'how'\n- Used with interfaces/pure virtual\n\nImplementation inheritance:\n- Inherit both interface and implementation\n- Code reuse\n- Used with concrete base classes\n\n// Interface inheritance\nclass Drawable {\npublic:\n    virtual void draw() = 0;  // Only signature\n};\n\n// Implementation inheritance\nclass Shape {\npublic:\n    void move(int x, int y) {  // With implementation\n        positionX += x;\n        positionY += y;\n    }\n};",
-    hint: "Interface inheritance = inherit only function signatures. Implementation inheritance = inherit actual code.",
-  },
-  {
-    id: "cpp_interface_6",
-    topicId: "cpp_interfaces",
-    question: "Can an interface have data members in C++?",
-    mathSolution: "Data members in interfaces",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Interface with static constant (allowed)\nclass Drawable {\npublic:\n    static const int VERSION = 1;  // OK - static const\n    \n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// Interface with non-static data (not recommended)\nclass Questionable {\npublic:\n    int data;  // Technically possible but breaks interface concept\n    virtual void func() = 0;\n};\n\nclass Circle : public Drawable {\npublic:\n    void draw() override {\n        cout << "Drawing circle, version " << VERSION << endl;\n    }\n};\n\nint main() {\n    Circle c;\n    c.draw();\n    return 0;\n}',
-    hint: "Pure interfaces typically have no data members. Static constants are acceptable, but non-static data defeats interface purpose.",
-  },
-  {
-    id: "cpp_interface_7",
-    topicId: "cpp_interfaces",
-    question: "Can an interface have implemented methods in C++?",
-    mathSolution: "Implemented methods in interfaces",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Pure interface - all pure virtual\nclass PureInterface {\npublic:\n    virtual void func1() = 0;\n    virtual void func2() = 0;\n};\n\n// Interface with default implementation (C++11 onward)\nclass InterfaceWithDefault {\npublic:\n    virtual void func1() = 0;\n    \n    // Default implementation (can be overridden)\n    virtual void func2() {\n        cout << "Default func2 implementation" << endl;\n    }\n    \n    virtual ~InterfaceWithDefault() {}\n};\n\nclass MyClass : public InterfaceWithDefault {\npublic:\n    void func1() override {\n        cout << "MyClass func1" << endl;\n    }\n    \n    // Optional: override func2 or use default\n};\n\nint main() {\n    MyClass obj;\n    obj.func1();\n    obj.func2();  // Uses default implementation\n    return 0;\n}',
-    hint: "Pure interfaces have no implementation. But C++ allows default implementations (C++11) - this blurs the line.",
-  },
-  {
-    id: "cpp_interface_8",
-    topicId: "cpp_interfaces",
-    question: "What is the role of virtual destructors in interfaces?",
-    mathSolution: "Virtual destructors in interfaces",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Interface with virtual destructor\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {  // Virtual destructor\n        cout << "Drawable destructor" << endl;\n    }\n};\n\nclass Circle : public Drawable {\nprivate:\n    int* data;\npublic:\n    Circle() { data = new int[100]; }\n    \n    void draw() override {\n        cout << "Drawing circle" << endl;\n    }\n    \n    ~Circle() override {\n        delete[] data;\n        cout << "Circle destructor" << endl;\n    }\n};\n\nint main() {\n    Drawable* ptr = new Circle();\n    ptr->draw();\n    delete ptr;  // Both destructors called\n    return 0;\n}',
-    hint: "Interfaces should always have virtual destructors to ensure proper cleanup of derived objects.",
-  },
-  {
-    id: "cpp_interface_9",
-    topicId: "cpp_interfaces",
-    question:
-      "What is the difference between interface in C++ and interface in Java/C#?",
-    mathSolution: "C++ vs Java/C# interfaces",
-    codeSolution:
-      "C++:\n- No formal 'interface' keyword\n- Implemented as abstract class with all pure virtual\n- Can have multiple inheritance\n- Can have static members\n- Can have default implementations (C++11)\n\nJava/C#:\n- Have 'interface' keyword\n- Cannot have implementation (pre-Java 8)\n- Cannot have instance variables\n- Classes implement, not inherit\n\n// C++ style\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// Java style (simulated in C++)\nclass Drawable {  // Pure interface\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() = default;\n};",
-    hint: "C++ has no formal interface keyword. Any class with all pure virtual functions acts as interface.",
-  },
-  {
-    id: "cpp_interface_10",
-    topicId: "cpp_interfaces",
-    question: "How do interfaces support the Dependency Inversion Principle?",
-    mathSolution: "Dependency Inversion",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\n// Abstraction (interface)\nclass MessageService {\npublic:\n    virtual void sendMessage(const string& msg) = 0;\n    virtual ~MessageService() {}\n};\n\n// Low-level module 1\nclass EmailService : public MessageService {\npublic:\n    void sendMessage(const string& msg) override {\n        cout << "Sending email: " << msg << endl;\n    }\n};\n\n// Low-level module 2\nclass SmsService : public MessageService {\npublic:\n    void sendMessage(const string& msg) override {\n        cout << "Sending SMS: " << msg << endl;\n    }\n};\n\n// High-level module depends on abstraction, not concrete classes\nclass NotificationSystem {\nprivate:\n    vector<shared_ptr<MessageService>> services;\n    \npublic:\n    void addService(shared_ptr<MessageService> service) {\n        services.push_back(service);\n    }\n    \n    void notify(const string& message) {\n        for(auto& service : services) {\n            service->sendMessage(message);\n        }\n    }\n};\n\nint main() {\n    auto email = make_shared<EmailService>();\n    auto sms = make_shared<SmsService>();\n    \n    NotificationSystem notifier;\n    notifier.addService(email);\n    notifier.addService(sms);\n    \n    notifier.notify("Hello World");\n    return 0;\n}',
-    hint: "Dependency Inversion: High-level modules should not depend on low-level modules. Both should depend on abstractions (interfaces).",
-  },
-  {
-    id: "cpp_interface_11",
-    topicId: "cpp_interfaces",
-    question: "What is the Strategy pattern? How does it use interfaces?",
-    mathSolution: "Strategy pattern",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\n#include <algorithm>\nusing namespace std;\n\n// Strategy interface\nclass SortStrategy {\npublic:\n    virtual void sort(vector<int>& data) = 0;\n    virtual ~SortStrategy() {}\n};\n\n// Concrete strategy 1\nclass BubbleSort : public SortStrategy {\npublic:\n    void sort(vector<int>& data) override {\n        cout << "Using Bubble Sort" << endl;\n        for(size_t i = 0; i < data.size()-1; i++) {\n            for(size_t j = 0; j < data.size()-i-1; j++) {\n                if(data[j] > data[j+1]) {\n                    swap(data[j], data[j+1]);\n                }\n            }\n        }\n    }\n};\n\n// Concrete strategy 2\nclass QuickSort : public SortStrategy {\npublic:\n    void sort(vector<int>& data) override {\n        cout << "Using Quick Sort" << endl;\n        // Quick sort implementation would be here\n        sort(data.begin(), data.end());\n    }\n};\n\n// Context that uses the strategy\nclass Sorter {\nprivate:\n    unique_ptr<SortStrategy> strategy;\n    \npublic:\n    Sorter(unique_ptr<SortStrategy> s) : strategy(move(s)) {}\n    \n    void setStrategy(unique_ptr<SortStrategy> s) {\n        strategy = move(s);\n    }\n    \n    void executeSort(vector<int>& data) {\n        strategy->sort(data);\n    }\n};\n\nint main() {\n    vector<int> data = {5, 2, 8, 1, 9};\n    \n    Sorter sorter(make_unique<BubbleSort>());\n    sorter.executeSort(data);\n    \n    for(int x : data) cout << x << " ";\n    cout << endl;\n    \n    sorter.setStrategy(make_unique<QuickSort>());\n    sorter.executeSort(data);\n    \n    return 0;\n}',
-    hint: "Strategy pattern uses interfaces to define a family of algorithms, making them interchangeable.",
-  },
-  {
-    id: "cpp_interface_12",
-    topicId: "cpp_interfaces",
-    question: "What is the Observer pattern? How does it use interfaces?",
-    mathSolution: "Observer pattern",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\n#include <algorithm>\nusing namespace std;\n\n// Observer interface\nclass Observer {\npublic:\n    virtual void update(float temperature) = 0;\n    virtual ~Observer() {}\n};\n\n// Subject interface\nclass Subject {\npublic:\n    virtual void attach(shared_ptr<Observer> obs) = 0;\n    virtual void detach(shared_ptr<Observer> obs) = 0;\n    virtual void notify() = 0;\n    virtual ~Subject() {}\n};\n\n// Concrete subject\nclass WeatherStation : public Subject {\nprivate:\n    vector<shared_ptr<Observer>> observers;\n    float temperature;\n    \npublic:\n    void setTemperature(float temp) {\n        temperature = temp;\n        notify();\n    }\n    \n    void attach(shared_ptr<Observer> obs) override {\n        observers.push_back(obs);\n    }\n    \n    void detach(shared_ptr<Observer> obs) override {\n        auto it = find(observers.begin(), observers.end(), obs);\n        if(it != observers.end()) {\n            observers.erase(it);\n        }\n    }\n    \n    void notify() override {\n        for(auto& obs : observers) {\n            obs->update(temperature);\n        }\n    }\n};\n\n// Concrete observer 1\nclass PhoneDisplay : public Observer {\nprivate:\n    string name;\n    \npublic:\n    PhoneDisplay(string n) : name(n) {}\n    \n    void update(float temperature) override {\n        cout << name << " Phone: Temperature updated to " << temperature << "°C" << endl;\n    }\n};\n\n// Concrete observer 2\nclass WindowDisplay : public Observer {\npublic:\n    void update(float temperature) override {\n        cout << "Window Display: Current temperature " << temperature << "°C" << endl;\n    }\n};\n\nint main() {\n    auto station = make_shared<WeatherStation>();\n    \n    auto phone1 = make_shared<PhoneDisplay>("Alice");\n    auto phone2 = make_shared<PhoneDisplay>("Bob");\n    auto window = make_shared<WindowDisplay>();\n    \n    station->attach(phone1);\n    station->attach(phone2);\n    station->attach(window);\n    \n    station->setTemperature(25.5);\n    cout << "---" << endl;\n    \n    station->detach(phone2);\n    station->setTemperature(27.0);\n    \n    return 0;\n}',
-    hint: "Observer pattern uses interfaces to define subject-observer relationship, allowing loose coupling.",
-  },
-  {
-    id: "cpp_interface_13",
-    topicId: "cpp_interfaces",
-    question: "What is the Factory pattern? How does it use interfaces?",
-    mathSolution: "Factory pattern",
-    codeSolution:
-      '#include <iostream>\n#include <memory>\n#include <string>\nusing namespace std;\n\n// Product interface\nclass Animal {\npublic:\n    virtual void speak() = 0;\n    virtual ~Animal() {}\n};\n\n// Concrete products\nclass Dog : public Animal {\npublic:\n    void speak() override { cout << "Woof!" << endl; }\n};\n\nclass Cat : public Animal {\npublic:\n    void speak() override { cout << "Meow!" << endl; }\n};\n\nclass Cow : public Animal {\npublic:\n    void speak() override { cout << "Moo!" << endl; }\n};\n\n// Factory interface\nclass AnimalFactory {\npublic:\n    virtual unique_ptr<Animal> createAnimal() = 0;\n    virtual ~AnimalFactory() {}\n};\n\n// Concrete factories\nclass DogFactory : public AnimalFactory {\npublic:\n    unique_ptr<Animal> createAnimal() override {\n        return make_unique<Dog>();\n    }\n};\n\nclass CatFactory : public AnimalFactory {\npublic:\n    unique_ptr<Animal> createAnimal() override {\n        return make_unique<Cat>();\n    }\n};\n\nclass RandomAnimalFactory : public AnimalFactory {\npublic:\n    unique_ptr<Animal> createAnimal() override {\n        int choice = rand() % 3;\n        switch(choice) {\n            case 0: return make_unique<Dog>();\n            case 1: return make_unique<Cat>();\n            case 2: return make_unique<Cow>();\n            default: return make_unique<Dog>();\n        }\n    }\n};\n\n// Client code depends on interfaces\nvoid makeAnimalSpeak(AnimalFactory& factory) {\n    auto animal = factory.createAnimal();\n    animal->speak();\n}\n\nint main() {\n    srand(time(nullptr));\n    \n    DogFactory dogFactory;\n    CatFactory catFactory;\n    RandomAnimalFactory randomFactory;\n    \n    makeAnimalSpeak(dogFactory);\n    makeAnimalSpeak(catFactory);\n    \n    cout << "Random animals:" << endl;\n    for(int i = 0; i < 5; i++) {\n        makeAnimalSpeak(randomFactory);\n    }\n    \n    return 0;\n}',
-    hint: "Factory pattern uses interfaces to create objects without specifying concrete classes.",
-  },
-  {
-    id: "cpp_interface_14",
-    topicId: "cpp_interfaces",
-    question: "What is the Repository pattern? How does it use interfaces?",
-    mathSolution: "Repository pattern",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\n// Entity\nclass User {\npublic:\n    int id;\n    string name;\n    string email;\n    \n    User(int i, string n, string e) : id(i), name(n), email(e) {}\n};\n\n// Repository interface\nclass UserRepository {\npublic:\n    virtual void addUser(const User& user) = 0;\n    virtual User* findUser(int id) = 0;\n    virtual vector<User> getAllUsers() = 0;\n    virtual void updateUser(int id, const User& user) = 0;\n    virtual void deleteUser(int id) = 0;\n    virtual ~UserRepository() {}\n};\n\n// In-memory implementation\nclass InMemoryUserRepository : public UserRepository {\nprivate:\n    vector<User> users;\n    \npublic:\n    void addUser(const User& user) override {\n        users.push_back(user);\n        cout << "Added user: " << user.name << endl;\n    }\n    \n    User* findUser(int id) override {\n        auto it = find_if(users.begin(), users.end(), \n            [id](const User& u) { return u.id == id; });\n        \n        if(it != users.end()) {\n            return &(*it);\n        }\n        return nullptr;\n    }\n    \n    vector<User> getAllUsers() override {\n        return users;\n    }\n    \n    void updateUser(int id, const User& user) override {\n        for(auto& u : users) {\n            if(u.id == id) {\n                u = user;\n                cout << "Updated user: " << user.name << endl;\n                return;\n            }\n        }\n    }\n    \n    void deleteUser(int id) override {\n        auto it = remove_if(users.begin(), users.end(),\n            [id](const User& u) { return u.id == id; });\n        \n        if(it != users.end()) {\n            users.erase(it, users.end());\n            cout << "Deleted user with id: " << id << endl;\n        }\n    }\n};\n\n// Service that depends on abstraction\nclass UserService {\nprivate:\n    unique_ptr<UserRepository> repository;\n    \npublic:\n    UserService(unique_ptr<UserRepository> repo) : repository(move(repo)) {}\n    \n    void registerUser(const string& name, const string& email) {\n        static int nextId = 1;\n        User user(nextId++, name, email);\n        repository->addUser(user);\n    }\n    \n    void displayUser(int id) {\n        User* user = repository->findUser(id);\n        if(user) {\n            cout << "Found: " << user->name << " (" << user->email << ")" << endl;\n        } else {\n            cout << "User not found" << endl;\n        }\n    }\n    \n    void listAllUsers() {\n        auto users = repository->getAllUsers();\n        cout << "\\nAll users:" << endl;\n        for(const auto& user : users) {\n            cout << "  " << user.id << ": " << user.name << " - " << user.email << endl;\n        }\n    }\n};\n\nint main() {\n    auto repo = make_unique<InMemoryUserRepository>();\n    UserService service(move(repo));\n    \n    service.registerUser("Alice", "alice@email.com");\n    service.registerUser("Bob", "bob@email.com");\n    service.registerUser("Charlie", "charlie@email.com");\n    \n    service.listAllUsers();\n    \n    cout << "\\nSearching for user 2:" << endl;\n    service.displayUser(2);\n    \n    return 0;\n}',
-    hint: "Repository pattern uses interfaces to abstract data access, allowing different implementations (database, file, memory).",
-  },
-  {
-    id: "cpp_interface_15",
-    topicId: "cpp_interfaces",
-    question: "What is the Adapter pattern? How does it use interfaces?",
-    mathSolution: "Adapter pattern",
-    codeSolution:
-      '#include <iostream>\n#include <memory>\n#include <string>\nusing namespace std;\n\n// Target interface (what client expects)\nclass MediaPlayer {\npublic:\n    virtual void play(const string& filename) = 0;\n    virtual ~MediaPlayer() {}\n};\n\n// Adaptee (existing incompatible interface)\nclass AdvancedMediaPlayer {\npublic:\n    void playMp4(const string& filename) {\n        cout << "Playing MP4 file: " << filename << endl;\n    }\n    \n    void playVlc(const string& filename) {\n        cout << "Playing VLC file: " << filename << endl;\n    }\n};\n\n// Adapter - makes Adaptee compatible with Target\nclass MediaAdapter : public MediaPlayer {\nprivate:\n    unique_ptr<AdvancedMediaPlayer> advancedPlayer;\n    \npublic:\n    MediaAdapter() : advancedPlayer(make_unique<AdvancedMediaPlayer>()) {}\n    \n    void play(const string& filename) override {\n        string extension = filename.substr(filename.find_last_of(".") + 1);\n        \n        if(extension == "mp4") {\n            advancedPlayer->playMp4(filename);\n        } else if(extension == "vlc") {\n            advancedPlayer->playVlc(filename);\n        } else {\n            cout << "Unsupported format: " << extension << endl;\n        }\n    }\n};\n\n// Client code\nint main() {\n    auto player = make_unique<MediaAdapter>();\n    \n    player->play("movie.mp4");\n    player->play("song.vlc");\n    player->play("video.avi");\n    \n    return 0;\n}',
-    hint: "Adapter pattern uses interfaces to make incompatible classes work together by converting one interface to another.",
-  },
-  {
-    id: "cpp_interface_16",
-    topicId: "cpp_interfaces",
-    question: "What is the Command pattern? How does it use interfaces?",
-    mathSolution: "Command pattern",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\n#include <stack>\nusing namespace std;\n\n// Command interface\nclass Command {\npublic:\n    virtual void execute() = 0;\n    virtual void undo() = 0;\n    virtual ~Command() {}\n};\n\n// Receiver\nclass TextEditor {\nprivate:\n    string text;\n    \npublic:\n    void write(const string& words) {\n        text += words;\n        cout << "Text: " << text << endl;\n    }\n    \n    void erase(int length) {\n        if(length <= text.length()) {\n            text = text.substr(0, text.length() - length);\n            cout << "Text: " << text << endl;\n        }\n    }\n    \n    string getText() const { return text; }\n};\n\n// Concrete command 1\nclass WriteCommand : public Command {\nprivate:\n    TextEditor* editor;\n    string words;\n    \npublic:\n    WriteCommand(TextEditor* e, const string& w) : editor(e), words(w) {}\n    \n    void execute() override {\n        editor->write(words);\n    }\n    \n    void undo() override {\n        editor->erase(words.length());\n    }\n};\n\n// Invoker\nclass CommandManager {\nprivate:\n    stack<unique_ptr<Command>> commandHistory;\n    \npublic:\n    void executeCommand(unique_ptr<Command> cmd) {\n        cmd->execute();\n        commandHistory.push(move(cmd));\n    }\n    \n    void undoLast() {\n        if(!commandHistory.empty()) {\n            commandHistory.top()->undo();\n            commandHistory.pop();\n        }\n    }\n};\n\nint main() {\n    TextEditor editor;\n    CommandManager manager;\n    \n    manager.executeCommand(make_unique<WriteCommand>(&editor, "Hello "));\n    manager.executeCommand(make_unique<WriteCommand>(&editor, "World!"));\n    \n    cout << "\\nUndoing last command:" << endl;\n    manager.undoLast();\n    \n    cout << "\\nUndoing another:" << endl;\n    manager.undoLast();\n    \n    return 0;\n}',
-    hint: "Command pattern uses interfaces to encapsulate requests as objects, allowing parameterization, queuing, and undo operations.",
-  },
-  {
-    id: "cpp_interface_17",
-    topicId: "cpp_interfaces",
-    question: "What is the State pattern? How does it use interfaces?",
-    mathSolution: "State pattern",
-    codeSolution:
-      '#include <iostream>\n#include <memory>\nusing namespace std;\n\n// Forward declaration\nclass VendingMachine;\n\n// State interface\nclass State {\npublic:\n    virtual void insertCoin(VendingMachine* vm) = 0;\n    virtual void selectProduct(VendingMachine* vm) = 0;\n    virtual void dispense(VendingMachine* vm) = 0;\n    virtual ~State() {}\n};\n\n// Context\nclass VendingMachine {\nprivate:\n    unique_ptr<State> currentState;\n    int inventory;\n    \npublic:\n    VendingMachine(int items);\n    \n    void setState(unique_ptr<State> state) {\n        currentState = move(state);\n    }\n    \n    void insertCoin() { currentState->insertCoin(this); }\n    void selectProduct() { currentState->selectProduct(this); }\n    void dispense() { currentState->dispense(this); }\n    \n    int getInventory() const { return inventory; }\n    void decreaseInventory() { if(inventory > 0) inventory--; }\n};\n\n// Concrete states\nclass NoCoinState : public State {\npublic:\n    void insertCoin(VendingMachine* vm) override;\n    void selectProduct(VendingMachine* vm) override {\n        cout << "Insert coin first!" << endl;\n    }\n    void dispense(VendingMachine* vm) override {\n        cout << "Insert coin and select product first!" << endl;\n    }\n};\n\nclass HasCoinState : public State {\npublic:\n    void insertCoin(VendingMachine* vm) override {\n        cout << "Coin already inserted" << endl;\n    }\n    void selectProduct(VendingMachine* vm) override;\n    void dispense(VendingMachine* vm) override {\n        cout << "Select product first!" << endl;\n    }\n};\n\nclass SoldState : public State {\npublic:\n    void insertCoin(VendingMachine* vm) override {\n        cout << "Please wait, dispensing product" << endl;\n    }\n    void selectProduct(VendingMachine* vm) override {\n        cout << "Already dispensing" << endl;\n    }\n    void dispense(VendingMachine* vm) override;\n};\n\nclass SoldOutState : public State {\npublic:\n    void insertCoin(VendingMachine* vm) override {\n        cout << "Sold out!" << endl;\n    }\n    void selectProduct(VendingMachine* vm) override {\n        cout << "Sold out!" << endl;\n    }\n    void dispense(VendingMachine* vm) override {\n        cout << "Sold out!" << endl;\n    }\n};\n\n// Implementations that need VendingMachine definition\nvoid NoCoinState::insertCoin(VendingMachine* vm) {\n    cout << "Coin inserted" << endl;\n    vm->setState(make_unique<HasCoinState>());\n}\n\nvoid HasCoinState::selectProduct(VendingMachine* vm) {\n    if(vm->getInventory() > 0) {\n        cout << "Product selected" << endl;\n        vm->setState(make_unique<SoldState>());\n    } else {\n        cout << "Sold out!" << endl;\n        vm->setState(make_unique<SoldOutState>());\n    }\n}\n\nvoid SoldState::dispense(VendingMachine* vm) {\n    vm->decreaseInventory();\n    cout << "Product dispensed" << endl;\n    \n    if(vm->getInventory() > 0) {\n        vm->setState(make_unique<NoCoinState>());\n    } else {\n        cout << "Machine sold out!" << endl;\n        vm->setState(make_unique<SoldOutState>());\n    }\n}\n\nVendingMachine::VendingMachine(int items) : inventory(items) {\n    if(items > 0) {\n        setState(make_unique<NoCoinState>());\n    } else {\n        setState(make_unique<SoldOutState>());\n    }\n}\n\nint main() {\n    VendingMachine vm(2);\n    \n    vm.selectProduct();     // Insert coin first!\n    vm.insertCoin();        // Coin inserted\n    vm.insertCoin();        // Coin already inserted\n    vm.selectProduct();     // Product selected\n    vm.dispense();          // Product dispensed\n    \n    cout << "\\n--- Next transaction ---" << endl;\n    vm.insertCoin();        // Coin inserted\n    vm.selectProduct();     // Product selected\n    vm.dispense();          // Product dispensed\n    \n    cout << "\\n--- Machine sold out ---" << endl;\n    vm.insertCoin();        // Sold out!\n    \n    return 0;\n}',
-    hint: "State pattern uses interfaces to encapsulate state-specific behavior, allowing object to change behavior when its state changes.",
-  },
-  {
-    id: "cpp_interface_18",
-    topicId: "cpp_interfaces",
-    question:
-      "What is the Template Method pattern? How does it differ from interfaces?",
-    mathSolution: "Template Method pattern",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Abstract class with template method\nclass DataProcessor {\npublic:\n    // Template method - defines algorithm skeleton\n    void process() {\n        readData();\n        processData();\n        writeData();\n        if(shouldValidate()) {  // Hook method\n            validateData();\n        }\n    }\n    \n    virtual ~DataProcessor() {}\n    \nprotected:\n    // Primitive operations - to be implemented by subclasses\n    virtual void readData() = 0;\n    virtual void processData() = 0;\n    virtual void writeData() = 0;\n    \n    // Hook method - optional override\n    virtual bool shouldValidate() { return false; }\n    virtual void validateData() {}\n};\n\n// Concrete class 1\nclass FileProcessor : public DataProcessor {\nprotected:\n    void readData() override {\n        cout << "Reading data from file" << endl;\n    }\n    \n    void processData() override {\n        cout << "Processing file data" << endl;\n    }\n    \n    void writeData() override {\n        cout << "Writing data to file" << endl;\n    }\n    \n    bool shouldValidate() override { return true; }\n    void validateData() override {\n        cout << "Validating file data" << endl;\n    }\n};\n\n// Concrete class 2\nclass NetworkProcessor : public DataProcessor {\nprotected:\n    void readData() override {\n        cout << "Reading data from network" << endl;\n    }\n    \n    void processData() override {\n        cout << "Processing network data" << endl;\n    }\n    \n    void writeData() override {\n        cout << "Writing data to database" << endl;\n    }\n};\n\nint main() {\n    FileProcessor fileProc;\n    NetworkProcessor netProc;\n    \n    cout << "File Processing:" << endl;\n    fileProc.process();\n    \n    cout << "\\nNetwork Processing:" << endl;\n    netProc.process();\n    \n    return 0;\n}',
-    hint: "Template Method defines algorithm skeleton in base class, lets subclasses override steps. Interfaces only declare methods, no algorithm structure.",
-  },
-  {
-    id: "cpp_interface_19",
-    topicId: "cpp_interfaces",
-    question: "Can an interface inherit from another interface in C++?",
-    mathSolution: "Interface inheritance",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Base interface\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// Derived interface (inherits from Drawable)\nclass ResizableDrawable : public Drawable {\npublic:\n    virtual void resize(double factor) = 0;\n    // Inherits draw() as pure virtual\n};\n\n// Another derived interface\nclass ColorableDrawable : public Drawable {\npublic:\n    virtual void setColor(string color) = 0;\n    virtual string getColor() = 0;\n};\n\n// Class implementing multiple derived interfaces\nclass Circle : public ResizableDrawable, public ColorableDrawable {\nprivate:\n    double radius;\n    string color;\n    \npublic:\n    Circle(double r, string c) : radius(r), color(c) {}\n    \n    void draw() override {\n        cout << "Drawing " << color << " circle with radius " << radius << endl;\n    }\n    \n    void resize(double factor) override {\n        radius *= factor;\n    }\n    \n    void setColor(string c) override { color = c; }\n    string getColor() override { return color; }\n};\n\nint main() {\n    Circle c(5.0, "red");\n    c.draw();\n    c.resize(2.0);\n    c.setColor("blue");\n    c.draw();\n    return 0;\n}',
-    hint: "Yes, interfaces can inherit from other interfaces, allowing interface hierarchies and composition.",
-  },
-  {
-    id: "cpp_interface_20",
-    topicId: "cpp_interfaces",
-    question: "What is multiple inheritance of interfaces? Give example.",
-    mathSolution: "Multiple interface inheritance",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Multiple independent interfaces\ninterface Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\ninterface Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\ninterface Colorable {\npublic:\n    virtual void setColor(string color) = 0;\n    virtual string getColor() = 0;\n    virtual ~Colorable() {}\n};\n\n// Class implementing multiple interfaces\nclass Circle : public Drawable, public Resizable, public Colorable {\nprivate:\n    double radius;\n    string color;\n    \npublic:\n    Circle(double r, string c) : radius(r), color(c) {}\n    \n    void draw() override {\n        cout << "Drawing " << color << " circle" << endl;\n    }\n    \n    void resize(double factor) override {\n        radius *= factor;\n        cout << "Circle resized to radius " << radius << endl;\n    }\n    \n    void setColor(string c) override { color = c; }\n    string getColor() override { return color; }\n};\n\nint main() {\n    Circle c(5.0, "red");\n    \n    // Use as Drawable\n    Drawable* d = &c;\n    d->draw();\n    \n    // Use as Resizable\n    Resizable* r = &c;\n    r->resize(2.0);\n    \n    // Use as Colorable\n    Colorable* col = &c;\n    col->setColor("blue");\n    \n    return 0;\n}',
-    hint: "Multiple interface inheritance allows a class to implement several interfaces, combining their contracts.",
-  },
-  {
-    id: "cpp_interface_21",
-    topicId: "cpp_interfaces",
-    question: "How do interfaces support unit testing and mocking?",
-    mathSolution: "Testing with interfaces",
-    codeSolution:
-      '#include <iostream>\n#include <memory>\n#include <cassert>\nusing namespace std;\n\n// Interface for data service\nclass DataService {\npublic:\n    virtual int fetchData() = 0;\n    virtual void saveData(int data) = 0;\n    virtual ~DataService() {}\n};\n\n// Real implementation (uses database)\nclass RealDatabaseService : public DataService {\npublic:\n    int fetchData() override {\n        // In real code, this would query a database\n        cout << "Fetching from real database" << endl;\n        return 42;\n    }\n    \n    void saveData(int data) override {\n        cout << "Saving " << data << " to real database" << endl;\n    }\n};\n\n// Mock implementation for testing\nclass MockDataService : public DataService {\nprivate:\n    int mockData;\n    bool saveCalled;\n    int lastSavedData;\n    \npublic:\n    MockDataService(int testData) : mockData(testData), saveCalled(false) {}\n    \n    int fetchData() override {\n        cout << "Mock fetch returning " << mockData << endl;\n        return mockData;\n    }\n    \n    void saveData(int data) override {\n        saveCalled = true;\n        lastSavedData = data;\n        cout << "Mock save called with " << data << endl;\n    }\n    \n    // Test verification methods\n    bool wasSaveCalled() const { return saveCalled; }\n    int getLastSavedData() const { return lastSavedData; }\n};\n\n// Class under test - depends on abstraction\nclass BusinessLogic {\nprivate:\n    unique_ptr<DataService> service;\n    \npublic:\n    BusinessLogic(unique_ptr<DataService> s) : service(move(s)) {}\n    \n    int processData() {\n        int data = service->fetchData();\n        int result = data * 2;\n        service->saveData(result);\n        return result;\n    }\n};\n\n// Test function\nvoid testBusinessLogic() {\n    // Use mock for testing\n    auto mock = make_unique<MockDataService>(10);\n    MockDataService* mockPtr = mock.get();\n    \n    BusinessLogic logic(move(mock));\n    int result = logic.processData();\n    \n    assert(result == 20);\n    assert(mockPtr->wasSaveCalled());\n    assert(mockPtr->getLastSavedData() == 20);\n    \n    cout << "Test passed!" << endl;\n}\n\nint main() {\n    // Real usage\n    auto realService = make_unique<RealDatabaseService>();\n    BusinessLogic realLogic(move(realService));\n    cout << "Real result: " << realLogic.processData() << endl;\n    \n    cout << "\\nRunning test:" << endl;\n    testBusinessLogic();\n    \n    return 0;\n}',
-    hint: "Interfaces allow swapping real implementations with mocks for testing, enabling isolated unit tests.",
-  },
-  {
-    id: "cpp_interface_22",
-    topicId: "cpp_interfaces",
-    question:
-      "What is the difference between static and dynamic polymorphism with interfaces?",
-    mathSolution: "Static vs Dynamic polymorphism",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Interface for dynamic polymorphism\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Circle : public Drawable {\npublic:\n    void draw() override { cout << "Drawing circle" << endl; }\n};\n\nclass Square : public Drawable {\npublic:\n    void draw() override { cout << "Drawing square" << endl; }\n};\n\n// Template for static polymorphism (compile-time)\ntemplate <typename T>\nvoid drawShape(T& shape) {\n    shape.draw();  // Static binding\n}\n\n// Function using dynamic polymorphism\nvoid drawShape(Drawable& shape) {\n    shape.draw();  // Dynamic binding via vtable\n}\n\nint main() {\n    Circle c;\n    Square s;\n    \n    cout << "Static polymorphism (compile-time):" << endl;\n    drawShape(c);  // Compile-time: Circle version\n    drawShape(s);  // Compile-time: Square version\n    \n    cout << "\\nDynamic polymorphism (runtime):" << endl;\n    Drawable& shape1 = c;\n    Drawable& shape2 = s;\n    drawShape(shape1);  // Runtime: Circle version\n    drawShape(shape2);  // Runtime: Square version\n    \n    return 0;\n}',
-    hint: "Interfaces enable dynamic polymorphism (runtime via virtual functions). Templates enable static polymorphism (compile-time).",
-  },
-  {
-    id: "cpp_interface_23",
-    topicId: "cpp_interfaces",
-    question: "What is the Interface Segregation Principle (ISP)?",
-    mathSolution: "Interface Segregation Principle",
-    codeSolution:
-      '#include <iostream>\nusing namespace std;\n\n// Bad - Fat interface (violates ISP)\nclass Worker {\npublic:\n    virtual void work() = 0;\n    virtual void eat() = 0;\n    virtual void sleep() = 0;\n    virtual void attendMeeting() = 0;\n    virtual ~Worker() {}\n};\n\n// Robot doesn\'t need eat() and sleep(), but forced to implement\nclass Robot : public Worker {\npublic:\n    void work() override { cout << "Robot working" << endl; }\n    void eat() override { /* Not applicable */ }\n    void sleep() override { /* Not applicable */ }\n    void attendMeeting() override { /* Not applicable */ }\n};\n\n// Good - Segregated interfaces (follows ISP)\nclass Workable {\npublic:\n    virtual void work() = 0;\n    virtual ~Workable() {}\n};\n\nclass Eatable {\npublic:\n    virtual void eat() = 0;\n    virtual ~Eatable() {}\n};\n\nclass Sleepable {\npublic:\n    virtual void sleep() = 0;\n    virtual ~Sleepable() {}\n};\n\nclass MeetingAttendable {\npublic:\n    virtual void attendMeeting() = 0;\n    virtual ~MeetingAttendable() {}\n};\n\n// Human implements all relevant interfaces\nclass Human : public Workable, public Eatable, public Sleepable, public MeetingAttendable {\npublic:\n    void work() override { cout << "Human working" << endl; }\n    void eat() override { cout << "Human eating" << endl; }\n    void sleep() override { cout << "Human sleeping" << endl; }\n    void attendMeeting() override { cout << "Human attending meeting" << endl; }\n};\n\n// Robot implements only what it needs\nclass GoodRobot : public Workable {\npublic:\n    void work() override { cout << "Robot working" << endl; }\n};\n\nint main() {\n    GoodRobot robot;\n    Human human;\n    \n    robot.work();\n    human.work();\n    human.eat();\n    \n    return 0;\n}',
-    hint: "ISP states that clients should not be forced to depend on interfaces they don't use. Split large interfaces into smaller, focused ones.",
-  },
-  {
-    id: "cpp_interface_24",
-    topicId: "cpp_interfaces",
-    question: "How do interfaces support the Open/Closed Principle?",
-    mathSolution: "Open/Closed Principle",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\n// Interface - open for extension\nclass PaymentMethod {\npublic:\n    virtual void pay(double amount) = 0;\n    virtual ~PaymentMethod() {}\n};\n\n// Existing implementations\nclass CreditCard : public PaymentMethod {\npublic:\n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using Credit Card" << endl;\n    }\n};\n\nclass PayPal : public PaymentMethod {\npublic:\n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using PayPal" << endl;\n    }\n};\n\n// New payment method - added without modifying existing code\nclass GooglePay : public PaymentMethod {\npublic:\n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using Google Pay" << endl;\n    }\n};\n\n// Cryptocurrency payment - another new method\nclass CryptoPayment : public PaymentMethod {\npublic:\n    void pay(double amount) override {\n        cout << "Paid $" << amount << " using Cryptocurrency" << endl;\n    }\n};\n\n// Payment processor - closed for modification\nclass PaymentProcessor {\nprivate:\n    vector<unique_ptr<PaymentMethod>> methods;\n    \npublic:\n    void addMethod(unique_ptr<PaymentMethod> method) {\n        methods.push_back(move(method));\n    }\n    \n    void processAll(double amount) {\n        for(auto& method : methods) {\n            method->pay(amount);\n        }\n    }\n};\n\nint main() {\n    PaymentProcessor processor;\n    \n    // Add existing methods\n    processor.addMethod(make_unique<CreditCard>());\n    processor.addMethod(make_unique<PayPal>());\n    \n    // Add new methods - no modification to PaymentProcessor needed!\n    processor.addMethod(make_unique<GooglePay>());\n    processor.addMethod(make_unique<CryptoPayment>());\n    \n    processor.processAll(100.50);\n    \n    return 0;\n}',
-    hint: "Open/Closed Principle: classes should be open for extension but closed for modification. Interfaces allow adding new functionality without changing existing code.",
-  },
-  {
-    id: "cpp_interface_25",
-    topicId: "cpp_interfaces",
-    question:
-      "Write a complete program demonstrating multiple interfaces and their usage.",
-    mathSolution: "Complete interface demo",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <memory>\n#include <string>\n#include <cmath>\nusing namespace std;\n\n// Basic interfaces (using class, not interface keyword)\nclass Drawable {\npublic:\n    virtual void draw() const = 0;\n    virtual ~Drawable() {}\n};\n\nclass Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\nclass Colorable {\npublic:\n    virtual void setColor(const string& color) = 0;\n    virtual string getColor() const = 0;\n    virtual ~Colorable() {}\n};\n\nclass AreaCalculable {\npublic:\n    virtual double getArea() const = 0;\n    virtual ~AreaCalculable() {}\n};\n\nclass Scalable {\npublic:\n    virtual void scale(double factor) = 0;\n    virtual ~Scalable() {}\n};\n\n// Composite interface (using class inheritance)\nclass Shape : public Drawable, public Colorable, public AreaCalculable {\n    // Combines multiple interfaces\n};\n\n// Concrete class implementing multiple interfaces\nclass Circle : public Shape, public Resizable, public Scalable {\nprivate:\n    double radius;\n    string color;\n    \npublic:\n    Circle(double r, const string& c) : radius(r), color(c) {}\n    \n    // Drawable implementation\n    void draw() const override {\n        cout << "Drawing " << color << " circle with radius " << radius << endl;\n    }\n    \n    // Colorable implementation\n    void setColor(const string& c) override { color = c; }\n    string getColor() const override { return color; }\n    \n    // AreaCalculable implementation\n    double getArea() const override {\n        return M_PI * radius * radius;\n    }\n    \n    // Resizable implementation\n    void resize(double factor) override {\n        radius *= factor;\n        cout << "Circle resized to radius " << radius << endl;\n    }\n    \n    // Scalable implementation (similar to resize but could be different)\n    void scale(double factor) override {\n        radius *= factor;\n        cout << "Circle scaled by factor " << factor << endl;\n    }\n    \n    // Additional method\n    double getRadius() const { return radius; }\n};\n\n// Another concrete class\nclass Rectangle : public Shape, public Scalable {\nprivate:\n    double length, width;\n    string color;\n    \npublic:\n    Rectangle(double l, double w, const string& c) : length(l), width(w), color(c) {}\n    \n    void draw() const override {\n        cout << "Drawing " << color << " rectangle " << length << "x" << width << endl;\n    }\n    \n    void setColor(const string& c) override { color = c; }\n    string getColor() const override { return color; }\n    \n    double getArea() const override {\n        return length * width;\n    }\n    \n    void scale(double factor) override {\n        length *= factor;\n        width *= factor;\n        cout << "Rectangle scaled to " << length << "x" << width << endl;\n    }\n};\n\n// Class that works with Drawable interface only\nvoid renderDrawable(const Drawable& d) {\n    d.draw();\n}\n\n// Class that works with Shape interface\nvoid printShapeInfo(const Shape& s) {\n    cout << "Shape info:" << endl;\n    cout << "  Color: " << s.getColor() << endl;\n    cout << "  Area: " << s.getArea() << endl;\n    s.draw();\n}\n\n// Class that works with multiple interfaces via templates\ntemplate<typename T>\nvoid processShape(T& shape) {\n    cout << "\\nProcessing shape:" << endl;\n    shape.draw();\n    \n    // Check if shape supports AreaCalculable via dynamic_cast\n    if(auto* areaObj = dynamic_cast<AreaCalculable*>(&shape)) {\n        cout << "  Area: " << areaObj->getArea() << endl;\n    }\n    \n    // Check if shape supports Colorable\n    if(auto* colorObj = dynamic_cast<Colorable*>(&shape)) {\n        cout << "  Color: " << colorObj->getColor() << endl;\n    }\n    \n    // Check if shape supports Scalable\n    if(auto* scaleObj = dynamic_cast<Scalable*>(&shape)) {\n        scaleObj->scale(1.5);\n    }\n}\n\nint main() {\n    cout << "=== Interface Demonstration in C++ ===\\n" << endl;\n    \n    // Create objects\n    Circle circle(5.0, "red");\n    Rectangle rect(4.0, 6.0, "blue");\n    \n    // 1. Using individual interfaces\n    cout << "1. Using Drawable interface:" << endl;\n    renderDrawable(circle);\n    renderDrawable(rect);\n    \n    // 2. Using Shape interface (combined)\n    cout << "\\n2. Using Shape interface:" << endl;\n    printShapeInfo(circle);\n    cout << "---" << endl;\n    printShapeInfo(rect);\n    \n    // 3. Using Resizable interface\n    cout << "\\n3. Using Resizable interface:" << endl;\n    Resizable& resizableCircle = circle;\n    resizableCircle.resize(2.0);\n    \n    // 4. Multiple interface polymorphism\n    cout << "\\n4. Multiple interface polymorphism:" << endl;\n    vector<Drawable*> drawables;\n    drawables.push_back(&circle);\n    drawables.push_back(&rect);\n    \n    for(auto d : drawables) {\n        d->draw();\n    }\n    \n    // 5. Interface composition\n    cout << "\\n5. Interface composition (Shape combines multiple interfaces):" << endl;\n    vector<Shape*> shapes;\n    shapes.push_back(&circle);\n    shapes.push_back(&rect);\n    \n    for(auto s : shapes) {\n        cout << "Color: " << s->getColor() << ", Area: " << s->getArea() << endl;\n    }\n    \n    // 6. Template function with interface checking\n    cout << "\\n6. Template processing with dynamic_cast interface checking:" << endl;\n    processShape(circle);\n    processShape(rect);\n    \n    // 7. Creating objects dynamically with interfaces\n    cout << "\\n7. Dynamic allocation with interfaces:" << endl;\n    unique_ptr<Drawable> drawable1 = make_unique<Circle>(3.0, "green");\n    unique_ptr<Drawable> drawable2 = make_unique<Rectangle>(2.0, 3.0, "yellow");\n    \n    drawable1->draw();\n    drawable2->draw();\n    \n    // 8. Interface segregation in action\n    cout << "\\n8. Interface segregation - objects implement only what they need:" << endl;\n    cout << "Circle implements: Drawable, Colorable, AreaCalculable, Resizable, Scalable" << endl;\n    cout << "Rectangle implements: Drawable, Colorable, AreaCalculable, Scalable" << endl;\n    \n    cout << "\\n=== Interface Concepts Demonstrated ===" << endl;\n    cout << "✓ Interface definition (pure virtual functions)" << endl;\n    cout << "✓ Multiple interface inheritance" << endl;\n    cout << "✓ Interface composition" << endl;\n    cout << "✓ Polymorphism through interfaces" << endl;\n    cout << "✓ Dynamic_cast for interface checking" << endl;\n    cout << "✓ Interface segregation" << endl;\n    cout << "✓ Dependency on abstractions, not concretions" << endl;\n    \n    return 0;\n}',
-    hint: "This demonstrates: interface definition, multiple inheritance, interface composition, polymorphism, dynamic_cast for interface checking, and interface segregation.",
-  },
+{
+  id: 'cpp_interfaces_1',
+  topicId: 'cpp_interfaces',
+  question: 'Create a simple interface using abstract base class with pure virtual functions.',
+  mathSolution: 'Interface defines contract with pure virtual functions.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Circle : public Drawable {\npublic:\n    void draw() override { cout << "Drawing circle" << endl; }\n};\n\nclass Square : public Drawable {\npublic:\n    void draw() override { cout << "Drawing square" << endl; }\n};\n\nint main() {\n    Drawable* shapes[] = {new Circle(), new Square()};\n    for (auto s : shapes) s->draw();\n    for (auto s : shapes) delete s;\n    return 0;\n}',
+  hint: 'Interface classes have only pure virtual functions and no data members.'
+},
+{
+  id: 'cpp_interfaces_2',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with multiple pure virtual functions.',
+  mathSolution: 'Interface can define multiple methods that implementing classes must provide.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Shape {\npublic:\n    virtual double area() = 0;\n    virtual double perimeter() = 0;\n    virtual void draw() = 0;\n    virtual ~Shape() {}\n};\n\nclass Rectangle : public Shape {\nprivate:\n    double width, height;\npublic:\n    Rectangle(double w, double h) : width(w), height(h) {}\n    double area() override { return width * height; }\n    double perimeter() override { return 2 * (width + height); }\n    void draw() override { cout << "Drawing rectangle" << endl; }\n};\n\nint main() {\n    Rectangle rect(5, 3);\n    cout << "Area: " << rect.area() << ", Perimeter: " << rect.perimeter() << endl;\n    rect.draw();\n    return 0;\n}',
+  hint: 'All pure virtual functions must be implemented by concrete classes.'
+},
+{
+  id: 'cpp_interfaces_3',
+  topicId: 'cpp_interfaces',
+  question: 'Implement multiple inheritance from multiple interfaces.',
+  mathSolution: 'A class can implement multiple interface contracts.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\nclass Button : public Drawable, public Resizable {\nprivate:\n    string label;\n    double size;\npublic:\n    Button(string lbl) : label(lbl), size(1.0) {}\n    void draw() override { cout << "Drawing button: " << label << endl; }\n    void resize(double factor) override { size *= factor; cout << "Button resized by " << factor << endl; }\n};\n\nint main() {\n    Button btn("Click Me");\n    btn.draw();\n    btn.resize(1.5);\n    return 0;\n}',
+  hint: 'Multiple interface inheritance allows combining contracts from different sources.'
+},
+{
+  id: 'cpp_interfaces_4',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface as function parameter for polymorphism.',
+  mathSolution: 'Interface references allow polymorphic function parameters.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Printable {\npublic:\n    virtual void print() = 0;\n    virtual ~Printable() {}\n};\n\nclass Document : public Printable {\nprivate:\n    string content;\npublic:\n    Document(string c) : content(c) {}\n    void print() override { cout << "Document: " << content << endl; }\n};\n\nclass Photo : public Printable {\nprivate:\n    string caption;\npublic:\n    Photo(string c) : caption(c) {}\n    void print() override { cout << "Photo: " << caption << endl; }\n};\n\nvoid printItem(Printable& item) {\n    item.print();\n}\n\nint main() {\n    Document doc("Report\");\n    Photo photo(\"Vacation\");\n    printItem(doc);\n    printItem(photo);\n    return 0;\n}',
+  hint: 'Interface references enable polymorphic function parameters.'
+},
+{
+  id: 'cpp_interfaces_5',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface pointer for polymorphic containers.',
+  mathSolution: 'Containers of interface pointers hold different implementations.',
+  codeSolution: '#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Animal {\npublic:\n    virtual void speak() = 0;\n    virtual ~Animal() {}\n};\n\nclass Dog : public Animal {\npublic:\n    void speak() override { cout << "Woof!" << endl; }\n};\n\nclass Cat : public Animal {\npublic:\n    void speak() override { cout << "Meow!" << endl; }\n};\n\nclass Cow : public Animal {\npublic:\n    void speak() override { cout << "Moo!" << endl; }\n};\n\nint main() {\n    vector<Animal*> animals;\n    animals.push_back(new Dog());\n    animals.push_back(new Cat());\n    animals.push_back(new Cow());\n    \n    for (auto a : animals) a->speak();\n    for (auto a : animals) delete a;\n    return 0;\n}',
+  hint: 'Interface pointers enable polymorphic containers.'
+},
+{
+  id: 'cpp_interfaces_6',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with default methods using virtual destructor.',
+  mathSolution: 'Interfaces should always have virtual destructor for proper cleanup.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Resource {\npublic:\n    virtual void open() = 0;\n    virtual void close() = 0;\n    virtual ~Resource() { cout << "Resource destroyed" << endl; }\n};\n\nclass FileResource : public Resource {\npublic:\n    void open() override { cout << "File opened" << endl; }\n    void close() override { cout << "File closed" << endl; }\n    ~FileResource() { cout << "FileResource destroyed" << endl; }\n};\n\nint main() {\n    Resource* res = new FileResource();\n    res->open();\n    res->close();\n    delete res;  // Calls both destructors correctly\n    return 0;\n}',
+  hint: 'Always include virtual destructor in interface classes.'
+},
+{
+  id: 'cpp_interfaces_7',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with pure virtual function returning reference.',
+  mathSolution: 'Interface methods can return references to other interfaces.',
+  codeSolution: '#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Logger {\npublic:\n    virtual void log(const string& msg) = 0;\n    virtual ~Logger() {}\n};\n\nclass Service {\npublic:\n    virtual Logger& getLogger() = 0;\n    virtual void process() = 0;\n    virtual ~Service() {}\n};\n\nclass ConsoleLogger : public Logger {\npublic:\n    void log(const string& msg) override { cout << "[LOG] " << msg << endl; }\n};\n\nclass DataService : public Service {\nprivate:\n    ConsoleLogger logger;\npublic:\n    Logger& getLogger() override { return logger; }\n    void process() override {\n        getLogger().log("Processing data");\n        cout << "Data processed" << endl;\n    }\n};\n\nint main() {\n    DataService service;\n    service.process();\n    return 0;\n}',
+  hint: 'Interface methods can return references to other interfaces.'
+},
+{
+  id: 'cpp_interfaces_8',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface with smart pointers for automatic memory management.',
+  mathSolution: 'Smart pointers with interfaces enable RAII for polymorphic objects.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\nusing namespace std;\n\nclass Shape {\npublic:\n    virtual void draw() = 0;\n    virtual ~Shape() {}\n};\n\nclass Circle : public Shape {\npublic:\n    void draw() override { cout << "○ \"; }\n};\n\nclass Square : public Shape {\npublic:\n    void draw() override { cout << \"□ \"; }\n};\n\nint main() {\n    vector<unique_ptr<Shape>> shapes;\n    shapes.push_back(make_unique<Circle>());\n    shapes.push_back(make_unique<Square>());\n    shapes.push_back(make_unique<Circle>());\n    \n    for (const auto& s : shapes) s->draw();\n    cout << endl;\n    return 0;\n}',
+  hint: 'Smart pointers manage interface object lifetimes automatically.'
+},
+{
+  "id": "cpp_interfaces_9",
+  "topicId": "cpp_interfaces",
+  "question": "Create interface factory pattern.",
+  "mathSolution": "Factory creates objects implementing specific interface.",
+  "codeSolution": "#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Product {\npublic:\n    virtual void use() = 0;\n    virtual ~Product() {}\n};\n\nclass ProductA : public Product {\npublic:\n    void use() override { cout << \"Using Product A\" << endl; }\n};\n\nclass ProductB : public Product {\npublic:\n    void use() override { cout << \"Using Product B\" << endl; }\n};\n\nclass Factory {\npublic:\n    static unique_ptr<Product> create(char type) {\n        if (type == 'A') return make_unique<ProductA>();\n        if (type == 'B') return make_unique<ProductB>();\n        return nullptr;\n    }\n};\n\nint main() {\n    auto product = Factory::create('A');\n    if (product) product->use();\n    product = Factory::create('B');\n    if (product) product->use();\n    return 0;\n}",
+  "hint": "Factory pattern returns objects implementing the interface."
+},
+{
+  id: 'cpp_interfaces_10',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface segregation principle (multiple small interfaces).',
+  mathSolution: 'Split large interfaces into smaller, focused interfaces.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Flyable {\npublic:\n    virtual void fly() = 0;\n    virtual ~Flyable() {}\n};\n\nclass Swimmable {\npublic:\n    virtual void swim() = 0;\n    virtual ~Swimmable() {}\n};\n\nclass Walkable {\npublic:\n    virtual void walk() = 0;\n    virtual ~Walkable() {}\n};\n\nclass Duck : public Flyable, public Swimmable, public Walkable {\npublic:\n    void fly() override { cout << "Duck flying\" << endl; }\n    void swim() override { cout << \"Duck swimming\" << endl; }\n    void walk() override { cout << \"Duck walking\" << endl; }\n};\n\nclass Penguin : public Swimmable, public Walkable {\npublic:\n    void swim() override { cout << \"Penguin swimming\" << endl; }\n    void walk() override { cout << \"Penguin walking\" << endl; }\n};\n\nint main() {\n    Duck d;\n    Penguin p;\n    d.fly(); d.swim(); d.walk();\n    p.swim(); p.walk();\n    return 0;\n}',
+  hint: 'Interface segregation principle: many client-specific interfaces are better.'
+},
+{
+  id: 'cpp_interfaces_11',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with const methods.',
+  mathSolution: 'Interface methods can be const for read-only operations.',
+  codeSolution: '#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Readable {\npublic:\n    virtual string read() const = 0;\n    virtual ~Readable() {}\n};\n\nclass FileReader : public Readable {\nprivate:\n    string content;\npublic:\n    FileReader(const string& c) : content(c) {}\n    string read() const override { return content; }\n};\n\nvoid printContent(const Readable& r) {\n    cout << r.read() << endl;\n}\n\nint main() {\n    FileReader reader(\"Hello World\");\n    printContent(reader);\n    return 0;\n}',
+  hint: 'Const interface methods guarantee read-only access.'
+},
+{
+  id: 'cpp_interfaces_12',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface as callback mechanism.',
+  mathSolution: 'Interface callbacks enable event-driven programming.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nclass EventListener {\npublic:\n    virtual void onEvent(const string& event) = 0;\n    virtual ~EventListener() {}\n};\n\nclass Button {\nprivate:\n    vector<EventListener*> listeners;\n    string label;\npublic:\n    Button(string lbl) : label(lbl) {}\n    void addListener(EventListener* l) { listeners.push_back(l); }\n    void click() {\n        cout << "Button clicked: \" << label << endl;\n        for (auto l : listeners) l->onEvent(\"click:\" + label);\n    }\n};\n\nclass Logger : public EventListener {\npublic:\n    void onEvent(const string& event) override {\n        cout << \"[LOG] Event: \" << event << endl;\n    }\n};\n\nint main() {\n    Button btn(\"Submit\");\n    Logger logger;\n    btn.addListener(&logger);\n    btn.click();\n    return 0;\n}',
+  hint: 'Interfaces are natural for implementing callback mechanisms.'
+},
+{
+  id: 'cpp_interfaces_13',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with template method pattern.',
+  mathSolution: 'Interface defines algorithm skeleton, implementations provide details.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass DataProcessor {\npublic:\n    virtual void loadData() = 0;\n    virtual void processData() = 0;\n    virtual void saveData() = 0;\n    virtual ~DataProcessor() {}\n    \n    void process() {  // Template method\n        loadData();\n        processData();\n        saveData();\n    }\n};\n\nclass CSVProcessor : public DataProcessor {\npublic:\n    void loadData() override { cout << \"Loading CSV file\" << endl; }\n    void processData() override { cout << \"Processing CSV data\" << endl; }\n    void saveData() override { cout << \"Saving CSV results\" << endl; }\n};\n\nint main() {\n    CSVProcessor processor;\n    processor.process();\n    return 0;\n}',
+  hint: 'Template method pattern uses interface to define algorithm structure.'
+},
+{
+  id: 'cpp_interfaces_14',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with private inheritance for implementation hiding.',
+  mathSolution: 'Private inheritance hides interface implementation details.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Printable {\npublic:\n    virtual void print() = 0;\n    virtual ~Printable() {}\n};\n\nclass Document {\nprivate:\n    string content;\npublic:\n    Document(const string& c) : content(c) {}\n    void display() { cout << content << endl; }\n};\n\nclass Report : private Document, public Printable {\npublic:\n    Report(const string& c) : Document(c) {}\n    void print() override { display(); }\n};\n\nint main() {\n    Report r(\"Annual Report\");\n    Printable* p = &r;\n    p->print();\n    // r.display(); // Error: display is private due to private inheritance\n    return 0;\n}',
+  hint: 'Private inheritance can hide implementation while exposing interface.'
+},
+{
+  id: 'cpp_interfaces_15',
+  topicId: 'cpp_interfaces',
+  question: 'Use dynamic_cast to query interface implementation.',
+  mathSolution: 'dynamic_cast checks if object implements specific interface.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\nclass Shape : public Drawable, public Resizable {\nprivate:\n    double size;\npublic:\n    Shape() : size(1.0) {}\n    void draw() override { cout << \"Drawing shape\" << endl; }\n    void resize(double factor) override { size *= factor; cout << \"Resized by \" << factor << endl; }\n};\n\nint main() {\n    Drawable* d = new Shape();\n    d->draw();\n    \n    Resizable* r = dynamic_cast<Resizable*>(d);\n    if (r) r->resize(2.0);\n    \n    delete d;\n    return 0;\n}',
+  hint: 'dynamic_cast queries whether an object implements an interface.'
+},
+{
+  id: 'cpp_interfaces_16',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with static factory method.',
+  mathSolution: 'Interface can provide static factory methods for creation.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Logger {\npublic:\n    virtual void log(const string& msg) = 0;\n    virtual ~Logger() {}\n    \n    static unique_ptr<Logger> createConsoleLogger();\n    static unique_ptr<Logger> createFileLogger(const string& filename);\n};\n\nclass ConsoleLogger : public Logger {\npublic:\n    void log(const string& msg) override { cout << \"[CONSOLE] \" << msg << endl; }\n};\n\nclass FileLogger : public Logger {\nprivate:\n    string filename;\npublic:\n    FileLogger(const string& f) : filename(f) {}\n    void log(const string& msg) override { cout << \"[FILE:\" << filename << \"] \" << msg << endl; }\n};\n\nunique_ptr<Logger> Logger::createConsoleLogger() {\n    return make_unique<ConsoleLogger>();\n}\n\nunique_ptr<Logger> Logger::createFileLogger(const string& filename) {\n    return make_unique<FileLogger>(filename);\n}\n\nint main() {\n    auto console = Logger::createConsoleLogger();\n    auto file = Logger::createFileLogger(\"app.log\");\n    console->log(\"Hello\");\n    file->log(\"World\");\n    return 0;\n}',
+  hint: 'Interfaces can provide static factory methods for object creation.'
+},
+{
+  id: 'cpp_interfaces_17',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for dependency injection.',
+  mathSolution: 'Interfaces enable loose coupling through dependency injection.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Database {\npublic:\n    virtual void query(const string& sql) = 0;\n    virtual ~Database() {}\n};\n\nclass MySQLDatabase : public Database {\npublic:\n    void query(const string& sql) override { cout << \"MySQL: \" << sql << endl; }\n};\n\nclass PostgreSQLDatabase : public Database {\npublic:\n    void query(const string& sql) override { cout << \"PostgreSQL: \" << sql << endl; }\n};\n\nclass UserService {\nprivate:\n    unique_ptr<Database> db;\npublic:\n    UserService(unique_ptr<Database> database) : db(move(database)) {}\n    void getUsers() { db->query(\"SELECT * FROM users\"); }\n};\n\nint main() {\n    UserService service(make_unique<MySQLDatabase>());\n    service.getUsers();\n    \n    UserService service2(make_unique<PostgreSQLDatabase>());\n    service2.getUsers();\n    return 0;\n}',
+  hint: 'Interfaces enable dependency injection and loose coupling.'
+},
+{
+  id: 'cpp_interfaces_18',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with noexcept specification.',
+  mathSolution: 'Interface methods can specify exception guarantees.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Calculator {\npublic:\n    virtual int add(int a, int b) noexcept = 0;\n    virtual int divide(int a, int b) = 0;\n    virtual ~Calculator() {}\n};\n\nclass SimpleCalculator : public Calculator {\npublic:\n    int add(int a, int b) noexcept override { return a + b; }\n    int divide(int a, int b) override {\n        if (b == 0) throw runtime_error(\"Division by zero\");\n        return a / b;\n    }\n};\n\nint main() {\n    SimpleCalculator calc;\n    cout << calc.add(5, 3) << endl;\n    try {\n        cout << calc.divide(10, 0) << endl;\n    } catch (const exception& e) {\n        cout << \"Error: \" << e.what() << endl;\n    }\n    return 0;\n}',
+  hint: 'noexcept in interfaces documents exception safety guarantees.'
+},
+{
+  id: 'cpp_interfaces_19',
+  topicId: 'cpp_interfaces',
+  question: 'Implement interface using CRTP for static polymorphism.',
+  mathSolution: 'CRTP provides compile-time interface implementation.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\ntemplate<typename Derived>\nclass Drawable {\npublic:\n    void draw() {\n        static_cast<Derived*>(this)->drawImpl();\n    }\n};\n\nclass Circle : public Drawable<Circle> {\npublic:\n    void drawImpl() { cout << "Drawing circle" << endl; }\n};\n\nclass Square : public Drawable<Square> {\npublic:\n    void drawImpl() { cout << "Drawing square" << endl; }\n};\n\ntemplate<typename T>\nvoid render(Drawable<T>& shape) {\n    shape.draw();\n}\n\nint main() {\n    Circle c;\n    Square s;\n    render(c);\n    render(s);\n    return 0;\n}',
+  hint: 'CRTP enables static polymorphism without virtual functions.'
+},
+{
+  id: 'cpp_interfaces_20',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface with std::variant for type-safe unions.',
+  mathSolution: 'std::variant with visitor pattern implements compile-time interface.',
+  codeSolution: '#include <iostream>\n#include <variant>\n#include <vector>\nusing namespace std;\n\nstruct Circle {\n    void draw() const { cout << \"○ \"; }\n};\n\nstruct Square {\n    void draw() const { cout << \"□ \"; }\n};\n\nstruct Triangle {\n    void draw() const { cout << \"▲ \"; }\n};\n\nusing Shape = variant<Circle, Square, Triangle>;\n\nint main() {\n    vector<Shape> shapes;\n    shapes.push_back(Circle{});\n    shapes.push_back(Square{});\n    shapes.push_back(Triangle{});\n    shapes.push_back(Circle{});\n    \n    auto drawVisitor = [](const auto& shape) { shape.draw(); };\n    \n    for (const auto& shape : shapes) {\n        visit(drawVisitor, shape);\n    }\n    cout << endl;\n    return 0;\n}',
+  hint: 'std::variant provides compile-time interface through visitors.'
+},
+{
+  id: 'cpp_interfaces_21',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with type erasure for non-intrusive design.',
+  mathSolution: 'Type erasure hides concrete types behind uniform interface.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Drawable {\nprivate:\n    struct Concept {\n        virtual void draw() = 0;\n        virtual ~Concept() {}\n    };\n    \n    template<typename T>\n    struct Model : Concept {\n        T object;\n        Model(const T& obj) : object(obj) {}\n        void draw() override { object.draw(); }\n    };\n    \n    unique_ptr<Concept> pimpl;\n    \npublic:\n    template<typename T>\n    Drawable(const T& obj) : pimpl(make_unique<Model<T>>(obj)) {}\n    \n    void draw() { pimpl->draw(); }\n};\n\nstruct Circle {\n    void draw() const { cout << \"Circle\"; }\n};\n\nstruct Square {\n    void draw() const { cout << \"Square\"; }\n};\n\nint main() {\n    Drawable d1(Circle{});\n    Drawable d2(Square{});\n    \n    d1.draw(); cout << endl;\n    d2.draw(); cout << endl;\n    \n    return 0;\n}',
+  hint: 'Type erasure creates interface without inheritance requirements.'
+},
+{
+  id: 'cpp_interfaces_22',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface with std::function for polymorphic callbacks.',
+  mathSolution: 'std::function wraps any callable satisfying interface contract.',
+  codeSolution: '#include <iostream>\n#include <functional>\n#include <vector>\nusing namespace std;\n\nclass Button {\nprivate:\n    vector<function<void()>> clickHandlers;\n    string label;\n    \npublic:\n    Button(const string& lbl) : label(lbl) {}\n    void addClickHandler(function<void()> handler) { clickHandlers.push_back(handler); }\n    void click() {\n        cout << "Button " << label << " clicked" << endl;\n        for (auto& h : clickHandlers) h();\n    }\n};\n\nint main() {\n    Button btn("Submit");\n    \n    btn.addClickHandler([]() { cout << "  - Logging click" << endl; });\n    btn.addClickHandler([]() { cout << "  - Sending event" << endl; });\n    btn.addClickHandler([]() { cout << "  - Updating UI" << endl; });\n    \n    btn.click();\n    return 0;\n}',
+  hint: 'std::function provides callable interface for any function object.'
+},
+{
+  id: 'cpp_interfaces_23',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with concept (C++20) for compile-time checking.',
+  mathSolution: 'Concepts define compile-time interface requirements.',
+  codeSolution: '#include <iostream>\n#include <concepts>\nusing namespace std;\n\ntemplate<typename T>\nconcept Drawable = requires(T t) {\n    { t.draw() } -> convertible_to<void>;\n};\n\ntemplate<typename T>\nconcept Resizable = requires(T t, double factor) {\n    { t.resize(factor) } -> convertible_to<void>;\n};\n\nstruct Circle {\n    void draw() { cout << \"Circle\"; }\n};\n\nstruct Square {\n    void draw() { cout << \"Square\"; }\n    void resize(double f) { cout << \" resize(\" << f << \")\"; }\n};\n\ntemplate<Drawable T>\nvoid render(const T& shape) {\n    shape.draw();\n}\n\ntemplate<Drawable T>\nvoid process(T& shape) {\n    shape.draw();\n    if constexpr (Resizable<T>) {\n        shape.resize(1.5);\n    }\n    cout << endl;\n}\n\nint main() {\n    Circle c;\n    Square s;\n    render(c); cout << endl;\n    process(s);\n    return 0;\n}',
+  hint: 'Concepts provide compile-time interface constraints (C++20).'
+},
+{
+  id: 'cpp_interfaces_24',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with virtual inheritance to avoid diamond problem.',
+  mathSolution: 'Virtual inheritance ensures single interface instance in multiple inheritance.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\nclass Colored {\npublic:\n    virtual string getColor() = 0;\n    virtual ~Colored() {}\n};\n\nclass ColoredDrawable : public virtual Drawable, public virtual Colored {\n    // Combines both interfaces\n};\n\nclass Circle : public ColoredDrawable {\nprivate:\n    string color;\npublic:\n    Circle(const string& c) : color(c) {}\n    void draw() override { cout << \"Drawing circle\" << endl; }\n    string getColor() override { return color; }\n};\n\nint main() {\n    Circle c(\"red\");\n    Drawable* d = &c;\n    Colored* col = &c;\n    d->draw();\n    cout << \"Color: \" << col->getColor() << endl;\n    return 0;\n}',
+  hint: 'Virtual inheritance prevents duplicate interface base classes.'
+},
+{
+  id: 'cpp_interfaces_25',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface with placement new for custom memory management.',
+  mathSolution: 'Placement new can construct interface objects in pre-allocated memory.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Widget {\npublic:\n    virtual void process() = 0;\n    virtual ~Widget() {}\n};\n\nclass ConcreteWidget : public Widget {\npublic:\n    void process() override { cout << \"Processing widget\" << endl; }\n};\n\nint main() {\n    alignas(ConcreteWidget) char buffer[sizeof(ConcreteWidget)];\n    \n    Widget* widget = new(buffer) ConcreteWidget();\n    widget->process();\n    widget->~Widget();  // Manual destructor call\n    \n    // Using unique_ptr with custom deleter for placement new\n    auto deleter = [](Widget* w) { w->~Widget(); };\n    unique_ptr<Widget, decltype(deleter)> widget2(new(buffer) ConcreteWidget(), deleter);\n    widget2->process();\n    \n    return 0;\n}',
+  hint: 'Interfaces can be used with placement new for custom allocation.'
+},
+{
+  id: 'cpp_interfaces_26',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface with friend function for operator overloading.',
+  mathSolution: 'Interfaces can declare friend operators for custom types.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Printable {\npublic:\n    virtual void print(ostream& os) const = 0;\n    virtual ~Printable() {}\n    \n    friend ostream& operator<<(ostream& os, const Printable& p) {\n        p.print(os);\n        return os;\n    }\n};\n\nclass Point : public Printable {\nprivate:\n    int x, y;\npublic:\n    Point(int a, int b) : x(a), y(b) {}\n    void print(ostream& os) const override { os << \"(\" << x << \",\" << y << \")\"; }\n};\n\nint main() {\n    Point p(10, 20);\n    cout << \"Point: \" << p << endl;\n    return 0;\n}',
+  hint: 'Interfaces can declare friend operators for consistent I/O.'
+},
+{
+  id: 'cpp_interfaces_27',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for logging abstraction.',
+  mathSolution: 'Logging interface enables multiple logging implementations.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <ctime>\nusing namespace std;\n\nclass Logger {\npublic:\n    virtual void log(const string& level, const string& msg) = 0;\n    virtual ~Logger() {}\n};\n\nclass ConsoleLogger : public Logger {\npublic:\n    void log(const string& level, const string& msg) override {\n        cout << "[" << level << "] " << msg << endl;\n    }\n};\n\nclass TimestampLogger : public Logger {\nprivate:\n    unique_ptr<Logger> logger;\npublic:\n    TimestampLogger(unique_ptr<Logger> log) : logger(move(log)) {}\n    void log(const string& level, const string& msg) override {\n        time_t now = time(nullptr);\n        string timestamp = ctime(&now);\n        timestamp.pop_back();\n        logger->log(level, timestamp + ": " + msg);\n    }\n};\n\nint main() {\n    auto logger = make_unique<TimestampLogger>(make_unique<ConsoleLogger>());\n    logger->log("INFO", "Application started");\n    return 0;\n}',
+  hint: 'Logger abstraction allows decorator pattern with interfaces.'
+},
+{
+  "id": "cpp_interfaces_28",
+  "topicId": "cpp_interfaces",
+  "question": "Create interface for serialization.",
+  "mathSolution": "Serialization interface allows polymorphic serialization.",
+  "codeSolution": "#include <iostream>\n#include <sstream>\n#include <string>\n#include <vector>\nusing namespace std;\n\nclass Serializable {\npublic:\n    virtual void serialize(ostream& os) const = 0;\n    virtual void deserialize(istream& is) = 0;\n    virtual ~Serializable() {}\n};\n\nclass Person : public Serializable {\nprivate:\n    string name;\n    int age;\npublic:\n    Person() : name(\"\"), age(0) {}\n    Person(const string& n, int a) : name(n), age(a) {}\n    \n    void serialize(ostream& os) const override { \n        os << name << \",\" << age; \n    }\n    \n    void deserialize(istream& is) override {\n        string line;\n        getline(is, line);\n        size_t commaPos = line.find(',');\n        if (commaPos != string::npos) {\n            name = line.substr(0, commaPos);\n            age = stoi(line.substr(commaPos + 1));\n        }\n    }\n    \n    void display() const { \n        cout << name << \" (\" << age << \")\" << endl; \n    }\n};\n\nint main() {\n    Person p1(\"John\", 30);\n    stringstream ss;\n    p1.serialize(ss);\n    \n    cout << \"Serialized data: \" << ss.str() << endl;\n    \n    Person p2;\n    p2.deserialize(ss);\n    cout << \"Deserialized: \";\n    p2.display();\n    \n    return 0;\n}",
+  "hint": "Serialization interface provides uniform serialization mechanism."
+},
+{
+  id: 'cpp_interfaces_29',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for iterator pattern.',
+  mathSolution: 'Iterator interface enables uniform container traversal.',
+  codeSolution: '#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Iterator {\npublic:\n    virtual void next() = 0;\n    virtual bool done() const = 0;\n    virtual int current() const = 0;\n    virtual ~Iterator() {}\n};\n\nclass VectorIterator : public Iterator {\nprivate:\n    const vector<int>& data;\n    size_t index;\npublic:\n    VectorIterator(const vector<int>& v) : data(v), index(0) {}\n    void next() override { if (index < data.size()) index++; }\n    bool done() const override { return index >= data.size(); }\n    int current() const override { return data[index]; }\n};\n\nint main() {\n    vector<int> numbers = {10, 20, 30, 40};\n    VectorIterator it(numbers);\n    while (!it.done()) {\n        cout << it.current() << \" \";\n        it.next();\n    }\n    cout << endl;\n    return 0;\n}',
+  hint: 'Iterator interface provides uniform traversal for different containers.'
+},
+{
+  id: 'cpp_interfaces_30',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for command pattern.',
+  mathSolution: 'Command interface encapsulates operations as objects.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Command {\npublic:\n    virtual void execute() = 0;\n    virtual void undo() = 0;\n    virtual ~Command() {}\n};\n\nclass Light {\npublic:\n    void on() { cout << \"Light ON\" << endl; }\n    void off() { cout << \"Light OFF\" << endl; }\n};\n\nclass LightOnCommand : public Command {\nprivate:\n    Light& light;\npublic:\n    LightOnCommand(Light& l) : light(l) {}\n    void execute() override { light.on(); }\n    void undo() override { light.off(); }\n};\n\nclass LightOffCommand : public Command {\nprivate:\n    Light& light;\npublic:\n    LightOffCommand(Light& l) : light(l) {}\n    void execute() override { light.off(); }\n    void undo() override { light.on(); }\n};\n\nint main() {\n    Light livingRoom;\n    vector<unique_ptr<Command>> commands;\n    commands.push_back(make_unique<LightOnCommand>(livingRoom));\n    commands.push_back(make_unique<LightOffCommand>(livingRoom));\n    for (auto& cmd : commands) cmd->execute();\n    commands.back()->undo();\n    return 0;\n}',
+  hint: 'Command interface encapsulates requests as objects.'
+},
+{
+  id: 'cpp_interfaces_31',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for state pattern.',
+  mathSolution: 'State interface encapsulates state-specific behavior.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass State {\npublic:\n    virtual void handle() = 0;\n    virtual ~State() {}\n};\n\nclass Context {\nprivate:\n    unique_ptr<State> state;\npublic:\n    void setState(unique_ptr<State> s) { state = move(s); }\n    void request() { if (state) state->handle(); }\n};\n\nclass ConcreteStateA : public State {\npublic:\n    void handle() override { cout << \"Handling State A\" << endl; }\n};\n\nclass ConcreteStateB : public State {\npublic:\n    void handle() override { cout << \"Handling State B\" << endl; }\n};\n\nint main() {\n    Context context;\n    context.setState(make_unique<ConcreteStateA>());\n    context.request();\n    context.setState(make_unique<ConcreteStateB>());\n    context.request();\n    return 0;\n}',
+  hint: 'State interface encapsulates varying behavior per state.'
+},
+{
+  id: 'cpp_interfaces_32',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for strategy pattern.',
+  mathSolution: 'Strategy interface encapsulates interchangeable algorithms.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass SortingStrategy {\npublic:\n    virtual void sort(vector<int>& data) = 0;\n    virtual ~SortingStrategy() {}\n};\n\nclass BubbleSort : public SortingStrategy {\npublic:\n    void sort(vector<int>& data) override {\n        cout << \"Using bubble sort\" << endl;\n        for (size_t i = 0; i < data.size(); i++) {\n            for (size_t j = 0; j < data.size() - i - 1; j++) {\n                if (data[j] > data[j + 1]) swap(data[j], data[j + 1]);\n            }\n        }\n    }\n};\n\nclass QuickSort : public SortingStrategy {\npublic:\n    void sort(vector<int>& data) override { cout << \"Using quick sort\" << endl; }\n};\n\nclass DataProcessor {\nprivate:\n    unique_ptr<SortingStrategy> strategy;\n    vector<int> data;\npublic:\n    void setStrategy(unique_ptr<SortingStrategy> s) { strategy = move(s); }\n    void add(int val) { data.push_back(val); }\n    void process() { if (strategy) strategy->sort(data); }\n};\n\nint main() {\n    DataProcessor dp;\n    dp.add(5); dp.add(2); dp.add(8); dp.add(1);\n    dp.setStrategy(make_unique<BubbleSort>());\n    dp.process();\n    return 0;\n}',
+  hint: 'Strategy interface allows interchangeable algorithms at runtime.'
+},
+{
+  id: 'cpp_interfaces_33',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for observer pattern.',
+  mathSolution: 'Observer interface defines update contract.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nclass Observer {\npublic:\n    virtual void update(const string& message) = 0;\n    virtual ~Observer() {}\n};\n\nclass Subject {\nprivate:\n    vector<Observer*> observers;\npublic:\n    void attach(Observer* obs) { observers.push_back(obs); }\n    void notify(const string& msg) { for (auto o : observers) o->update(msg); }\n};\n\nclass ConcreteObserver : public Observer {\nprivate:\n    string name;\npublic:\n    ConcreteObserver(const string& n) : name(n) {}\n    void update(const string& message) override {\n        cout << name << \" received: \" << message << endl;\n    }\n};\n\nint main() {\n    Subject subject;\n    ConcreteObserver o1(\"Observer1\"), o2(\"Observer2\");\n    subject.attach(&o1);\n    subject.attach(&o2);\n    subject.notify(\"Hello Observers!\");\n    return 0;\n}',
+  hint: 'Observer interface enables event-driven architecture.'
+},
+{
+  id: 'cpp_interfaces_34',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for visitor pattern double dispatch.',
+  mathSolution: 'Visitor interface enables operations on object structures.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass Circle;\nclass Rectangle;\n\nclass Visitor {\npublic:\n    virtual void visit(Circle& c) = 0;\n    virtual void visit(Rectangle& r) = 0;\n    virtual ~Visitor() {}\n};\n\nclass Shape {\npublic:\n    virtual void accept(Visitor& v) = 0;\n    virtual ~Shape() {}\n};\n\nclass Circle : public Shape {\npublic:\n    void accept(Visitor& v) override { v.visit(*this); }\n    void draw() { cout << \"Circle\"; }\n};\n\nclass Rectangle : public Shape {\npublic:\n    void accept(Visitor& v) override { v.visit(*this); }\n    void draw() { cout << \"Rectangle\"; }\n};\n\nclass DrawVisitor : public Visitor {\npublic:\n    void visit(Circle& c) override { c.draw(); }\n    void visit(Rectangle& r) override { r.draw(); }\n};\n\nint main() {\n    Circle c;\n    Rectangle r;\n    DrawVisitor drawer;\n    c.accept(drawer); cout << endl;\n    r.accept(drawer); cout << endl;\n    return 0;\n}',
+  hint: 'Visitor interface enables double dispatch for operations.'
+},
+{
+  id: 'cpp_interfaces_35',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for adapter pattern.',
+  mathSolution: 'Adapter interface bridges incompatible interfaces.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass OldSystem {\npublic:\n    void oldRequest() { cout << \"Old system request\" << endl; }\n};\n\nclass NewSystem {\npublic:\n    virtual void newRequest() = 0;\n    virtual ~NewSystem() {}\n};\n\nclass Adapter : public NewSystem {\nprivate:\n    unique_ptr<OldSystem> oldSystem;\npublic:\n    Adapter() : oldSystem(make_unique<OldSystem>()) {}\n    void newRequest() override { oldSystem->oldRequest(); }\n};\n\nint main() {\n    unique_ptr<NewSystem> system = make_unique<Adapter>();\n    system->newRequest();\n    return 0;\n}',
+  hint: 'Adapter interface allows incompatible systems to work together.'
+},
+{
+  id: 'cpp_interfaces_36',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for bridge pattern.',
+  mathSolution: 'Bridge interface separates abstraction from implementation.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass DrawingAPI {\npublic:\n    virtual void drawCircle(double x, double y, double r) = 0;\n    virtual ~DrawingAPI() {}\n};\n\nclass DrawingAPI1 : public DrawingAPI {\npublic:\n    void drawCircle(double x, double y, double r) override {\n        cout << \"API1: circle at (\" << x << \",\" << y << \") r=\" << r << endl;\n    }\n};\n\nclass Shape {\nprotected:\n    unique_ptr<DrawingAPI> drawingAPI;\npublic:\n    Shape(unique_ptr<DrawingAPI> api) : drawingAPI(move(api)) {}\n    virtual void draw() = 0;\n    virtual ~Shape() {}\n};\n\nclass CircleShape : public Shape {\nprivate:\n    double x, y, radius;\npublic:\n    CircleShape(double cx, double cy, double r, unique_ptr<DrawingAPI> api)\n        : Shape(move(api)), x(cx), y(cy), radius(r) {}\n    void draw() override { drawingAPI->drawCircle(x, y, radius); }\n};\n\nint main() {\n    CircleShape circle(5, 5, 10, make_unique<DrawingAPI1>());\n    circle.draw();\n    return 0;\n}',
+  hint: 'Bridge interface decouples abstraction from implementation.'
+},
+{
+  id: 'cpp_interfaces_37',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for proxy pattern.',
+  mathSolution: 'Proxy interface controls access to real object.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Image {\npublic:\n    virtual void display() = 0;\n    virtual ~Image() {}\n};\n\nclass RealImage : public Image {\nprivate:\n    string filename;\n    void load() { cout << "Loading " << filename << endl; }\npublic:\n    RealImage(const string& f) : filename(f) { load(); }\n    void display() override { cout << "Displaying " << filename << endl; }\n};\n\nclass ImageProxy : public Image {\nprivate:\n    string filename;\n    unique_ptr<RealImage> realImage;\npublic:\n    ImageProxy(const string& f) : filename(f) {}\n    void display() override {\n        if (!realImage) realImage = make_unique<RealImage>(filename);\n        realImage->display();\n    }\n};\n\nint main() {\n    ImageProxy proxy("photo.jpg");\n    cout << "Proxy created, image not loaded" << endl;\n    proxy.display();\n    proxy.display();\n    return 0;\n}',
+  hint: 'Proxy interface controls access to real objects.'
+},
+{
+  id: 'cpp_interfaces_38',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for decorator pattern.',
+  mathSolution: 'Decorator interface wraps and enhances existing objects.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Coffee {\npublic:\n    virtual double cost() = 0;\n    virtual string description() = 0;\n    virtual ~Coffee() {}\n};\n\nclass SimpleCoffee : public Coffee {\npublic:\n    double cost() override { return 5.0; }\n    string description() override { return \"Simple coffee\"; }\n};\n\nclass CoffeeDecorator : public Coffee {\nprotected:\n    unique_ptr<Coffee> coffee;\npublic:\n    CoffeeDecorator(unique_ptr<Coffee> c) : coffee(move(c)) {}\n};\n\nclass MilkDecorator : public CoffeeDecorator {\npublic:\n    MilkDecorator(unique_ptr<Coffee> c) : CoffeeDecorator(move(c)) {}\n    double cost() override { return coffee->cost() + 2.0; }\n    string description() override { return coffee->description() + \", milk\"; }\n};\n\nint main() {\n    auto coffee = make_unique<SimpleCoffee>();\n    coffee = make_unique<MilkDecorator>(move(coffee));\n    cout << coffee->description() << \": $\" << coffee->cost() << endl;\n    return 0;\n}',
+  hint: 'Decorator interface adds behavior dynamically.'
+},
+{
+  id: 'cpp_interfaces_39',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for facade pattern.',
+  mathSolution: 'Facade interface simplifies complex subsystem.',
+  codeSolution: '#include <iostream>\nusing namespace std;\n\nclass CPU {\npublic:\n    void start() { cout << \"CPU started\" << endl; }\n    void execute() { cout << \"CPU executing\" << endl; }\n};\n\nclass Memory {\npublic:\n    void load() { cout << \"Memory loaded\" << endl; }\n};\n\nclass HardDrive {\npublic:\n    void read() { cout << \"Hard drive reading\" << endl; }\n};\n\nclass ComputerFacade {\nprivate:\n    CPU cpu;\n    Memory memory;\n    HardDrive hd;\npublic:\n    void start() {\n        cpu.start();\n        memory.load();\n        hd.read();\n        cpu.execute();\n        cout << \"Computer ready\" << endl;\n    }\n};\n\nint main() {\n    ComputerFacade computer;\n    computer.start();\n    return 0;\n}',
+  hint: 'Facade interface simplifies subsystem interaction.'
+},
+{
+  "id": "cpp_interfaces_40",
+  "topicId": "cpp_interfaces",
+  "question": "Use interface for flyweight pattern.",
+  "mathSolution": "Flyweight interface shares common state among objects.",
+  "codeSolution": "#include <iostream>\n#include <unordered_map>\n#include <memory>\n#include <string>\nusing namespace std;\n\nclass Character {\npublic:\n    virtual void display(int x, int y) = 0;\n    virtual ~Character() {}\n};\n\nclass ConcreteCharacter : public Character {\nprivate:\n    char symbol;\n    string font;\npublic:\n    ConcreteCharacter(char s, const string& f) : symbol(s), font(f) {}\n    void display(int x, int y) override {\n        cout << \"Character '\" << symbol << \"' at (\" << x << \",\" << y \n             << \") font: \" << font << endl;\n    }\n};\n\nclass CharacterFactory {\nprivate:\n    unordered_map<string, shared_ptr<Character>> cache;\npublic:\n    shared_ptr<Character> getCharacter(char c, const string& font) {\n        string key = string(1, c) + font;\n        if (cache.find(key) == cache.end()) {\n            cache[key] = make_shared<ConcreteCharacter>(c, font);\n            cout << \"Creating new character: \" << key << endl;\n        }\n        return cache[key];\n    }\n    \n    size_t getCacheSize() const {\n        return cache.size();\n    }\n};\n\nint main() {\n    CharacterFactory factory;\n    auto a1 = factory.getCharacter('A', \"Arial\");\n    auto a2 = factory.getCharacter('A', \"Arial\");\n    auto b1 = factory.getCharacter('B', \"Arial\");\n    \n    a1->display(0, 0);\n    a2->display(10, 0);\n    b1->display(20, 0);\n    \n    cout << \"\\nUnique characters cached: \" << factory.getCacheSize() << endl;\n    cout << \"(Only 2 unique characters created for 3 uses)\" << endl;\n    \n    return 0;\n}",
+  "hint": "Flyweight interface enables efficient sharing of objects."
+},
+{
+  id: 'cpp_interfaces_41',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for mediator pattern.',
+  mathSolution: 'Mediator interface centralizes communication between objects.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <string>\nusing namespace std;\n\nclass Colleague;\n\nclass Mediator {\npublic:\n    virtual void notify(Colleague* sender, const string& event) = 0;\n    virtual ~Mediator() {}\n};\n\nclass Colleague {\nprotected:\n    Mediator* mediator;\npublic:\n    Colleague(Mediator* m) : mediator(m) {}\n};\n\nclass ConcreteMediator : public Mediator {\nprivate:\n    vector<Colleague*> colleagues;\npublic:\n    void addColleague(Colleague* c) { colleagues.push_back(c); }\n    void notify(Colleague* sender, const string& event) override {\n        for (auto c : colleagues) if (c != sender) cout << \"Mediator: \" << event << endl;\n    }\n};\n\nclass Component1 : public Colleague {\npublic:\n    Component1(Mediator* m) : Colleague(m) {}\n    void doSomething() { mediator->notify(this, \"Component1 event\"); }\n};\n\nint main() {\n    ConcreteMediator mediator;\n    Component1 c1(&mediator);\n    mediator.addColleague(&c1);\n    c1.doSomething();\n    return 0;\n}',
+  hint: 'Mediator interface reduces coupling between components.'
+},
+{
+  id: 'cpp_interfaces_42',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for memento pattern.',
+  mathSolution: 'Memento interface captures and restores object state.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Memento {\npublic:\n    virtual string getState() const = 0;\n    virtual ~Memento() {}\n};\n\nclass ConcreteMemento : public Memento {\nprivate:\n    string state;\npublic:\n    ConcreteMemento(const string& s) : state(s) {}\n    string getState() const override { return state; }\n};\n\nclass Originator {\nprivate:\n    string state;\npublic:\n    void setState(const string& s) { state = s; cout << \"State: \" << state << endl; }\n    unique_ptr<Memento> save() { return make_unique<ConcreteMemento>(state); }\n    void restore(unique_ptr<Memento> m) { state = m->getState(); cout << \"Restored: \" << state << endl; }\n};\n\nint main() {\n    Originator originator;\n    originator.setState(\"State1\");\n    auto saved = originator.save();\n    originator.setState(\"State2\");\n    originator.restore(move(saved));\n    return 0;\n}',
+  hint: 'Memento interface enables state capture and restoration.'
+},
+{
+  id: 'cpp_interfaces_43',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for chain of responsibility.',
+  mathSolution: 'Handler interface forms chain for request processing.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Handler {\nprotected:\n    unique_ptr<Handler> next;\npublic:\n    void setNext(unique_ptr<Handler> h) { next = move(h); }\n    virtual void handleRequest(int level) {\n        if (next) next->handleRequest(level);\n    }\n    virtual ~Handler() {}\n};\n\nclass ConcreteHandler1 : public Handler {\npublic:\n    void handleRequest(int level) override {\n        if (level <= 10) cout << \"Handler1 processed \" << level << endl;\n        else Handler::handleRequest(level);\n    }\n};\n\nclass ConcreteHandler2 : public Handler {\npublic:\n    void handleRequest(int level) override {\n        if (level <= 20) cout << \"Handler2 processed \" << level << endl;\n        else Handler::handleRequest(level);\n    }\n};\n\nint main() {\n    auto h1 = make_unique<ConcreteHandler1>();\n    auto h2 = make_unique<ConcreteHandler2>();\n    h1->setNext(move(h2));\n    h1->handleRequest(5);\n    h1->handleRequest(15);\n    return 0;\n}',
+  hint: 'Handler interface enables request processing chain.'
+},
+{
+  id: 'cpp_interfaces_44',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for prototype pattern.',
+  mathSolution: 'Prototype interface defines cloning method.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Prototype {\npublic:\n    virtual unique_ptr<Prototype> clone() const = 0;\n    virtual void display() const = 0;\n    virtual ~Prototype() {}\n};\n\nclass ConcretePrototype : public Prototype {\nprivate:\n    int id;\n    string name;\npublic:\n    ConcretePrototype(int i, const string& n) : id(i), name(n) {}\n    ConcretePrototype(const ConcretePrototype& other) : id(other.id), name(other.name) {}\n    unique_ptr<Prototype> clone() const override {\n        return make_unique<ConcretePrototype>(*this);\n    }\n    void display() const override { cout << id << \": \" << name << endl; }\n};\n\nint main() {\n    ConcretePrototype original(1, \"Original\");\n    auto clone = original.clone();\n    original.display();\n    clone->display();\n    return 0;\n}',
+  hint: 'Prototype interface enables object cloning.'
+},
+{
+  id: 'cpp_interfaces_45',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for builder pattern.',
+  mathSolution: 'Builder interface constructs complex objects step by step.',
+  codeSolution: '#include <iostream>\n#include <string>\nusing namespace std;\n\nclass Product {\nprivate:\n    string parts[3];\npublic:\n    void setPart(int index, const string& part) { parts[index] = part; }\n    void show() { for (int i = 0; i < 3; i++) cout << parts[i] << \" \"; cout << endl; }\n};\n\nclass Builder {\npublic:\n    virtual void buildPartA() = 0;\n    virtual void buildPartB() = 0;\n    virtual void buildPartC() = 0;\n    virtual Product getResult() = 0;\n    virtual ~Builder() {}\n};\n\nclass ConcreteBuilder : public Builder {\nprivate:\n    Product product;\npublic:\n    void buildPartA() override { product.setPart(0, \"PartA\"); }\n    void buildPartB() override { product.setPart(1, \"PartB\"); }\n    void buildPartC() override { product.setPart(2, \"PartC\"); }\n    Product getResult() override { return product; }\n};\n\nclass Director {\nprivate:\n    Builder& builder;\npublic:\n    Director(Builder& b) : builder(b) {}\n    void construct() {\n        builder.buildPartA();\n        builder.buildPartB();\n        builder.buildPartC();\n    }\n};\n\nint main() {\n    ConcreteBuilder builder;\n    Director director(builder);\n    director.construct();\n    Product product = builder.getResult();\n    product.show();\n    return 0;\n}',
+  hint: 'Builder interface constructs complex objects step by step.'
+},
+{
+  id: 'cpp_interfaces_46',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for singleton pattern.',
+  mathSolution: 'Singleton interface ensures single instance access.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Singleton {\nprivate:\n    static unique_ptr<Singleton> instance;\n    Singleton() { cout << \"Singleton created\" << endl; }\npublic:\n    Singleton(const Singleton&) = delete;\n    Singleton& operator=(const Singleton&) = delete;\n    \n    static Singleton* getInstance() {\n        if (!instance) instance = make_unique<Singleton>();\n        return instance.get();\n    }\n    \n    void doSomething() { cout << \"Singleton doing work\" << endl; }\n};\n\nunique_ptr<Singleton> Singleton::instance = nullptr;\n\nint main() {\n    Singleton* s1 = Singleton::getInstance();\n    Singleton* s2 = Singleton::getInstance();\n    cout << \"Same instance? \" << (s1 == s2 ? \"Yes\" : \"No\") << endl;\n    s1->doSomething();\n    return 0;\n}',
+  hint: 'Singleton interface ensures single instance of a class.'
+},
+{
+  id: 'cpp_interfaces_47',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for pool pattern.',
+  mathSolution: 'Pool interface manages reusable object instances.',
+  codeSolution: '#include <iostream>\n#include <queue>\n#include <memory>\nusing namespace std;\n\nclass Resource {\nprivate:\n    int id;\n    static int nextId;\npublic:\n    Resource() : id(nextId++) { cout << \"Resource \" << id << \" created\" << endl; }\n    ~Resource() { cout << \"Resource \" << id << \" destroyed\" << endl; }\n    void use() { cout << \"Using resource \" << id << endl; }\n};\n\nint Resource::nextId = 1;\n\nclass ResourcePool {\nprivate:\n    queue<unique_ptr<Resource>> pool;\n    size_t maxSize;\npublic:\n    ResourcePool(size_t size) : maxSize(size) {\n        for (size_t i = 0; i < size; i++) pool.push(make_unique<Resource>());\n    }\n    \n    unique_ptr<Resource> acquire() {\n        if (pool.empty()) return make_unique<Resource>();\n        auto res = move(pool.front());\n        pool.pop();\n        return res;\n    }\n    \n    void release(unique_ptr<Resource> res) {\n        if (pool.size() < maxSize) pool.push(move(res));\n    }\n};\n\nint main() {\n    ResourcePool pool(2);\n    auto r1 = pool.acquire();\n    auto r2 = pool.acquire();\n    r1->use();\n    r2->use();\n    pool.release(move(r1));\n    auto r3 = pool.acquire();\n    r3->use();\n    return 0;\n}',
+  hint: 'Pool interface manages reusable resource objects.'
+},
+{
+  id: 'cpp_interfaces_48',
+  topicId: 'cpp_interfaces',
+  question: 'Use interface for null object pattern.',
+  mathSolution: 'Null object interface provides default do-nothing behavior.',
+  codeSolution: '#include <iostream>\n#include <memory>\nusing namespace std;\n\nclass Logger {\npublic:\n    virtual void log(const string& msg) = 0;\n    virtual ~Logger() {}\n};\n\nclass ConsoleLogger : public Logger {\npublic:\n    void log(const string& msg) override { cout << \"[LOG] \" << msg << endl; }\n};\n\nclass NullLogger : public Logger {\npublic:\n    void log(const string& msg) override { /* do nothing */ }\n};\n\nclass Application {\nprivate:\n    unique_ptr<Logger> logger;\npublic:\n    Application(unique_ptr<Logger> log) : logger(move(log)) {}\n    void run() { logger->log(\"Application running\"); }\n};\n\nint main() {\n    Application app1(make_unique<ConsoleLogger>());\n    Application app2(make_unique<NullLogger>());\n    app1.run();\n    app2.run();\n    return 0;\n}',
+  hint: 'Null object interface provides safe default behavior.'
+},
+{
+  id: 'cpp_interfaces_49',
+  topicId: 'cpp_interfaces',
+  question: 'Create interface for composite pattern.',
+  mathSolution: 'Composite interface allows uniform treatment of leaf and composite.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <memory>\nusing namespace std;\n\nclass Graphic {\npublic:\n    virtual void draw() = 0;\n    virtual ~Graphic() {}\n};\n\nclass Circle : public Graphic {\npublic:\n    void draw() override { cout << \"○ \"; }\n};\n\nclass Square : public Graphic {\npublic:\n    void draw() override { cout << \"□ \"; }\n};\n\nclass CompositeGraphic : public Graphic {\nprivate:\n    vector<unique_ptr<Graphic>> children;\npublic:\n    void add(unique_ptr<Graphic> g) { children.push_back(move(g)); }\n    void draw() override { for (auto& g : children) g->draw(); }\n};\n\nint main() {\n    auto composite = make_unique<CompositeGraphic>();\n    composite->add(make_unique<Circle>());\n    composite->add(make_unique<Square>());\n    composite->add(make_unique<Circle>());\n    composite->draw(); cout << endl;\n    return 0;\n}',
+  hint: 'Composite interface treats part and whole uniformly.'
+},
+{
+  id: 'cpp_interfaces_50',
+  topicId: 'cpp_interfaces',
+  question: 'Create comprehensive interface demonstration program.',
+  mathSolution: 'Combine multiple interface concepts in complete example.',
+  codeSolution: '#include <iostream>\n#include <memory>\n#include <vector>\nusing namespace std;\n\n// 1. Basic interface\nclass Drawable {\npublic:\n    virtual void draw() = 0;\n    virtual ~Drawable() {}\n};\n\n// 2. Another interface\nclass Resizable {\npublic:\n    virtual void resize(double factor) = 0;\n    virtual ~Resizable() {}\n};\n\n// 3. Multiple interface implementation\nclass Shape : public Drawable, public Resizable {\nprotected:\n    double size;\n    string name;\npublic:\n    Shape(const string& n) : size(1.0), name(n) {}\n    void resize(double factor) override { size *= factor; }\n};\n\nclass Circle : public Shape {\npublic:\n    Circle() : Shape(\"Circle\") {}\n    void draw() override { cout << \"○ (size: \" << size << \") \"; }\n};\n\nclass Square : public Shape {\npublic:\n    Square() : Shape(\"Square\") {}\n    void draw() override { cout << \"□ (size: \" << size << \") \"; }\n};\n\n// 4. Factory interface\nclass ShapeFactory {\npublic:\n    virtual unique_ptr<Drawable> create() = 0;\n    virtual ~ShapeFactory() {}\n};\n\nclass CircleFactory : public ShapeFactory {\npublic:\n    unique_ptr<Drawable> create() override { return make_unique<Circle>(); }\n};\n\nclass SquareFactory : public ShapeFactory {\npublic:\n    unique_ptr<Drawable> create() override { return make_unique<Square>(); }\n};\n\n// 5. Observer interface\nclass Observer {\npublic:\n    virtual void onDraw() = 0;\n    virtual ~Observer() {}\n};\n\nclass DrawObserver : public Observer {\npublic:\n    void onDraw() override { cout << \"[Observed] \"; }\n};\n\n// 6. Composite interface\nclass CompositeDrawable : public Drawable {\nprivate:\n    vector<unique_ptr<Drawable>> children;\n    vector<Observer*> observers;\npublic:\n    void add(unique_ptr<Drawable> d) { children.push_back(move(d)); }\n    void attach(Observer* o) { observers.push_back(o); }\n    void draw() override {\n        for (auto o : observers) o->onDraw();\n        for (auto& c : children) c->draw();\n    }\n};\n\nint main() {\n    cout << \"=== Interface Demonstration ===\\n\\n\";\n    \n    // Factory pattern\n    CircleFactory circleFactory;\n    SquareFactory squareFactory;\n    \n    // Create shapes\n    auto circle = circleFactory.create();\n    auto square = squareFactory.create();\n    \n    // Resize if supported\n    if (auto resizable = dynamic_cast<Resizable*>(circle.get())) {\n        resizable->resize(2.0);\n    }\n    \n    // Draw individual shapes\n    cout << \"Individual shapes:\\n\";\n    circle->draw(); cout << endl;\n    square->draw(); cout << endl;\n    \n    // Composite pattern\n    cout << \"\\nComposite shape:\\n\";\n    auto composite = make_unique<CompositeDrawable>();\n    DrawObserver observer;\n    composite->attach(&observer);\n    composite->add(circleFactory.create());\n    composite->add(squareFactory.create());\n    composite->add(circleFactory.create());\n    composite->draw(); cout << endl;\n    \n    // Container of interfaces\n    cout << \"\\nContainer of shapes:\\n\";\n    vector<unique_ptr<Drawable>> shapes;\n    shapes.push_back(circleFactory.create());\n    shapes.push_back(squareFactory.create());\n    shapes.push_back(circleFactory.create());\n    shapes.push_back(squareFactory.create());\n    \n    for (auto& s : shapes) s->draw();\n    cout << endl;\n    \n    cout << \"\\n=== Interface Concepts Demonstrated ===\" << endl;\n    cout << \"1. Interface definition with pure virtual functions\" << endl;\n    cout << \"2. Multiple interface inheritance\" << endl;\n    cout << \"3. Factory pattern with interfaces\" << endl;\n    cout << \"4. Observer pattern with interfaces\" << endl;\n    cout << \"5. Composite pattern with interfaces\" << endl;\n    cout << \"6. Polymorphic containers with interfaces\" << endl;\n    cout << \"7. Dynamic casting to query interfaces\" << endl;\n    \n    return 0;\n}',
+  hint: 'Comprehensive demonstration of multiple interface design patterns.'
+}
 );

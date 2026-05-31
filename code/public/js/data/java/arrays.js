@@ -2,333 +2,265 @@ QuizData.questions.push(
   {
     id: "java_array_1",
     topicId: "java_array",
-    question:
-      "Create an integer array of size 5 and initialize it with the values 10, 20, 30, 40, 50. Print the third element.",
-    mathSolution:
-      "Array index 2 corresponds to the third element, which is 30.",
-    codeSolution:
-      "int[] arr = {10, 20, 30, 40, 50};\nSystem.out.println(arr[2]);",
+    question: "Create an integer array of size 5 and initialize it with the values 10, 20, 30, 40, 50. Print the third element.",
+    mathSolution: "Array index 2 corresponds to the third element, which is 30.",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        System.out.println(arr[2]);\n    }\n}',
     hint: "Array indices start at 0. The third element is at index 2.",
   },
   {
     id: "java_array_2",
     topicId: "java_array",
-    question:
-      "Calculate and print the sum of all elements in the array: {5, 10, 15, 20}.",
+    question: "Calculate and print the sum of all elements in the array: {5, 10, 15, 20}.",
     mathSolution: "5 + 10 + 15 + 20 = 50",
-    codeSolution:
-      "int[] arr = {5, 10, 15, 20};\nint sum = 0;\nfor(int i = 0; i < arr.length; i++) {\n    sum += arr[i];\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 10, 15, 20};\n        int sum = 0;\n        for(int i = 0; i < arr.length; i++) {\n            sum += arr[i];\n        }\n        System.out.println(sum);\n    }\n}',
     hint: "Use a for loop to iterate through the array and add each element to a sum variable.",
   },
   {
     id: "java_array_3",
     topicId: "java_array",
-    question:
-      "Find and print the largest element in the array: {3, 7, 2, 9, 5}.",
+    question: "Find and print the largest element in the array: {3, 7, 2, 9, 5}.",
     mathSolution: "The largest number is 9.",
-    codeSolution:
-      "int[] arr = {3, 7, 2, 9, 5};\nint max = arr[0];\nfor(int i = 1; i < arr.length; i++) {\n    if(arr[i] > max) {\n        max = arr[i];\n    }\n}\nSystem.out.println(max);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 7, 2, 9, 5};\n        int max = arr[0];\n        for(int i = 1; i < arr.length; i++) {\n            if(arr[i] > max) max = arr[i];\n        }\n        System.out.println(max);\n    }\n}',
     hint: "Assume the first element is the largest, then compare with the rest.",
   },
   {
     id: "java_array_4",
     topicId: "java_array",
-    question:
-      "Find and print the smallest element in the array: {12, 4, 8, 3, 10}.",
+    question: "Find and print the smallest element in the array: {12, 4, 8, 3, 10}.",
     mathSolution: "The smallest number is 3.",
-    codeSolution:
-      "int[] arr = {12, 4, 8, 3, 10};\nint min = arr[0];\nfor(int i = 1; i < arr.length; i++) {\n    if(arr[i] < min) {\n        min = arr[i];\n    }\n}\nSystem.out.println(min);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {12, 4, 8, 3, 10};\n        int min = arr[0];\n        for(int i = 1; i < arr.length; i++) {\n            if(arr[i] < min) min = arr[i];\n        }\n        System.out.println(min);\n    }\n}',
     hint: "Similar to finding the max, but look for values smaller than the current minimum.",
   },
   {
     id: "java_array_5",
     topicId: "java_array",
-    question:
-      "Print each element of the array {1, 2, 3, 4, 5} in reverse order.",
+    question: "Print each element of the array {1, 2, 3, 4, 5} in reverse order.",
     mathSolution: "The output should be: 5, 4, 3, 2, 1",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nfor(int i = arr.length - 1; i >= 0; i--) {\n    System.out.println(arr[i]);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        for(int i = arr.length - 1; i >= 0; i--) {\n            System.out.println(arr[i]);\n        }\n    }\n}',
     hint: "Start your loop from the last index (length-1) and go down to 0.",
   },
   {
     id: "java_array_6",
     topicId: "java_array",
-    question:
-      "Count how many elements in the array {2, 4, 6, 8, 10} are greater than 5.",
+    question: "Count how many elements in the array {2, 4, 6, 8, 10} are greater than 5.",
     mathSolution: "Three elements (6, 8, 10) are greater than 5.",
-    codeSolution:
-      "int[] arr = {2, 4, 6, 8, 10};\nint count = 0;\nfor(int num : arr) {\n    if(num > 5) {\n        count++;\n    }\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 4, 6, 8, 10};\n        int count = 0;\n        for(int num : arr) {\n            if(num > 5) count++;\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Use an enhanced for loop to check each element and increment a counter.",
   },
   {
     id: "java_array_7",
     topicId: "java_array",
-    question:
-      "Check if the array {1, 3, 5, 7, 9} contains the number 5. Print true or false.",
+    question: "Check if the array {1, 3, 5, 7, 9} contains the number 5. Print true or false.",
     mathSolution: "The array contains 5, so output is true.",
-    codeSolution:
-      "int[] arr = {1, 3, 5, 7, 9};\nint target = 5;\nboolean found = false;\nfor(int num : arr) {\n    if(num == target) {\n        found = true;\n        break;\n    }\n}\nSystem.out.println(found);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 3, 5, 7, 9};\n        int target = 5;\n        boolean found = false;\n        for(int num : arr) {\n            if(num == target) { found = true; break; }\n        }\n        System.out.println(found);\n    }\n}',
     hint: "Loop through the array and set a flag to true if you find the target.",
   },
   {
     id: "java_array_8",
     topicId: "java_array",
-    question:
-      "Create a new array where each element is twice the corresponding element from the original array {2, 4, 6}. Print the new array.",
+    question: "Create a new array where each element is twice the corresponding element from the original array {2, 4, 6}. Print the new array.",
     mathSolution: "Twice of {2, 4, 6} is {4, 8, 12}",
-    codeSolution:
-      "int[] original = {2, 4, 6};\nint[] doubled = new int[original.length];\nfor(int i = 0; i < original.length; i++) {\n    doubled[i] = original[i] * 2;\n}\nSystem.out.println(Arrays.toString(doubled));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] original = {2, 4, 6};\n        int[] doubled = new int[original.length];\n        for(int i = 0; i < original.length; i++) {\n            doubled[i] = original[i] * 2;\n        }\n        System.out.println(Arrays.toString(doubled));\n    }\n}',
     hint: "Create a new array of the same length and fill it using a loop.",
   },
   {
     id: "java_array_9",
     topicId: "java_array",
-    question:
-      "Calculate the average of all elements in the array {10, 20, 30, 40, 50}.",
+    question: "Calculate the average of all elements in the array {10, 20, 30, 40, 50}.",
     mathSolution: "Sum = 150, Average = 150 / 5 = 30",
-    codeSolution:
-      "int[] arr = {10, 20, 30, 40, 50};\nint sum = 0;\nfor(int num : arr) {\n    sum += num;\n}\ndouble average = (double) sum / arr.length;\nSystem.out.println(average);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        int sum = 0;\n        for(int num : arr) sum += num;\n        double average = (double) sum / arr.length;\n        System.out.println(average);\n    }\n}',
     hint: "Calculate the sum first, then divide by the array length.",
   },
   {
     id: "java_array_10",
     topicId: "java_array",
-    question:
-      "Find the index of the first occurrence of the number 7 in the array {5, 7, 2, 7, 9}. Print the index (or -1 if not found).",
+    question: "Find the index of the first occurrence of the number 7 in the array {5, 7, 2, 7, 9}. Print the index (or -1 if not found).",
     mathSolution: "The number 7 first appears at index 1.",
-    codeSolution:
-      "int[] arr = {5, 7, 2, 7, 9};\nint target = 7;\nint index = -1;\nfor(int i = 0; i < arr.length; i++) {\n    if(arr[i] == target) {\n        index = i;\n        break;\n    }\n}\nSystem.out.println(index);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 7, 2, 7, 9};\n        int target = 7;\n        int index = -1;\n        for(int i = 0; i < arr.length; i++) {\n            if(arr[i] == target) { index = i; break; }\n        }\n        System.out.println(index);\n    }\n}',
     hint: "Loop through the array and return the index as soon as you find the target.",
   },
   {
     id: "java_array_11",
     topicId: "java_array",
-    question:
-      "Copy all elements from array {1, 2, 3, 4} into a new array and print the new array.",
+    question: "Copy all elements from array {1, 2, 3, 4} into a new array and print the new array.",
     mathSolution: "The new array should be identical: {1, 2, 3, 4}",
-    codeSolution:
-      "int[] source = {1, 2, 3, 4};\nint[] destination = new int[source.length];\nfor(int i = 0; i < source.length; i++) {\n    destination[i] = source[i];\n}\nSystem.out.println(Arrays.toString(destination));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] source = {1, 2, 3, 4};\n        int[] destination = new int[source.length];\n        for(int i = 0; i < source.length; i++) {\n            destination[i] = source[i];\n        }\n        System.out.println(Arrays.toString(destination));\n    }\n}',
     hint: "Iterate through the source array and assign each value to the corresponding position in the destination.",
   },
   {
     id: "java_array_12",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, create a new array containing only the first three elements. Print the new array.",
+    question: "Given array {1, 2, 3, 4, 5}, create a new array containing only the first three elements. Print the new array.",
     mathSolution: "The new array is {1, 2, 3}",
-    codeSolution:
-      "int[] original = {1, 2, 3, 4, 5};\nint[] newArr = new int[3];\nfor(int i = 0; i < 3; i++) {\n    newArr[i] = original[i];\n}\nSystem.out.println(Arrays.toString(newArr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] original = {1, 2, 3, 4, 5};\n        int[] newArr = new int[3];\n        for(int i = 0; i < 3; i++) {\n            newArr[i] = original[i];\n        }\n        System.out.println(Arrays.toString(newArr));\n    }\n}',
     hint: "Create an array of size 3 and copy only the elements at indices 0, 1, and 2.",
   },
   {
     id: "java_array_13",
     topicId: "java_array",
-    question:
-      "Swap the first and last elements of the array {10, 20, 30, 40, 50}. Print the modified array.",
+    question: "Swap the first and last elements of the array {10, 20, 30, 40, 50}. Print the modified array.",
     mathSolution: "After swapping first and last: {50, 20, 30, 40, 10}",
-    codeSolution:
-      "int[] arr = {10, 20, 30, 40, 50};\nint temp = arr[0];\narr[0] = arr[arr.length - 1];\narr[arr.length - 1] = temp;\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        int temp = arr[0];\n        arr[0] = arr[arr.length - 1];\n        arr[arr.length - 1] = temp;\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Use a temporary variable to hold one value while swapping.",
   },
   {
     id: "java_array_14",
     topicId: "java_array",
-    question:
-      "Create an array of the first 5 even numbers starting from 2. Print the array.",
+    question: "Create an array of the first 5 even numbers starting from 2. Print the array.",
     mathSolution: "The first five even numbers are 2, 4, 6, 8, 10",
-    codeSolution:
-      "int[] evens = new int[5];\nfor(int i = 0; i < 5; i++) {\n    evens[i] = (i + 1) * 2;\n}\nSystem.out.println(Arrays.toString(evens));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] evens = new int[5];\n        for(int i = 0; i < 5; i++) {\n            evens[i] = (i + 1) * 2;\n        }\n        System.out.println(Arrays.toString(evens));\n    }\n}',
     hint: "Even numbers can be generated by multiplying (i+1) by 2.",
   },
   {
     id: "java_array_15",
     topicId: "java_array",
-    question:
-      "Count the number of even elements in the array {2, 3, 4, 5, 6, 7}.",
+    question: "Count the number of even elements in the array {2, 3, 4, 5, 6, 7}.",
     mathSolution: "Even numbers are 2, 4, 6 → count = 3",
-    codeSolution:
-      "int[] arr = {2, 3, 4, 5, 6, 7};\nint count = 0;\nfor(int num : arr) {\n    if(num % 2 == 0) {\n        count++;\n    }\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 3, 4, 5, 6, 7};\n        int count = 0;\n        for(int num : arr) {\n            if(num % 2 == 0) count++;\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Use the modulo operator (%) to check if a number is divisible by 2.",
   },
   {
     id: "java_array_16",
     topicId: "java_array",
-    question:
-      "Count the number of odd elements in the array {1, 2, 3, 4, 5, 6}.",
+    question: "Count the number of odd elements in the array {1, 2, 3, 4, 5, 6}.",
     mathSolution: "Odd numbers are 1, 3, 5 → count = 3",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5, 6};\nint count = 0;\nfor(int num : arr) {\n    if(num % 2 != 0) {\n        count++;\n    }\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5, 6};\n        int count = 0;\n        for(int num : arr) {\n            if(num % 2 != 0) count++;\n        }\n        System.out.println(count);\n    }\n}',
     hint: "Numbers not divisible by 2 are odd.",
   },
   {
     id: "java_array_17",
     topicId: "java_array",
-    question:
-      "Create an array of 5 integers where each element is equal to its index squared (i²). Print the array.",
+    question: "Create an array of 5 integers where each element is equal to its index squared (i²). Print the array.",
     mathSolution: "Index 0:0, 1:1, 2:4, 3:9, 4:16 → {0, 1, 4, 9, 16}",
-    codeSolution:
-      "int[] arr = new int[5];\nfor(int i = 0; i < arr.length; i++) {\n    arr[i] = i * i;\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = new int[5];\n        for(int i = 0; i < arr.length; i++) {\n            arr[i] = i * i;\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Multiply the index by itself to get the square.",
   },
   {
     id: "java_array_18",
     topicId: "java_array",
-    question:
-      "Find the difference between the largest and smallest elements in the array {8, 3, 12, 5, 9}.",
+    question: "Find the difference between the largest and smallest elements in the array {8, 3, 12, 5, 9}.",
     mathSolution: "Largest = 12, Smallest = 3, Difference = 9",
-    codeSolution:
-      "int[] arr = {8, 3, 12, 5, 9};\nint max = arr[0];\nint min = arr[0];\nfor(int num : arr) {\n    if(num > max) max = num;\n    if(num < min) min = num;\n}\nSystem.out.println(max - min);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {8, 3, 12, 5, 9};\n        int max = arr[0], min = arr[0];\n        for(int num : arr) {\n            if(num > max) max = num;\n            if(num < min) min = num;\n        }\n        System.out.println(max - min);\n    }\n}',
     hint: "Find both the max and min in a single loop, then subtract.",
   },
   {
     id: "java_array_19",
     topicId: "java_array",
-    question:
-      "Print all elements that are greater than the average of the array {5, 10, 15, 20, 25}.",
+    question: "Print all elements that are greater than the average of the array {5, 10, 15, 20, 25}.",
     mathSolution: "Average = 15, Elements greater than 15 are 20 and 25",
-    codeSolution:
-      "int[] arr = {5, 10, 15, 20, 25};\nint sum = 0;\nfor(int num : arr) sum += num;\ndouble avg = (double) sum / arr.length;\nfor(int num : arr) {\n    if(num > avg) {\n        System.out.println(num);\n    }\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 10, 15, 20, 25};\n        int sum = 0;\n        for(int num : arr) sum += num;\n        double avg = (double) sum / arr.length;\n        for(int num : arr) {\n            if(num > avg) System.out.println(num);\n        }\n    }\n}',
     hint: "First calculate the average, then loop again to compare.",
   },
   {
     id: "java_array_20",
     topicId: "java_array",
-    question:
-      "Check if the array {1, 2, 3, 4, 5} is sorted in ascending order. Print true or false.",
-    mathSolution:
-      "Each element is greater than the previous, so it is sorted → true",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nboolean sorted = true;\nfor(int i = 0; i < arr.length - 1; i++) {\n    if(arr[i] > arr[i + 1]) {\n        sorted = false;\n        break;\n    }\n}\nSystem.out.println(sorted);",
+    question: "Check if the array {1, 2, 3, 4, 5} is sorted in ascending order. Print true or false.",
+    mathSolution: "Each element is greater than the previous, so it is sorted → true",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        boolean sorted = true;\n        for(int i = 0; i < arr.length - 1; i++) {\n            if(arr[i] > arr[i+1]) { sorted = false; break; }\n        }\n        System.out.println(sorted);\n    }\n}',
     hint: "Compare each element with the next one; if any is greater than the next, the array is not sorted.",
   },
   {
     id: "java_array_21",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, shift all elements one position to the right. The last element should wrap around to the first position. Print the resulting array.",
+    question: "Given array {1, 2, 3, 4, 5}, shift all elements one position to the right. The last element should wrap around to the first position. Print the resulting array.",
     mathSolution: "After right shift: {5, 1, 2, 3, 4}",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nint last = arr[arr.length - 1];\nfor(int i = arr.length - 1; i > 0; i--) {\n    arr[i] = arr[i - 1];\n}\narr[0] = last;\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int last = arr[arr.length - 1];\n        for(int i = arr.length - 1; i > 0; i--) {\n            arr[i] = arr[i - 1];\n        }\n        arr[0] = last;\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Save the last element, then move each element to the right starting from the end.",
   },
   {
     id: "java_array_22",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, shift all elements one position to the left. The first element should wrap around to the last position. Print the resulting array.",
+    question: "Given array {1, 2, 3, 4, 5}, shift all elements one position to the left. The first element should wrap around to the last position. Print the resulting array.",
     mathSolution: "After left shift: {2, 3, 4, 5, 1}",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nint first = arr[0];\nfor(int i = 0; i < arr.length - 1; i++) {\n    arr[i] = arr[i + 1];\n}\narr[arr.length - 1] = first;\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        int first = arr[0];\n        for(int i = 0; i < arr.length - 1; i++) {\n            arr[i] = arr[i + 1];\n        }\n        arr[arr.length - 1] = first;\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Save the first element, then move each element to the left starting from the beginning.",
   },
   {
     id: "java_array_23",
     topicId: "java_array",
-    question:
-      "Merge two arrays {1, 3, 5} and {2, 4, 6} into a single array. Print the merged array.",
+    question: "Merge two arrays {1, 3, 5} and {2, 4, 6} into a single array. Print the merged array.",
     mathSolution: "Merged array: {1, 3, 5, 2, 4, 6}",
-    codeSolution:
-      "int[] arr1 = {1, 3, 5};\nint[] arr2 = {2, 4, 6};\nint[] merged = new int[arr1.length + arr2.length];\nfor(int i = 0; i < arr1.length; i++) {\n    merged[i] = arr1[i];\n}\nfor(int i = 0; i < arr2.length; i++) {\n    merged[arr1.length + i] = arr2[i];\n}\nSystem.out.println(Arrays.toString(merged));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr1 = {1, 3, 5};\n        int[] arr2 = {2, 4, 6};\n        int[] merged = new int[arr1.length + arr2.length];\n        for(int i = 0; i < arr1.length; i++) merged[i] = arr1[i];\n        for(int i = 0; i < arr2.length; i++) merged[arr1.length + i] = arr2[i];\n        System.out.println(Arrays.toString(merged));\n    }\n}',
     hint: "Create a new array with combined length, then copy both arrays sequentially.",
   },
   {
     id: "java_array_24",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, print only the elements at even indices (0, 2, 4).",
+    question: "Given array {1, 2, 3, 4, 5}, print only the elements at even indices (0, 2, 4).",
     mathSolution: "Elements at indices 0, 2, 4 are: 1, 3, 5",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nfor(int i = 0; i < arr.length; i += 2) {\n    System.out.println(arr[i]);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        for(int i = 0; i < arr.length; i += 2) {\n            System.out.println(arr[i]);\n        }\n    }\n}',
     hint: "Increment your loop variable by 2 instead of 1.",
   },
   {
     id: "java_array_25",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, print only the elements at odd indices (1, 3).",
+    question: "Given array {1, 2, 3, 4, 5}, print only the elements at odd indices (1, 3).",
     mathSolution: "Elements at indices 1 and 3 are: 2, 4",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nfor(int i = 1; i < arr.length; i += 2) {\n    System.out.println(arr[i]);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        for(int i = 1; i < arr.length; i += 2) {\n            System.out.println(arr[i]);\n        }\n    }\n}',
     hint: "Start your loop at index 1 and increment by 2.",
   },
   {
     id: "java_array_26",
     topicId: "java_array",
-    question:
-      "Given array {10, 20, 30, 40, 50}, replace every element at an odd index with 0. Print the modified array.",
+    question: "Given array {10, 20, 30, 40, 50}, replace every element at an odd index with 0. Print the modified array.",
     mathSolution: "Indices 1 and 3 become 0: {10, 0, 30, 0, 50}",
-    codeSolution:
-      "int[] arr = {10, 20, 30, 40, 50};\nfor(int i = 1; i < arr.length; i += 2) {\n    arr[i] = 0;\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        for(int i = 1; i < arr.length; i += 2) {\n            arr[i] = 0;\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Loop through the odd indices and assign 0.",
   },
   {
     id: "java_array_27",
     topicId: "java_array",
-    question:
-      "Find the second largest element in the array {12, 35, 1, 10, 34, 1}.",
+    question: "Find the second largest element in the array {12, 35, 1, 10, 34, 1}.",
     mathSolution: "Largest is 35, second largest is 34",
-    codeSolution:
-      "int[] arr = {12, 35, 1, 10, 34, 1};\nint largest = Integer.MIN_VALUE;\nint secondLargest = Integer.MIN_VALUE;\nfor(int num : arr) {\n    if(num > largest) {\n        secondLargest = largest;\n        largest = num;\n    } else if(num > secondLargest && num != largest) {\n        secondLargest = num;\n    }\n}\nSystem.out.println(secondLargest);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {12, 35, 1, 10, 34, 1};\n        int largest = Integer.MIN_VALUE;\n        int secondLargest = Integer.MIN_VALUE;\n        for(int num : arr) {\n            if(num > largest) {\n                secondLargest = largest;\n                largest = num;\n            } else if(num > secondLargest && num != largest) {\n                secondLargest = num;\n            }\n        }\n        System.out.println(secondLargest);\n    }\n}',
     hint: "Keep track of both the largest and second largest as you iterate.",
   },
   {
     id: "java_array_28",
     topicId: "java_array",
-    question:
-      "Remove duplicate elements from the sorted array {1, 1, 2, 2, 3, 4, 4, 5} and print the array without duplicates.",
+    question: "Remove duplicate elements from the sorted array {1, 1, 2, 2, 3, 4, 4, 5} and print the array without duplicates.",
     mathSolution: "Unique elements: {1, 2, 3, 4, 5}",
-    codeSolution:
-      "int[] arr = {1, 1, 2, 2, 3, 4, 4, 5};\nint[] temp = new int[arr.length];\nint j = 0;\nfor(int i = 0; i < arr.length - 1; i++) {\n    if(arr[i] != arr[i + 1]) {\n        temp[j++] = arr[i];\n    }\n}\ntemp[j++] = arr[arr.length - 1];\nint[] result = Arrays.copyOf(temp, j);\nSystem.out.println(Arrays.toString(result));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 1, 2, 2, 3, 4, 4, 5};\n        int[] temp = new int[arr.length];\n        int j = 0;\n        for(int i = 0; i < arr.length - 1; i++) {\n            if(arr[i] != arr[i+1]) temp[j++] = arr[i];\n        }\n        temp[j++] = arr[arr.length - 1];\n        int[] result = Arrays.copyOf(temp, j);\n        System.out.println(Arrays.toString(result));\n    }\n}',
     hint: "Compare each element with the next; if different, add to a temporary array.",
   },
   {
     id: "java_array_29",
     topicId: "java_array",
-    question:
-      "Given array {1, 2, 3, 4, 5}, check if it contains any duplicate elements. Print true or false.",
+    question: "Given array {1, 2, 3, 4, 5}, check if it contains any duplicate elements. Print true or false.",
     mathSolution: "All elements are unique, so false",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nboolean hasDuplicate = false;\nfor(int i = 0; i < arr.length; i++) {\n    for(int j = i + 1; j < arr.length; j++) {\n        if(arr[i] == arr[j]) {\n            hasDuplicate = true;\n            break;\n        }\n    }\n}\nSystem.out.println(hasDuplicate);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        boolean hasDuplicate = false;\n        for(int i = 0; i < arr.length; i++) {\n            for(int j = i + 1; j < arr.length; j++) {\n                if(arr[i] == arr[j]) { hasDuplicate = true; break; }\n            }\n        }\n        System.out.println(hasDuplicate);\n    }\n}',
     hint: "Use nested loops to compare each element with every other element.",
   },
   {
     id: "java_array_30",
     topicId: "java_array",
-    question:
-      "Reverse the array {1, 2, 3, 4, 5} in-place (without creating a new array). Print the reversed array.",
+    question: "Reverse the array {1, 2, 3, 4, 5} in-place (without creating a new array). Print the reversed array.",
     mathSolution: "Reversed array: {5, 4, 3, 2, 1}",
-    codeSolution:
-      "int[] arr = {1, 2, 3, 4, 5};\nfor(int i = 0; i < arr.length / 2; i++) {\n    int temp = arr[i];\n    arr[i] = arr[arr.length - 1 - i];\n    arr[arr.length - 1 - i] = temp;\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        for(int i = 0; i < arr.length / 2; i++) {\n            int temp = arr[i];\n            arr[i] = arr[arr.length - 1 - i];\n            arr[arr.length - 1 - i] = temp;\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Swap the first with the last, the second with the second last, and so on.",
   },
   {
     id: "java_array_31",
     topicId: "java_array",
-    question:
-      "Given array {3, 7, 1, 9, 4}, find the index of the largest element. Print the index.",
+    question: "Given array {3, 7, 1, 9, 4}, find the index of the largest element. Print the index.",
     mathSolution: "Largest element is 9 at index 3",
-    codeSolution:
-      "int[] arr = {3, 7, 1, 9, 4};\nint maxIndex = 0;\nfor(int i = 1; i < arr.length; i++) {\n    if(arr[i] > arr[maxIndex]) {\n        maxIndex = i;\n    }\n}\nSystem.out.println(maxIndex);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 7, 1, 9, 4};\n        int maxIndex = 0;\n        for(int i = 1; i < arr.length; i++) {\n            if(arr[i] > arr[maxIndex]) maxIndex = i;\n        }\n        System.out.println(maxIndex);\n    }\n}',
     hint: "Keep track of the index where the maximum occurs, not just the maximum value.",
   },
   {
     id: "java_array_32",
     topicId: "java_array",
-    question:
-      "Given two arrays {1, 2, 3} and {1, 2, 3}, check if they are equal (same length and same elements in same order). Print true or false.",
+    question: "Given two arrays {1, 2, 3} and {1, 2, 3}, check if they are equal (same length and same elements in same order). Print true or false.",
     mathSolution: "Both arrays are identical, so true",
-    codeSolution:
-      "int[] arr1 = {1, 2, 3};\nint[] arr2 = {1, 2, 3};\nboolean equal = arr1.length == arr2.length;\nif(equal) {\n    for(int i = 0; i < arr1.length; i++) {\n        if(arr1[i] != arr2[i]) {\n            equal = false;\n            break;\n        }\n    }\n}\nSystem.out.println(equal);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr1 = {1, 2, 3};\n        int[] arr2 = {1, 2, 3};\n        boolean equal = arr1.length == arr2.length;\n        if(equal) {\n            for(int i = 0; i < arr1.length; i++) {\n                if(arr1[i] != arr2[i]) { equal = false; break; }\n            }\n        }\n        System.out.println(equal);\n    }\n}',
     hint: "First check lengths, then compare each corresponding element.",
   },
   {
     id: "java_array_33",
     topicId: "java_array",
-    question:
-      "Create an array containing the common elements between {1, 2, 3, 4} and {3, 4, 5, 6}. Print the resulting array.",
+    question: "Create an array containing the common elements between {1, 2, 3, 4} and {3, 4, 5, 6}. Print the resulting array.",
     mathSolution: "Common elements: {3, 4}",
-    codeSolution:
-      "int[] arr1 = {1, 2, 3, 4};\nint[] arr2 = {3, 4, 5, 6};\nint[] temp = new int[Math.min(arr1.length, arr2.length)];\nint index = 0;\nfor(int i = 0; i < arr1.length; i++) {\n    for(int j = 0; j < arr2.length; j++) {\n        if(arr1[i] == arr2[j]) {\n            temp[index++] = arr1[i];\n            break;\n        }\n    }\n}\nint[] common = Arrays.copyOf(temp, index);\nSystem.out.println(Arrays.toString(common));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr1 = {1, 2, 3, 4};\n        int[] arr2 = {3, 4, 5, 6};\n        int[] temp = new int[Math.min(arr1.length, arr2.length)];\n        int index = 0;\n        for(int i = 0; i < arr1.length; i++) {\n            for(int j = 0; j < arr2.length; j++) {\n                if(arr1[i] == arr2[j]) {\n                    temp[index++] = arr1[i];\n                    break;\n                }\n            }\n        }\n        int[] common = Arrays.copyOf(temp, index);\n        System.out.println(Arrays.toString(common));\n    }\n}',
     hint: "Use nested loops to find elements present in both arrays.",
   },
   {
@@ -336,18 +268,15 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find the frequency of element 3 in array {1, 3, 3, 2, 3, 4}.",
     mathSolution: "3 appears 3 times.",
-    codeSolution:
-      "int[] arr = {1, 3, 3, 2, 3, 4};\nint count = 0;\nfor(int num : arr){\n if(num == 3) count++;\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 3, 3, 2, 3, 4};\n        int count = 0;\n        for(int num : arr) if(num == 3) count++;\n        System.out.println(count);\n    }\n}',
     hint: "Loop and count when element equals target.",
   },
   {
     id: "java_array_35",
     topicId: "java_array",
-    question:
-      "Find the sum of elements at even indices in {10, 20, 30, 40, 50}.",
+    question: "Find the sum of elements at even indices in {10, 20, 30, 40, 50}.",
     mathSolution: "Indices 0,2,4 → 10+30+50 = 90",
-    codeSolution:
-      "int[] arr = {10,20,30,40,50};\nint sum=0;\nfor(int i=0;i<arr.length;i+=2){\n sum+=arr[i];\n}\nSystem.out.println(sum);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        int sum = 0;\n        for(int i = 0; i < arr.length; i += 2) sum += arr[i];\n        System.out.println(sum);\n    }\n}',
     hint: "Increment loop by 2.",
   },
   {
@@ -355,8 +284,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Multiply all elements in array {1,2,3,4}.",
     mathSolution: "1×2×3×4 = 24",
-    codeSolution:
-      "int[] arr={1,2,3,4};\nint product=1;\nfor(int num:arr){\n product*=num;\n}\nSystem.out.println(product);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4};\n        int product = 1;\n        for(int num : arr) product *= num;\n        System.out.println(product);\n    }\n}',
     hint: "Initialize product with 1.",
   },
   {
@@ -364,8 +292,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Count negative numbers in {-1, 2, -3, 4, -5}.",
     mathSolution: "There are 3 negative numbers.",
-    codeSolution:
-      "int[] arr={-1,2,-3,4,-5};\nint count=0;\nfor(int num:arr){\n if(num<0) count++;\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {-1, 2, -3, 4, -5};\n        int count = 0;\n        for(int num : arr) if(num < 0) count++;\n        System.out.println(count);\n    }\n}',
     hint: "Check num < 0.",
   },
   {
@@ -373,8 +300,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Replace all negative numbers in {-1,2,-3,4} with 0.",
     mathSolution: "Result → {0,2,0,4}",
-    codeSolution:
-      "int[] arr={-1,2,-3,4};\nfor(int i=0;i<arr.length;i++){\n if(arr[i]<0) arr[i]=0;\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {-1, 2, -3, 4};\n        for(int i = 0; i < arr.length; i++) {\n            if(arr[i] < 0) arr[i] = 0;\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Modify array in-place.",
   },
   {
@@ -382,8 +308,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find the middle element of array {10,20,30,40,50}.",
     mathSolution: "Middle index = 2 → 30",
-    codeSolution:
-      "int[] arr={10,20,30,40,50};\nSystem.out.println(arr[arr.length/2]);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 20, 30, 40, 50};\n        System.out.println(arr[arr.length / 2]);\n    }\n}',
     hint: "Middle index = length/2.",
   },
   {
@@ -391,8 +316,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Check if array {2,4,6,8} contains only even numbers.",
     mathSolution: "All are even → true",
-    codeSolution:
-      "int[] arr={2,4,6,8};\nboolean allEven=true;\nfor(int num:arr){\n if(num%2!=0){\n  allEven=false;\n  break;\n }\n}\nSystem.out.println(allEven);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 4, 6, 8};\n        boolean allEven = true;\n        for(int num : arr) {\n            if(num % 2 != 0) { allEven = false; break; }\n        }\n        System.out.println(allEven);\n    }\n}',
     hint: "Break loop if odd found.",
   },
   {
@@ -400,8 +324,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find total number of elements divisible by 3 in {3,6,7,9,10}.",
     mathSolution: "3,6,9 → count = 3",
-    codeSolution:
-      "int[] arr={3,6,7,9,10};\nint count=0;\nfor(int num:arr){\n if(num%3==0) count++;\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 6, 7, 9, 10};\n        int count = 0;\n        for(int num : arr) if(num % 3 == 0) count++;\n        System.out.println(count);\n    }\n}',
     hint: "Use modulo operator.",
   },
   {
@@ -409,8 +332,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Print array elements greater than 25 in {10,30,20,40,50}.",
     mathSolution: "30, 40, 50",
-    codeSolution:
-      "int[] arr={10,30,20,40,50};\nfor(int num:arr){\n if(num>25) System.out.println(num);\n}",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {10, 30, 20, 40, 50};\n        for(int num : arr) if(num > 25) System.out.println(num);\n    }\n}',
     hint: "Use condition inside loop.",
   },
   {
@@ -418,8 +340,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find sum of first and last element in {5,10,15,20}.",
     mathSolution: "5 + 20 = 25",
-    codeSolution:
-      "int[] arr={5,10,15,20};\nSystem.out.println(arr[0]+arr[arr.length-1]);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 10, 15, 20};\n        System.out.println(arr[0] + arr[arr.length - 1]);\n    }\n}',
     hint: "First index 0, last index length-1.",
   },
   {
@@ -427,8 +348,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find the smallest even number in {7,4,9,2,6}.",
     mathSolution: "Even numbers 4,2,6 → smallest = 2",
-    codeSolution:
-      "int[] arr={7,4,9,2,6};\nint min=Integer.MAX_VALUE;\nfor(int num:arr){\n if(num%2==0 && num<min) min=num;\n}\nSystem.out.println(min);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {7, 4, 9, 2, 6};\n        int min = Integer.MAX_VALUE;\n        for(int num : arr) {\n            if(num % 2 == 0 && num < min) min = num;\n        }\n        System.out.println(min);\n    }\n}',
     hint: "Check even and compare with min.",
   },
   {
@@ -436,8 +356,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find the maximum even number in {3,8,5,12,7}.",
     mathSolution: "Even numbers 8,12 → max = 12",
-    codeSolution:
-      "int[] arr={3,8,5,12,7};\nint max=Integer.MIN_VALUE;\nfor(int num:arr){\n if(num%2==0 && num>max) max=num;\n}\nSystem.out.println(max);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {3, 8, 5, 12, 7};\n        int max = Integer.MIN_VALUE;\n        for(int num : arr) {\n            if(num % 2 == 0 && num > max) max = num;\n        }\n        System.out.println(max);\n    }\n}',
     hint: "Check even and compare with max.",
   },
   {
@@ -445,8 +364,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Count numbers greater than 50 in {45,60,75,30,90}.",
     mathSolution: "60,75,90 → count = 3",
-    codeSolution:
-      "int[] arr={45,60,75,30,90};\nint count=0;\nfor(int num:arr){\n if(num>50) count++;\n}\nSystem.out.println(count);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {45, 60, 75, 30, 90};\n        int count = 0;\n        for(int num : arr) if(num > 50) count++;\n        System.out.println(count);\n    }\n}',
     hint: "Simple conditional counting.",
   },
   {
@@ -454,8 +372,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Square each element of {1,2,3,4} and print result.",
     mathSolution: "{1,4,9,16}",
-    codeSolution:
-      "int[] arr={1,2,3,4};\nfor(int i=0;i<arr.length;i++){\n arr[i]=arr[i]*arr[i];\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4};\n        for(int i = 0; i < arr.length; i++) {\n            arr[i] = arr[i] * arr[i];\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Multiply element by itself.",
   },
   {
@@ -463,8 +380,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Check if array {1,2,3,2,1} is palindrome.",
     mathSolution: "Same forward & backward → true",
-    codeSolution:
-      "int[] arr={1,2,3,2,1};\nboolean palindrome=true;\nfor(int i=0;i<arr.length/2;i++){\n if(arr[i]!=arr[arr.length-1-i]){\n  palindrome=false;\n  break;\n }\n}\nSystem.out.println(palindrome);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 2, 1};\n        boolean palindrome = true;\n        for(int i = 0; i < arr.length / 2; i++) {\n            if(arr[i] != arr[arr.length - 1 - i]) { palindrome = false; break; }\n        }\n        System.out.println(palindrome);\n    }\n}',
     hint: "Compare first with last.",
   },
   {
@@ -472,8 +388,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Find second smallest element in {5,1,4,2,3}.",
     mathSolution: "Smallest=1, second=2",
-    codeSolution:
-      "int[] arr={5,1,4,2,3};\nint min=Integer.MAX_VALUE, second=Integer.MAX_VALUE;\nfor(int num:arr){\n if(num<min){\n  second=min;\n  min=num;\n }else if(num<second && num!=min){\n  second=num;\n }\n}\nSystem.out.println(second);",
+    codeSolution: 'public class Main {\n    public static void main(String[] args) {\n        int[] arr = {5, 1, 4, 2, 3};\n        int min = Integer.MAX_VALUE, second = Integer.MAX_VALUE;\n        for(int num : arr) {\n            if(num < min) {\n                second = min;\n                min = num;\n            } else if(num < second && num != min) {\n                second = num;\n            }\n        }\n        System.out.println(second);\n    }\n}',
     hint: "Track both smallest and second smallest.",
   },
   {
@@ -481,8 +396,7 @@ QuizData.questions.push(
     topicId: "java_array",
     question: "Rotate array {1,2,3,4,5} by 2 positions to right.",
     mathSolution: "After 2 rotations → {4,5,1,2,3}",
-    codeSolution:
-      "int[] arr={1,2,3,4,5};\nfor(int k=0;k<2;k++){\n int last=arr[arr.length-1];\n for(int i=arr.length-1;i>0;i--){\n  arr[i]=arr[i-1];\n }\n arr[0]=last;\n}\nSystem.out.println(Arrays.toString(arr));",
+    codeSolution: 'import java.util.Arrays;\npublic class Main {\n    public static void main(String[] args) {\n        int[] arr = {1, 2, 3, 4, 5};\n        for(int k = 0; k < 2; k++) {\n            int last = arr[arr.length - 1];\n            for(int i = arr.length - 1; i > 0; i--) {\n                arr[i] = arr[i - 1];\n            }\n            arr[0] = last;\n        }\n        System.out.println(Arrays.toString(arr));\n    }\n}',
     hint: "Perform right shift twice.",
   },
 );

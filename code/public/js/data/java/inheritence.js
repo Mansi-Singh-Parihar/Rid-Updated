@@ -3,11 +3,9 @@ QuizData.questions.push(
   {
     id: "inheritance_1",
     topicId: "inheritance",
-    question:
-      "Create a simple inheritance hierarchy with Animal and Dog classes.",
+    question: "Create a simple inheritance hierarchy with Animal and Dog classes.",
     mathSolution: "Child class extends parent class",
-    codeSolution:
-      'class Animal {\n    void eat() {\n        System.out.println("Animal is eating");\n    }\n}\n\nclass Dog extends Animal {\n    void bark() {\n        System.out.println("Dog is barking");\n    }\n}\n\nDog d = new Dog();\nd.eat();  // inherited method\nd.bark(); // own method',
+    codeSolution: 'public class Main {\n    static class Animal {\n        void eat() { System.out.println("Animal is eating"); }\n    }\n    static class Dog extends Animal {\n        void bark() { System.out.println("Dog is barking"); }\n    }\n    public static void main(String[] args) {\n        Dog d = new Dog();\n        d.eat();\n        d.bark();\n    }\n}',
     hint: "Use extends keyword",
   },
   {
@@ -15,8 +13,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Demonstrate multi-level inheritance.",
     mathSolution: "Grandparent -> Parent -> Child",
-    codeSolution:
-      'class Vehicle {\n    void move() { System.out.println("Vehicle moves"); }\n}\n\nclass Car extends Vehicle {\n    void wheels() { System.out.println("Car has 4 wheels"); }\n}\n\nclass SportsCar extends Car {\n    void turbo() { System.out.println("SportsCar has turbo"); }\n}\n\nSportsCar sc = new SportsCar();\nsc.move();   // from Vehicle\nsc.wheels(); // from Car\nsc.turbo();  // own method',
+    codeSolution: 'public class Main {\n    static class Vehicle {\n        void move() { System.out.println("Vehicle moves"); }\n    }\n    static class Car extends Vehicle {\n        void wheels() { System.out.println("Car has 4 wheels"); }\n    }\n    static class SportsCar extends Car {\n        void turbo() { System.out.println("SportsCar has turbo"); }\n    }\n    public static void main(String[] args) {\n        SportsCar sc = new SportsCar();\n        sc.move();\n        sc.wheels();\n        sc.turbo();\n    }\n}',
     hint: "Chain of inheritance",
   },
   {
@@ -24,8 +21,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Access parent class fields in child class.",
     mathSolution: "Child inherits non-private fields",
-    codeSolution:
-      'class Person {\n    String name;\n    int age;\n    \n    Person(String n, int a) {\n        name = n;\n        age = a;\n    }\n}\n\nclass Student extends Person {\n    int rollNo;\n    \n    Student(String n, int a, int r) {\n        super(n, a); // call parent constructor\n        rollNo = r;\n    }\n    \n    void display() {\n        System.out.println("Name: " + name + ", Age: " + age + ", Roll: " + rollNo);\n    }\n}\n\nStudent s = new Student("Alice", 20, 101);\ns.display();',
+    codeSolution: 'public class Main {\n    static class Person {\n        String name;\n        int age;\n        Person(String n, int a) { name = n; age = a; }\n    }\n    static class Student extends Person {\n        int rollNo;\n        Student(String n, int a, int r) { super(n, a); rollNo = r; }\n        void display() { System.out.println("Name: " + name + ", Age: " + age + ", Roll: " + rollNo); }\n    }\n    public static void main(String[] args) {\n        Student s = new Student("Alice", 20, 101);\n        s.display();\n    }\n}',
     hint: "super() calls parent constructor",
   },
   {
@@ -33,8 +29,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Use protected members for inheritance access.",
     mathSolution: "protected members accessible in child classes",
-    codeSolution:
-      'class Parent {\n    private int privateVar = 10;    // not accessible in child\n    protected int protectedVar = 20; // accessible in child\n    public int publicVar = 30;       // accessible everywhere\n    int defaultVar = 40;              // accessible in same package\n}\n\nclass Child extends Parent {\n    void display() {\n        // System.out.println(privateVar); // ERROR!\n        System.out.println("Protected: " + protectedVar);\n        System.out.println("Public: " + publicVar);\n        System.out.println("Default: " + defaultVar);\n    }\n}\n\nChild c = new Child();\nc.display();',
+    codeSolution: 'public class Main {\n    static class Parent {\n        private int privateVar = 10;\n        protected int protectedVar = 20;\n        public int publicVar = 30;\n        int defaultVar = 40;\n    }\n    static class Child extends Parent {\n        void display() {\n            // System.out.println(privateVar); // ERROR\n            System.out.println("Protected: " + protectedVar);\n            System.out.println("Public: " + publicVar);\n            System.out.println("Default: " + defaultVar);\n        }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.display();\n    }\n}',
     hint: "protected is between private and public",
   },
 
@@ -44,8 +39,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Override a method in child class.",
     mathSolution: "Child provides specific implementation",
-    codeSolution:
-      'class Shape {\n    void draw() {\n        System.out.println("Drawing shape");\n    }\n}\n\nclass Circle extends Shape {\n    @Override\n    void draw() {\n        System.out.println("Drawing circle");\n    }\n}\n\nclass Rectangle extends Shape {\n    @Override\n    void draw() {\n        System.out.println("Drawing rectangle");\n    }\n}\n\nShape s1 = new Circle();\nShape s2 = new Rectangle();\ns1.draw(); // Circle\'s draw\ns2.draw(); // Rectangle\'s draw',
+    codeSolution: 'public class Main {\n    static class Shape {\n        void draw() { System.out.println("Drawing shape"); }\n    }\n    static class Circle extends Shape {\n        @Override\n        void draw() { System.out.println("Drawing circle"); }\n    }\n    static class Rectangle extends Shape {\n        @Override\n        void draw() { System.out.println("Drawing rectangle"); }\n    }\n    public static void main(String[] args) {\n        Shape s1 = new Circle();\n        Shape s2 = new Rectangle();\n        s1.draw();\n        s2.draw();\n    }\n}',
     hint: "@Override annotation recommended",
   },
   {
@@ -53,8 +47,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Call parent class overridden method using super.",
     mathSolution: "super.method() calls parent version",
-    codeSolution:
-      'class Parent {\n    void display() {\n        System.out.println("Parent display");\n    }\n}\n\nclass Child extends Parent {\n    @Override\n    void display() {\n        super.display(); // call parent\'s method\n        System.out.println("Child display");\n    }\n}\n\nChild c = new Child();\nc.display();\n// Output:\n// Parent display\n// Child display',
+    codeSolution: 'public class Main {\n    static class Parent {\n        void display() { System.out.println("Parent display"); }\n    }\n    static class Child extends Parent {\n        @Override\n        void display() {\n            super.display();\n            System.out.println("Child display");\n        }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.display();\n    }\n}',
     hint: "super to access parent's method",
   },
   {
@@ -62,8 +55,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Rules of method overriding - return types.",
     mathSolution: "Covariant return types allowed",
-    codeSolution:
-      'class Parent {\n    Object getValue() { return "Parent value"; }\n}\n\nclass Child extends Parent {\n    @Override\n    String getValue() { // String is subtype of Object\n        return "Child value";\n    }\n}\n\nChild c = new Child();\nSystem.out.println(c.getValue());\n\n// This is covariant return type - allowed in Java 5+',
+    codeSolution: 'public class Main {\n    static class Parent {\n        Object getValue() { return "Parent value"; }\n    }\n    static class Child extends Parent {\n        @Override\n        String getValue() { return "Child value"; }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        System.out.println(c.getValue());\n    }\n}',
     hint: "Can return subtype of parent's return type",
   },
   {
@@ -71,8 +63,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Cannot override static methods - method hiding.",
     mathSolution: "Static methods are hidden, not overridden",
-    codeSolution:
-      'class Parent {\n    static void staticMethod() {\n        System.out.println("Parent static");\n    }\n    \n    void instanceMethod() {\n        System.out.println("Parent instance");\n    }\n}\n\nclass Child extends Parent {\n    static void staticMethod() { // This hides, not overrides\n        System.out.println("Child static");\n    }\n    \n    @Override\n    void instanceMethod() { // This overrides\n        System.out.println("Child instance");\n    }\n}\n\nParent p = new Child();\np.staticMethod();   // Parent static (not polymorphic)\np.instanceMethod(); // Child instance (polymorphic)',
+    codeSolution: 'public class Main {\n    static class Parent {\n        static void staticMethod() { System.out.println("Parent static"); }\n        void instanceMethod() { System.out.println("Parent instance"); }\n    }\n    static class Child extends Parent {\n        static void staticMethod() { System.out.println("Child static"); }\n        @Override\n        void instanceMethod() { System.out.println("Child instance"); }\n    }\n    public static void main(String[] args) {\n        Parent p = new Child();\n        p.staticMethod();   // Parent static (resolved at compile time)\n        p.instanceMethod(); // Child instance (runtime polymorphic)\n    }\n}',
     hint: "Static methods are resolved at compile-time",
   },
 
@@ -82,8 +73,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Constructor chaining in inheritance.",
     mathSolution: "Parent constructor called before child",
-    codeSolution:
-      'class A {\n    A() { System.out.println("A constructor"); }\n}\n\nclass B extends A {\n    B() { System.out.println("B constructor"); }\n}\n\nclass C extends B {\n    C() { System.out.println("C constructor"); }\n}\n\nC c = new C();\n// Output:\n// A constructor\n// B constructor\n// C constructor',
+    codeSolution: 'public class Main {\n    static class A { A() { System.out.println("A constructor"); } }\n    static class B extends A { B() { System.out.println("B constructor"); } }\n    static class C extends B { C() { System.out.println("C constructor"); } }\n    public static void main(String[] args) {\n        C c = new C();\n    }\n}',
     hint: "Constructors execute from top to bottom",
   },
   {
@@ -91,8 +81,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Call parameterized parent constructor using super().",
     mathSolution: "super() must be first statement",
-    codeSolution:
-      'class Employee {\n    String name;\n    double salary;\n    \n    Employee(String n, double s) {\n        name = n;\n        salary = s;\n        System.out.println("Employee constructor");\n    }\n}\n\nclass Manager extends Employee {\n    double bonus;\n    \n    Manager(String n, double s, double b) {\n        super(n, s); // must be first statement\n        bonus = b;\n        System.out.println("Manager constructor");\n    }\n    \n    void display() {\n        System.out.println(name + ", Salary: $" + salary + ", Bonus: $" + bonus);\n    }\n}\n\nManager m = new Manager("John", 50000, 5000);\nm.display();',
+    codeSolution: 'public class Main {\n    static class Employee {\n        String name; double salary;\n        Employee(String n, double s) { name = n; salary = s; System.out.println("Employee constructor"); }\n    }\n    static class Manager extends Employee {\n        double bonus;\n        Manager(String n, double s, double b) { super(n, s); bonus = b; System.out.println("Manager constructor"); }\n        void display() { System.out.println(name + ", Salary: $" + salary + ", Bonus: $" + bonus); }\n    }\n    public static void main(String[] args) {\n        Manager m = new Manager("John", 50000, 5000);\n        m.display();\n    }\n}',
     hint: "super() with parameters",
   },
   {
@@ -100,8 +89,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Implicit super() call if no parent constructor defined.",
     mathSolution: "Default constructor inserted automatically",
-    codeSolution:
-      'class Parent {\n    // No constructor defined - default exists\n}\n\nclass Child extends Parent {\n    Child() {\n        // super() is automatically inserted\n        System.out.println("Child constructor");\n    }\n}\n\n// But if Parent has parameterized constructor only:\nclass Parent2 {\n    Parent2(int x) {}\n    // No default constructor\n}\n\nclass Child2 extends Parent2 {\n    Child2() {\n        super(10); // MUST call explicitly\n        System.out.println("Child2 constructor");\n    }\n}',
+    codeSolution: 'public class Main {\n    static class Parent {}\n    static class Child extends Parent {\n        Child() { System.out.println("Child constructor"); }\n    }\n    static class Parent2 {\n        Parent2(int x) { System.out.println("Parent2 param: " + x); }\n    }\n    static class Child2 extends Parent2 {\n        Child2() { super(10); System.out.println("Child2 constructor"); }\n    }\n    public static void main(String[] args) {\n        System.out.println("--- Default ---");\n        Child c = new Child();\n        System.out.println("--- Parameterized parent ---");\n        Child2 c2 = new Child2();\n    }\n}',
     hint: "If parent has no default constructor, must call super explicitly",
   },
 
@@ -111,8 +99,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Runtime polymorphism with method overriding.",
     mathSolution: "Parent reference, child object",
-    codeSolution:
-      'class Animal {\n    void sound() { System.out.println("Animal makes sound"); }\n}\n\nclass Cat extends Animal {\n    void sound() { System.out.println("Cat meows"); }\n}\n\nclass Dog extends Animal {\n    void sound() { System.out.println("Dog barks"); }\n}\n\nAnimal a1 = new Cat();\nAnimal a2 = new Dog();\n\na1.sound(); // Cat meows\na2.sound(); // Dog barks\n\n// Array of Animals\nAnimal[] animals = {new Cat(), new Dog(), new Animal()};\nfor(Animal a : animals) {\n    a.sound(); // Polymorphic call\n}',
+    codeSolution: 'public class Main {\n    static class Animal {\n        void sound() { System.out.println("Animal makes sound"); }\n    }\n    static class Cat extends Animal {\n        void sound() { System.out.println("Cat meows"); }\n    }\n    static class Dog extends Animal {\n        void sound() { System.out.println("Dog barks"); }\n    }\n    public static void main(String[] args) {\n        Animal a1 = new Cat();\n        Animal a2 = new Dog();\n        a1.sound();\n        a2.sound();\n        Animal[] animals = {new Cat(), new Dog(), new Animal()};\n        for(Animal a : animals) a.sound();\n    }\n}',
     hint: "Actual method called based on object type at runtime",
   },
   {
@@ -120,8 +107,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Use instanceof to check object type.",
     mathSolution: "instanceof operator for type checking",
-    codeSolution:
-      'class Vehicle {}\nclass Car extends Vehicle {}\nclass Bike extends Vehicle {}\n\nVehicle v1 = new Car();\nVehicle v2 = new Bike();\n\nSystem.out.println("v1 instanceof Car: " + (v1 instanceof Car)); // true\nSystem.out.println("v1 instanceof Bike: " + (v1 instanceof Bike)); // false\nSystem.out.println("v1 instanceof Vehicle: " + (v1 instanceof Vehicle)); // true\n\n// Safe casting\nif(v1 instanceof Car) {\n    Car c = (Car) v1;\n    System.out.println("Casted to Car");\n}',
+    codeSolution: 'public class Main {\n    static class Vehicle {}\n    static class Car extends Vehicle {}\n    static class Bike extends Vehicle {}\n    public static void main(String[] args) {\n        Vehicle v1 = new Car();\n        Vehicle v2 = new Bike();\n        System.out.println("v1 instanceof Car: " + (v1 instanceof Car));\n        System.out.println("v1 instanceof Bike: " + (v1 instanceof Bike));\n        System.out.println("v1 instanceof Vehicle: " + (v1 instanceof Vehicle));\n        if(v1 instanceof Car) {\n            Car c = (Car) v1;\n            System.out.println("Casted to Car");\n        }\n    }\n}',
     hint: "Always check before downcasting",
   },
   {
@@ -129,8 +115,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Polymorphism with method parameters.",
     mathSolution: "Method accepts parent type, works with any child",
-    codeSolution:
-      'class Media {\n    void play() { System.out.println("Playing media"); }\n}\n\nclass Song extends Media {\n    void play() { System.out.println("Playing song"); }\n}\n\nclass Video extends Media {\n    void play() { System.out.println("Playing video"); }\n}\n\nclass Player {\n    void playMedia(Media m) { // Polymorphic parameter\n        m.play();\n    }\n}\n\nPlayer p = new Player();\np.playMedia(new Song());  // Playing song\np.playMedia(new Video()); // Playing video\np.playMedia(new Media()); // Playing media',
+    codeSolution: 'public class Main {\n    static class Media {\n        void play() { System.out.println("Playing media"); }\n    }\n    static class Song extends Media {\n        void play() { System.out.println("Playing song"); }\n    }\n    static class Video extends Media {\n        void play() { System.out.println("Playing video"); }\n    }\n    static class Player {\n        void playMedia(Media m) { m.play(); }\n    }\n    public static void main(String[] args) {\n        Player p = new Player();\n        p.playMedia(new Song());\n        p.playMedia(new Video());\n        p.playMedia(new Media());\n    }\n}',
     hint: "Method works with any Media subclass",
   },
 
@@ -140,8 +125,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Create abstract class with abstract methods.",
     mathSolution: "Abstract classes cannot be instantiated",
-    codeSolution:
-      'abstract class Shape {\n    abstract double area(); // abstract method\n    \n    void display() { // concrete method\n        System.out.println("Area: " + area());\n    }\n}\n\nclass Circle extends Shape {\n    double radius;\n    Circle(double r) { radius = r; }\n    \n    @Override\n    double area() { return Math.PI * radius * radius; }\n}\n\nclass Rectangle extends Shape {\n    double l, w;\n    Rectangle(double len, double wid) { l = len; w = wid; }\n    \n    @Override\n    double area() { return l * w; }\n}\n\n// Shape s = new Shape(); // ERROR - abstract\nShape c = new Circle(5);\nShape r = new Rectangle(4, 6);\nc.display();\nr.display();',
+    codeSolution: 'public class Main {\n    static abstract class Shape {\n        abstract double area();\n        void display() { System.out.println("Area: " + area()); }\n    }\n    static class Circle extends Shape {\n        double radius;\n        Circle(double r) { radius = r; }\n        double area() { return Math.PI * radius * radius; }\n    }\n    static class Rectangle extends Shape {\n        double l, w;\n        Rectangle(double len, double wid) { l = len; w = wid; }\n        double area() { return l * w; }\n    }\n    public static void main(String[] args) {\n        Shape c = new Circle(5);\n        Shape r = new Rectangle(4, 6);\n        c.display();\n        r.display();\n    }\n}',
     hint: "Abstract methods must be implemented by concrete subclasses",
   },
   {
@@ -149,8 +133,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Abstract class with constructor.",
     mathSolution: "Abstract classes can have constructors",
-    codeSolution:
-      'abstract class Database {\n    String connection;\n    \n    Database(String conn) {\n        connection = conn;\n        System.out.println("Connecting to " + connection);\n    }\n    \n    abstract void query(String sql);\n}\n\nclass MySQL extends Database {\n    MySQL(String conn) {\n        super(conn); // call abstract class constructor\n    }\n    \n    @Override\n    void query(String sql) {\n        System.out.println("MySQL executing: " + sql);\n    }\n}\n\nclass PostgreSQL extends Database {\n    PostgreSQL(String conn) {\n        super(conn);\n    }\n    \n    @Override\n    void query(String sql) {\n        System.out.println("PostgreSQL executing: " + sql);\n    }\n}\n\nMySQL db1 = new MySQL("localhost:3306/mydb");\ndb1.query("SELECT * FROM users");',
+    codeSolution: 'public class Main {\n    static abstract class Database {\n        String connection;\n        Database(String conn) { connection = conn; System.out.println("Connecting to " + connection); }\n        abstract void query(String sql);\n    }\n    static class MySQL extends Database {\n        MySQL(String conn) { super(conn); }\n        void query(String sql) { System.out.println("MySQL executing: " + sql); }\n    }\n    static class PostgreSQL extends Database {\n        PostgreSQL(String conn) { super(conn); }\n        void query(String sql) { System.out.println("PostgreSQL executing: " + sql); }\n    }\n    public static void main(String[] args) {\n        MySQL db1 = new MySQL("localhost:3306/mydb");\n        db1.query("SELECT * FROM users");\n    }\n}',
     hint: "Abstract class constructors called via super()",
   },
   {
@@ -158,8 +141,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Abstract class can have concrete methods.",
     mathSolution: "Abstract classes can provide default implementations",
-    codeSolution:
-      'abstract class Logger {\n    // Abstract method - must be implemented\n    abstract void log(String message);\n    \n    // Concrete method with default behavior\n    void logWithTimestamp(String message) {\n        String timestamp = new java.util.Date().toString();\n        log("[" + timestamp + "] " + message);\n    }\n    \n    // Another concrete method\n    void logError(String error) {\n        log("ERROR: " + error);\n    }\n}\n\nclass FileLogger extends Logger {\n    @Override\n    void log(String message) {\n        System.out.println("Writing to file: " + message);\n    }\n}\n\nclass ConsoleLogger extends Logger {\n    @Override\n    void log(String message) {\n        System.out.println("Console: " + message);\n    }\n}\n\nConsoleLogger logger = new ConsoleLogger();\nlogger.logWithTimestamp("Application started");\nlogger.logError("Null pointer exception");',
+    codeSolution: 'import java.util.Date;\npublic class Main {\n    static abstract class Logger {\n        abstract void log(String message);\n        void logWithTimestamp(String message) {\n            String timestamp = new Date().toString();\n            log("[" + timestamp + "] " + message);\n        }\n        void logError(String error) { log("ERROR: " + error); }\n    }\n    static class ConsoleLogger extends Logger {\n        void log(String message) { System.out.println("Console: " + message); }\n    }\n    public static void main(String[] args) {\n        ConsoleLogger logger = new ConsoleLogger();\n        logger.logWithTimestamp("Application started");\n        logger.logError("Null pointer exception");\n    }\n}',
     hint: "Abstract classes can provide partial implementation",
   },
 
@@ -169,8 +151,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Prevent inheritance using final class.",
     mathSolution: "final classes cannot be extended",
-    codeSolution:
-      'final class MathConstants {\n    static final double PI = 3.14159;\n    static final double E = 2.71828;\n}\n\n// This would cause error:\n// class ExtendedMath extends MathConstants { }\n\nclass Calculator {\n    double circleArea(double r) {\n        return MathConstants.PI * r * r;\n    }\n}\n\nSystem.out.println("PI: " + MathConstants.PI);\nCalculator calc = new Calculator();\nSystem.out.println("Area: " + calc.circleArea(5));',
+    codeSolution: 'public class Main {\n    static final class MathConstants {\n        static final double PI = 3.14159;\n    }\n    static class Calculator {\n        double circleArea(double r) { return MathConstants.PI * r * r; }\n    }\n    public static void main(String[] args) {\n        System.out.println("PI: " + MathConstants.PI);\n        Calculator calc = new Calculator();\n        System.out.println("Area: " + calc.circleArea(5));\n    }\n}',
     hint: "final class for security/immutability",
   },
   {
@@ -178,8 +159,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Prevent method overriding using final method.",
     mathSolution: "final methods cannot be overridden",
-    codeSolution:
-      'class Parent {\n    final void show() {\n        System.out.println("This is final method");\n    }\n    \n    void normal() {\n        System.out.println("Normal method");\n    }\n}\n\nclass Child extends Parent {\n    // This would cause error:\n    // void show() { }\n    \n    @Override\n    void normal() { // Can override non-final methods\n        System.out.println("Overridden normal method");\n    }\n}\n\nChild c = new Child();\nc.show();   // Calls parent\'s final method\nc.normal(); // Calls overridden method',
+    codeSolution: 'public class Main {\n    static class Parent {\n        final void show() { System.out.println("This is final method"); }\n        void normal() { System.out.println("Normal method"); }\n    }\n    static class Child extends Parent {\n        // void show() {} // would cause error\n        void normal() { System.out.println("Overridden normal method"); }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.show();\n        c.normal();\n    }\n}',
     hint: "final methods for critical implementations",
   },
 
@@ -189,8 +169,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Override toString() method inherited from Object.",
     mathSolution: "toString() provides string representation",
-    codeSolution:
-      'class Person {\n    String name;\n    int age;\n    \n    Person(String n, int a) { name = n; age = a; }\n    \n    @Override\n    public String toString() {\n        return "Person[name=" + name + ", age=" + age + "]";\n    }\n}\n\nPerson p = new Person("Alice", 25);\nSystem.out.println(p); // automatically calls toString()\nSystem.out.println(p.toString()); // same\n\n// Without override, would print: Person@hashcode',
+    codeSolution: 'public class Main {\n    static class Person {\n        String name; int age;\n        Person(String n, int a) { name = n; age = a; }\n        @Override\n        public String toString() { return "Person[name=" + name + ", age=" + age + "]"; }\n    }\n    public static void main(String[] args) {\n        Person p = new Person("Alice", 25);\n        System.out.println(p);\n    }\n}',
     hint: "All classes inherit from Object",
   },
   {
@@ -198,8 +177,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Override equals() and hashCode() methods.",
     mathSolution: "Proper implementation for object equality",
-    codeSolution:
-      'class Student {\n    int id;\n    String name;\n    \n    Student(int i, String n) { id = i; name = n; }\n    \n    @Override\n    public boolean equals(Object obj) {\n        if(this == obj) return true;\n        if(obj == null || getClass() != obj.getClass()) return false;\n        Student s = (Student) obj;\n        return id == s.id && Objects.equals(name, s.name);\n    }\n    \n    @Override\n    public int hashCode() {\n        return Objects.hash(id, name);\n    }\n}\n\nStudent s1 = new Student(101, "Alice");\nStudent s2 = new Student(101, "Alice");\nStudent s3 = new Student(102, "Bob");\n\nSystem.out.println("s1.equals(s2): " + s1.equals(s2)); // true\nSystem.out.println("s1.equals(s3): " + s1.equals(s3)); // false\n\n// Works correctly in HashSet\nSet<Student> set = new HashSet<>();\nset.add(s1);\nset.add(s2); // Won\'t add duplicate\nSystem.out.println("Set size: " + set.size()); // 1',
+    codeSolution: 'import java.util.*;\npublic class Main {\n    static class Student {\n        int id; String name;\n        Student(int i, String n) { id = i; name = n; }\n        @Override\n        public boolean equals(Object obj) {\n            if(this == obj) return true;\n            if(obj == null || getClass() != obj.getClass()) return false;\n            Student s = (Student) obj;\n            return id == s.id && Objects.equals(name, s.name);\n        }\n        @Override\n        public int hashCode() { return Objects.hash(id, name); }\n    }\n    public static void main(String[] args) {\n        Student s1 = new Student(101, "Alice");\n        Student s2 = new Student(101, "Alice");\n        Student s3 = new Student(102, "Bob");\n        System.out.println("s1.equals(s2): " + s1.equals(s2));\n        System.out.println("s1.equals(s3): " + s1.equals(s3));\n        Set<Student> set = new HashSet<>();\n        set.add(s1);\n        set.add(s2);\n        System.out.println("Set size: " + set.size());\n    }\n}',
     hint: "equals and hashCode must be consistent",
   },
 
@@ -209,8 +187,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Implement multiple interfaces.",
     mathSolution: "Java supports multiple interface inheritance",
-    codeSolution:
-      'interface Flyable {\n    void fly();\n}\n\ninterface Swimmable {\n    void swim();\n}\n\nclass Duck implements Flyable, Swimmable {\n    public void fly() { System.out.println("Duck flying"); }\n    public void swim() { System.out.println("Duck swimming"); }\n}\n\nclass Plane implements Flyable {\n    public void fly() { System.out.println("Plane flying"); }\n}\n\nDuck d = new Duck();\nd.fly();\nd.swim();\n\nPlane p = new Plane();\np.fly();',
+    codeSolution: 'public class Main {\n    interface Flyable { void fly(); }\n    interface Swimmable { void swim(); }\n    static class Duck implements Flyable, Swimmable {\n        public void fly() { System.out.println("Duck flying"); }\n        public void swim() { System.out.println("Duck swimming"); }\n    }\n    static class Plane implements Flyable {\n        public void fly() { System.out.println("Plane flying"); }\n    }\n    public static void main(String[] args) {\n        Duck d = new Duck();\n        d.fly();\n        d.swim();\n        Plane p = new Plane();\n        p.fly();\n    }\n}',
     hint: "A class can implement multiple interfaces",
   },
   {
@@ -218,8 +195,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Default methods in interfaces.",
     mathSolution: "Interfaces can have default implementations",
-    codeSolution:
-      'interface Vehicle {\n    void start();\n    \n    default void honk() {\n        System.out.println("Beep beep!");\n    }\n    \n    static void service() {\n        System.out.println("Vehicle service");\n    }\n}\n\nclass Car implements Vehicle {\n    public void start() { System.out.println("Car starting"); }\n    // honk() inherited with default implementation\n}\n\nclass Bike implements Vehicle {\n    public void start() { System.out.println("Bike starting"); }\n    \n    @Override\n    public void honk() { // Can override default method\n        System.out.println("Bike horn: Tring tring!");\n    }\n}\n\nCar c = new Car();\nc.start();\nc.honk(); // default\n\nBike b = new Bike();\nb.start();\nb.honk(); // overridden\n\nVehicle.service(); // static method call',
+    codeSolution: 'public class Main {\n    interface Vehicle {\n        void start();\n        default void honk() { System.out.println("Beep beep!"); }\n        static void service() { System.out.println("Vehicle service"); }\n    }\n    static class Car implements Vehicle {\n        public void start() { System.out.println("Car starting"); }\n    }\n    static class Bike implements Vehicle {\n        public void start() { System.out.println("Bike starting"); }\n        public void honk() { System.out.println("Bike horn: Tring tring!"); }\n    }\n    public static void main(String[] args) {\n        Car c = new Car();\n        c.start();\n        c.honk();\n        Bike b = new Bike();\n        b.start();\n        b.honk();\n        Vehicle.service();\n    }\n}',
     hint: "default methods add functionality without breaking existing code",
   },
   {
@@ -227,8 +203,7 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Diamond problem with multiple inheritance of interfaces.",
     mathSolution: "Java resolves with explicit override",
-    codeSolution:
-      'interface A {\n    default void show() { System.out.println("A show"); }\n}\n\ninterface B {\n    default void show() { System.out.println("B show"); }\n}\n\nclass C implements A, B {\n    // Must override to resolve conflict\n    @Override\n    public void show() {\n        A.super.show(); // call A\'s version\n        B.super.show(); // call B\'s version\n        System.out.println("C show");\n    }\n}\n\nC c = new C();\nc.show();',
+    codeSolution: 'public class Main {\n    interface A { default void show() { System.out.println("A show"); } }\n    interface B { default void show() { System.out.println("B show"); } }\n    static class C implements A, B {\n        public void show() {\n            A.super.show();\n            B.super.show();\n            System.out.println("C show");\n        }\n    }\n    public static void main(String[] args) {\n        C c = new C();\n        c.show();\n    }\n}',
     hint: "Use super to call specific interface default method",
   },
 
@@ -238,8 +213,127 @@ QuizData.questions.push(
     topicId: "inheritance",
     question: "Prefer composition over inheritance.",
     mathSolution: "Has-a relationship vs Is-a relationship",
-    codeSolution:
-      '// Inheritance approach (may not be appropriate)\nclass Engine {\n    void start() { System.out.println("Engine started"); }\n}\n\nclass Car extends Engine { // Is-a relationship? Not really\n    void drive() { System.out.println("Car driving"); }\n}\n\n// Composition approach (better)\nclass Engine2 {\n    void start() { System.out.println("Engine started"); }\n    void stop() { System.out.println("Engine stopped"); }\n}\n\nclass Car2 { // Has-a relationship\n    private Engine2 engine;\n    private String model;\n    \n    Car2(String m) {\n        model = m;\n        engine = new Engine2(); // composition\n    }\n    \n    void startCar() {\n        System.out.print(model + ": ");\n        engine.start();\n    }\n    \n    void stopCar() {\n        System.out.print(model + ": ");\n        engine.stop();\n    }\n    \n    void drive() {\n        System.out.println(model + " driving");\n    }\n}\n\nCar2 myCar = new Car2("Tesla");\nmyCar.startCar();\nmyCar.drive();\nmyCar.stopCar();\n\n// Composition is more flexible and loosely coupled',
+    codeSolution: 'public class Main {\n    static class Engine {\n        void start() { System.out.println("Engine started"); }\n        void stop() { System.out.println("Engine stopped"); }\n    }\n    static class Car { // Composition: Car has Engine\n        private Engine engine;\n        private String model;\n        Car(String m) { model = m; engine = new Engine(); }\n        void startCar() { System.out.print(model + ": "); engine.start(); }\n        void stopCar() { System.out.print(model + ": "); engine.stop(); }\n        void drive() { System.out.println(model + " driving"); }\n    }\n    public static void main(String[] args) {\n        Car myCar = new Car("Tesla");\n        myCar.startCar();\n        myCar.drive();\n        myCar.stopCar();\n    }\n}',
     hint: "Favor composition over inheritance for flexibility",
   },
+  {
+    "id": "inheritance_26",
+    "topicId": "inheritance",
+    "question": "Demonstrate field hiding (shadowing) in inheritance. Create a parent class with a variable `value` and a child class that also declares `value`. Show that the child's variable hides the parent's, and access the parent's variable using `super`.",
+    "mathSolution": "Fields are resolved at compile-time based on reference type; child's field hides parent's.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        int value = 10;\n    }\n    static class Child extends Parent {\n        int value = 20;\n        void display() {\n            System.out.println(\"Child value: \" + value);\n            System.out.println(\"Parent value: \" + super.value);\n        }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.display();\n    }\n}",
+    "hint": "Use `super.field` to access hidden parent field."
+  },
+  {
+    "id": "inheritance_27",
+    "topicId": "inheritance",
+    "question": "Create a subclass that overloads the constructor with different parameters, calling different super constructors using `super()` based on the arguments.",
+    "mathSolution": "Subclass constructors can choose which parent constructor to invoke.",
+    "codeSolution": "public class Main {\n    static class Employee {\n        String name;\n        int id;\n        Employee() { this(\"Unknown\", 0); }\n        Employee(String name) { this(name, 0); }\n        Employee(String name, int id) { this.name = name; this.id = id; }\n    }\n    static class Manager extends Employee {\n        String department;\n        Manager() { super(); department = \"General\"; }\n        Manager(String name) { super(name); department = \"General\"; }\n        Manager(String name, int id, String dept) { super(name, id); department = dept; }\n        void display() { System.out.println(name + \" (ID:\" + id + \") - \" + department); }\n    }\n    public static void main(String[] args) {\n        new Manager().display();\n        new Manager(\"Alice\").display();\n        new Manager(\"Bob\", 101, \"IT\").display();\n    }\n}",
+    "hint": "Overload subclass constructors to call different parent constructors."
+  },
+  {
+    "id": "inheritance_28",
+    "topicId": "inheritance",
+    "question": "Override a method in child class that throws a more specific checked exception than the parent (allowed). Also show that overriding cannot throw a broader checked exception.",
+    "mathSolution": "Child method can throw subclass of parent's exception or none, but not a broader exception.",
+    "codeSolution": "import java.io.*;\npublic class Main {\n    static class Parent {\n        void readFile() throws IOException {\n            System.out.println(\"Parent reading\");\n        }\n    }\n    static class Child extends Parent {\n        @Override\n        void readFile() throws FileNotFoundException {\n            System.out.println(\"Child reading (narrower exception)\");\n        }\n    }\n    public static void main(String[] args) {\n        Parent p = new Child();\n        try {\n            p.readFile();\n        } catch(IOException e) {}\n    }\n}",
+    "hint": "Overriding method can throw a subclass of the parent's exception (covariant exceptions)."
+  },
+  {
+    "id": "inheritance_29",
+    "topicId": "inheritance",
+    "question": "Use `super` to call a parent method that has been overridden, but also access a hidden parent field from within a method.",
+    "mathSolution": "`super` can access both methods and fields that are hidden/overridden.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        String msg = \"Parent message\";\n        void show() { System.out.println(\"Parent show\"); }\n    }\n    static class Child extends Parent {\n        String msg = \"Child message\";\n        void show() {\n            super.show();\n            System.out.println(\"Child show\");\n            System.out.println(\"Parent msg: \" + super.msg);\n        }\n    }\n    public static void main(String[] args) {\n        new Child().show();\n    }\n}",
+    "hint": "Use `super.method()` and `super.field` to access parent's members."
+  },
+  {
+    "id": "inheritance_30",
+    "topicId": "inheritance",
+    "question": "Define a static nested class inside a parent class and extend it in a child class's static nested class. Demonstrate inheritance of static nested classes.",
+    "mathSolution": "Static nested classes can extend each other within the inheritance hierarchy.",
+    "codeSolution": "public class Main {\n    static class OuterParent {\n        static class Nested {\n            void display() { System.out.println(\"Parent nested\"); }\n        }\n    }\n    static class OuterChild extends OuterParent {\n        static class Nested extends OuterParent.Nested {\n            void display() {\n                super.display();\n                System.out.println(\"Child nested\");\n            }\n        }\n    }\n    public static void main(String[] args) {\n        OuterChild.Nested nested = new OuterChild.Nested();\n        nested.display();\n    }\n}",
+    "hint": "Static nested classes are independent but can be extended across inheritance."
+  },
+  {
+    "id": "inheritance_31",
+    "topicId": "inheritance",
+    "question": "Observe the order of execution of instance initializer blocks and constructors in a multi-level inheritance hierarchy.",
+    "mathSolution": "Instance initializers run after superclass constructor but before the current class constructor body.",
+    "codeSolution": "public class Main {\n    static class A {\n        { System.out.println(\"A instance init\"); }\n        A() { System.out.println(\"A constructor\"); }\n    }\n    static class B extends A {\n        { System.out.println(\"B instance init\"); }\n        B() { System.out.println(\"B constructor\"); }\n    }\n    static class C extends B {\n        { System.out.println(\"C instance init\"); }\n        C() { System.out.println(\"C constructor\"); }\n    }\n    public static void main(String[] args) {\n        new C();\n    }\n}",
+    "hint": "Order: superclass constructor → instance init → constructor body for each level."
+  },
+  {
+    "id": "inheritance_32",
+    "topicId": "inheritance",
+    "question": "Demonstrate safe downcasting using instanceof and then cast to call child-specific methods.",
+    "mathSolution": "Always check type with instanceof before downcasting to avoid ClassCastException.",
+    "codeSolution": "public class Main {\n    static class Animal { void sound() { System.out.println(\"Animal sound\"); } }\n    static class Dog extends Animal { void bark() { System.out.println(\"Dog barking\"); } }\n    public static void main(String[] args) {\n        Animal a = new Dog();\n        if (a instanceof Dog) {\n            Dog d = (Dog) a;\n            d.bark();\n        }\n        a = new Animal();\n        if (a instanceof Dog) {\n            Dog d = (Dog) a;\n            d.bark();\n        } else {\n            System.out.println(\"Not a Dog\");\n        }\n    }\n}",
+    "hint": "Check with instanceof before casting."
+  },
+  {
+    "id": "inheritance_33",
+    "topicId": "inheritance",
+    "question": "Override a protected method in a child class and change its access modifier to public (allowed, since it's broader).",
+    "mathSolution": "Overriding method can increase accessibility (protected → public) but cannot reduce it.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        protected void display() { System.out.println(\"Parent display\"); }\n    }\n    static class Child extends Parent {\n        @Override\n        public void display() { System.out.println(\"Child display\"); }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.display();\n        Parent p = new Child();\n        p.display();\n    }\n}",
+    "hint": "Overriding method can have a less restrictive access modifier."
+  },
+  {
+    "id": "inheritance_34",
+    "topicId": "inheritance",
+    "question": "Call a child's overridden method from the parent constructor. Show the pitfall (method called before child is fully constructed).",
+    "mathSolution": "Overridden methods called from parent constructor use child's implementation even though child's fields may not be initialized.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        Parent() { display(); }\n        void display() { System.out.println(\"Parent display\"); }\n    }\n    static class Child extends Parent {\n        private String value = \"Child value\";\n        Child() { System.out.println(\"Child constructor\"); }\n        @Override\n        void display() { System.out.println(\"Child display: \" + value); }\n    }\n    public static void main(String[] args) {\n        new Child();\n    }\n}",
+    "hint": "Avoid calling overridden methods in constructor; they may run before child's fields are initialized."
+  },
+  {
+    "id": "inheritance_35",
+    "topicId": "inheritance",
+    "question": "Create an abstract class that extends another abstract class. Implement only some abstract methods, leaving others for further subclasses.",
+    "mathSolution": "Abstract classes can inherit from abstract classes and optionally implement methods.",
+    "codeSolution": "public class Main {\n    static abstract class Vehicle {\n        abstract void start();\n        abstract void stop();\n    }\n    static abstract class Car extends Vehicle {\n        void start() { System.out.println(\"Car starting\"); }\n    }\n    static class ElectricCar extends Car {\n        void stop() { System.out.println(\"Electric car stopping\"); }\n    }\n    public static void main(String[] args) {\n        ElectricCar ec = new ElectricCar();\n        ec.start();\n        ec.stop();\n    }\n}",
+    "hint": "An abstract class can partially implement an abstract parent."
+  },
+   {
+    "id": "inheritance_36",
+    "topicId": "inheritance",
+    "question": "Create an interface with a default method that calls an abstract method. Implement the interface and provide the abstract method.",
+    "mathSolution": "Default methods can invoke abstract methods to define a template.",
+    "codeSolution": "public class Main {\n    interface Formatter {\n        String format(String s);\n        default void printFormatted(String s) {\n            System.out.println(\"Formatted: \" + format(s));\n        }\n    }\n    static class UpperCaseFormatter implements Formatter {\n        public String format(String s) { return s.toUpperCase(); }\n    }\n    public static void main(String[] args) {\n        UpperCaseFormatter uf = new UpperCaseFormatter();\n        uf.printFormatted(\"hello\");\n    }\n}",
+    "hint": "Default methods can use abstract methods as building blocks."
+  },
+  {
+    "id": "inheritance_37",
+    "topicId": "inheritance",
+    "question": "Inherit a final variable from a parent class. Show that it can be accessed but not modified by the child.",
+    "mathSolution": "Final variables are immutable and accessible to subclasses.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        final int VALUE = 100;\n    }\n    static class Child extends Parent {\n        void display() { System.out.println(\"Final VALUE: \" + VALUE); }\n    }\n    public static void main(String[] args) {\n        new Child().display();\n    }\n}",
+    "hint": "Final fields are inherited but cannot be reassigned."
+  },
+  {
+    "id": "inheritance_38",
+    "topicId": "inheritance",
+    "question": "Override a method that is declared as synchronized in the parent. The child's override may or may not be synchronized.",
+    "mathSolution": "synchronized is not part of the method signature; it can be added or removed in overrides.",
+    "codeSolution": "public class Main {\n    static class Parent {\n        synchronized void syncMethod() {\n            System.out.println(\"Parent synchronized method\");\n        }\n    }\n    static class Child extends Parent {\n        void syncMethod() { // not synchronized\n            System.out.println(\"Child non-synchronized override\");\n        }\n    }\n    public static void main(String[] args) {\n        Child c = new Child();\n        c.syncMethod();\n    }\n}",
+    "hint": "synchronized modifier is not required to match in overrides."
+  },
+  {
+    "id": "inheritance_39",
+    "topicId": "inheritance",
+    "question": "Create a generic parent class (Box<T>) and extend it with a concrete type (StringBox). Show usage of type parameter inheritance.",
+    "mathSolution": "Subclass can specify the generic type parameter of the parent.",
+    "codeSolution": "public class Main {\n    static class Box<T> {\n        T item;\n        void set(T item) { this.item = item; }\n        T get() { return item; }\n    }\n    static class StringBox extends Box<String> {\n        void print() { System.out.println(\"StringBox: \" + get()); }\n    }\n    public static void main(String[] args) {\n        StringBox sb = new StringBox();\n        sb.set(\"Hello Generics\");\n        sb.print();\n    }\n}",
+    "hint": "Subclass can bind parent's type parameter to a concrete type."
+  },
+  {
+    "id": "inheritance_40",
+    "topicId": "inheritance",
+    "question": "Create an anonymous class that extends an abstract class with a single abstract method and instantiate it.",
+    "mathSolution": "Anonymous class provides inline implementation.",
+    "codeSolution": "public class Main {\n    static abstract class Greeting {\n        abstract void sayHello();\n    }\n    public static void main(String[] args) {\n        Greeting g = new Greeting() {\n            void sayHello() { System.out.println(\"Hello from anonymous class!\"); }\n        };\n        g.sayHello();\n    }\n}",
+    "hint": "Anonymous classes are a concise way to subclass on the fly."
+  }
 );

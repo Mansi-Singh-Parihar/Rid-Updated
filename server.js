@@ -17,6 +17,8 @@ const configureMiddleware = require("./config/middleware");
 dotenv.config();
 // Initialize express app
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 9191;
 const http = require("http");
 const server = http.createServer(app);
@@ -527,7 +529,7 @@ app.get("/admin/dashboard", requireAdmin, (req, res) => {
 app.get("/offerlatter",(req,res)=>{
   res.render("Admin/offerlatter/offerlatter-form.ejs")
 })
-app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static("public"));
 
 const offerRoutes = require("./routes/offerRoutes");

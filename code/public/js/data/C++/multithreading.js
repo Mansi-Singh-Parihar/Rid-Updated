@@ -1,250 +1,402 @@
 QuizData.questions.push(
-  // ==================== BASIC THREAD CREATION (5 questions) ====================
-  {
-    id: "cpp_thread_1",
-    topicId: "cpp_multithreading",
-    question: "How do you create and start a basic thread in C++?",
-    mathSolution: "Use std::thread with a callable object",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\nusing namespace std;\n\n// Function to run in thread\nvoid helloFunction() {\n    cout << "Hello from thread!" << endl;\n}\n\n// Function object\nclass HelloObject {\npublic:\n    void operator()() const {\n        cout << "Hello from function object!" << endl;\n    }\n};\n\nint main() {\n    // Create thread with function pointer\n    thread t1(helloFunction);\n    \n    // Create thread with function object\n    HelloObject obj;\n    thread t2(obj);\n    \n    // Create thread with lambda\n    thread t3([]() {\n        cout << "Hello from lambda!" << endl;\n    });\n    \n    // Wait for threads to complete\n    t1.join();\n    t2.join();\n    t3.join();\n    \n    cout << "Main thread ending" << endl;\n    return 0;\n}',
-    hint: "Threads start automatically when created. Always call join() or detach() before thread destructor.",
-  },
-  {
-    id: "cpp_thread_2",
-    topicId: "cpp_multithreading",
-    question: "How do you pass arguments to a thread function?",
-    mathSolution:
-      "Pass arguments after the function pointer in thread constructor",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <string>\nusing namespace std;\n\nvoid printMessage(string msg, int count) {\n    for(int i = 0; i < count; i++) {\n        cout << msg << ": " << i << endl;\n    }\n}\n\nvoid modifyValue(int& x) {\n    x *= 2;\n    cout << "Inside thread, x = " << x << endl;\n}\n\nint main() {\n    // Pass by value\n    thread t1(printMessage, "Hello", 5);\n    t1.join();\n    \n    // Pass by reference - need ref() wrapper\n    int value = 42;\n    thread t2(modifyValue, ref(value));\n    t2.join();\n    cout << "After thread, value = " << value << endl;\n    \n    // Pass multiple arguments of different types\n    string name = "Alice";\n    int age = 25;\n    double salary = 50000.50;\n    \n    thread t3([](string n, int a, double s) {\n        cout << n << " is " << a << " years old, earns $" << s << endl;\n    }, name, age, salary);\n    t3.join();\n    \n    return 0;\n}',
-    hint: "Use ref() wrapper for references. Arguments are copied/moved to thread storage.",
-  },
-  {
-    id: "cpp_thread_3",
-    topicId: "cpp_multithreading",
-    question: "What is the difference between join() and detach()?",
-    mathSolution: "join() waits for thread, detach() lets it run independently",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nvoid worker(int id, int seconds) {\n    cout << "Thread " << id << " starting, will work for " << seconds << " seconds" << endl;\n    this_thread::sleep_for(chrono::seconds(seconds));\n    cout << "Thread " << id << " finished" << endl;\n}\n\nint main() {\n    // Join example - main waits\n    thread t1(worker, 1, 2);\n    cout << "Main waiting for thread 1..." << endl;\n    t1.join();\n    cout << "Thread 1 joined" << endl;\n    \n    // Detach example - main doesn\'t wait\n    thread t2(worker, 2, 3);\n    t2.detach();\n    cout << "Thread 2 detached, main continues..." << endl;\n    \n    // Check if thread is joinable\n    if(t2.joinable()) {\n        cout << "Thread 2 is joinable" << endl;\n    } else {\n        cout << "Thread 2 is not joinable" << endl;\n    }\n    \n    // Give detached thread time to complete\n    this_thread::sleep_for(chrono::seconds(4));\n    cout << "Main ending" << endl;\n    \n    // Error: cannot join detached thread\n    // t2.join(); // Would throw std::system_error\n    \n    return 0;\n}',
-    hint: "join() blocks until thread completes. detach() lets thread run independently. Always join or detach before thread destructor.",
-  },
-  {
-    id: "cpp_thread_4",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you get the current thread ID and check if threads are joinable?",
-    mathSolution: "Use get_id() and joinable() methods",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nvoid threadFunction(int id) {\n    cout << "Thread " << id << " ID: " << this_thread::get_id() << endl;\n    this_thread::sleep_for(chrono::milliseconds(500));\n}\n\nint main() {\n    cout << "Main thread ID: " << this_thread::get_id() << endl;\n    cout << "Hardware concurrency: " << thread::hardware_concurrency() << endl;\n    \n    thread t1(threadFunction, 1);\n    thread t2(threadFunction, 2);\n    thread t3; // Not associated with any thread\n    \n    cout << "t1 joinable? " << t1.joinable() << endl;\n    cout << "t2 joinable? " << t2.joinable() << endl;\n    cout << "t3 joinable? " << t3.joinable() << endl;\n    \n    t1.join();\n    cout << "After join, t1 joinable? " << t1.joinable() << endl;\n    \n    t2.join();\n    \n    // Create thread that will be detached\n    thread t4(threadFunction, 4);\n    t4.detach();\n    cout << "After detach, t4 joinable? " << t4.joinable() << endl;\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    \n    return 0;\n}',
-    hint: "get_id() returns unique thread identifier. joinable() checks if thread can be joined.",
-  },
-  {
-    id: "cpp_thread_5",
-    topicId: "cpp_multithreading",
-    question: "How do you use lambda expressions with threads?",
-    mathSolution: "Pass lambda directly to thread constructor",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <vector>\n#include <algorithm>\nusing namespace std;\n\nint main() {\n    // Simple lambda thread\n    thread t1([]() {\n        cout << "Lambda thread running" << endl;\n    });\n    \n    // Lambda with parameters\n    int x = 10, y = 20;\n    thread t2([x, &y]() {\n        cout << "x (captured by value): " << x << endl;\n        cout << "y (captured by reference): " << y << endl;\n        y = 100; // Modify captured reference\n    });\n    \n    // Lambda returning value (need to capture result)\n    int result = 0;\n    thread t3([&result]() {\n        result = 42; // Store result in captured reference\n    });\n    \n    t1.join();\n    t2.join();\n    t3.join();\n    \n    cout << "y after thread: " << y << endl;\n    cout << "Result from thread: " << result << endl;\n    \n    // Multiple threads with lambda\n    vector<thread> threads;\n    for(int i = 0; i < 5; i++) {\n        threads.emplace_back([i]() {\n            cout << "Thread " << i << " running" << endl;\n            this_thread::sleep_for(chrono::milliseconds(100));\n        });\n    }\n    \n    // Join all threads\n    for(auto& t : threads) {\n        t.join();\n    }\n    \n    return 0;\n}',
-    hint: "Lambda capture specifies how variables are accessed. Be careful with references to local variables.",
-  },
-
-  // ==================== THREAD SYNCHRONIZATION (5 questions) ====================
-  {
-    id: "cpp_thread_6",
-    topicId: "cpp_multithreading",
-    question: "What is a race condition? How do you fix it with mutex?",
-    mathSolution: "Use std::mutex to protect shared data",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <vector>\nusing namespace std;\n\n// Shared counter without synchronization\nint counter = 0;\n\nvoid unsafeIncrement(int iterations) {\n    for(int i = 0; i < iterations; i++) {\n        counter++; // Race condition here\n    }\n}\n\n// Shared counter with mutex protection\nint safeCounter = 0;\nmutex mtx;\n\nvoid safeIncrement(int iterations) {\n    for(int i = 0; i < iterations; i++) {\n        lock_guard<mutex> lock(mtx); // RAII lock\n        safeCounter++;\n    } // lock automatically released\n}\n\nint main() {\n    const int NUM_THREADS = 10;\n    const int ITERATIONS = 10000;\n    \n    // Demonstrate race condition\n    {\n        vector<thread> threads;\n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back(unsafeIncrement, ITERATIONS);\n        }\n        \n        for(auto& t : threads) {\n            t.join();\n        }\n        \n        cout << "Expected: " << NUM_THREADS * ITERATIONS << endl;\n        cout << "Actual (unsafe): " << counter << " (wrong due to race condition)" << endl;\n    }\n    \n    // Fix with mutex\n    {\n        vector<thread> threads;\n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back(safeIncrement, ITERATIONS);\n        }\n        \n        for(auto& t : threads) {\n            t.join();\n        }\n        \n        cout << "Actual (with mutex): " << safeCounter << " (correct)" << endl;\n    }\n    \n    return 0;\n}',
-    hint: "Race condition occurs when multiple threads access shared data without synchronization. Mutex ensures exclusive access.",
-  },
-  {
-    id: "cpp_thread_7",
-    topicId: "cpp_multithreading",
-    question: "What is the difference between lock_guard and unique_lock?",
-    mathSolution: "lock_guard is simpler, unique_lock offers more flexibility",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <chrono>\nusing namespace std;\n\nmutex mtx;\nint sharedData = 0;\n\nvoid lockGuardExample() {\n    // lock_guard - simple RAII, cannot unlock early\n    lock_guard<mutex> lock(mtx);\n    cout << "lock_guard: Thread " << this_thread::get_id() << " has lock" << endl;\n    sharedData++;\n    this_thread::sleep_for(chrono::milliseconds(100));\n    // Lock automatically released here\n}\n\nvoid uniqueLockExample() {\n    // unique_lock - more flexible, can unlock early\n    unique_lock<mutex> lock(mtx);\n    cout << "unique_lock: Thread " << this_thread::get_id() << " has lock" << endl;\n    sharedData++;\n    \n    // Unlock early if needed\n    lock.unlock();\n    cout << "unique_lock: Thread " << this_thread::get_id() << " released lock early" << endl;\n    \n    // Do some work without lock\n    this_thread::sleep_for(chrono::milliseconds(50));\n    \n    // Lock again if needed\n    lock.lock();\n    sharedData++;\n    cout << "unique_lock: Thread " << this_thread::get_id() << " reacquired lock" << endl;\n    // Automatically released at end of scope\n}\n\nvoid tryLockExample() {\n    unique_lock<mutex> lock(mtx, defer_lock); // Don\'t lock yet\n    \n    if(lock.try_lock()) {\n        cout << "try_lock: Thread " << this_thread::get_id() << " acquired lock" << endl;\n        sharedData++;\n        // lock automatically released\n    } else {\n        cout << "try_lock: Thread " << this_thread::get_id() << " couldn\'t acquire lock" << endl;\n    }\n}\n\nint main() {\n    thread t1(lockGuardExample);\n    thread t2(lockGuardExample);\n    t1.join(); t2.join();\n    \n    cout << "\\n---" << endl;\n    \n    thread t3(uniqueLockExample);\n    thread t4(uniqueLockExample);\n    t3.join(); t4.join();\n    \n    cout << "\\n---" << endl;\n    \n    thread t5(tryLockExample);\n    thread t6(tryLockExample);\n    t5.join(); t6.join();\n    \n    return 0;\n}',
-    hint: "lock_guard is faster but less flexible. unique_lock supports deferred locking, try_lock, and early unlock.",
-  },
-  {
-    id: "cpp_thread_8",
-    topicId: "cpp_multithreading",
-    question: "How do you avoid deadlocks with multiple mutexes?",
-    mathSolution: "Use std::lock to lock multiple mutexes atomically",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <chrono>\nusing namespace std;\n\nmutex mtx1, mtx2;\n\n// Deadlock prone approach\nvoid unsafeOperation1() {\n    lock_guard<mutex> lock1(mtx1);\n    this_thread::sleep_for(chrono::milliseconds(100)); // Simulate work\n    lock_guard<mutex> lock2(mtx2); // May deadlock if other thread locks in reverse order\n    cout << "Unsafe operation 1 completed" << endl;\n}\n\nvoid unsafeOperation2() {\n    lock_guard<mutex> lock2(mtx2);\n    this_thread::sleep_for(chrono::milliseconds(100));\n    lock_guard<mutex> lock1(mtx1); // May cause deadlock\n    cout << "Unsafe operation 2 completed" << endl;\n}\n\n// Safe approach using std::lock\nvoid safeOperation1() {\n    // Lock both mutexes atomically\n    unique_lock<mutex> lock1(mtx1, defer_lock);\n    unique_lock<mutex> lock2(mtx2, defer_lock);\n    lock(lock1, lock2); // Lock both without deadlock\n    \n    cout << "Safe operation 1 has both locks" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n    // Locks automatically released\n}\n\nvoid safeOperation2() {\n    // Lock in same order using scoped_lock (C++17)\n    scoped_lock lock(mtx1, mtx2); // Locks both atomically\n    \n    cout << "Safe operation 2 has both locks" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n}\n\n// Hierarchical locking to prevent deadlocks\nclass HierarchicalMutex {\n    mutex mtx;\n    const int level;\n    static inline thread_local int previousLevel = 0;\n    \npublic:\n    HierarchicalMutex(int lvl) : level(lvl) {}\n    \n    void lock() {\n        if(level <= previousLevel) {\n            throw runtime_error("Lock hierarchy violation");\n        }\n        mtx.lock();\n        previousLevel = level;\n    }\n    \n    void unlock() {\n        previousLevel = 0;\n        mtx.unlock();\n    }\n};\n\nint main() {\n    // This might deadlock\n    cout << "Unsafe operations (may deadlock):" << endl;\n    // thread t1(unsafeOperation1);\n    // thread t2(unsafeOperation2);\n    // t1.join(); t2.join();\n    \n    cout << "\\nSafe operations with std::lock:" << endl;\n    thread t3(safeOperation1);\n    thread t4(safeOperation2);\n    t3.join(); t4.join();\n    \n    return 0;\n}',
-    hint: "Always lock multiple mutexes in the same order or use std::lock/scoped_lock to lock atomically.",
-  },
-  {
-    id: "cpp_thread_9",
-    topicId: "cpp_multithreading",
-    question: "How do you use std::recursive_mutex?",
-    mathSolution: "recursive_mutex allows same thread to lock multiple times",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nrecursive_mutex recMtx;\n\n// Recursive function that needs to lock same mutex multiple times\nvoid recursiveFunction(int count) {\n    recMtx.lock();\n    cout << "Thread " << this_thread::get_id() << " locked, count = " << count << endl;\n    \n    if(count > 1) {\n        recursiveFunction(count - 1); // Recursive call\n    }\n    \n    cout << "Thread " << this_thread::get_id() << " unlocking, count = " << count << endl;\n    recMtx.unlock();\n}\n\n// Non-recursive mutex would deadlock here\nmutex regularMtx;\nvoid badRecursiveFunction(int count) {\n    // This would deadlock on second call\n    // regularMtx.lock();\n    cout << "This would deadlock with regular mutex" << endl;\n    // if(count > 1) badRecursiveFunction(count - 1);\n    // regularMtx.unlock();\n}\n\nclass BankAccount {\n    recursive_mutex mtx;\n    int balance = 0;\n    \npublic:\n    void deposit(int amount) {\n        lock_guard<recursive_mutex> lock(mtx);\n        balance += amount;\n    }\n    \n    void transfer(BankAccount& to, int amount) {\n        lock_guard<recursive_mutex> lock(mtx); // Lock this account\n        deposit(-amount); // Same thread calls deposit which needs same lock\n        to.deposit(amount);\n    }\n    \n    int getBalance() {\n        lock_guard<recursive_mutex> lock(mtx);\n        return balance;\n    }\n};\n\nint main() {\n    cout << "Recursive mutex example:" << endl;\n    thread t1(recursiveFunction, 3);\n    thread t2(recursiveFunction, 2);\n    t1.join(); t2.join();\n    \n    cout << "\\nBank account example:" << endl;\n    BankAccount acc1, acc2;\n    \n    thread t3([&]() {\n        acc1.transfer(acc2, 100);\n    });\n    \n    thread t4([&]() {\n        acc2.transfer(acc1, 50);\n    });\n    \n    t3.join(); t4.join();\n    \n    return 0;\n}',
-    hint: "Use recursive_mutex when same thread needs to lock same mutex multiple times. Regular mutex would deadlock.",
-  },
-  {
-    id: "cpp_thread_10",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you use timed mutexes with try_lock_for and try_lock_until?",
-    mathSolution: "timed_mutex allows waiting with timeout",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <chrono>\nusing namespace std;\n\ntimed_mutex tmtx;\n\nvoid tryLockForExample(int id) {\n    // Try to lock for 100ms\n    if(tmtx.try_lock_for(chrono::milliseconds(100))) {\n        cout << "Thread " << id << " acquired lock with try_lock_for" << endl;\n        this_thread::sleep_for(chrono::milliseconds(200)); // Hold lock\n        tmtx.unlock();\n        cout << "Thread " << id << " released lock" << endl;\n    } else {\n        cout << "Thread " << id << " could not acquire lock within timeout" << endl;\n    }\n}\n\nvoid tryLockUntilExample(int id) {\n    auto timeout = chrono::steady_clock::now() + chrono::milliseconds(150);\n    \n    if(tmtx.try_lock_until(timeout)) {\n        cout << "Thread " << id << " acquired lock with try_lock_until" << endl;\n        this_thread::sleep_for(chrono::milliseconds(100));\n        tmtx.unlock();\n    } else {\n        cout << "Thread " << id << " could not acquire lock before deadline" << endl;\n    }\n}\n\nint main() {\n    // First thread holds lock for 200ms\n    thread t1([]() {\n        tmtx.lock();\n        cout << "Thread 1 holding lock for 200ms" << endl;\n        this_thread::sleep_for(chrono::milliseconds(200));\n        tmtx.unlock();\n    });\n    \n    this_thread::sleep_for(chrono::milliseconds(50)); // Ensure t1 gets lock first\n    \n    thread t2(tryLockForExample, 2);\n    thread t3(tryLockForExample, 3);\n    \n    t1.join();\n    t2.join();\n    t3.join();\n    \n    cout << "\\n--- try_lock_until example ---" << endl;\n    \n    thread t4([]() {\n        tmtx.lock();\n        cout << "Thread 4 holding lock for 200ms" << endl;\n        this_thread::sleep_for(chrono::milliseconds(200));\n        tmtx.unlock();\n    });\n    \n    this_thread::sleep_for(chrono::milliseconds(50));\n    \n    thread t5(tryLockUntilExample, 5);\n    thread t6(tryLockUntilExample, 6);\n    \n    t4.join();\n    t5.join();\n    t6.join();\n    \n    return 0;\n}',
-    hint: "timed_mutex provides try_lock_for (wait relative time) and try_lock_until (wait until absolute time).",
-  },
-
-  // ==================== CONDITION VARIABLES (3 questions) ====================
-  {
-    id: "cpp_thread_11",
-    topicId: "cpp_multithreading",
-    question: "How do you use condition variables for thread synchronization?",
-    mathSolution: "condition_variable allows threads to wait for conditions",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <queue>\nusing namespace std;\n\nmutex mtx;\ncondition_variable cv;\nqueue<int> dataQueue;\nbool finished = false;\n\nvoid producer() {\n    for(int i = 1; i <= 10; i++) {\n        {\n            lock_guard<mutex> lock(mtx);\n            dataQueue.push(i);\n            cout << "Produced: " << i << endl;\n        }\n        cv.notify_one(); // Notify one waiting consumer\n        this_thread::sleep_for(chrono::milliseconds(100));\n    }\n    \n    {\n        lock_guard<mutex> lock(mtx);\n        finished = true;\n    }\n    cv.notify_all(); // Notify all consumers\n}\n\nvoid consumer(int id) {\n    while(true) {\n        unique_lock<mutex> lock(mtx);\n        \n        // Wait until queue has data or production finished\n        cv.wait(lock, []() { return !dataQueue.empty() || finished; });\n        \n        if(!dataQueue.empty()) {\n            int value = dataQueue.front();\n            dataQueue.pop();\n            lock.unlock();\n            cout << "Consumer " << id << " consumed: " << value << endl;\n        } else if(finished) {\n            cout << "Consumer " << id << " exiting" << endl;\n            break;\n        }\n    }\n}\n\nint main() {\n    thread prod(producer);\n    thread cons1(consumer, 1);\n    thread cons2(consumer, 2);\n    \n    prod.join();\n    cons1.join();\n    cons2.join();\n    \n    return 0;\n}',
-    hint: "condition_variable requires unique_lock. wait() releases lock and blocks, then reacquires when notified.",
-  },
-  {
-    id: "cpp_thread_12",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you implement producer-consumer pattern with condition variables?",
-    mathSolution:
-      "Bounded buffer with producer-consumer using condition variables",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <queue>\nusing namespace std;\n\ntemplate<typename T>\nclass BoundedBuffer {\n    queue<T> queue_;\n    mutex mtx_;\n    condition_variable notEmpty_;\n    condition_variable notFull_;\n    size_t capacity_;\n    \npublic:\n    BoundedBuffer(size_t capacity) : capacity_(capacity) {}\n    \n    void produce(T item) {\n        unique_lock<mutex> lock(mtx_);\n        \n        // Wait if buffer is full\n        notFull_.wait(lock, [this]() { return queue_.size() < capacity_; });\n        \n        queue_.push(item);\n        cout << "Produced: " << item << ", size: " << queue_.size() << endl;\n        \n        // Notify consumer\n        notEmpty_.notify_one();\n    }\n    \n    T consume() {\n        unique_lock<mutex> lock(mtx_);\n        \n        // Wait if buffer is empty\n        notEmpty_.wait(lock, [this]() { return !queue_.empty(); });\n        \n        T item = queue_.front();\n        queue_.pop();\n        cout << "Consumed: " << item << ", size: " << queue_.size() << endl;\n        \n        // Notify producer\n        notFull_.notify_one();\n        \n        return item;\n    }\n};\n\nint main() {\n    BoundedBuffer<int> buffer(3); // Buffer capacity of 3\n    \n    thread producer([&buffer]() {\n        for(int i = 1; i <= 10; i++) {\n            buffer.produce(i);\n            this_thread::sleep_for(chrono::milliseconds(50));\n        }\n    });\n    \n    thread consumer1([&buffer]() {\n        for(int i = 0; i < 5; i++) {\n            buffer.consume();\n            this_thread::sleep_for(chrono::milliseconds(150));\n        }\n    });\n    \n    thread consumer2([&buffer]() {\n        for(int i = 0; i < 5; i++) {\n            buffer.consume();\n            this_thread::sleep_for(chrono::milliseconds(200));\n        }\n    });\n    \n    producer.join();\n    consumer1.join();\n    consumer2.join();\n    \n    return 0;\n}',
-    hint: "Bounded buffer uses two condition variables: notEmpty for consumers, notFull for producers.",
-  },
-  {
-    id: "cpp_thread_13",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you use notify_one vs notify_all with condition variables?",
-    mathSolution: "notify_one wakes one thread, notify_all wakes all",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <chrono>\nusing namespace std;\n\nmutex mtx;\ncondition_variable cv;\nint data = 0;\nbool ready = false;\n\nvoid waiter(int id, bool useNotifyAll) {\n    unique_lock<mutex> lock(mtx);\n    cout << "Waiter " << id << " waiting..." << endl;\n    \n    cv.wait(lock, []() { return ready; });\n    \n    cout << "Waiter " << id << " woke up, data = " << data << endl;\n    data++;\n}\n\nvoid notifier(bool useNotifyAll) {\n    this_thread::sleep_for(chrono::seconds(1));\n    \n    {\n        lock_guard<mutex> lock(mtx);\n        data = 100;\n        ready = true;\n        cout << "Notifier setting ready flag" << endl;\n    }\n    \n    if(useNotifyAll) {\n        cout << "Notifier calling notify_all" << endl;\n        cv.notify_all();\n    } else {\n        cout << "Notifier calling notify_one" << endl;\n        cv.notify_one();\n    }\n}\n\nint main() {\n    // notify_one example\n    cout << "=== notify_one ===" << endl;\n    {\n        thread t1(waiter, 1, false);\n        thread t2(waiter, 2, false);\n        thread t3(waiter, 3, false);\n        thread n(notifier, false);\n        \n        t1.join(); t2.join(); t3.join(); n.join();\n    }\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    ready = false;\n    data = 0;\n    \n    // notify_all example\n    cout << "\\n=== notify_all ===" << endl;\n    {\n        thread t1(waiter, 1, true);\n        thread t2(waiter, 2, true);\n        thread t3(waiter, 3, true);\n        thread n(notifier, true);\n        \n        t1.join(); t2.join(); t3.join(); n.join();\n    }\n    \n    return 0;\n}',
-    hint: "notify_one wakes only one waiting thread (unknown which). notify_all wakes all waiting threads.",
-  },
-
-  // ==================== ATOMIC OPERATIONS (3 questions) ====================
-  {
-    id: "cpp_thread_14",
-    topicId: "cpp_multithreading",
-    question: "What are atomic operations and how do you use std::atomic?",
-    mathSolution: "std::atomic provides lock-free thread-safe operations",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <atomic>\n#include <vector>\nusing namespace std;\n\n// Non-atomic counter (unsafe)\nint unsafeCounter = 0;\n\n// Atomic counter (safe, no mutex needed)\natomic<int> atomicCounter(0);\n\n// Atomic with different operations\natomic<long long> sum(0);\natomic<bool> flag(false);\n\nvoid unsafeIncrement(int iterations) {\n    for(int i = 0; i < iterations; i++) {\n        unsafeCounter++; // Race condition\n    }\n}\n\nvoid atomicIncrement(int iterations) {\n    for(int i = 0; i < iterations; i++) {\n        atomicCounter++; // Atomic operation\n    }\n}\n\nvoid atomicOperations(int id) {\n    // Different atomic operations\n    sum.fetch_add(id * 10); // Atomic addition\n    \n    int expected = 0;\n    bool exchanged = flag.compare_exchange_strong(expected, true);\n    \n    if(exchanged) {\n        cout << "Thread " << id << " set flag from false to true" << endl;\n    }\n    \n    // Atomic load and store\n    int current = sum.load();\n    sum.store(current + id);\n}\n\nint main() {\n    const int NUM_THREADS = 10;\n    const int ITERATIONS = 10000;\n    \n    // Unsafe counter\n    {\n        vector<thread> threads;\n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back(unsafeIncrement, ITERATIONS);\n        }\n        for(auto& t : threads) t.join();\n        \n        cout << "Unsafe counter: " << unsafeCounter \n             << " (expected " << NUM_THREADS * ITERATIONS << ")" << endl;\n    }\n    \n    // Atomic counter\n    {\n        vector<thread> threads;\n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back(atomicIncrement, ITERATIONS);\n        }\n        for(auto& t : threads) t.join();\n        \n        cout << "Atomic counter: " << atomicCounter \n             << " (expected " << NUM_THREADS * ITERATIONS << ")" << endl;\n    }\n    \n    // Other atomic operations\n    {\n        vector<thread> threads;\n        for(int i = 0; i < 5; i++) {\n            threads.emplace_back(atomicOperations, i + 1);\n        }\n        for(auto& t : threads) t.join();\n        \n        cout << "Final sum: " << sum << endl;\n        cout << "Final flag: " << flag << endl;\n    }\n    \n    return 0;\n}',
-    hint: "std::atomic provides lock-free operations for integral types. Much faster than mutex for simple counters.",
-  },
-  {
-    id: "cpp_thread_15",
-    topicId: "cpp_multithreading",
-    question: "How do atomic flags and memory ordering work?",
-    mathSolution:
-      "atomic_flag is the simplest atomic type, memory ordering controls synchronization",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <atomic>\n#include <vector>\nusing namespace std;\n\n// atomic_flag - simplest atomic (always lock-free)\natomic_flag spinlock = ATOMIC_FLAG_INIT;\n\nvoid spinlockExample(int id) {\n    // Acquire lock (spin until flag was false)\n    while(spinlock.test_and_set(memory_order_acquire)) {\n        // Spin (busy wait)\n        this_thread::yield(); // Give other threads chance\n    }\n    \n    // Critical section\n    cout << "Thread " << id << " in critical section" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n    \n    // Release lock\n    spinlock.clear(memory_order_release);\n}\n\n// Memory ordering examples\natomic<int> data(0);\natomic<bool> ready(false);\n\nvoid producer() {\n    data.store(42, memory_order_relaxed); // No synchronization\n    ready.store(true, memory_order_release); // Release barrier\n}\n\nvoid consumer() {\n    while(!ready.load(memory_order_acquire)) { // Acquire barrier\n        this_thread::yield();\n    }\n    // Guaranteed to see producer\'s data store\n    cout << "Data: " << data.load(memory_order_relaxed) << endl;\n}\n\n// Sequential consistency (default) - strongest but slowest\natomic<int> seqData(0);\n\nvoid seqProducer() {\n    seqData.store(100); // memory_order_seq_cst by default\n}\n\nvoid seqConsumer() {\n    int val = seqData.load();\n    cout << "Seq data: " << val << endl;\n}\n\nint main() {\n    // Spinlock example\n    {\n        vector<thread> threads;\n        for(int i = 0; i < 5; i++) {\n            threads.emplace_back(spinlockExample, i + 1);\n        }\n        for(auto& t : threads) t.join();\n    }\n    \n    cout << "\\n--- Memory ordering example ---" << endl;\n    \n    // Release/acquire example\n    thread prod(producer);\n    thread cons(consumer);\n    prod.join();\n    cons.join();\n    \n    return 0;\n}',
-    hint: "Memory ordering: relaxed (no sync), acquire/release (pair), seq_cst (strongest). Default is seq_cst.",
-  },
-  {
-    id: "cpp_thread_16",
-    topicId: "cpp_multithreading",
-    question: "How do you implement a lock-free stack using atomic operations?",
-    mathSolution: "Use compare_exchange_weak for lock-free data structures",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <atomic>\n#include <vector>\nusing namespace std;\n\ntemplate<typename T>\nclass LockFreeStack {\nprivate:\n    struct Node {\n        T data;\n        Node* next;\n        Node(const T& d) : data(d), next(nullptr) {}\n    };\n    \n    atomic<Node*> head;\n    \npublic:\n    LockFreeStack() : head(nullptr) {}\n    \n    void push(const T& value) {\n        Node* newNode = new Node(value);\n        newNode->next = head.load(memory_order_relaxed);\n        \n        // CAS loop\n        while(!head.compare_exchange_weak(\n            newNode->next,  // Expected value\n            newNode,         // Desired value\n            memory_order_release,\n            memory_order_relaxed)) {\n            // Loop until CAS succeeds\n        }\n    }\n    \n    bool pop(T& result) {\n        Node* oldHead = head.load(memory_order_relaxed);\n        \n        // CAS loop\n        while(oldHead && !head.compare_exchange_weak(\n            oldHead,         // Expected value\n            oldHead->next,   // Desired value\n            memory_order_acquire,\n            memory_order_relaxed)) {\n            // Loop until CAS succeeds\n        }\n        \n        if(oldHead) {\n            result = oldHead->data;\n            // In real code, need to handle memory reclamation (hazard pointers)\n            delete oldHead; // Not safe in production!\n            return true;\n        }\n        return false;\n    }\n    \n    bool isEmpty() const {\n        return head.load(memory_order_acquire) == nullptr;\n    }\n};\n\n// Simplified hazard pointer for demonstration\nclass HazardPointerDemo {\n    static const int MAX_THREADS = 10;\n    atomic<void*> hp[MAX_THREADS];\n    \npublic:\n    void protect(int threadId, void* ptr) {\n        hp[threadId].store(ptr, memory_order_release);\n    }\n    \n    bool isProtected(void* ptr) {\n        for(int i = 0; i < MAX_THREADS; i++) {\n            if(hp[i].load(memory_order_acquire) == ptr) {\n                return true;\n            }\n        }\n        return false;\n    }\n};\n\nint main() {\n    LockFreeStack<int> stack;\n    \n    // Multiple producers\n    vector<thread> producers;\n    for(int i = 0; i < 5; i++) {\n        producers.emplace_back([&stack, i]() {\n            for(int j = 0; j < 10; j++) {\n                stack.push(i * 100 + j);\n                this_thread::sleep_for(chrono::microseconds(100));\n            }\n        });\n    }\n    \n    // Multiple consumers\n    vector<thread> consumers;\n    for(int i = 0; i < 3; i++) {\n        consumers.emplace_back([&stack, i]() {\n            int value;\n            int count = 0;\n            while(count < 15) {\n                if(stack.pop(value)) {\n                    cout << "Consumer " << i << " popped: " << value << endl;\n                    count++;\n                }\n                this_thread::sleep_for(chrono::microseconds(150));\n            }\n        });\n    }\n    \n    for(auto& t : producers) t.join();\n    for(auto& t : consumers) t.join();\n    \n    return 0;\n}',
-    hint: "compare_exchange_weak is key for lock-free data structures. Memory management is complex - hazard pointers or RCU needed.",
-  },
-
-  // ==================== FUTURES AND PROMISES (3 questions) ====================
-  {
-    id: "cpp_thread_17",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you use std::future and std::async for asynchronous tasks?",
-    mathSolution: "async returns future that will hold result",
-    codeSolution:
-      '#include <iostream>\n#include <future>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nint slowSquare(int x) {\n    cout << "Computing square of " << x << "..." << endl;\n    this_thread::sleep_for(chrono::seconds(2));\n    return x * x;\n}\n\nint slowCube(int x) {\n    cout << "Computing cube of " << x << "..." << endl;\n    this_thread::sleep_for(chrono::seconds(1));\n    return x * x * x;\n}\n\nint main() {\n    cout << "Starting async tasks..." << endl;\n    \n    // Launch async tasks\n    future<int> result1 = async(launch::async, slowSquare, 5);\n    future<int> result2 = async(launch::async, slowCube, 3);\n    \n    // Do other work while computations run\n    cout << "Main thread doing other work..." << endl;\n    this_thread::sleep_for(chrono::milliseconds(500));\n    \n    // Get results (may block if not ready)\n    cout << "Waiting for results..." << endl;\n    \n    int square = result1.get(); // Blocks until ready\n    int cube = result2.get();\n    \n    cout << "Square of 5: " << square << endl;\n    cout << "Cube of 3: " << cube << endl;\n    \n    // Launch policy examples\n    // async(launch::async) - runs in new thread\n    // async(launch::deferred) - runs when get() called\n    // async(launch::async | launch::deferred) - implementation chooses\n    \n    auto deferred = async(launch::deferred, []() {\n        cout << "Deferred task running" << endl;\n        return 42;\n    });\n    \n    // Task not started yet\n    this_thread::sleep_for(chrono::seconds(1));\n    cout << "Calling get on deferred task..." << endl;\n    int val = deferred.get(); // Task runs here\n    cout << "Deferred result: " << val << endl;\n    \n    return 0;\n}',
-    hint: "async starts asynchronous task. future.get() retrieves result (blocks if not ready).",
-  },
-  {
-    id: "cpp_thread_18",
-    topicId: "cpp_multithreading",
-    question:
-      "How do you use std::promise and std::future for thread communication?",
-    mathSolution: "promise sets value, future gets it across threads",
-    codeSolution:
-      '#include <iostream>\n#include <future>\n#include <thread>\n#include <chrono>\n#include <exception>\nusing namespace std;\n\nvoid producer(promise<int> prom) {\n    cout << "Producer: Starting work..." << endl;\n    this_thread::sleep_for(chrono::seconds(2));\n    \n    try {\n        // Simulate possible error\n        // throw runtime_error("Something went wrong");\n        \n        cout << "Producer: Setting value" << endl;\n        prom.set_value(42);\n    } catch(...) {\n        prom.set_exception(current_exception());\n    }\n}\n\nvoid consumer(future<int> fut) {\n    cout << "Consumer: Waiting for value..." << endl;\n    \n    try {\n        int value = fut.get(); // Blocks until ready\n        cout << "Consumer: Got value " << value << endl;\n    } catch(const exception& e) {\n        cout << "Consumer: Caught exception: " << e.what() << endl;\n    }\n}\n\nint main() {\n    // Simple promise-future pair\n    promise<int> prom;\n    future<int> fut = prom.get_future();\n    \n    thread prod(producer, move(prom));\n    thread cons(consumer, move(fut));\n    \n    prod.join();\n    cons.join();\n    \n    // Multiple futures example\n    cout << "\\n--- Multiple futures example ---" << endl;\n    \n    promise<int> prom2;\n    future<int> fut2 = prom2.get_future();\n    shared_future<int> sharedFut = fut2.share(); // Can be copied\n    \n    auto worker = [](shared_future<int> sf, int id) {\n        int val = sf.get();\n        cout << "Worker " << id << " got value " << val << endl;\n    };\n    \n    thread t1(worker, sharedFut, 1);\n    thread t2(worker, sharedFut, 2);\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    prom2.set_value(100);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
-    hint: "promise/future provide one-time channel between threads. promise sets, future gets. Use shared_future for multiple consumers.",
-  },
-  {
-    id: "cpp_thread_19",
-    topicId: "cpp_multithreading",
-    question: "How do you use std::packaged_task to wrap callable objects?",
-    mathSolution: "packaged_task wraps function, provides future for result",
-    codeSolution:
-      '#include <iostream>\n#include <future>\n#include <thread>\n#include <chrono>\n#include <functional>\n#include <vector>\nusing namespace std;\n\nint add(int a, int b) {\n    this_thread::sleep_for(chrono::milliseconds(500));\n    return a + b;\n}\n\nint multiply(int a, int b) {\n    this_thread::sleep_for(chrono::milliseconds(300));\n    return a * b;\n}\n\nstring concat(const string& a, const string& b) {\n    this_thread::sleep_for(chrono::milliseconds(400));\n    return a + b;\n}\n\nint main() {\n    // Create packaged_tasks\n    packaged_task<int(int, int)> task1(add);\n    packaged_task<int(int, int)> task2(multiply);\n    packaged_task<string(string, string)> task3(concat);\n    \n    // Get futures\n    future<int> result1 = task1.get_future();\n    future<int> result2 = task2.get_future();\n    future<string> result3 = task3.get_future();\n    \n    // Run tasks in threads\n    thread t1(move(task1), 10, 20);\n    thread t2(move(task2), 5, 6);\n    thread t3(move(task3), "Hello ", "World");\n    \n    // Do other work\n    cout << "Main thread working..." << endl;\n    \n    // Get results\n    cout << "Add result: " << result1.get() << endl;\n    cout << "Multiply result: " << result2.get() << endl;\n    cout << "Concat result: " << result3.get() << endl;\n    \n    t1.join();\n    t2.join();\n    t3.join();\n    \n    // Task queue example\n    cout << "\\n--- Task queue example ---" << endl;\n    \n    vector<packaged_task<int()>> tasks;\n    vector<future<int>> futures;\n    \n    // Create tasks\n    for(int i = 0; i < 5; i++) {\n        packaged_task<int()> task([i]() {\n            this_thread::sleep_for(chrono::milliseconds(100 * i));\n            return i * i;\n        });\n        futures.push_back(task.get_future());\n        tasks.push_back(move(task));\n    }\n    \n    // Run tasks\n    vector<thread> threads;\n    for(auto& task : tasks) {\n        threads.emplace_back(move(task));\n    }\n    \n    // Collect results\n    for(auto& fut : futures) {\n        cout << fut.get() << " ";\n    }\n    cout << endl;\n    \n    for(auto& t : threads) {\n        t.join();\n    }\n    \n    return 0;\n}',
-    hint: "packaged_task wraps callable, can be moved to thread, provides future for result. Useful for task queues.",
-  },
-
-  // ==================== THREAD POOLS AND PARALLEL ALGORITHMS (4 questions) ====================
-  {
-    id: "cpp_thread_20",
-    topicId: "cpp_multithreading",
-    question: "How do you implement a simple thread pool?",
-    mathSolution: "Thread pool with task queue and worker threads",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <queue>\n#include <functional>\n#include <chrono>\n#include <vector>\nusing namespace std;\n\nclass ThreadPool {\n    vector<thread> workers;\n    queue<function<void()>> tasks;\n    mutex queueMutex;\n    condition_variable condition;\n    bool stop;\n    \npublic:\n    ThreadPool(size_t numThreads) : stop(false) {\n        for(size_t i = 0; i < numThreads; i++) {\n            workers.emplace_back([this] {\n                while(true) {\n                    function<void()> task;\n                    {\n                        unique_lock<mutex> lock(queueMutex);\n                        condition.wait(lock, [this] {\n                            return stop || !tasks.empty();\n                        });\n                        \n                        if(stop && tasks.empty()) {\n                            return;\n                        }\n                        \n                        task = move(tasks.front());\n                        tasks.pop();\n                    }\n                    \n                    task();\n                }\n            });\n        }\n    }\n    \n    template<class F>\n    void enqueue(F&& f) {\n        {\n            unique_lock<mutex> lock(queueMutex);\n            tasks.emplace(forward<F>(f));\n        }\n        condition.notify_one();\n    }\n    \n    ~ThreadPool() {\n        {\n            unique_lock<mutex> lock(queueMutex);\n            stop = true;\n        }\n        condition.notify_all();\n        \n        for(auto& worker : workers) {\n            worker.join();\n        }\n    }\n};\n\nint main() {\n    ThreadPool pool(4); // 4 worker threads\n    \n    // Enqueue tasks\n    for(int i = 0; i < 20; i++) {\n        pool.enqueue([i] {\n            cout << "Task " << i << " running on thread " \n                 << this_thread::get_id() << endl;\n            this_thread::sleep_for(chrono::milliseconds(100));\n        });\n    }\n    \n    // Let tasks complete\n    this_thread::sleep_for(chrono::seconds(3));\n    \n    return 0;\n}',
-    hint: "Thread pool pre-creates threads and distributes tasks. Reduces thread creation overhead.",
-  },
-  {
-    id: "cpp_thread_21",
-    topicId: "cpp_multithreading",
-    question: "How do you use parallel algorithms in C++17?",
-    mathSolution: "Use execution policies with standard algorithms",
-    codeSolution:
-      '#include <iostream>\n#include <vector>\n#include <algorithm>\n#include <numeric>\n#include <execution>\n#include <chrono>\n#include <random>\nusing namespace std;\nusing namespace chrono;\n\nint main() {\n    const size_t SIZE = 10000000;\n    vector<int> vec(SIZE);\n    \n    // Fill with random numbers\n    random_device rd;\n    mt19937 gen(rd());\n    uniform_int_distribution<> dist(1, 100);\n    \n    for(auto& x : vec) {\n        x = dist(gen);\n    }\n    \n    // Sequential sort\n    auto seqStart = high_resolution_clock::now();\n    vector<int> seqVec = vec;\n    sort(seqVec.begin(), seqVec.end());\n    auto seqEnd = high_resolution_clock::now();\n    \n    // Parallel sort\n    auto parStart = high_resolution_clock::now();\n    vector<int> parVec = vec;\n    sort(execution::par, parVec.begin(), parVec.end());\n    auto parEnd = high_resolution_clock::now();\n    \n    cout << "Sequential sort: " \n         << duration_cast<milliseconds>(seqEnd - seqStart).count()\n         << " ms" << endl;\n    \n    cout << "Parallel sort: " \n         << duration_cast<milliseconds>(parEnd - parStart).count()\n         << " ms" << endl;\n    \n    // Other parallel algorithms\n    vector<int> nums(1000000);\n    iota(nums.begin(), nums.end(), 1);\n    \n    // Parallel reduce\n    auto sum1 = reduce(execution::par, nums.begin(), nums.end());\n    \n    // Parallel transform\n    vector<int> squares(nums.size());\n    transform(execution::par_unseq, nums.begin(), nums.end(),\n              squares.begin(), [](int x) { return x * x; });\n    \n    // Parallel find\n    auto found = find(execution::par, nums.begin(), nums.end(), 999999);\n    \n    cout << "Sum: " << sum1 << endl;\n    cout << "Found: " << (found != nums.end() ? *found : 0) << endl;\n    \n    return 0;\n}',
-    hint: "Execution policies: seq (sequential), par (parallel), par_unseq (parallel + vectorized). Need C++17 and compiler support.",
-  },
-  {
-    id: "cpp_thread_22",
-    topicId: "cpp_multithreading",
-    question: "How do you implement parallel map-reduce?",
-    mathSolution: "Divide work among threads and combine results",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <vector>\n#include <numeric>\n#include <functional>\n#include <chrono>\nusing namespace std;\n\ntemplate<typename InputIt, typename MapFunc, typename ReduceFunc>\nauto parallelMapReduce(InputIt first, InputIt last, \n                       MapFunc mapFunc, ReduceFunc reduceFunc,\n                       size_t numThreads) {\n    size_t totalElements = distance(first, last);\n    size_t chunkSize = (totalElements + numThreads - 1) / numThreads;\n    \n    vector<thread> threads;\n    vector<future<decltype(mapFunc(*first))>> results;\n    \n    for(size_t i = 0; i < numThreads; i++) {\n        auto start = first + i * chunkSize;\n        auto end = min(first + (i + 1) * chunkSize, last);\n        \n        packaged_task<decltype(mapFunc(*first))()> task([start, end, &mapFunc] {\n            using ResultType = decltype(mapFunc(*first));\n            ResultType result = ResultType();\n            for(auto it = start; it != end; ++it) {\n                result = reduceFunc(result, mapFunc(*it));\n            }\n            return result;\n        });\n        \n        results.push_back(task.get_future());\n        threads.emplace_back(move(task));\n    }\n    \n    for(auto& t : threads) {\n        t.join();\n    }\n    \n    using ResultType = decltype(mapFunc(*first));\n    ResultType finalResult = ResultType();\n    for(auto& fut : results) {\n        finalResult = reduceFunc(finalResult, fut.get());\n    }\n    \n    return finalResult;\n}\n\nint main() {\n    vector<int> numbers(1000000);\n    iota(numbers.begin(), numbers.end(), 1);\n    \n    // Map: square, Reduce: sum\n    auto sumOfSquares = parallelMapReduce(\n        numbers.begin(), numbers.end(),\n        [](int x) { return x * x; },\n        [](int a, int b) { return a + b; },\n        4\n    );\n    \n    cout << "Sum of squares: " << sumOfSquares << endl;\n    \n    // Map: identity, Reduce: max\n    auto maxElement = parallelMapReduce(\n        numbers.begin(), numbers.end(),\n        [](int x) { return x; },\n        [](int a, int b) { return max(a, b); },\n        4\n    );\n    \n    cout << "Max element: " << maxElement << endl;\n    \n    // Map: check even, Reduce: count\n    auto evenCount = parallelMapReduce(\n        numbers.begin(), numbers.end(),\n        [](int x) { return x % 2 == 0 ? 1 : 0; },\n        [](int a, int b) { return a + b; },\n        4\n    );\n    \n    cout << "Even count: " << evenCount << endl;\n    \n    return 0;\n}',
-    hint: "Map phase processes chunks in parallel, Reduce phase combines results. Classic parallel programming pattern.",
-  },
-  {
-    id: "cpp_thread_23",
-    topicId: "cpp_multithreading",
-    question: "How do you measure and improve parallel performance?",
-    mathSolution: "Measure speedup and efficiency, avoid false sharing",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <vector>\n#include <chrono>\n#include <numeric>\n#include <atomic>\nusing namespace std;\nusing namespace chrono;\n\n// False sharing example\nstruct FalseSharingCounter {\n    int counter;  // Multiple counters may share cache line\n};\n\nstruct AlignedCounter {\n    alignas(64) int counter;  // Align to cache line (typically 64 bytes)\n};\n\nvoid falseSharingTest() {\n    const int NUM_THREADS = 4;\n    const int ITERATIONS = 10000000;\n    \n    // Bad - false sharing\n    {\n        FalseSharingCounter counters[NUM_THREADS];\n        vector<thread> threads;\n        \n        auto start = high_resolution_clock::now();\n        \n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back([&counters, i, ITERATIONS]() {\n                for(int j = 0; j < ITERATIONS; j++) {\n                    counters[i].counter++;\n                }\n            });\n        }\n        \n        for(auto& t : threads) t.join();\n        \n        auto end = high_resolution_clock::now();\n        auto duration = duration_cast<milliseconds>(end - start);\n        cout << "False sharing time: " << duration.count() << " ms" << endl;\n    }\n    \n    // Good - aligned to avoid false sharing\n    {\n        AlignedCounter counters[NUM_THREADS];\n        vector<thread> threads;\n        \n        auto start = high_resolution_clock::now();\n        \n        for(int i = 0; i < NUM_THREADS; i++) {\n            threads.emplace_back([&counters, i, ITERATIONS]() {\n                for(int j = 0; j < ITERATIONS; j++) {\n                    counters[i].counter++;\n                }\n            });\n        }\n        \n        for(auto& t : threads) t.join();\n        \n        auto end = high_resolution_clock::now();\n        auto duration = duration_cast<milliseconds>(end - start);\n        cout << "Aligned time: " << duration.count() << " ms" << endl;\n    }\n}\n\n// Work stealing demo\nclass WorkStealingDemo {\npublic:\n    static void run(int numThreads, int numTasks) {\n        atomic<int> taskCounter(0);\n        vector<thread> threads;\n        \n        auto start = high_resolution_clock::now();\n        \n        for(int i = 0; i < numThreads; i++) {\n            threads.emplace_back([&taskCounter, numTasks, i]() {\n                while(true) {\n                    int task = taskCounter.fetch_add(1);\n                    if(task >= numTasks) break;\n                    \n                    // Simulate work\n                    this_thread::sleep_for(chrono::microseconds(100));\n                }\n            });\n        }\n        \n        for(auto& t : threads) t.join();\n        \n        auto end = high_resolution_clock::now();\n        auto duration = duration_cast<milliseconds>(end - start);\n        \n        double speedup = (double)(numTasks * 100) / duration.count();\n        cout << "Threads: " << numThreads \n             << ", Time: " << duration.count() \n             << " ms, Speedup: " << speedup << "x" << endl;\n    }\n};\n\nint main() {\n    cout << "=== False Sharing Test ===" << endl;\n    falseSharingTest();\n    \n    cout << "\\n=== Work Stealing Performance ===" << endl;\n    int numTasks = 1000;\n    \n    for(int threads : {1, 2, 4, 8}) {\n        WorkStealingDemo::run(threads, numTasks);\n    }\n    \n    // Amdahl\'s law illustration\n    cout << "\\n=== Amdahl\'s Law ===" << endl;\n    double sequential_portion = 0.1; // 10% sequential\n    \n    for(int p : {1, 2, 4, 8, 16}) {\n        double speedup = 1.0 / (sequential_portion + (1 - sequential_portion)/p);\n        cout << "Processors: " << p << ", Max speedup: " << speedup << "x" << endl;\n    }\n    \n    return 0;\n}',
-    hint: "Consider false sharing, load balancing, Amdahl's law. Align data to cache lines, use work stealing for better distribution.",
-  },
-
-  // ==================== THREAD-SAFE DESIGN PATTERNS (2 questions) ====================
-  {
-    id: "cpp_thread_24",
-    topicId: "cpp_multithreading",
-    question: "How do you implement a thread-safe singleton?",
-    mathSolution: "Use static local variable (C++11) or double-checked locking",
-    codeSolution:
-      '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <vector>\nusing namespace std;\n\n// Modern C++11 thread-safe singleton (Meyers\' singleton)\nclass Singleton {\nprivate:\n    Singleton() { cout << "Singleton created" << endl; }\n    \npublic:\n    Singleton(const Singleton&) = delete;\n    Singleton& operator=(const Singleton&) = delete;\n    \n    static Singleton& getInstance() {\n        static Singleton instance; // Thread-safe in C++11\n        return instance;\n    }\n    \n    void doSomething() {\n        cout << "Singleton doing something on thread " \n             << this_thread::get_id() << endl;\n    }\n};\n\n// Double-checked locking singleton (pre-C++11 style, needs careful implementation)\nclass DoubleCheckedSingleton {\nprivate:\n    static DoubleCheckedSingleton* instance;\n    static mutex mtx;\n    \n    DoubleCheckedSingleton() { cout << "DoubleCheckedSingleton created" << endl; }\n    \npublic:\n    DoubleCheckedSingleton(const DoubleCheckedSingleton&) = delete;\n    DoubleCheckedSingleton& operator=(const DoubleCheckedSingleton&) = delete;\n    \n    static DoubleCheckedSingleton* getInstance() {\n        if(!instance) { // First check (no lock)\n            lock_guard<mutex> lock(mtx);\n            if(!instance) { // Second check (with lock)\n                instance = new DoubleCheckedSingleton();\n            }\n        }\n        return instance;\n    }\n};\n\nDoubleCheckedSingleton* DoubleCheckedSingleton::instance = nullptr;\nmutex DoubleCheckedSingleton::mtx;\n\n// Thread-safe singleton with acquire/release semantics\nclass AtomicSingleton {\nprivate:\n    static atomic<AtomicSingleton*> instance;\n    static mutex mtx;\n    \n    AtomicSingleton() { cout << "AtomicSingleton created" << endl; }\n    \npublic:\n    static AtomicSingleton* getInstance() {\n        AtomicSingleton* tmp = instance.load(memory_order_acquire);\n        if(!tmp) {\n            lock_guard<mutex> lock(mtx);\n            tmp = instance.load(memory_order_relaxed);\n            if(!tmp) {\n                tmp = new AtomicSingleton();\n                instance.store(tmp, memory_order_release);\n            }\n        }\n        return tmp;\n    }\n};\n\natomic<AtomicSingleton*> AtomicSingleton::instance(nullptr);\nmutex AtomicSingleton::mtx;\n\nint main() {\n    vector<thread> threads;\n    \n    // Test Meyers\' singleton\n    cout << "=== Meyers\' Singleton ===" << endl;\n    for(int i = 0; i < 5; i++) {\n        threads.emplace_back([]() {\n            Singleton& s = Singleton::getInstance();\n            s.doSomething();\n        });\n    }\n    for(auto& t : threads) t.join();\n    threads.clear();\n    \n    // Test double-checked locking\n    cout << "\\n=== Double-Checked Locking Singleton ===" << endl;\n    for(int i = 0; i < 5; i++) {\n        threads.emplace_back([]() {\n            DoubleCheckedSingleton* s = DoubleCheckedSingleton::getInstance();\n        });\n    }\n    for(auto& t : threads) t.join();\n    \n    return 0;\n}',
-    hint: "C++11 guarantees static local variables are thread-safe. For older code, use double-checked locking with atomic or mutex.",
-  },
-  {
-    id: "cpp_thread_25",
-    topicId: "cpp_multithreading",
-    question: "How do you implement a thread-safe queue?",
-    mathSolution:
-      "Use mutex and condition variable to protect queue operations",
-    codeSolution:
-      '#include <iostream>\n#include <queue>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <chrono>\nusing namespace std;\n\ntemplate<typename T>\nclass ThreadSafeQueue {\nprivate:\n    queue<T> queue_;\n    mutable mutex mtx_;\n    condition_variable cv_;\n    \npublic:\n    ThreadSafeQueue() = default;\n    \n    void push(T value) {\n        {\n            lock_guard<mutex> lock(mtx_);\n            queue_.push(move(value));\n        }\n        cv_.notify_one();\n    }\n    \n    bool tryPop(T& value) {\n        lock_guard<mutex> lock(mtx_);\n        if(queue_.empty()) {\n            return false;\n        }\n        value = move(queue_.front());\n        queue_.pop();\n        return true;\n    }\n    \n    void waitAndPop(T& value) {\n        unique_lock<mutex> lock(mtx_);\n        cv_.wait(lock, [this]() { return !queue_.empty(); });\n        value = move(queue_.front());\n        queue_.pop();\n    }\n    \n    bool empty() const {\n        lock_guard<mutex> lock(mtx_);\n        return queue_.empty();\n    }\n    \n    size_t size() const {\n        lock_guard<mutex> lock(mtx_);\n        return queue_.size();\n    }\n    \n    // Clear all elements\n    void clear() {\n        lock_guard<mutex> lock(mtx_);\n        queue<T>().swap(queue_);\n    }\n};\n\n// Bounded thread-safe queue with capacity limit\ntemplate<typename T>\nclass BoundedThreadSafeQueue {\nprivate:\n    queue<T> queue_;\n    mutex mtx_;\n    condition_variable notEmpty_;\n    condition_variable notFull_;\n    size_t capacity_;\n    \npublic:\n    BoundedThreadSafeQueue(size_t capacity) : capacity_(capacity) {}\n    \n    void push(T value) {\n        unique_lock<mutex> lock(mtx_);\n        notFull_.wait(lock, [this]() { return queue_.size() < capacity_; });\n        queue_.push(move(value));\n        notEmpty_.notify_one();\n    }\n    \n    T pop() {\n        unique_lock<mutex> lock(mtx_);\n        notEmpty_.wait(lock, [this]() { return !queue_.empty(); });\n        T value = move(queue_.front());\n        queue_.pop();\n        notFull_.notify_one();\n        return value;\n    }\n    \n    bool tryPush(T value) {\n        lock_guard<mutex> lock(mtx_);\n        if(queue_.size() >= capacity_) {\n            return false;\n        }\n        queue_.push(move(value));\n        notEmpty_.notify_one();\n        return true;\n    }\n    \n    bool tryPop(T& value) {\n        lock_guard<mutex> lock(mtx_);\n        if(queue_.empty()) {\n            return false;\n        }\n        value = move(queue_.front());\n        queue_.pop();\n        notFull_.notify_one();\n        return true;\n    }\n};\n\nint main() {\n    ThreadSafeQueue<int> queue;\n    \n    // Producer\n    thread producer([&queue]() {\n        for(int i = 0; i < 10; i++) {\n            queue.push(i);\n            cout << "Produced: " << i << endl;\n            this_thread::sleep_for(chrono::milliseconds(100));\n        }\n    });\n    \n    // Consumer 1\n    thread consumer1([&queue]() {\n        for(int i = 0; i < 5; i++) {\n            int value;\n            queue.waitAndPop(value);\n            cout << "Consumer 1 got: " << value << endl;\n        }\n    });\n    \n    // Consumer 2\n    thread consumer2([&queue]() {\n        for(int i = 0; i < 5; i++) {\n            int value;\n            queue.waitAndPop(value);\n            cout << "Consumer 2 got: " << value << endl;\n        }\n    });\n    \n    producer.join();\n    consumer1.join();\n    consumer2.join();\n    \n    return 0;\n}',
-    hint: "Thread-safe queue protects all operations with mutex. Use condition variable for blocking operations. Consider bounded queues to limit memory usage.",
-  },
+{
+  id: 'cpp_multithreading_1',
+  topicId: 'cpp_multithreading',
+  question: 'Create and join a simple thread using std::thread.',
+  mathSolution: 'std::thread creates new thread of execution.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nvoid threadFunction() {\n    cout << "Thread is running" << endl;\n}\n\nint main() {\n    thread t(threadFunction);\n    t.join();\n    cout << "Main thread finished" << endl;\n    return 0;\n}',
+  hint: 'Use join() to wait for thread completion.'
+},
+{
+  id: 'cpp_multithreading_2',
+  topicId: 'cpp_multithreading',
+  question: 'Pass arguments to thread function.',
+  mathSolution: 'Arguments are passed to thread constructor.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <string>\nusing namespace std;\n\nvoid printMessage(const string& msg, int count) {\n    for (int i = 0; i < count; i++) {\n        cout << msg << " " << i << endl;\n    }\n}\n\nint main() {\n    thread t(printMessage, "Hello", 5);\n    t.join();\n    return 0;\n}',
+  hint: 'Thread constructor accepts function and its arguments.'
+},
+{
+  id: 'cpp_multithreading_3',
+  topicId: 'cpp_multithreading',
+  question: 'Pass arguments by reference to thread function.',
+  mathSolution: 'Use ref() wrapper to pass by reference.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nvoid increment(int& count) {\n    for (int i = 0; i < 1000; i++) {\n        count++;\n    }\n}\n\nint main() {\n    int counter = 0;\n    thread t(increment, ref(counter));\n    t.join();\n    cout << "Counter: " << counter << endl;\n    return 0;\n}',
+  hint: 'Use std::ref() to pass references to threads.'
+},
+{
+  id: 'cpp_multithreading_4',
+  topicId: 'cpp_multithreading',
+  question: 'Use lambda expression as thread function.',
+  mathSolution: 'Lambda can capture local variables.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nint main() {\n    int value = 42;\n    \n    thread t([&value]() {\n        cout << "Thread captured value: " << value << endl;\n        value = 100;\n    });\n    t.join();\n    \n    cout << "Modified value: " << value << endl;\n    return 0;\n}',
+  hint: 'Lambdas provide convenient thread functions with capture.'
+},
+{
+  id: 'cpp_multithreading_5',
+  topicId: 'cpp_multithreading',
+  question: 'Detach a thread to run independently.',
+  mathSolution: 'detach() allows thread to run independently.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nvoid independentTask() {\n    this_thread::sleep_for(chrono::seconds(1));\n    cout << "Independent thread finished" << endl;\n}\n\nint main() {\n    thread t(independentTask);\n    t.detach();\n    cout << "Main thread continues" << endl;\n    this_thread::sleep_for(chrono::seconds(2));\n    return 0;\n}',
+  hint: 'detach() makes thread run independently; cannot be joined later.'
+},
+{
+  id: 'cpp_multithreading_6',
+  topicId: 'cpp_multithreading',
+  question: 'Check if thread is joinable before joining.',
+  mathSolution: 'joinable() checks if thread can be joined.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nvoid work() {\n    cout << "Working..." << endl;\n}\n\nint main() {\n    thread t(work);\n    \n    if (t.joinable()) {\n        cout << "Thread is joinable" << endl;\n        t.join();\n    }\n    \n    if (!t.joinable()) {\n        cout << "Thread is not joinable" << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'Always check joinable() before calling join().'
+},
+{
+  id: 'cpp_multithreading_7',
+  topicId: 'cpp_multithreading',
+  question: 'Get thread ID using get_id().',
+  mathSolution: 'Each thread has unique identifier.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nvoid printID() {\n    cout << "Thread ID: " << this_thread::get_id() << endl;\n}\n\nint main() {\n    cout << "Main thread ID: " << this_thread::get_id() << endl;\n    \n    thread t1(printID);\n    thread t2(printID);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'get_id() returns unique identifier for each thread.'
+},
+{
+  id: 'cpp_multithreading_8',
+  topicId: 'cpp_multithreading',
+  question: 'Use mutex to protect shared data from race conditions.',
+  mathSolution: 'mutex ensures exclusive access to critical section.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nmutex mtx;\nint sharedCounter = 0;\n\nvoid increment() {\n    for (int i = 0; i < 100000; i++) {\n        mtx.lock();\n        sharedCounter++;\n        mtx.unlock();\n    }\n}\n\nint main() {\n    thread t1(increment);\n    thread t2(increment);\n    \n    t1.join();\n    t2.join();\n    \n    cout << "Final counter: " << sharedCounter << endl;\n    return 0;\n}',
+  hint: 'mutex prevents data races by serializing access.'
+},
+{
+  id: 'cpp_multithreading_9',
+  topicId: 'cpp_multithreading',
+  question: 'Use lock_guard for RAII mutex management.',
+  mathSolution: 'lock_guard automatically releases mutex.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nmutex mtx;\nint counter = 0;\n\nvoid increment() {\n    for (int i = 0; i < 100000; i++) {\n        lock_guard<mutex> lock(mtx);\n        counter++;\n    }\n}\n\nint main() {\n    thread t1(increment);\n    thread t2(increment);\n    \n    t1.join();\n    t2.join();\n    \n    cout << "Counter: " << counter << endl;\n    return 0;\n}',
+  hint: 'lock_guard provides exception-safe mutex management.'
+},
+{
+  id: 'cpp_multithreading_10',
+  topicId: 'cpp_multithreading',
+  question: 'Use unique_lock for flexible mutex ownership.',
+  mathSolution: 'unique_lock allows deferred locking and unlocking.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nmutex mtx;\n\nvoid flexibleLock() {\n    unique_lock<mutex> lock(mtx, defer_lock);\n    // Do some work without lock\n    cout << "Preparing...\\n";\n    \n    lock.lock();\n    cout << "Critical section\\n";\n    lock.unlock();\n    \n    cout << "Cleanup\\n";\n}\n\nint main() {\n    thread t(flexibleLock);\n    t.join();\n    return 0;\n}',
+  hint: 'unique_lock provides more flexibility than lock_guard.'
+},
+{
+  id: 'cpp_multithreading_11',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::atomic for lock-free thread-safe operations.',
+  mathSolution: 'atomic operations are indivisible without mutex.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <atomic>\nusing namespace std;\n\natomic<int> counter(0);\n\nvoid increment() {\n    for (int i = 0; i < 100000; i++) {\n        counter++;\n    }\n}\n\nint main() {\n    thread t1(increment);\n    thread t2(increment);\n    \n    t1.join();\n    t2.join();\n    \n    cout << "Final counter: " << counter << endl;\n    return 0;\n}',
+  hint: 'std::atomic provides lock-free thread-safe operations.'
+},
+{
+  id: 'cpp_multithreading_12',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::async for asynchronous task execution.',
+  mathSolution: 'async runs function asynchronously, returns future.',
+  codeSolution: '#include <iostream>\n#include <future>\nusing namespace std;\n\nint computeSquare(int x) {\n    return x * x;\n}\n\nint main() {\n    future<int> result = async(launch::async, computeSquare, 5);\n    \n    cout << "Computing...\\n";\n    int value = result.get();\n    cout << "Result: " << value << endl;\n    \n    return 0;\n}',
+  hint: 'std::async simplifies concurrent task execution.'
+},
+{
+  id: 'cpp_multithreading_13',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future and std::promise for communication.',
+  mathSolution: 'promise sets value, future retrieves it.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <future>\nusing namespace std;\n\nvoid producer(promise<int>&& prom) {\n    this_thread::sleep_for(chrono::seconds(1));\n    prom.set_value(42);\n}\n\nint main() {\n    promise<int> prom;\n    future<int> fut = prom.get_future();\n    \n    thread t(producer, move(prom));\n    \n    cout << "Waiting for value...\\n";\n    int value = fut.get();\n    cout << "Received: " << value << endl;\n    \n    t.join();\n    return 0;\n}',
+  hint: 'promise/future provide one-time communication between threads.'
+},
+{
+  id: 'cpp_multithreading_14',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::packaged_task to package callable for async execution.',
+  mathSolution: 'packaged_task wraps callable for future retrieval.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <thread>\nusing namespace std;\n\nint add(int a, int b) { return a + b; }\n\nint main() {\n    packaged_task<int(int, int)> task(add);\n    future<int> result = task.get_future();\n    \n    thread t(move(task), 10, 20);\n    \n    cout << "Result: " << result.get() << endl;\n    t.join();\n    \n    return 0;\n}',
+  hint: 'packaged_task connects callable objects to futures.'
+},
+{
+  id: 'cpp_multithreading_15',
+  topicId: 'cpp_multithreading',
+  question: 'Use condition_variable for thread synchronization.',
+  mathSolution: 'condition_variable allows threads to wait for events.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\nusing namespace std;\n\nmutex mtx;\ncondition_variable cv;\nbool ready = false;\n\nvoid worker() {\n    unique_lock<mutex> lock(mtx);\n    cv.wait(lock, []{ return ready; });\n    cout << "Worker thread proceed" << endl;\n}\n\nint main() {\n    thread t(worker);\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    {\n        lock_guard<mutex> lock(mtx);\n        ready = true;\n    }\n    cv.notify_one();\n    \n    t.join();\n    return 0;\n}',
+  hint: 'condition_variable enables event-driven thread synchronization.'
+},
+{
+  id: 'cpp_multithreading_16',
+  topicId: 'cpp_multithreading',
+  question: 'Implement producer-consumer pattern using condition_variable.',
+  mathSolution: 'Producer adds items, consumer waits for items.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <queue>\nusing namespace std;\n\nqueue<int> buffer;\nmutex mtx;\ncondition_variable cv;\nconst int MAX_SIZE = 10;\n\nvoid producer() {\n    for (int i = 0; i < 20; i++) {\n        unique_lock<mutex> lock(mtx);\n        cv.wait(lock, []{ return buffer.size() < MAX_SIZE; });\n        buffer.push(i);\n        cout << "Produced: " << i << ", Buffer size: " << buffer.size() << endl;\n        cv.notify_all();\n    }\n}\n\nvoid consumer() {\n    for (int i = 0; i < 20; i++) {\n        unique_lock<mutex> lock(mtx);\n        cv.wait(lock, []{ return !buffer.empty(); });\n        int value = buffer.front();\n        buffer.pop();\n        cout << "Consumed: " << value << ", Buffer size: " << buffer.size() << endl;\n        cv.notify_all();\n    }\n}\n\nint main() {\n    thread t1(producer);\n    thread t2(consumer);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'Producer-consumer pattern uses condition variables for synchronization.'
+},
+{
+  id: 'cpp_multithreading_17',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::shared_mutex for reader-writer lock.',
+  mathSolution: 'Multiple readers allowed, exclusive writer.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <shared_mutex>\n#include <vector>\nusing namespace std;\n\nshared_mutex rwMutex;\nint sharedData = 0;\n\nvoid reader(int id) {\n    shared_lock<shared_mutex> lock(rwMutex);\n    cout << "Reader " << id << " sees: " << sharedData << endl;\n}\n\nvoid writer(int id) {\n    unique_lock<shared_mutex> lock(rwMutex);\n    sharedData++;\n    cout << "Writer " << id << " updated to: " << sharedData << endl;\n}\n\nint main() {\n    vector<thread> threads;\n    \n    for (int i = 0; i < 3; i++) {\n        threads.emplace_back(reader, i);\n    }\n    threads.emplace_back(writer, 0);\n    for (int i = 3; i < 6; i++) {\n        threads.emplace_back(reader, i);\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    return 0;\n}',
+  hint: 'shared_mutex allows concurrent reads, exclusive writes.'
+},
+{
+  id: 'cpp_multithreading_18',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::call_once for one-time initialization.',
+  mathSolution: 'call_once ensures function executes once across threads.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nonce_flag flag;\n\nvoid initialize() {\n    cout << "Initialization performed" << endl;\n}\n\nvoid threadFunction() {\n    call_once(flag, initialize);\n    cout << "Thread " << this_thread::get_id() << " running" << endl;\n}\n\nint main() {\n    thread t1(threadFunction);\n    thread t2(threadFunction);\n    thread t3(threadFunction);\n    \n    t1.join();\n    t2.join();\n    t3.join();\n    \n    return 0;\n}',
+  hint: 'call_once guarantees single execution even with multiple threads.'
+},
+{
+  id: 'cpp_multithreading_19',
+  topicId: 'cpp_multithreading',
+  question: 'Use recursive_mutex for nested locking.',
+  mathSolution: 'recursive_mutex allows same thread to lock multiple times.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nrecursive_mutex rmtx;\n\nvoid recursiveFunction(int depth) {\n    if (depth <= 0) return;\n    \n    rmtx.lock();\n    cout << "Locked at depth " << depth << endl;\n    recursiveFunction(depth - 1);\n    rmtx.unlock();\n}\n\nint main() {\n    thread t(recursiveFunction, 5);\n    t.join();\n    return 0;\n}',
+  hint: 'recursive_mutex allows same thread to lock recursively.'
+},
+{
+  id: 'cpp_multithreading_20',
+  topicId: 'cpp_multithreading',
+  question: 'Use timed_mutex for timed locking attempts.',
+  mathSolution: 'timed_mutex provides try_lock_for and try_lock_until.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <chrono>\nusing namespace std;\n\ntimed_mutex tmtx;\n\nvoid attemptLock(int id) {\n    if (tmtx.try_lock_for(chrono::milliseconds(100))) {\n        cout << "Thread " << id << " acquired lock" << endl;\n        this_thread::sleep_for(chrono::milliseconds(200));\n        tmtx.unlock();\n    } else {\n        cout << "Thread " << id << " timeout" << endl;\n    }\n}\n\nint main() {\n    thread t1(attemptLock, 1);\n    thread t2(attemptLock, 2);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'timed_mutex prevents indefinite waiting for lock.'
+},
+{
+  "id": "cpp_multithreading_21",
+  "topicId": "cpp_multithreading",
+  "question": "Use std::this_thread::sleep_for to pause thread.",
+  "mathSolution": "sleep_for suspends thread for specified duration.",
+  "codeSolution": "#include <iostream>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nint main() {\n    cout << \"Starting timer...\" << endl;\n    \n    for (int i = 5; i > 0; i--) {\n        cout << i << \"...\" << endl;\n        this_thread::sleep_for(chrono::seconds(1));\n    }\n    \n    cout << \"Time's up!\" << endl;\n    return 0;\n}",
+  "hint": "sleep_for suspends current thread for specified duration."
+},
+{
+  id: 'cpp_multithreading_22',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::this_thread::yield to yield CPU time.',
+  mathSolution: 'yield hints scheduler to run other threads.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <atomic>\nusing namespace std;\n\natomic<bool> flag(false);\n\nvoid waitingThread() {\n    while (!flag) {\n        this_thread::yield();\n    }\n    cout << "Flag detected!" << endl;\n}\n\nint main() {\n    thread t(waitingThread);\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    flag = true;\n    \n    t.join();\n    return 0;\n}',
+  hint: 'yield() allows other threads to run in busy-wait loops.'
+},
+{
+  id: 'cpp_multithreading_23',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::hardware_concurrency to get CPU cores.',
+  mathSolution: 'hardware_concurrency returns number of concurrent threads supported.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nint main() {\n    unsigned int cores = thread::hardware_concurrency();\n    cout << "Number of CPU cores: " << cores << endl;\n    \n    if (cores > 0) {\n        cout << "Optimal thread count: " << cores << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'hardware_concurrency helps determine optimal thread count.'
+},
+{
+  id: 'cpp_multithreading_24',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::async with launch policies.',
+  mathSolution: 'launch::async ensures new thread, launch::deferred lazy evaluation.',
+  codeSolution: '#include <iostream>\n#include <future>\nusing namespace std;\n\nint compute(int x) {\n    cout << "Computing..." << endl;\n    return x * x;\n}\n\nint main() {\n    // Asynchronous (new thread)\n    future<int> asyncResult = async(launch::async, compute, 5);\n    \n    // Deferred (lazy evaluation)\n    future<int> deferredResult = async(launch::deferred, compute, 10);\n    \n    cout << "Async result: " << asyncResult.get() << endl;\n    cout << "Deferred result: " << deferredResult.get() << endl;\n    \n    return 0;\n}',
+  hint: 'launch policies control when/where task executes.'
+},
+{
+  id: 'cpp_multithreading_25',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future with std::async for multiple tasks.',
+  mathSolution: 'Multiple async tasks run concurrently.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <vector>\nusing namespace std;\n\nint computeSquare(int x) {\n    this_thread::sleep_for(chrono::milliseconds(100));\n    return x * x;\n}\n\nint main() {\n    vector<future<int>> futures;\n    \n    for (int i = 1; i <= 10; i++) {\n        futures.push_back(async(launch::async, computeSquare, i));\n    }\n    \n    for (auto& f : futures) {\n        cout << f.get() << " ";\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Multiple async tasks execute concurrently for parallelism.'
+},
+{
+  id: 'cpp_multithreading_26',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future::wait_for to check if result is ready.',
+  mathSolution: 'wait_for returns future_status indicating readiness.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <chrono>\nusing namespace std;\n\nint slowCompute() {\n    this_thread::sleep_for(chrono::seconds(2));\n    return 42;\n}\n\nint main() {\n    future<int> result = async(launch::async, slowCompute);\n    \n    while (result.wait_for(chrono::milliseconds(500)) != future_status::ready) {\n        cout << "Still waiting..." << endl;\n    }\n    \n    cout << "Result: " << result.get() << endl;\n    \n    return 0;\n}',
+  hint: 'wait_for checks if future is ready without blocking indefinitely.'
+},
+{
+  id: 'cpp_multithreading_27',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::shared_future for multiple consumers.',
+  mathSolution: 'shared_future allows multiple threads to wait for same result.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <thread>\n#include <vector>\nusing namespace std;\n\nint computeValue() {\n    this_thread::sleep_for(chrono::seconds(1));\n    return 100;\n}\n\nint main() {\n    shared_future<int> sharedResult = async(launch::async, computeValue);\n    \n    vector<thread> consumers;\n    for (int i = 0; i < 5; i++) {\n        consumers.emplace_back([sharedResult]() {\n            cout << "Thread " << this_thread::get_id() << " got: " << sharedResult.get() << endl;\n        });\n    }\n    \n    for (auto& t : consumers) t.join();\n    \n    return 0;\n}',
+  hint: 'shared_future allows multiple threads to access same result.'
+},
+{
+  id: 'cpp_multithreading_28',
+  topicId: 'cpp_multithreading',
+  question: 'Implement thread pool using std::thread and queue.',
+  mathSolution: 'Thread pool reuses threads for multiple tasks.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <queue>\n#include <functional>\n#include <mutex>\n#include <condition_variable>\n#include <vector>\nusing namespace std;\n\nclass ThreadPool {\nprivate:\n    vector<thread> workers;\n    queue<function<void()>> tasks;\n    mutex queueMutex;\n    condition_variable cv;\n    bool stop;\n    \npublic:\n    ThreadPool(size_t numThreads) : stop(false) {\n        for (size_t i = 0; i < numThreads; i++) {\n            workers.emplace_back([this] {\n                while (true) {\n                    function<void()> task;\n                    {\n                        unique_lock<mutex> lock(queueMutex);\n                        cv.wait(lock, [this] { return stop || !tasks.empty(); });\n                        if (stop && tasks.empty()) return;\n                        task = move(tasks.front());\n                        tasks.pop();\n                    }\n                    task();\n                }\n            });\n        }\n    }\n    \n    template<typename F>\n    void enqueue(F&& f) {\n        {\n            lock_guard<mutex> lock(queueMutex);\n            tasks.emplace(forward<F>(f));\n        }\n        cv.notify_one();\n    }\n    \n    ~ThreadPool() {\n        {\n            lock_guard<mutex> lock(queueMutex);\n            stop = true;\n        }\n        cv.notify_all();\n        for (auto& worker : workers) {\n            worker.join();\n        }\n    }\n};\n\nint main() {\n    ThreadPool pool(4);\n    \n    for (int i = 0; i < 10; i++) {\n        pool.enqueue([i]() {\n            cout << "Task " << i << " executed by thread " << this_thread::get_id() << endl;\n            this_thread::sleep_for(chrono::milliseconds(100));\n        });\n    }\n    \n    this_thread::sleep_for(chrono::seconds(2));\n    return 0;\n}',
+  hint: 'Thread pool reuses threads to reduce creation overhead.'
+},
+{
+  id: 'cpp_multithreading_29',
+  topicId: 'cpp_multithreading',
+  question: 'Implement parallel accumulation using multiple threads.',
+  mathSolution: 'Divide array into chunks, sum in parallel.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <vector>\n#include <numeric>\nusing namespace std;\n\nvoid partialSum(const vector<int>& data, int start, int end, long long& result, mutex& mtx) {\n    long long sum = 0;\n    for (int i = start; i < end; i++) {\n        sum += data[i];\n    }\n    lock_guard<mutex> lock(mtx);\n    result += sum;\n}\n\nint main() {\n    vector<int> data(1000000, 1); // Array of 1 million ones\n    int numThreads = 4;\n    vector<thread> threads;\n    long long total = 0;\n    mutex mtx;\n    \n    int chunkSize = data.size() / numThreads;\n    \n    for (int i = 0; i < numThreads; i++) {\n        int start = i * chunkSize;\n        int end = (i == numThreads - 1) ? data.size() : start + chunkSize;\n        threads.emplace_back(partialSum, ref(data), start, end, ref(total), ref(mtx));\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    cout << "Total sum: " << total << endl;\n    \n    return 0;\n}',
+  hint: 'Parallel accumulation speeds up large data processing.'
+},
+{
+  id: 'cpp_multithreading_30',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::async for parallel sorting.',
+  mathSolution: 'Merge sort using async for parallel processing.',
+  codeSolution: '#include <iostream>\n#include <vector>\n#include <algorithm>\n#include <future>\nusing namespace std;\n\nvoid merge(vector<int>& arr, int left, int mid, int right) {\n    vector<int> temp(right - left + 1);\n    int i = left, j = mid + 1, k = 0;\n    \n    while (i <= mid && j <= right) {\n        if (arr[i] <= arr[j]) temp[k++] = arr[i++];\n        else temp[k++] = arr[j++];\n    }\n    \n    while (i <= mid) temp[k++] = arr[i++];\n    while (j <= right) temp[k++] = arr[j++];\n    \n    for (int i = 0; i < temp.size(); i++) {\n        arr[left + i] = temp[i];\n    }\n}\n\nvoid parallelMergeSort(vector<int>& arr, int left, int right, int depth = 0) {\n    if (left >= right) return;\n    \n    int mid = left + (right - left) / 2;\n    \n    if (depth < 2) { // Use parallelism for first 2 levels\n        auto future1 = async(launch::async, parallelMergeSort, ref(arr), left, mid, depth + 1);\n        auto future2 = async(launch::async, parallelMergeSort, ref(arr), mid + 1, right, depth + 1);\n        future1.get();\n        future2.get();\n    } else {\n        parallelMergeSort(arr, left, mid, depth + 1);\n        parallelMergeSort(arr, mid + 1, right, depth + 1);\n    }\n    \n    merge(arr, left, mid, right);\n}\n\nint main() {\n    vector<int> arr = {5, 2, 8, 1, 9, 3, 7, 4, 6, 0};\n    \n    cout << "Original: \";\n    for (int x : arr) cout << x << \" \";\n    cout << endl;\n    \n    parallelMergeSort(arr, 0, arr.size() - 1);\n    \n    cout << "Sorted: \";\n    for (int x : arr) cout << x << \" \";\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Parallel sorting improves performance on multi-core systems.'
+},
+{
+  id: 'cpp_multithreading_31',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::atomic_flag for spinlock implementation.',
+  mathSolution: 'atomic_flag provides test-and-set primitive.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <atomic>\n#include <vector>\nusing namespace std;\n\nclass Spinlock {\nprivate:\n    atomic_flag flag = ATOMIC_FLAG_INIT;\n    \npublic:\n    void lock() {\n        while (flag.test_and_set(memory_order_acquire)) {\n            this_thread::yield();\n        }\n    }\n    \n    void unlock() {\n        flag.clear(memory_order_release);\n    }\n};\n\nSpinlock spinlock;\nint counter = 0;\n\nvoid increment() {\n    for (int i = 0; i < 100000; i++) {\n        spinlock.lock();\n        counter++;\n        spinlock.unlock();\n    }\n}\n\nint main() {\n    thread t1(increment);\n    thread t2(increment);\n    \n    t1.join();\n    t2.join();\n    \n    cout << "Counter: " << counter << endl;\n    \n    return 0;\n}',
+  hint: 'Spinlock uses busy-waiting for short critical sections.'
+},
+{
+  id: 'cpp_multithreading_32',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::atomic for lock-free stack.',
+  mathSolution: 'Compare-and-swap for concurrent push/pop.',
+  codeSolution: '#include <iostream>\n#include <atomic>\n#include <thread>\n#include <vector>\nusing namespace std;\n\ntemplate<typename T>\nclass LockFreeStack {\nprivate:\n    struct Node {\n        T data;\n        Node* next;\n        Node(const T& d) : data(d), next(nullptr) {}\n    };\n    \n    atomic<Node*> head;\n    \npublic:\n    void push(const T& value) {\n        Node* newNode = new Node(value);\n        newNode->next = head.load();\n        while (!head.compare_exchange_weak(newNode->next, newNode));\n    }\n    \n    bool pop(T& result) {\n        Node* oldHead = head.load();\n        while (oldHead && !head.compare_exchange_weak(oldHead, oldHead->next));\n        \n        if (oldHead) {\n            result = oldHead->data;\n            delete oldHead;\n            return true;\n        }\n        return false;\n    }\n};\n\nint main() {\n    LockFreeStack<int> stack;\n    vector<thread> threads;\n    \n    for (int i = 0; i < 10; i++) {\n        threads.emplace_back([&stack, i]() {\n            stack.push(i);\n        });\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    int value;\n    while (stack.pop(value)) {\n        cout << value << \" \";\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Lock-free structures use atomic operations to avoid mutex.'
+},
+{
+  id: 'cpp_multithreading_33',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::barrier for thread synchronization (C++20).',
+  mathSolution: 'barrier synchronizes multiple threads at a point.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <barrier>\n#include <vector>\nusing namespace std;\n\nvoid worker(int id, barrier& syncPoint) {\n    cout << "Thread " << id << " phase 1" << endl;\n    syncPoint.arrive_and_wait();\n    cout << "Thread " << id << " phase 2" << endl;\n    syncPoint.arrive_and_wait();\n    cout << "Thread " << id << " phase 3" << endl;\n}\n\nint main() {\n    const int numThreads = 4;\n    barrier syncPoint(numThreads);\n    vector<thread> threads;\n    \n    for (int i = 0; i < numThreads; i++) {\n        threads.emplace_back(worker, i, ref(syncPoint));\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    return 0;\n}',
+  hint: 'barrier synchronizes threads at specific points in execution.'
+},
+{
+  id: 'cpp_multithreading_34',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::latch for single-use synchronization (C++20).',
+  mathSolution: 'latch counts down once, releasing waiting threads.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <latch>\n#include <vector>\nusing namespace std;\n\nlatch startLatch(1);\n\nvoid worker(int id) {\n    cout << "Thread " << id << " waiting at latch" << endl;\n    startLatch.wait();\n    cout << "Thread " << id << " started" << endl;\n}\n\nint main() {\n    vector<thread> threads;\n    \n    for (int i = 0; i < 5; i++) {\n        threads.emplace_back(worker, i);\n    }\n    \n    this_thread::sleep_for(chrono::seconds(1));\n    cout << "Releasing latch..." << endl;\n    startLatch.count_down();\n    \n    for (auto& t : threads) t.join();\n    \n    return 0;\n}',
+  hint: 'latch is a single-use countdown synchronization primitive.'
+},
+{
+  id: 'cpp_multithreading_35',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::counting_semaphore for resource management (C++20).',
+  mathSolution: 'semaphore limits concurrent access to resources.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <semaphore>\n#include <vector>\nusing namespace std;\n\ncounting_semaphore<3> sem(3); // Max 3 concurrent accesses\n\nvoid accessResource(int id) {\n    sem.acquire();\n    cout << "Thread " << id << " accessing resource" << endl;\n    this_thread::sleep_for(chrono::milliseconds(500));\n    cout << "Thread " << id << " releasing resource" << endl;\n    sem.release();\n}\n\nint main() {\n    vector<thread> threads;\n    \n    for (int i = 0; i < 10; i++) {\n        threads.emplace_back(accessResource, i);\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    return 0;\n}',
+  hint: 'Semaphore limits number of threads accessing a resource.'
+},
+{
+  id: 'cpp_multithreading_36',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::jthread with automatic joining (C++20).',
+  mathSolution: 'jthread automatically joins on destruction.',
+  codeSolution: '#include <iostream>\n#include <thread>\nusing namespace std;\n\nvoid task() {\n    cout << "Thread running" << endl;\n    this_thread::sleep_for(chrono::seconds(1));\n}\n\nint main() {\n    jthread t1(task);\n    jthread t2(task);\n    jthread t3(task);\n    \n    cout << "Main thread finishing" << endl;\n    // No need to call join() - jthread does it automatically\n    return 0;\n}',
+  hint: 'jthread automatically joins, preventing resource leaks.'
+},
+{
+  id: 'cpp_multithreading_37',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::stop_token for cooperative thread cancellation (C++20).',
+  mathSolution: 'stop_token signals threads to stop execution.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <chrono>\nusing namespace std;\n\nvoid backgroundTask(stop_token stoken) {\n    while (!stoken.stop_requested()) {\n        cout << "Working..." << endl;\n        this_thread::sleep_for(chrono::milliseconds(500));\n    }\n    cout << "Thread stopped" << endl;\n}\n\nint main() {\n    jthread worker(backgroundTask);\n    \n    this_thread::sleep_for(chrono::seconds(2));\n    worker.request_stop();\n    \n    return 0;\n}',
+  hint: 'stop_token enables cooperative thread cancellation.'
+},
+{
+  id: 'cpp_multithreading_38',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::scoped_lock for multiple mutexes (C++17).',
+  mathSolution: 'scoped_lock locks multiple mutexes without deadlock.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\nusing namespace std;\n\nmutex mtx1, mtx2;\n\nvoid thread1() {\n    scoped_lock lock(mtx1, mtx2);\n    cout << "Thread 1 acquired both locks" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n}\n\nvoid thread2() {\n    scoped_lock lock(mtx1, mtx2);\n    cout << "Thread 2 acquired both locks" << endl;\n}\n\nint main() {\n    thread t1(thread1);\n    thread t2(thread2);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'scoped_lock prevents deadlock when locking multiple mutexes.'
+},
+{
+  id: 'cpp_multithreading_39',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::notify_all_at_thread_exit for safe notification.',
+  mathSolution: 'Notifies condition variable when thread exits.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\nusing namespace std;\n\nmutex mtx;\ncondition_variable cv;\nbool done = false;\n\nvoid worker() {\n    unique_lock<mutex> lock(mtx);\n    // Do work\n    cout << "Worker completing..." << endl;\n    notify_all_at_thread_exit(cv, move(lock));\n}\n\nint main() {\n    thread t(worker);\n    \n    {\n        unique_lock<mutex> lock(mtx);\n        cv.wait(lock, []{ return done; });\n    }\n    \n    cout << "Worker finished" << endl;\n    t.join();\n    \n    return 0;\n}',
+  hint: 'notify_all_at_thread_exit ensures notification after thread-local cleanup.'
+},
+{
+  id: 'cpp_multithreading_40',
+  topicId: 'cpp_multithreading',
+  question: 'Implement parallel matrix multiplication using threads.',
+  mathSolution: 'Divide output matrix rows among threads.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <vector>\nusing namespace std;\n\nconst int N = 100;\nint A[N][N], B[N][N], C[N][N];\n\nvoid multiplyRow(int row, int startCol, int endCol) {\n    for (int j = startCol; j < endCol; j++) {\n        C[row][j] = 0;\n        for (int k = 0; k < N; k++) {\n            C[row][j] += A[row][k] * B[k][j];\n        }\n    }\n}\n\nint main() {\n    // Initialize matrices\n    for (int i = 0; i < N; i++) {\n        for (int j = 0; j < N; j++) {\n            A[i][j] = i + j;\n            B[i][j] = i - j;\n        }\n    }\n    \n    int numThreads = thread::hardware_concurrency();\n    vector<thread> threads;\n    \n    // Each thread handles one row\n    for (int i = 0; i < N; i++) {\n        threads.emplace_back(multiplyRow, i, 0, N);\n    }\n    \n    for (auto& t : threads) t.join();\n    \n    cout << "Matrix multiplication completed" << endl;\n    cout << "C[0][0] = " << C[0][0] << endl;\n    \n    return 0;\n}',
+  hint: 'Parallel matrix multiplication scales with number of cores.'
+},
+{
+  id: 'cpp_multithreading_41',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future and exceptions in async tasks.',
+  mathSolution: 'Exceptions in async are propagated through future.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <stdexcept>\nusing namespace std;\n\nint riskyOperation(int x) {\n    if (x < 0) {\n        throw runtime_error("Negative input not allowed");\n    }\n    return x * x;\n}\n\nint main() {\n    future<int> result = async(launch::async, riskyOperation, -5);\n    \n    try {\n        int value = result.get();\n        cout << "Result: " << value << endl;\n    } catch (const exception& e) {\n        cout << "Exception caught: " << e.what() << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'Exceptions in async tasks are stored and rethrown on get().'
+},
+{
+  id: 'cpp_multithreading_42',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future::share() to create shared_future.',
+  mathSolution: 'share() converts future to shared_future.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <thread>\nusing namespace std;\n\nint compute() {\n    this_thread::sleep_for(chrono::seconds(1));\n    return 42;\n}\n\nint main() {\n    future<int> fut = async(launch::async, compute);\n    shared_future<int> sharedFut = fut.share();\n    \n    auto consumer = [sharedFut]() {\n        cout << "Thread " << this_thread::get_id() << " got: " << sharedFut.get() << endl;\n    };\n    \n    thread t1(consumer);\n    thread t2(consumer);\n    thread t3(consumer);\n    \n    t1.join();\n    t2.join();\n    t3.join();\n    \n    return 0;\n}',
+  hint: 'share() creates shared_future for multiple consumers.'
+},
+{
+  id: 'cpp_multithreading_43',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future::wait_until for time-bound waiting.',
+  mathSolution: 'wait_until waits until specified time point.',
+  codeSolution: '#include <iostream>\n#include <future>\n#include <chrono>\nusing namespace std;\n\nint main() {\n    future<int> result = async(launch::async, []() {\n        this_thread::sleep_for(chrono::seconds(3));\n        return 100;\n    });\n    \n    auto timeout = chrono::system_clock::now() + chrono::seconds(2);\n    \n    if (result.wait_until(timeout) == future_status::ready) {\n        cout << "Result: " << result.get() << endl;\n    } else {\n        cout << "Timeout occurred" << endl;\n    }\n    \n    return 0;\n}',
+  hint: 'wait_until sets absolute timeout for future waiting.'
+},
+{
+  id: 'cpp_multithreading_44',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::future::then for continuations (experimental).',
+  mathSolution: 'then attaches continuation to future.',
+  codeSolution: '#include <iostream>\n#include <future>\nusing namespace std;\n\nint main() {\n    future<int> fut = async(launch::async, []() { return 10; });\n    \n    // Note: then is not standard yet, but available in some implementations\n    // auto result = fut.then([](future<int> f) {\n    //     return f.get() * 2;\n    // });\n    \n    // Workaround: use async\n    auto result = async(launch::async, [fut = move(fut)]() mutable {\n        return fut.get() * 2;\n    });\n    \n    cout << result.get() << endl;\n    \n    return 0;\n}',
+  hint: 'then allows chaining asynchronous operations.'
+},
+{
+  id: 'cpp_multithreading_45',
+  topicId: 'cpp_multithreading',
+  question: 'Implement parallel for loop using threads.',
+  mathSolution: 'Divide loop iterations among threads.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <vector>\n#include <algorithm>\n#include <numeric>\nusing namespace std;\n\ntemplate<typename Iterator, typename Function>\nvoid parallelFor(Iterator begin, Iterator end, Function func) {\n    size_t size = distance(begin, end);\n    size_t numThreads = thread::hardware_concurrency();\n    size_t chunkSize = size / numThreads;\n    \n    vector<thread> threads;\n    for (size_t i = 0; i < numThreads; i++) {\n        auto start = next(begin, i * chunkSize);\n        auto end_iter = (i == numThreads - 1) ? end : next(start, chunkSize);\n        \n        threads.emplace_back([start, end_iter, &func]() {\n            for (auto it = start; it != end_iter; ++it) {\n                func(*it);\n            }\n        });\n    }\n    \n    for (auto& t : threads) t.join();\n}\n\nint main() {\n    vector<int> data(1000000);\n    iota(data.begin(), data.end(), 1);\n    \n    parallelFor(data.begin(), data.end(), [](int& x) {\n        x = x * x;\n    });\n    \n    cout << "First 10: \";\n    for (int i = 0; i < 10; i++) {\n        cout << data[i] << \" \";\n    }\n    cout << endl;\n    \n    return 0;\n}',
+  hint: 'Parallel for improves performance of independent iterations.'
+},
+{
+  id: 'cpp_multithreading_46',
+  topicId: 'cpp_multithreading',
+  question: 'Use std::async vs std::thread comparison.',
+  mathSolution: 'async manages threads automatically, thread requires manual management.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <future>\n#include <chrono>\nusing namespace std;\n\nvoid doWork(int id) {\n    this_thread::sleep_for(chrono::milliseconds(100));\n    cout << "Work " << id << " done\\n";\n}\n\nint main() {\n    // Using thread (manual management)\n    thread t1(doWork, 1);\n    thread t2(doWork, 2);\n    t1.join();\n    t2.join();\n    \n    // Using async (automatic management)\n    auto f1 = async(launch::async, doWork, 3);\n    auto f2 = async(launch::async, doWork, 4);\n    f1.get();\n    f2.get();\n    \n    // async returns future that can be used for result\n    auto result = async(launch::async, []() { return 42; });\n    cout << "Result: " << result.get() << endl;\n    \n    return 0;\n}',
+  hint: 'async simplifies thread management, thread offers more control.'
+},
+{
+  id: 'cpp_multithreading_47',
+  topicId: 'cpp_multithreading',
+  question: 'Debug multithreading using thread names.',
+  mathSolution: 'Name threads for easier debugging.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <string>\n#ifdef __linux__\n#include <sys/prctl.h>\n#endif\nusing namespace std;\n\nvoid setThreadName(const string& name) {\n#ifdef __linux__\n    prctl(PR_SET_NAME, name.c_str());\n#endif\n}\n\nvoid worker1() {\n    setThreadName("Worker1");\n    for (int i = 0; i < 3; i++) {\n        cout << "Worker1: iteration " << i << endl;\n        this_thread::sleep_for(chrono::milliseconds(100));\n    }\n}\n\nvoid worker2() {\n    setThreadName("Worker2");\n    for (int i = 0; i < 3; i++) {\n        cout << "Worker2: iteration " << i << endl;\n        this_thread::sleep_for(chrono::milliseconds(100));\n    }\n}\n\nint main() {\n    thread t1(worker1);\n    thread t2(worker2);\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'Thread naming helps in debugging and profiling tools.'
+},
+{
+  id: 'cpp_multithreading_48',
+  topicId: 'cpp_multithreading',
+  question: 'Measure thread execution time.',
+  mathSolution: 'Use chrono to measure thread execution duration.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <chrono>\n#include <future>\nusing namespace std;\n\ndouble measureTime(auto&& func) {\n    auto start = chrono::high_resolution_clock::now();\n    func();\n    auto end = chrono::high_resolution_clock::now();\n    return chrono::duration_cast<chrono::microseconds>(end - start).count() / 1000.0;\n}\n\nint main() {\n    auto duration = measureTime([]() {\n        thread t([]() {\n            this_thread::sleep_for(chrono::milliseconds(100));\n        });\n        t.join();\n    });\n    \n    cout << "Thread execution time: " << duration << " ms" << endl;\n    \n    auto asyncDuration = measureTime([]() {\n        auto fut = async(launch::async, []() {\n            this_thread::sleep_for(chrono::milliseconds(100));\n        });\n        fut.wait();\n    });\n    \n    cout << "Async execution time: " << asyncDuration << " ms" << endl;\n    \n    return 0;\n}',
+  hint: 'Timing helps optimize multithreaded performance.'
+},
+{
+  id: 'cpp_multithreading_49',
+  topicId: 'cpp_multithreading',
+  question: 'Implement deadlock detection simulation.',
+  mathSolution: 'Two threads locking mutexes in opposite order.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <chrono>\nusing namespace std;\n\nmutex mtxA, mtxB;\n\nvoid thread1() {\n    lock_guard<mutex> lockA(mtxA);\n    cout << \"Thread1 acquired A\" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n    \n    lock_guard<mutex> lockB(mtxB);\n    cout << \"Thread1 acquired B\" << endl;\n}\n\nvoid thread2() {\n    lock_guard<mutex> lockB(mtxB);\n    cout << \"Thread2 acquired B\" << endl;\n    this_thread::sleep_for(chrono::milliseconds(100));\n    \n    lock_guard<mutex> lockA(mtxA);\n    cout << \"Thread2 acquired A\" << endl;\n}\n\nint main() {\n    thread t1(thread1);\n    thread t2(thread2);\n    \n    // Without proper order, this may deadlock\n    // Solution: Always lock mutexes in same order\n    \n    t1.join();\n    t2.join();\n    \n    return 0;\n}',
+  hint: 'Lock mutexes in consistent order to prevent deadlocks.'
+},
+{
+  id: 'cpp_multithreading_50',
+  topicId: 'cpp_multithreading',
+  question: 'Create comprehensive multithreading demonstration.',
+  mathSolution: 'Combine multiple threading concepts in one program.',
+  codeSolution: '#include <iostream>\n#include <thread>\n#include <mutex>\n#include <condition_variable>\n#include <queue>\n#include <future>\n#include <atomic>\n#include <chrono>\nusing namespace std;\n\nclass ThreadDemo {\nprivate:\n    mutex mtx;\n    condition_variable cv;\n    queue<int> tasks;\n    atomic<bool> running{true};\n    \npublic:\n    void producer() {\n        for (int i = 0; i < 10; i++) {\n            {\n                lock_guard<mutex> lock(mtx);\n                tasks.push(i);\n                cout << "Produced: " << i << endl;\n            }\n            cv.notify_one();\n            this_thread::sleep_for(chrono::milliseconds(100));\n        }\n        running = false;\n        cv.notify_all();\n    }\n    \n    void consumer(int id) {\n        while (running || !tasks.empty()) {\n            unique_lock<mutex> lock(mtx);\n            cv.wait(lock, [this] { return !tasks.empty() || !running; });\n            \n            if (!tasks.empty()) {\n                int task = tasks.front();\n                tasks.pop();\n                lock.unlock();\n                cout << "Consumer " << id << " processed: " << task << endl;\n                this_thread::sleep_for(chrono::milliseconds(50));\n            }\n        }\n    }\n};\n\nint main() {\n    cout << "=== Multithreading Demonstration ===\\n\\n";\n    \n    // 1. Basic thread\n    cout << "1. Basic thread:\\n";\n    thread t1([]() { cout << "  Thread running\\n"; });\n    t1.join();\n    \n    // 2. Mutex protection\n    cout << "\\n2. Mutex protection:\\n";\n    int counter = 0;\n    mutex counterMtx;\n    auto increment = [&counter, &counterMtx]() {\n        for (int i = 0; i < 1000; i++) {\n            lock_guard<mutex> lock(counterMtx);\n            counter++;\n        }\n    };\n    thread t2(increment);\n    thread t3(increment);\n    t2.join();\n    t3.join();\n    cout << "  Protected counter: " << counter << endl;\n    \n    // 3. Atomic operations\n    cout << "\\n3. Atomic operations:\\n";\n    atomic<int> atomicCounter(0);\n    auto atomicIncrement = [&atomicCounter]() {\n        for (int i = 0; i < 1000; i++) atomicCounter++;\n    };\n    thread t4(atomicIncrement);\n    thread t5(atomicIncrement);\n    t4.join();\n    t5.join();\n    cout << "  Atomic counter: " << atomicCounter << endl;\n    \n    // 4. Producer-consumer\n    cout << "\\n4. Producer-Consumer pattern:\\n";\n    ThreadDemo demo;\n    thread prod(&ThreadDemo::producer, &demo);\n    thread cons1(&ThreadDemo::consumer, &demo, 1);\n    thread cons2(&ThreadDemo::consumer, &demo, 2);\n    \n    prod.join();\n    cons1.join();\n    cons2.join();\n    \n    // 5. Async/Future\n    cout << "\\n5. Async/Future:\\n";\n    auto asyncTask = async(launch::async, []() {\n        this_thread::sleep_for(chrono::milliseconds(100));\n        return 42;\n    });\n    cout << "  Async result: " << asyncTask.get() << endl;\n    \n    cout << "\\n=== All threading concepts demonstrated ===\\n";\n    \n    return 0;\n}',
+  hint: 'Comprehensive demonstration of multithreading concepts.'
+}
 );
