@@ -1,3 +1,72 @@
+function openRequestModal() {
+  document.getElementById("requestModal").style.display = "block";
+}
+
+function submitRequest() {
+  const notesFile = document.getElementById("notes").files[0];
+  const description = document.getElementById("description").value.trim();
+  const testName = document.getElementById("testName").value.trim();
+  const subject = document.getElementById("subject").value.trim();
+
+  if (!notesFile) return alert("Please upload notes.");
+  if (!description) return alert("Please enter description.");
+  if (!testName) return alert("Please enter test name.");
+  if (!subject) return alert("Please enter subject.");
+
+  const formData = new FormData();
+  formData.append("notes", notesFile);
+  formData.append("description", description);
+  formData.append("testName", testName);
+  formData.append("subject", subject);
+
+  fetch("/teacher/send-request", {
+    method: "POST",
+    body: formData
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("Request Sent Successfully!");
+        document.getElementById("notes").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("testName").value = "";
+        document.getElementById("subject").value = "";
+        closeRequestModal();
+      } else {
+        alert(data.message || "Failed to send request");
+      }
+    })
+    .catch(() => alert("Server Error"));
+}
+
+
+
+// Sidebar + Top दोनों के लिए
+const navSendRequest = document.getElementById("nav-send-request");
+const topNavSendRequest = document.getElementById("top-nav-send-request");
+
+function handleSendRequestClick(e) {
+  e.preventDefault();
+
+  if (!state.paymentCompleted) {
+    alert("Please complete payment first.");
+    showDashboard();
+    return;
+  }
+
+  openRequestModal();
+}
+
+// Sidebar click
+if (navSendRequest) {
+  navSendRequest.addEventListener("click", handleSendRequestClick);
+}
+
+// Top navbar click
+if (topNavSendRequest) {
+  topNavSendRequest.addEventListener("click", handleSendRequestClick);
+}
+
 // State management
 const state = {
   paymentCompleted: true,
@@ -3246,65 +3315,6 @@ function previous() {
   window.location.href = "/previous-year-paper";
 }
 
-const generateLinkBtn = document.getElementById("generate-link-btn");
-
-if (generateLinkBtn) {
-  generateLinkBtn.addEventListener("click", () => {
-    const link = `${window.location.origin}/student-register/${TEACHER_ID}`;
-
-    prompt("Copy this link and send to students:", link);
-  });
-}
-
-// Open Modal
-let inviteLink = "";
-
-function openInviteModal() {
-  inviteLink = `${window.location.origin}/student-register/${TEACHER_ID}`;
-
-  document.getElementById("inviteLinkInput").value = inviteLink;
-  document.getElementById("inviteModal").style.display = "flex";
-
-  QRCode.toCanvas(
-    document.getElementById("qrCanvas"),
-    inviteLink,
-    function (error) {
-      if (error) console.error(error);
-    },
-  );
-}
-// Close Modal
-function closeInviteModal() {
-  document.getElementById("inviteModal").style.display = "none";
-}
-
-// Copy Link
-function copyInviteLink() {
-  navigator.clipboard.writeText(inviteLink);
-  alert("Link copied ✅");
-}
-
-// WhatsApp Share
-function shareWhatsApp() {
-  const text = encodeURIComponent("Register here:\n" + inviteLink);
-  window.open(`https://wa.me/?text=${text}`, "_blank");
-}
-
-// Download QR
-function downloadQR() {
-  const canvas = document.getElementById("qrCanvas");
-  const link = document.createElement("a");
-  link.download = "invite-qr.png";
-  link.href = canvas.toDataURL();
-  link.click();
-}
-window.addEventListener("click", function (e) {
-  const modal = document.getElementById("inviteModal");
-  if (e.target === modal) {
-    modal.style.display = "none";
-  }
-});
-
 function viewStudent(studentId) {
   const student = state.students.find((s) => s._id === studentId);
 
@@ -3472,5 +3482,40 @@ async function loadAnalyticsCards() {
     });
   } catch (err) {
     console.log("Analytics Load Error:", err);
+  }
+}
+function openInviteModal() {
+  const link = `${window.location.origin}/teacher/student-register/${TEACHER_ID}`;
+
+  document.getElementById("inviteLink").value = link;
+
+  document.getElementById("inviteModal").style.display = "flex";
+}
+
+function closeInviteModal() {
+  document.getElementById("inviteModal").style.display = "none";
+}
+
+function copyInviteLink() {
+  const input = document.getElementById("inviteLink");
+
+  input.select();
+
+  document.execCommand("copy");
+
+  alert("Link copied!");
+}
+
+function shareInviteLink() {
+  const link = document.getElementById("inviteLink").value;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Student Registration",
+      text: "Fill this form to join class",
+      url: link,
+    });
+  } else {
+    window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
   }
 }
