@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Monetization Hub | Creative Dashboard</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at 20% 30%, #f4f9ff, #e6edf8);
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      color: #0f2b3d;
+      position: relative;
+    }
+
+    /* animated gradient orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      left: -10%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(100, 150, 220, 0.15), transparent 70%);
+      pointer-events: none;
+      z-index: -2;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      right: -10%;
+      width: 70%;
+      height: 70%;
+      background: radial-gradient(circle, rgba(210, 180, 240, 0.12), transparent 70%);
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .dashboard-container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* ===== PREMIUM GLASS HEADER ===== */
+    .premium-header {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(18px);
+      border-radius: 2rem;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.7);
+      transition: all 0.3s ease;
+    }
+
+    .header-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .title-badge h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(125deg, #1f2e4a, #2a4b7c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .title-badge h1 i {
+      background: none;
+      color: #3b6ea0;
+      font-size: 2rem;
+    }
+
+    .request-counter {
+      background: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #e2edff;
+    }
+    .request-counter span {
+      background: #1f2e4a;
+      color: white;
+      padding: 0.2rem 0.7rem;
+      border-radius: 40px;
+      margin-left: 8px;
+      font-size: 0.8rem;
+    }
+
+    /* filter + search bar */
+    .filter-section {
+      margin-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-top: 1px solid rgba(60, 91, 158, 0.15);
+      padding-top: 1rem;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #2c4e6e;
+      font-family: inherit;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .filter-pill i {
+      margin-right: 6px;
+      font-size: 0.75rem;
+    }
+    .filter-pill.active {
+      background: #1f3b5c;
+      color: white;
+      box-shadow: 0 6px 12px -6px rgba(31,59,92,0.25);
+      border-color: transparent;
+    }
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.8);
+      border-radius: 60px;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid #caddf0;
+      backdrop-filter: blur(4px);
+    }
+    .search-wrapper i {
+      color: #7c9bc2;
+      margin-right: 8px;
+    }
+    .search-wrapper input {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 0.2rem;
+      font-size: 0.85rem;
+      width: 180px;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+    }
+    .refresh-btn {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid #cad9f0;
+      border-radius: 40px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+    }
+    .refresh-btn:hover {
+      background: white;
+      transform: rotate(15deg) scale(1.02);
+    }
+
+    /* requests grid */
+    .requests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.8rem;
+      animation: fadeInUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    /* premium card 3D + glow */
+    .premium-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(4px);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .premium-card:hover {
+      transform: translateY(-8px);
+      background: white;
+      box-shadow: 0 28px 36px -16px rgba(0, 32, 64, 0.18);
+      border-color: rgba(98, 144, 205, 0.3);
+    }
+    .premium-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #4f7eb3, #b9d6f2, #4f7eb3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .premium-card:hover::after {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .user-avatar {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(145deg, #eaf2ff, #dee8fc);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #1d4e7a;
+      box-shadow: inset 0 1px 2px white, 0 6px 12px -6px rgba(0,0,0,0.1);
+    }
+    .user-name {
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: -0.2px;
+      color: #0a2c44;
+    }
+    .status-badge {
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .status-pending { background: #fff0db; color: #bc6f00; }
+    .status-approved { background: #e0f6e8; color: #1a7343; }
+    .status-rejected { background: #ffe8e8; color: #bc4e4e; }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 0.9rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid #eff3fc;
+      font-size: 0.85rem;
+    }
+    .info-row i {
+      width: 24px;
+      color: #5f7ea3;
+    }
+    .info-label {
+      font-weight: 500;
+      color: #2c4b6e;
+      min-width: 65px;
+    }
+    .info-value {
+      color: #1a3b54;
+      font-weight: 500;
+      word-break: break-word;
+    }
+    .card-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+    }
+    .btn-icon {
+      flex: 1;
+      border: none;
+      padding: 0.7rem 0;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: white;
+      border: 1px solid #d4e2f5;
+      font-family: inherit;
+    }
+    .btn-approve { color: #227722; border-color: #c3e0c3; }
+    .btn-approve:hover { background: #e9f7e9; transform: scale(0.97); }
+    .btn-reject { color: #bb5555; border-color: #f5cfcf; }
+    .btn-reject:hover { background: #ffecec; transform: scale(0.97); }
+    .btn-details { color: #3c6e9e; border-color: #c9dcf5; background: #fafcff; }
+    .btn-details:hover { background: #eef4fc; transform: scale(0.97); }
+
+    /* loading + empty states */
+    .loading-spinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      gap: 20px;
+      grid-column: 1/-1;
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(70, 120, 180, 0.15);
+      border-top: 4px solid #3b6ea0;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      background: rgba(255,255,250,0.7);
+      border-radius: 2rem;
+      backdrop-filter: blur(5px);
+      grid-column: 1/-1;
+    }
+
+    /* ===== MODAL (Premium) ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-content {
+      background: #ffffffea;
+      width: 90%;
+      max-width: 750px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 1.8rem;
+      border-radius: 2rem;
+      box-shadow: 0 35px 50px -15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255,255,255,0.5);
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #8dabcc;
+      transition: 0.2s;
+    }
+    .close-btn:hover { color: #2c4e70; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .detail-card {
+      background: #f8fbfe;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      border-left: 3px solid #6089c8;
+    }
+    .detail-card b { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: #6e8eb0; margin-bottom: 5px; }
+    .detail-card span { font-weight: 600; color: #173e5c; word-break: break-word; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @media (max-width: 680px) {
+      body { padding: 1rem; }
+      .premium-header { padding: 1rem; }
+      .title-badge h1 { font-size: 1.4rem; }
+      .requests-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+      .filter-section { flex-direction: column; align-items: stretch; }
+      .search-wrapper input { width: 100%; }
+    }
+    /* custom scroll */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #eef2f9; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #b7cbe2; border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+  <div class="premium-header">
+    <div class="header-flex">
+      <div class="title-badge">
+        <h1><i class="fas fa-crown"></i> Monetization Hub</h1>
+      </div>
+      <div class="request-counter">
+        <i class="fas fa-users"></i> Total requests 
+        <span id="requestCountSpan">0</span>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-pill active" data-filter="all"><i class="fas fa-list"></i> All</button>
+        <button class="filter-pill" data-filter="pending"><i class="fas fa-clock"></i> Pending</button>
+        <button class="filter-pill" data-filter="approved"><i class="fas fa-check-circle"></i> Approved</button>
+        <button class="filter-pill" data-filter="rejected"><i class="fas fa-times-circle"></i> Rejected</button>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <div class="search-wrapper">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Search name, email...">
+        </div>
+        <button class="refresh-btn" id="manualRefresh"><i class="fas fa-arrows-rotate"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="requests" class="requests-grid">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p style="color:#4a627a;">Loading creators...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="detailsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2 style="margin-bottom: 0.8rem;"><i class="fas fa-id-card"></i> Complete Details</h2>
+    <div id="modalData" class="detail-grid"></div>
+  </div>
+</div>
+
+<script>
+  // ------------------------------
+  // CORE LOGIC PRESERVED (API endpoints unchanged)
+  // additional: client-side filtering, search, global store
+  // approve/reject still call original backend
+  // ------------------------------
+  let cachedRequests = [];        // store all requests from API
+  let currentFilter = "all";
+  let currentSearch = "";
+
+  window.onload = () => {
+    loadRequests();
+    // event listeners
+    document.querySelectorAll(".filter-pill").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.getAttribute("data-filter");
+        renderFilteredCards();
+      });
+    });
+    const searchInput = document.getElementById("searchInput");
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = e.target.value.toLowerCase();
+      renderFilteredCards();
+    });
+    document.getElementById("manualRefresh").addEventListener("click", () => loadRequests());
+  };
+
+  async function loadRequests() {
+    const container = document.getElementById("requests");
+    container.innerHTML = `<div class="loading-spinner"><div class="spinner"></div><p>Fetching latest requests...</p></div>`;
+    try {
+      const res = await fetch("/admin/monetization-requests");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      cachedRequests = data;
+      const countSpan = document.getElementById("requestCountSpan");
+      if (countSpan) countSpan.innerText = cachedRequests.length;
+      renderFilteredCards();
+    } catch (err) {
+      console.error(err);
+      container.innerHTML = `<div class="empty-state"><i class="fas fa-satellite-dish" style="font-size: 2rem; color:#a0bbdd;"></i><h3>Connection error</h3><p>Unable to load requests. Check network.</p><button onclick="loadRequests()" style="margin-top:1rem; padding:0.5rem 1.5rem; border-radius:60px; border:none; background:#fff; cursor:pointer;">Retry <i class="fas fa-redo-alt"></i></button></div>`;
+    }
+  }
+
+  // filtering + search logic
+  function filterRequests() {
+    let filtered = [...cachedRequests];
+    if (currentFilter !== "all") {
+      filtered = filtered.filter(r => (r.status || "pending").toLowerCase() === currentFilter);
+    }
+    if (currentSearch.trim() !== "") {
+      const term = currentSearch.toLowerCase();
+      filtered = filtered.filter(r => 
+        (r.fullName && r.fullName.toLowerCase().includes(term)) ||
+        (r.email && r.email.toLowerCase().includes(term))
+      );
+    }
+    return filtered;
+  }
+
+  function renderFilteredCards() {
+    const filtered = filterRequests();
+    const container = document.getElementById("requests");
+    if (!filtered.length) {
+      container.innerHTML = `<div class="empty-state"><i class="fas fa-filter-circle-xmark" style="font-size: 2.2rem; color:#8faad4;"></i><h3>No matching requests</h3><p>Try changing filters or search term.</p></div>`;
+      return;
+    }
+
+    let cardsHTML = "";
+    for (const r of filtered) {
+      const statusLower = (r.status || "pending").toLowerCase();
+      let statusClass = "status-pending";
+      let statusIcon = '<i class="fas fa-hourglass-half"></i>';
+      if (statusLower === "approved") { statusClass = "status-approved"; statusIcon = '<i class="fas fa-check-circle"></i>'; }
+      else if (statusLower === "rejected") { statusClass = "status-rejected"; statusIcon = '<i class="fas fa-ban"></i>'; }
+      
+      const fullName = r.fullName || "Anonymous";
+      const initials = fullName.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      
+      cardsHTML += `
+        <div class="premium-card" data-id="${r._id}">
+          <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="user-avatar">${escapeHtml(initials)}</div>
+              <div class="user-name">${escapeHtml(fullName)}</div>
+            </div>
+            <div class="status-badge ${statusClass}">${statusIcon} ${escapeHtml(r.status || "Pending")}</div>
+          </div>
+          <div class="info-row"><i class="fas fa-envelope"></i><span class="info-label">Email</span><span class="info-value">${escapeHtml(r.email || "—")}</span></div>
+          <div class="info-row"><i class="fas fa-phone-alt"></i><span class="info-label">Mobile</span><span class="info-value">${escapeHtml(r.mobileNumber || "—")}</span></div>
+          <div class="info-row"><i class="fas fa-id-card"></i><span class="info-label">PAN</span><span class="info-value">${escapeHtml(r.panNumber || "—")}</span></div>
+          <div class="card-actions">
+            <button class="btn-icon btn-approve" onclick="approveMonetization('${r._id}')"><i class="fas fa-thumbs-up"></i> Approve</button>
+            <button class="btn-icon btn-reject" onclick="rejectMonetization('${r._id}')"><i class="fas fa-times"></i> Reject</button>
+            <button class="btn-icon btn-details" onclick="showDetailsById('${r._id}')"><i class="fas fa-eye"></i> Details</button>
+          </div>
+        </div>
+      `;
+    }
+    container.innerHTML = cardsHTML;
+  }
+
+  // helper safe escaping
+  function escapeHtml(str) {
+    if (!str) return "";
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // approve & reject (original endpoints, then reload)
+  async function approveMonetization(id) {
+    try {
+      await fetch("/admin/approve-monetization/" + id, { method: "POST" });
+      await loadRequests();   // fresh data, keep filter & search state but reset cache
+    } catch(e) { console.error(e); loadRequests(); }
+  }
+  async function rejectMonetization(id) {
+    try {
+      await fetch("/admin/reject-monetization/" + id, { method: "POST" });
+      await loadRequests();
+    } catch(e) { console.error(e); loadRequests(); }
+  }
+
+  // show full details using cached request object (avoids JSON injection)
+  function showDetailsById(id) {
+    const request = cachedRequests.find(r => r._id === id);
+    if (!request) return;
+    const modalDiv = document.getElementById("modalData");
+    if (!modalDiv) return;
+    // format date if exists
+    let appliedDate = "—";
+    if (request.createdAt) {
+      try {
+        appliedDate = new Date(request.createdAt).toLocaleString();
+      } catch(e) { appliedDate = request.createdAt; }
+    }
+    modalDiv.innerHTML = `
+      <div class="detail-card"><b>Full Name</b><span>${escapeHtml(request.fullName || "—")}</span></div>
+      <div class="detail-card"><b>Email</b><span>${escapeHtml(request.email || "—")}</span></div>
+      <div class="detail-card"><b>Mobile</b><span>${escapeHtml(request.mobileNumber || "—")}</span></div>
+      <div class="detail-card"><b>PAN Number</b><span>${escapeHtml(request.panNumber || "—")}</span></div>
+      <div class="detail-card"><b>Address</b><span>${escapeHtml(request.address || "—")}</span></div>
+      <div class="detail-card"><b>State</b><span>${escapeHtml(request.state || "—")}</span></div>
+      <div class="detail-card"><b>District</b><span>${escapeHtml(request.district || "—")}</span></div>
+      <div class="detail-card"><b>Pincode</b><span>${escapeHtml(request.pincode || "—")}</span></div>
+      <div class="detail-card"><b>Bank Name</b><span>${escapeHtml(request.bankName || "—")}</span></div>
+      <div class="detail-card"><b>Account Number</b><span>${escapeHtml(request.accountNumber || "—")}</span></div>
+      <div class="detail-card"><b>IFSC Code</b><span>${escapeHtml(request.ifscCode || "—")}</span></div>
+      <div class="detail-card"><b>UPI ID</b><span>${escapeHtml(request.upiId || "—")}</span></div>
+      <div class="detail-card"><b>Status</b><span>${escapeHtml(request.status || "—")}</span></div>
+      <div class="detail-card"><b>Applied On</b><span>${appliedDate}</span></div>
+    `;
+    document.getElementById("detailsModal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("detailsModal").style.display = "none";
+  }
+  window.closeModal = closeModal;
+  window.showDetailsById = showDetailsById;
+  window.approveMonetization = approveMonetization;
+  window.rejectMonetization = rejectMonetization;
+
+  // click outside modal to close
+  window.onclick = function(e) {
+    const modal = document.getElementById("detailsModal");
+    if (e.target === modal) closeModal();
+  };
+</script>
+</body>
+</html>

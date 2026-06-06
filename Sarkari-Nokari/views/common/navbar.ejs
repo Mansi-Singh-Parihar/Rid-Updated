@@ -1,0 +1,374 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="/nokari/css/common/navbar.css">
+
+<!-- ===== NAVBAR ===== -->
+<nav class="sn-navbar" id="navbar">
+
+  <!-- BRAND -->
+  <a class="sn-brand" href="/">
+    <img src="/assets/images/ridtechlogo.png" style="width:46px; height:46px; border-radius:50%; object-fit:cover; flex-shrink:0;">
+    <div style="display:flex; flex-direction:column; line-height:1.2;">
+      <span class="b1">Apna Naukari</span>
+      <span class="b2">अपना नौकरी</span>
+    </div>
+  </a>
+
+  <!-- DESKTOP NAV LINKS -->
+  <div class="sn-links" id="snLinks">
+
+    <!-- Home -->
+    <div class="nav-item">
+      <a href="/nokari" class="nav-link">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+    </div>
+
+    <!-- Latest Job -->
+    <div class="nav-item" id="ni-jobs">
+      <a href="/nokari/jobs" class="nav-link">
+        <i class="fa-solid fa-briefcase"></i> Latest Job
+      </a>
+      <button class="drop-btn" data-target="ni-jobs" aria-label="Filter jobs by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+      <div class="dropdown">
+        <div class="dropdown-header">Filter by State</div>
+        <div class="dropdown-states">
+          <a href="/nokari/jobs?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/jobs?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/jobs?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/jobs?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/jobs?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/jobs?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/jobs?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/jobs?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/jobs?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/jobs?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/jobs?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/jobs?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/jobs?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/jobs?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/jobs?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/jobs?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/jobs?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/jobs?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/jobs?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/jobs?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/jobs?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/jobs?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/jobs?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/jobs?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/jobs?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/jobs?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/jobs?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/jobs?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/jobs?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/jobs?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/jobs?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/jobs?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/jobs?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/jobs?state=py">Puducherry <span class="state-code">PY</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admit Cards -->
+    <div class="nav-item" id="ni-admit">
+      <a href="/nokari/admit" class="nav-link">
+        <i class="fa-solid fa-id-card"></i> Admit Cards
+      </a>
+      <button class="drop-btn" data-target="ni-admit" aria-label="Filter admit cards by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+      <div class="dropdown">
+        <div class="dropdown-header">Filter by State</div>
+        <div class="dropdown-states">
+          <a href="/nokari/admit?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/admit?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/admit?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/admit?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/admit?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/admit?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/admit?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/admit?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/admit?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/admit?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/admit?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/admit?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/admit?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/admit?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/admit?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/admit?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/admit?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/admit?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/admit?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/admit?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/admit?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/admit?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/admit?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/admit?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/admit?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/admit?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/admit?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/admit?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/admit?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/admit?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/admit?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/admit?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/admit?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/admit?state=py">Puducherry <span class="state-code">PY</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="nav-item" id="ni-result">
+      <a href="/nokari/result" class="nav-link">
+        <i class="fa-solid fa-square-poll-vertical"></i> Result
+      </a>
+      <button class="drop-btn" data-target="ni-result" aria-label="Filter results by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+      <div class="dropdown">
+        <div class="dropdown-header">Filter by State</div>
+        <div class="dropdown-states">
+          <a href="/nokari/result?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/result?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/result?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/result?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/result?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/result?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/result?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/result?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/result?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/result?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/result?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/result?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/result?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/result?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/result?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/result?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/result?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/result?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/result?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/result?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/result?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/result?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/result?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/result?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/result?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/result?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/result?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/result?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/result?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/result?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/result?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/result?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/result?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/result?state=py">Puducherry <span class="state-code">PY</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eligibility Checker -->
+    <div class="nav-item">
+      <a href="/nokari/eligibility" class="nav-link">
+        <i class="fa-solid fa-user-check"></i> Eligibility
+      </a>
+    </div>
+    
+
+    <div class="nav-item">
+      <a href="/nokari/examcalendar" class="nav-link">
+        <i class="fa-solid fa-calendar-days"></i> Exam Calendar
+      </a>
+    </div>
+
+  </div>
+
+  <!-- DESKTOP SEARCH -->
+  <div class="search-container">
+    <div class="search-bar-desktop">
+      <input type="text" id="searchInputDesktop" placeholder="Search jobs, results..." autocomplete="off">
+      <button id="searchBtnDesktop"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+  </div>
+
+  <!-- MOBILE RIGHT ICONS -->
+  <div class="sn-right">
+    <button class="search-icon-btn" id="searchToggleMobile" aria-label="Search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+</nav>
+
+<!-- MOBILE SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <input type="text" id="searchInputMobile" placeholder="Search jobs, results, admit cards..." autocomplete="off">
+  <button id="searchBtnMobile"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+
+  <div class="mobile-nav-item">
+    <div class="mobile-nav-row">
+      <a href="/nokari"><i class="fa-solid fa-house"></i> Home</a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-item" id="mni-jobs">
+    <div class="mobile-nav-row">
+      <a href="/nokari/jobs"><i class="fa-solid fa-briefcase"></i> Latest Job</a>
+      <button class="mobile-drop-btn" data-target="mni-jobs" aria-label="Filter jobs by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+    </div>
+    <div class="mobile-dropdown">
+      <a href="/nokari/jobs?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/jobs?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/jobs?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/jobs?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/jobs?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/jobs?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/jobs?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/jobs?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/jobs?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/jobs?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/jobs?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/jobs?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/jobs?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/jobs?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/jobs?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/jobs?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/jobs?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/jobs?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/jobs?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/jobs?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/jobs?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/jobs?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/jobs?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/jobs?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/jobs?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/jobs?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/jobs?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/jobs?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/jobs?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/jobs?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/jobs?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/jobs?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/jobs?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/jobs?state=py">Puducherry <span class="state-code">PY</span></a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-item" id="mni-admit">
+    <div class="mobile-nav-row">
+      <a href="/nokari/admit"><i class="fa-solid fa-id-card"></i> Admit Cards</a>
+      <button class="mobile-drop-btn" data-target="mni-admit" aria-label="Filter admit cards by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+    </div>
+    <div class="mobile-dropdown">
+      <a href="/nokari/admit?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/admit?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/admit?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/admit?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/admit?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/admit?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/admit?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/admit?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/admit?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/admit?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/admit?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/admit?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/admit?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/admit?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/admit?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/admit?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/admit?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/admit?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/admit?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/admit?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/admit?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/admit?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/admit?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/admit?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/admit?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/admit?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/admit?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/admit?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/admit?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/admit?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/admit?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/admit?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/admit?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/admit?state=py">Puducherry <span class="state-code">PY</span></a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-item" id="mni-result">
+    <div class="mobile-nav-row">
+      <a href="/nokari/result"><i class="fa-solid fa-square-poll-vertical"></i> Result</a>
+      <button class="mobile-drop-btn" data-target="mni-result" aria-label="Filter results by state">
+        <svg viewBox="0 0 12 12"><polyline points="2,4 6,8 10,4"/></svg>
+      </button>
+    </div>
+    <div class="mobile-dropdown">
+      <a href="/nokari/result?state=ap">Andhra Pradesh <span class="state-code">AP</span></a>
+          <a href="/nokari/result?state=ar">Arunachal Pradesh <span class="state-code">AR</span></a>
+          <a href="/nokari/result?state=as">Assam <span class="state-code">AS</span></a>
+          <a href="/nokari/result?state=br">Bihar <span class="state-code">BR</span></a>
+          <a href="/nokari/result?state=cg">Chhattisgarh <span class="state-code">CG</span></a>
+          <a href="/nokari/result?state=ga">Goa <span class="state-code">GA</span></a>
+          <a href="/nokari/result?state=gj">Gujarat <span class="state-code">GJ</span></a>
+          <a href="/nokari/result?state=hr">Haryana <span class="state-code">HR</span></a>
+          <a href="/nokari/result?state=hp">Himachal Pradesh <span class="state-code">HP</span></a>
+          <a href="/nokari/result?state=jh">Jharkhand <span class="state-code">JH</span></a>
+          <a href="/nokari/result?state=ka">Karnataka <span class="state-code">KA</span></a>
+          <a href="/nokari/result?state=kl">Kerala <span class="state-code">KL</span></a>
+          <a href="/nokari/result?state=mp">Madhya Pradesh <span class="state-code">MP</span></a>
+          <a href="/nokari/result?state=mh">Maharashtra <span class="state-code">MH</span></a>
+          <a href="/nokari/result?state=mn">Manipur <span class="state-code">MN</span></a>
+          <a href="/nokari/result?state=ml">Meghalaya <span class="state-code">ML</span></a>
+          <a href="/nokari/result?state=mz">Mizoram <span class="state-code">MZ</span></a>
+          <a href="/nokari/result?state=nl">Nagaland <span class="state-code">NL</span></a>
+          <a href="/nokari/result?state=od">Odisha <span class="state-code">OD</span></a>
+          <a href="/nokari/result?state=pb">Punjab <span class="state-code">PB</span></a>
+          <a href="/nokari/result?state=rj">Rajasthan <span class="state-code">RJ</span></a>
+          <a href="/nokari/result?state=sk">Sikkim <span class="state-code">SK</span></a>
+          <a href="/nokari/result?state=tn">Tamil Nadu <span class="state-code">TN</span></a>
+          <a href="/nokari/result?state=tg">Telangana <span class="state-code">TG</span></a>
+          <a href="/nokari/result?state=tr">Tripura <span class="state-code">TR</span></a>
+          <a href="/nokari/result?state=up">Uttar Pradesh <span class="state-code">UP</span></a>
+          <a href="/nokari/result?state=uk">Uttarakhand <span class="state-code">UK</span></a>
+          <a href="/nokari/result?state=wb">West Bengal <span class="state-code">WB</span></a>
+          <a href="/nokari/result?state=dl">Delhi (NCT) <span class="state-code">DL</span></a>
+          <a href="/nokari/result?state=jk">Jammu &amp; Kashmir <span class="state-code">JK</span></a>
+          <a href="/nokari/result?state=la">Ladakh <span class="state-code">LA</span></a>
+          <a href="/nokari/result?state=ch">Chandigarh <span class="state-code">CH</span></a>
+          <a href="/nokari/result?state=dd">Dadra &amp; Nagar Haveli <span class="state-code">DD</span></a>
+          <a href="/nokari/result?state=py">Puducherry <span class="state-code">PY</span></a>
+    </div>
+  </div>
+
+  <div class="mobile-nav-item">
+    <div class="mobile-nav-row">
+      <a href="/nokari/eligibility"><i class="fa-solid fa-user-check"></i> Eligibility Checker</a>
+    </div>
+  </div>
+  <div class="mobile-nav-item">
+    <div class="mobile-nav-row">
+      <a href="/nokari/examcalendar"><i class="fa-solid fa-calendar-days"></i> Exam Calendar</a>
+    </div>
+  </div>
+
+</div>
+
+<script src="/nokari/js/navbar.js"></script>

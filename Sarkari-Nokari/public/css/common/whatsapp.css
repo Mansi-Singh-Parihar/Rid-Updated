@@ -1,0 +1,33 @@
+/* WhatsApp Channel Button - Minimal & Clean */
+.whatsapp-banner {
+  text-align: center;
+  margin: 15px 0;
+}
+
+.whatsapp-banner a {
+  display: inline-block;
+  background-color: #25D366;  /* WhatsApp green */
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 40px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: none;
+  cursor: pointer;
+}
+
+.whatsapp-banner a:hover {
+  background-color: #128C7E;  /* darker green on hover */
+  transform: scale(1.02);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Agar icon chahiye to pseudo-element se add kar sakte hain */
+.whatsapp-banner a::before {
+  content: "📱 ";
+  font-size: 14px;
+}

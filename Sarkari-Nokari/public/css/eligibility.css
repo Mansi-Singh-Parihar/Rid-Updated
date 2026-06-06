@@ -1,0 +1,769 @@
+/* =================================================================
+   eligibility.css — Layout aligned with exam calendar page
+   ================================================================= */
+
+/* ── CSS custom properties ── */
+:root {
+    --elig-bg:            #f5f6fa;
+    --elig-surface:       #ffffff;
+    --elig-surface2:      #f0f4ff;
+    --elig-border:        #e2e8f0;
+    --elig-primary:       #2a3f5f;
+    --elig-primary-dark:  #083d5d;
+    --elig-primary-light: #eff6ff;
+    --elig-accent:        #f59e0b;
+    --elig-accent-light:  #fffbeb;
+    --elig-green:         #16a34a;
+    --elig-green-light:   #f0fdf4;
+    --elig-red:           #dc2626;
+    --elig-text:          #0f172a;
+    --elig-text2:         #475569;
+    --elig-text3:         #94a3b8;
+    --elig-radius:        12px;
+    --elig-radius-lg:     18px;
+    --elig-shadow:        0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --elig-shadow-lg:     0 8px 32px rgba(37,99,235,.12), 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* ── Scope ── */
+.eligibility-page *,
+.eligibility-page *::before,
+.eligibility-page *::after {
+    box-sizing: border-box;
+}
+
+.eligibility-page {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--elig-bg);
+    color: var(--elig-text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    z-index: 0;
+    padding-top: 71px; /* navbar height — same as calendar page */
+}
+
+.eligibility-page h1,
+.eligibility-page h2,
+.eligibility-page h3,
+.eligibility-page h4 {
+    font-family: 'Sora', sans-serif;
+}
+
+/* ── Container — matches calendar's max-width & padding ── */
+.eligibility-page .container {
+    
+   
+    padding: 0 20px;
+}
+
+/* ══════════════════════════════════════════
+   HERO — identical to calendar hero
+   ══════════════════════════════════════════ */
+.eligibility-page .hero {
+    background: linear-gradient(135deg, #083d5d, #1565C0);
+    color: white;
+    padding: 30px 28px;
+    
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;          /* no top margin — padding-top on .eligibility-page handles it */
+    box-sizing: border-box;
+}
+
+.eligibility-page .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    z-index: 0;
+}
+
+.eligibility-page .hero > * {
+    position: relative;
+    z-index: 1;
+}
+
+.eligibility-page .hero h1 {
+    font-size: clamp(22px, 4vw, 36px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin: auto;
+}
+
+.eligibility-page .stats-ribbon {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.eligibility-page .stat-pill {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 100px;
+    padding: 5px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: white;
+}
+
+.eligibility-page .stat-pill strong {
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 2px;
+}
+
+/* ══════════════════════════════════════════
+   CHECKER SECTION
+   ══════════════════════════════════════════ */
+.eligibility-page .checker-wrapper {
+    padding: 28px 0 40px;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+.eligibility-page .checker-card {
+    background: var(--elig-surface);
+    border-radius: var(--elig-radius-lg);
+    box-shadow: var(--elig-shadow-lg);
+    overflow: hidden;
+    padding: 0 16px;
+}
+
+/* ── Mode description ── */
+.eligibility-page .mode-desc {
+    background: var(--elig-surface2);
+    border-radius: var(--elig-radius);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--elig-text2);
+    margin: 24px 24px 36px;
+    border-left: 3px solid var(--elig-primary);
+}
+
+.eligibility-page .mode-desc strong {
+    color: var(--elig-text);
+}
+
+/* ── Form ── */
+.eligibility-page .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 28px;
+    padding: 20px 32px 0;
+}
+
+.eligibility-page .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--elig-text);
+    margin-bottom: 7px;
+}
+
+.eligibility-page .form-group label .req {
+    color: var(--elig-red);
+    margin-left: 2px;
+}
+
+.eligibility-page .form-group input,
+.eligibility-page .form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--elig-border);
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--elig-text);
+    background: white;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+}
+
+.eligibility-page .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+.eligibility-page .form-group input:focus,
+.eligibility-page .form-group select:focus {
+    border-color: var(--elig-primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+
+.eligibility-page .btn-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--elig-primary), var(--elig-primary-dark));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 32px;
+    margin: 0 32px 24px;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 4px 14px rgba(37,99,235,.35);
+}
+
+.eligibility-page .btn-check:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37,99,235,.4);
+}
+
+.eligibility-page .btn-check:active {
+    transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════
+   DEEP RESULTS
+   ══════════════════════════════════════════ */
+
+/* Profile Summary */
+.eligibility-page .profile-summary {
+    margin: 0 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--elig-border);
+    display: none;
+}
+
+.eligibility-page .profile-summary.visible {
+    display: block;
+}
+
+.eligibility-page .summary-card {
+    background: var(--elig-surface2);
+    border-radius: var(--elig-radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.eligibility-page .summary-card h2 {
+    font-size: 16px;
+    margin-bottom: 14px;
+}
+
+.eligibility-page .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.eligibility-page .summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.eligibility-page .summary-item .label {
+    font-size: 11px;
+    color: var(--elig-text3);
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.eligibility-page .summary-item .value {
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--elig-text);
+}
+
+.eligibility-page .result-count-banner {
+    background: var(--elig-green);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.eligibility-page .result-count-banner strong {
+    font-size: 18px;
+}
+
+/* Exam Cards */
+.eligibility-page .deep-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 24px 24px 14px;
+    padding-top: 8px;
+    color: var(--elig-text);
+}
+
+.eligibility-page .deep-section-title.hidden {
+    display: none;
+}
+
+.eligibility-page .exams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin: 0 24px 28px;
+}
+
+.eligibility-page .exams-grid.hidden {
+    display: none;
+}
+
+.eligibility-page .exam-card {
+    border: 1.5px solid var(--elig-border);
+    border-radius: var(--elig-radius);
+    overflow: hidden;
+    background: white;
+    transition: box-shadow .2s, border-color .2s, transform .2s;
+}
+
+.eligibility-page .exam-card:hover {
+    box-shadow: var(--elig-shadow-lg);
+    border-color: var(--elig-primary);
+    transform: translateY(-2px);
+}
+
+.eligibility-page .exam-card.eligible    { border-color: #bbf7d0; }
+.eligibility-page .exam-card.recommended { border-color: #c7d2fe; }
+.eligibility-page .exam-card.upcoming    { border-color: #fde68a; }
+
+.eligibility-page .exam-header {
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    border-bottom: 1px solid var(--elig-border);
+}
+
+.eligibility-page .exam-header h3 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.eligibility-page .department-badge {
+    font-size: 10px;
+    font-weight: 700;
+    background: var(--elig-primary-light);
+    color: var(--elig-primary);
+    border-radius: 6px;
+    padding: 2px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.eligibility-page .exam-body {
+    padding: 12px 16px 14px;
+}
+
+.eligibility-page .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12.5px;
+    padding: 4px 0;
+    color: var(--elig-text2);
+    border-bottom: 1px dashed var(--elig-border);
+}
+
+.eligibility-page .info-row:last-of-type {
+    border-bottom: none;
+}
+
+.eligibility-page .info-row strong {
+    color: var(--elig-text);
+    font-weight: 600;
+}
+
+.eligibility-page .exam-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.eligibility-page .btn-details,
+.eligibility-page .btn-apply {
+    flex: 1;
+    text-align: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background .15s;
+}
+
+.eligibility-page .btn-details {
+    background: var(--elig-surface2);
+    color: var(--elig-primary);
+    border: 1.5px solid var(--elig-primary-light);
+}
+
+.eligibility-page .btn-details:hover {
+    background: var(--elig-primary-light);
+}
+
+.eligibility-page .btn-apply {
+    background: var(--elig-primary);
+    color: white;
+}
+
+.eligibility-page .btn-apply:hover {
+    background: var(--elig-primary-dark);
+}
+
+.eligibility-page .no-results {
+    margin: 0 24px 24px;
+    background: var(--elig-surface2);
+    border-radius: var(--elig-radius);
+    padding: 24px;
+    text-align: center;
+    color: var(--elig-text2);
+    font-size: 14px;
+}
+
+/* Tips Card */
+.eligibility-page .tips-card {
+    margin: 0 24px 32px;
+    background: var(--elig-accent-light);
+    border: 1px solid #fde68a;
+    border-radius: var(--elig-radius);
+    padding: 18px 20px;
+    display: none;
+}
+
+.eligibility-page .tips-card.visible {
+    display: block;
+}
+
+.eligibility-page .tips-card h3 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.eligibility-page .tips-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.eligibility-page .tips-card ul li {
+    font-size: 13px;
+    color: var(--elig-text2);
+}
+
+/* ══════════════════════════════════════════
+   REFERENCE TABLE
+   ══════════════════════════════════════════ */
+.eligibility-page .ref-section {
+    padding: 48px 0;
+}
+
+.eligibility-page .section-header {
+    margin-bottom: 24px;
+}
+
+.eligibility-page .section-header h2 {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.eligibility-page .section-header p {
+    font-size: 14px;
+    color: var(--elig-text2);
+}
+
+.eligibility-page .table-wrapper {
+    background: var(--elig-surface);
+    border-radius: var(--elig-radius-lg);
+    box-shadow: var(--elig-shadow);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.eligibility-page .table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.eligibility-page .table-wrapper thead tr {
+    background: #1e3a8a;
+    color: white;
+}
+
+.eligibility-page .table-wrapper thead th {
+    padding: 13px 16px;
+    text-align: left;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.eligibility-page .table-wrapper tbody tr {
+    border-bottom: 1px solid var(--elig-border);
+    transition: background .15s;
+}
+
+.eligibility-page .table-wrapper tbody tr:last-child {
+    border-bottom: none;
+}
+
+.eligibility-page .table-wrapper tbody tr:hover {
+    background: var(--elig-surface2);
+}
+
+.eligibility-page .table-wrapper tbody td {
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+.eligibility-page .table-wrapper tbody td:first-child {
+    font-weight: 600;
+    color: var(--elig-primary);
+}
+
+.eligibility-page .notif-badge {
+    display: inline-block;
+    background: var(--elig-accent-light);
+    color: #92400e;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.eligibility-page .notif-badge.tbn {
+    background: #f1f5f9;
+    color: var(--elig-text3);
+    border-color: var(--elig-border);
+}
+
+.eligibility-page .table-note {
+    font-size: 12px;
+    color: var(--elig-text2);
+    padding: 12px 16px;
+    background: var(--elig-accent-light);
+    border-top: 1px solid #fde68a;
+}
+
+/* ══════════════════════════════════════════
+   AGE RELAXATION CARDS
+   ══════════════════════════════════════════ */
+.eligibility-page .relaxation-section {
+    padding: 0 0 48px;
+}
+
+.eligibility-page .relax-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+}
+
+.eligibility-page .relax-card {
+    background: var(--elig-surface);
+    border-radius: var(--elig-radius);
+    padding: 18px 20px;
+    box-shadow: var(--elig-shadow);
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border-left: 4px solid transparent;
+}
+
+.eligibility-page .relax-card.obc { border-color: #f59e0b; }
+.eligibility-page .relax-card.sc,
+.eligibility-page .relax-card.st  { border-color: #3b82f6; }
+.eligibility-page .relax-card.pwd { border-color: #22c55e; }
+.eligibility-page .relax-card.esm { border-color: #f97316; }
+.eligibility-page .relax-card.ews { border-color: #94a3b8; }
+
+.eligibility-page .relax-years {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+    min-width: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eligibility-page .relax-card.obc .relax-years { color: #d97706; }
+.eligibility-page .relax-card.sc  .relax-years,
+.eligibility-page .relax-card.st  .relax-years { color: var(--elig-primary); }
+.eligibility-page .relax-card.pwd .relax-years { color: var(--elig-green); }
+.eligibility-page .relax-card.esm .relax-years { color: #ea580c; }
+.eligibility-page .relax-card.ews .relax-years { color: var(--elig-text3); }
+
+.eligibility-page .relax-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.eligibility-page .relax-info p {
+    font-size: 12px;
+    color: var(--elig-text2);
+    line-height: 1.5;
+}
+
+/* ══════════════════════════════════════════
+   SPINNER
+   ══════════════════════════════════════════ */
+.spinner-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid rgba(255,255,255,.25);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: elig-spin .7s linear infinite;
+}
+
+.spinner-overlay p {
+    color: white;
+    margin-top: 16px;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+}
+
+@keyframes elig-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — 768px  (matches calendar exactly)
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+    .eligibility-page {
+        padding-top: 65px;
+    }
+
+    .eligibility-page .hero {
+        margin: 16px 12px 0;
+        border-radius: 14px;
+        padding: 20px 16px;
+    }
+
+    .eligibility-page .hero h1     { font-size: 20px; margin-bottom: 8px; }
+    .eligibility-page .stats-ribbon { gap: 8px; }
+    .eligibility-page .stat-pill   { font-size: 11px; padding: 4px 12px; }
+    .eligibility-page .stat-pill strong { font-size: 12px; }
+
+    .eligibility-page .checker-wrapper { padding: 20px 0 28px; }
+    .eligibility-page .checker-card    { padding: 0 12px; }
+
+    .eligibility-page .mode-desc {
+        margin: 16px 0 20px;
+        font-size: 13px;
+        padding: 12px 14px;
+    }
+
+    .eligibility-page .form-grid {
+        padding: 16px 0 0;
+        gap: 12px;
+        grid-template-columns: 1fr;
+    }
+
+    .eligibility-page .btn-check {
+        margin: 0 0 20px;
+        width: 100%;
+        justify-content: center;
+        font-size: 14px;
+        padding: 13px 20px;
+    }
+
+    .eligibility-page .profile-summary  { margin: 0; padding-top: 20px; }
+    .eligibility-page .summary-card     { padding: 16px; }
+    .eligibility-page .summary-grid     { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .eligibility-page .deep-section-title { margin: 20px 0 12px; font-size: 16px; }
+    .eligibility-page .exams-grid       { margin: 0 0 24px; grid-template-columns: 1fr; gap: 12px; }
+    .eligibility-page .tips-card        { margin: 0 0 24px; }
+    .eligibility-page .no-results       { margin: 0 0 20px; }
+
+    .eligibility-page .ref-section      { padding: 32px 0; }
+    .eligibility-page .section-header h2 { font-size: 17px; }
+    .eligibility-page .relaxation-section { padding: 0 0 32px; }
+    .eligibility-page .relax-grid       { grid-template-columns: 1fr; gap: 10px; }
+    .eligibility-page .relax-card       { padding: 14px 16px; }
+    .eligibility-page .relax-years      { font-size: 20px; min-width: 40px; }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — 480px  (single consolidated block)
+   ══════════════════════════════════════════ */
+@media (max-width: 480px) {
+    .eligibility-page {
+        padding-top: 68px;
+    }
+        .eligibility-page .container {
+        padding: 0 4px;
+    }
+
+  
+
+    .eligibility-page .hero {
+         margin: 4px 0 0;
+        border-radius: 12px;
+        padding: 16px 14px;
+    }
+
+    .eligibility-page .hero h1              { font-size: 18px; }
+    .eligibility-page .stats-ribbon         { gap: 6px; }
+    .eligibility-page .stat-pill            { font-size: 10px; padding: 3px 8px; }
+    .eligibility-page .stat-pill strong     { font-size: 11px; }
+
+    .eligibility-page .mode-desc            { font-size: 12.5px; padding: 12px 14px; }
+
+    .eligibility-page .form-group label     { font-size: 12px; }
+    .eligibility-page .form-group input,
+    .eligibility-page .form-group select    { padding: 9px 12px; font-size: 13px; }
+
+    .eligibility-page .btn-check            { font-size: 13px; padding: 11px 16px; }
+
+    .eligibility-page .summary-grid         { grid-template-columns: 1fr; gap: 8px; }
+    .eligibility-page .result-count-banner  { font-size: 13px; }
+
+    .eligibility-page .exam-header h3       { font-size: 13px; }
+    .eligibility-page .info-row             { font-size: 12px; }
+    .eligibility-page .btn-details,
+    .eligibility-page .btn-apply            { font-size: 11px; padding: 7px 8px; }
+
+    .eligibility-page .table-wrapper table  { font-size: 11px; min-width: 480px; }
+    .eligibility-page .table-wrapper thead th,
+    .eligibility-page .table-wrapper tbody td { padding: 7px 10px; }
+
+    .eligibility-page .relax-info h4        { font-size: 13px; }
+    .eligibility-page .relax-info p         { font-size: 11px; }
+    .eligibility-page .section-header h2    { font-size: 15px; }
+    .eligibility-page .section-header p     { font-size: 12px; }
+}

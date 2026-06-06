@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Govt Exam Eligibility Checker 2026 | Sarkari Exam Finder</title>
+    <meta name="description" content="Instantly check your eligibility for 100+ government exams in 2026 — UPSC, SSC, Banking, Railway, Defence and more. Free tool, no login required.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="/nokari/css/common/navbar.css">
+    <link rel="stylesheet" href="/nokari/css/eligibility.css">
+    <link rel="stylesheet" href="/nokari/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<%- include('../common/navbar') %>
+
+<div class="eligibility-page">
+    <section class="container">
+        <div class="hero">
+            <h1>Government Exam Eligibility Checker 2026</h1>
+            <div class="stats-ribbon">
+                <div class="stat-pill"><strong>100+</strong> Exams Covered</div>
+                <div class="stat-pill">📅 <strong>1 Aug 2026</strong> Age Cut-off</div>
+                <div class="stat-pill">OBC <strong>+3 yrs</strong> Relaxation</div>
+                <div class="stat-pill">SC/ST <strong>+5 yrs</strong> Relaxation</div>
+                <div class="stat-pill">PwBD <strong>+10 yrs</strong> Relaxation</div>
+            </div>
+        </div>
+    </section>
+
+    <% if (typeof query !== 'undefined' && query && query.error) { %>
+    <div style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:14px 20px;border-radius:10px;margin:16px auto;max-width:960px;font-size:14px;">
+        ⚠️ <%= decodeURIComponent(query.error) %>
+    </div>
+    <% } %>
+
+    <section class="checker-wrapper">
+        <div class="container">
+            <div class="checker-card">
+                <!-- ══ DEEP CHECK ONLY ══ -->
+                <div class="mode-desc">
+                    <strong>🔍 Deep Check:</strong> Full eligibility report for 9 major exams — UPSC IAS, SSC CGL, IBPS PO, SBI PO, RRB NTPC, IBPS Clerk, SBI Clerk, RRB Group D, and SSC GD Constable. Includes attempt limits, domicile rules, and physical standards.
+                </div>
+                
+                <form id="deepForm" action="/nokari/eligibility/check" method="POST">
+                    <input type="hidden" name="mode" value="deep">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dob_d">📅 Date of Birth <span class="req">*</span></label>
+                            <input type="date" id="dob_d" name="dob" required max="2010-01-01"
+                                value="<%= (typeof userInput !== 'undefined' && userInput && userInput.dob) ? userInput.dob : '' %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="category_d">Category <span class="req">*</span></label>
+                            <select id="category_d" name="category" required>
+                                <% ['General','OBC','SC','ST','EWS','PwBD','Ex-Servicemen'].forEach(function(cat){ %>
+                                    <option value="<%= cat %>"
+                                        <%= (typeof userInput !== 'undefined' && userInput && userInput.category === cat) ? 'selected' : (cat === 'General' ? 'selected' : '') %>>
+                                        <%= cat %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="qualification_d">🎓 Qualification <span class="req">*</span></label>
+                            <select id="qualification_d" name="qualification" required>
+                                <% [['8th','8th Pass'],['10th','10th Pass'],['12th','12th Pass'],['Diploma','Diploma'],['Graduation','Graduate'],['Post Graduation','Post Graduate']].forEach(function(q){ %>
+                                    <option value="<%= q[0] %>"
+                                        <%= (typeof userInput !== 'undefined' && userInput && userInput.qualification === q[0]) ? 'selected' : (q[0] === 'Graduation' ? 'selected' : '') %>>
+                                        <%= q[1] %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender_d">Gender</label>
+                            <select id="gender_d" name="gender">
+                                <option value="All"    <%= (typeof userInput !== 'undefined' && userInput && userInput.gender === 'All')    ? 'selected' : 'selected' %>>All / Prefer not to say</option>
+                                <option value="Male"   <%= (typeof userInput !== 'undefined' && userInput && userInput.gender === 'Male')   ? 'selected' : '' %>>Male</option>
+                                <option value="Female" <%= (typeof userInput !== 'undefined' && userInput && userInput.gender === 'Female') ? 'selected' : '' %>>Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="state_d">State / Domicile</label>
+                            <select id="state_d" name="state">
+                                <% ['All India','Andhra Pradesh','Bihar','Delhi','Gujarat','Haryana','Karnataka','Madhya Pradesh','Maharashtra','Punjab','Rajasthan','Tamil Nadu','Uttar Pradesh','West Bengal'].forEach(function(s){ %>
+                                    <option value="<%= s %>"
+                                        <%= (typeof userInput !== 'undefined' && userInput && userInput.state === s) ? 'selected' : (s === 'All India' ? 'selected' : '') %>>
+                                        <%= s %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="interest_d">Area of Interest</label>
+                            <select id="interest_d" name="interest">
+                                <% ['All Government Jobs','UPSC','SSC','Banking','Railway','Defence','Police','Teaching','State PSC'].forEach(function(i){ %>
+                                    <option value="<%= i === 'All Government Jobs' ? 'All' : i %>"
+                                        <%= (typeof userInput !== 'undefined' && userInput && (userInput.interest === i || (i === 'All Government Jobs' && userInput.interest === 'All'))) ? 'selected' : (i === 'All Government Jobs' ? 'selected' : '') %>>
+                                        <%= i %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-check">🔍 Generate Deep Eligibility Report →</button>
+                </form>
+
+                <!-- ══ DEEP CHECK RESULTS ══ -->
+                <% if (typeof eligibleExams !== 'undefined') { %>
+                <div class="profile-summary visible">
+                    <div class="summary-card">
+                        <h2>Your Eligibility Profile</h2>
+                        <div class="summary-grid">
+                            <% if (typeof userInput !== 'undefined' && userInput) { %>
+                            <div class="summary-item">
+                                <span class="label">Qualification</span>
+                                <span class="value"><%= userInput.qualification %></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Age</span>
+                                <span class="value"><%= userInput.age %> years</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">State</span>
+                                <span class="value"><%= userInput.state %></span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">Category</span>
+                                <span class="value"><%= userInput.category %></span>
+                            </div>
+                            <% } %>
+                        </div>
+                        <div class="result-count-banner">
+                            🎯 You are eligible for <strong><%= typeof totalCount !== 'undefined' ? totalCount : 0 %></strong> government exams
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="deep-section-title">Exams You Can Apply For</h2>
+                <% if (eligibleExams && eligibleExams.length > 0) { %>
+                <div class="exams-grid">
+                    <% eligibleExams.forEach(function(exam) { %>
+                    <div class="exam-card eligible">
+                        <div class="exam-header">
+                            <h3><%= exam.title %></h3>
+                            <span class="department-badge"><%= exam.department %></span>
+                        </div>
+                        <div class="exam-body">
+                            <div class="info-row">
+                                <span>💰 Salary</span>
+                                <strong>₹<%= exam.salaryRange.min %> – ₹<%= exam.salaryRange.max %></strong>
+                            </div>
+                            <div class="info-row">
+                                <span>📅 Last Date</span>
+                                <strong><%= exam.lastDate.toLocaleDateString() %></strong>
+                            </div>
+                            <div class="info-row">
+                                <span>📊 Exam Level</span>
+                                <strong><%= exam.examLevel %></strong>
+                            </div>
+                            <% if (exam.admitCardDate) { %>
+                            <div class="info-row">
+                                <span>🎫 Admit Card</span>
+                                <strong><%= exam.admitCardDate.toLocaleDateString() %></strong>
+                            </div>
+                            <% } %>
+                            <div class="exam-actions">
+                                <a href="/nokari/eligibility/exam/<%= exam._id %>" class="btn-details">View Details</a>
+                                <a href="<%= exam.officialWebsite %>" target="_blank" class="btn-apply">Apply Now →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+                <% } else { %>
+                <div class="no-results">
+                    <p>No eligible exams found matching your criteria.</p>
+                    <p>Try adjusting your preferences or check back later for new notifications.</p>
+                </div>
+                <% } %>
+
+                <% if (typeof recommendations !== 'undefined' && recommendations && recommendations.length > 0) { %>
+                <h2 class="deep-section-title">Recommended For You</h2>
+                <div class="exams-grid">
+                    <% recommendations.slice(0, 6).forEach(function(exam) { %>
+                        <%- include('../partials/exam-card', { exam: exam, type: 'recommended' }) %>
+                    <% }) %>
+                </div>
+                <% } %>
+
+                
+
+                <div class="tips-card visible">
+                    <h3>💡 Pro Tips</h3>
+                    <ul>
+                        <li>✓ Start preparing for the exams that match your qualification</li>
+                        <li>✓ Keep checking official websites for notification updates</li>
+                        <li>✓ Apply for multiple exams to increase your chances</li>
+                        <li>✓ Set reminders for application deadlines</li>
+                    </ul>
+                </div>
+                <% } %>
+            </div><!-- /.checker-card -->
+        </div><!-- /.container -->
+    </section>
+
+    <!-- ══ Reference Table ══ -->
+    <section class="ref-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>📋 Government Exam Eligibility at a Glance — 2026</h2>
+                <p>Quick reference for age limits and qualifications. OBC gets +3 years, SC/ST gets +5 years on General maximum age below.</p>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Exam</th><th>Min Age</th><th>Max Age (Gen)</th>
+                            <th>Min Qualification</th><th>Attempts</th><th>2026 Notification</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>UPSC IAS 2026</td><td>21</td><td>32</td><td>Graduate</td><td>6 (Gen)</td><td><span class="notif-badge">Feb 2026</span></td></tr>
+                        <tr><td>SSC CGL 2026</td><td>18</td><td>32</td><td>Graduate</td><td>No limit</td><td><span class="notif-badge">Apr 2026</span></td></tr>
+                        <tr><td>IBPS PO 2026</td><td>20</td><td>30</td><td>Graduate (complete)</td><td>No limit</td><td><span class="notif-badge">Jul 2026</span></td></tr>
+                        <tr><td>SBI PO 2026</td><td>21</td><td>30</td><td>Graduate (complete)</td><td>No limit</td><td><span class="notif-badge">Mar 2026</span></td></tr>
+                        <tr><td>RRB NTPC 2026</td><td>18</td><td>33</td><td>12th / Graduate</td><td>No limit</td><td><span class="notif-badge tbn">TBN</span></td></tr>
+                        <tr><td>SSC CHSL 2026</td><td>18</td><td>27</td><td>12th Pass</td><td>No limit</td><td><span class="notif-badge">May 2026</span></td></tr>
+                        <tr><td>NDA 2026</td><td>16.5</td><td>19.5</td><td>12th Pass</td><td>No limit</td><td><span class="notif-badge">Dec 2025 / Jun 2026</span></td></tr>
+                        <tr><td>Agniveer 2026</td><td>17.5</td><td>21</td><td>10th / 12th</td><td>No limit</td><td><span class="notif-badge tbn">TBN</span></td></tr>
+                    </tbody>
+                </table>
+                <div class="table-note">
+                    ⚠️ Age limits are for General/EWS as of <strong>1 August 2026</strong>. Always verify from the official notification before applying.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══ Age Relaxation ══ -->
+    <section class="relaxation-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>📋 Age Relaxation for All Categories — 2026</h2>
+                <p>Central government standard relaxation rules. Certificates from competent authority required at document verification.</p>
+            </div>
+            <div class="relax-grid">
+                <div class="relax-card obc">
+                    <div class="relax-years">+3<span>yrs</span></div>
+                    <div class="relax-info"><h4>🟡 OBC (Non-Creamy Layer)</h4><p>All central govt exams. NCL certificate required.</p></div>
+                </div>
+                <div class="relax-card sc">
+                    <div class="relax-years">+5<span>yrs</span></div>
+                    <div class="relax-info"><h4>🔵 SC / ST</h4><p>All central govt exams. Caste certificate from competent authority required.</p></div>
+                </div>
+                <div class="relax-card pwd">
+                    <div class="relax-years">+10<span>yrs</span></div>
+                    <div class="relax-info"><h4>🟢 PwBD (General)</h4><p>Person with Benchmark Disability. Disability certificate (40%+) required.</p></div>
+                </div>
+                <div class="relax-card pwd">
+                    <div class="relax-years">+13<span>yrs</span></div>
+                    <div class="relax-info"><h4>🟢 PwBD (OBC)</h4><p>OBC relaxation (3) + PwBD relaxation (10) = 13 years total.</p></div>
+                </div>
+                <div class="relax-card pwd">
+                    <div class="relax-years">+15<span>yrs</span></div>
+                    <div class="relax-info"><h4>🟢 PwBD (SC/ST)</h4><p>SC/ST relaxation (5) + PwBD relaxation (10) = 15 years total.</p></div>
+                </div>
+                <div class="relax-card esm">
+                    <div class="relax-years">+5<span>yrs</span></div>
+                    <div class="relax-info"><h4>🟠 Ex-Servicemen</h4><p>Plus actual military service period for some exams. Discharge certificate required.</p></div>
+                </div>
+                <div class="relax-card ews">
+                    <div class="relax-years">+0<span>yrs</span></div>
+                    <div class="relax-info"><h4>⚪ EWS</h4><p>EWS gets 10% reservation but NO age relaxation. Same age limit as General.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- /.eligibility-page -->
+
+<div id="loadingSpinner" class="spinner-overlay" style="display:none;">
+    <div class="spinner"></div>
+    <p>Finding best matches for you...</p>
+</div>
+
+<%- include('../common/footer') %>
+<script src="/nokari/js/eligibility.js"></script>
+</body>
+</html>

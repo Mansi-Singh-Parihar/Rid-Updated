@@ -63,50 +63,50 @@ router.post("/follow/:targetId", async (req, res) => {
 
     // ================= CHECK FOLLOW =================
     const alreadyFollow =
-  targetUser.followers.some(
-    f => f.user && f.user.toString() === userId.toString()
-  );
+      targetUser.followers.some(
+        f => f.user && f.user.toString() === userId.toString()
+      );
     // ================= UNFOLLOW =================
     if (alreadyFollow) {
 
       targetUser.followers =
-  targetUser.followers.filter(
-    f => f.user && f.user.toString() !== userId.toString()
-  );
+        targetUser.followers.filter(
+          f => f.user && f.user.toString() !== userId.toString()
+        );
 
       currentUser.following =
-  currentUser.following.filter(
-    f => f.user && f.user.toString() !== targetId.toString()
-  );
+        currentUser.following.filter(
+          f => f.user && f.user.toString() !== targetId.toString()
+        );
 
     }
 
     // ================= FOLLOW =================
     else {
 
-    // prevent duplicate followers
-if (
-  !targetUser.followers.some(
-   f => f.user && f.user.toString() === userId.toString()
-  )
-) {
-  targetUser.followers.push({
-  user: userId,
-  model: currentModel
-});
-}
+      // prevent duplicate followers
+      if (
+        !targetUser.followers.some(
+          f => f.user && f.user.toString() === userId.toString()
+        )
+      ) {
+        targetUser.followers.push({
+          user: userId,
+          model: currentModel
+        });
+      }
 
-// prevent duplicate following
-if (
-  !currentUser.following.some(
-    id => id.toString() === targetId.toString()
-  )
-) {
-  currentUser.following.push({
-  user: targetId,
-  model: targetModel
-});
-}
+      // prevent duplicate following
+      if (
+        !currentUser.following.some(
+          id => id.toString() === targetId.toString()
+        )
+      ) {
+        currentUser.following.push({
+          user: targetId,
+          model: targetModel
+        });
+      }
 
     }
 
@@ -144,15 +144,15 @@ router.get("/teacher/followers", async (req, res) => {
 
     let profileUser =
       await Teacher.findById(userId)
-       .populate("followers.user")
-.populate("following.user")
+        .populate("followers.user")
+        .populate("following.user")
 
     if (!profileUser) {
 
       profileUser =
         await User.findById(userId)
-         .populate("followers.user")
-.populate("following.user")
+          .populate("followers.user")
+          .populate("following.user")
 
     }
 
@@ -194,14 +194,14 @@ router.get("/profile/:id", async (req, res) => {
     let profileUser =
       await Teacher.findById(profileId)
         .populate("followers.user")
-.populate("following.user")
+        .populate("following.user")
 
     if (!profileUser) {
 
       profileUser =
         await User.findById(profileId)
           .populate("followers.user")
-.populate("following.user")
+          .populate("following.user")
 
     }
 

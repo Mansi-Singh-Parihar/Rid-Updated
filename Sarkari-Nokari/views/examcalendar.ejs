@@ -1,0 +1,504 @@
+<link rel="stylesheet" href="/nokari/css/common/navbar.css">
+<link rel="stylesheet" href="/nokari/css/common/footer.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%- include('common/navbar') %>
+
+<%
+function fmtDate(val, opts) {
+  if (!val) return null;
+  if (val instanceof Date && !isNaN(val)) {
+    return val.toLocaleDateString('en-IN', opts || { day:'numeric', month:'short', year:'numeric' });
+  }
+  const d = new Date(String(val));
+  if (!isNaN(d.getTime())) {
+    return d.toLocaleDateString('en-IN', opts || { day:'numeric', month:'short', year:'numeric' });
+  }
+  return String(val);
+}
+
+if (typeof grouped === 'undefined') { var grouped = {}; }
+if (typeof categoryCounts === 'undefined') { var categoryCounts = {}; }
+if (typeof activeCategory === 'undefined') { var activeCategory = 'All'; }
+if (typeof totalCount === 'undefined') { var totalCount = 0; }
+%>
+
+<div class="calendar-page">
+
+  <!-- ══ HERO ══ -->
+  <div class="hero">
+    <div class="hero-container">
+      <h1>📅 Exam Calendar <span>2025–26</span></h1>
+      <p>Track upcoming government exams, notifications & application deadlines in one place</p>
+      <div class="stats-ribbon">
+        <div class="stat-pill"><strong><%= totalCount %></strong> Total Exams</div>
+        <div class="stat-pill"><strong><%= Object.keys(grouped).length %></strong> Active Months</div>
+        <div class="stat-pill"><strong><%= Object.keys(categoryCounts).length %></strong> Categories</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="content-container">
+
+    <!-- Category Filter -->
+    <div class="filter-scroll">
+      <% const categories = ["All","UPSC","SSC","Banking","Railway","Defence","Teaching","Police","State PSC"]; %>
+      <% categories.forEach(cat => { %>
+        <% const qs = new URLSearchParams(); if (cat !== 'All') qs.set('category', cat); const href = '/examcalendar' + (qs.toString() ? '?' + qs.toString() : ''); %>
+        <a href="<%= href %>" class="filter-pill <%= activeCategory === cat ? 'active' : '' %>">
+          <%= cat %><span><%= cat === 'All' ? totalCount : (categoryCounts[cat] || 0) %></span>
+        </a>
+      <% }) %>
+    </div>
+
+    <!-- Month Sections -->
+    <% if (!grouped || Object.keys(grouped).length === 0) { %>
+      <div class="no-results">⚠️ No exams found. Please check back later.</div>
+    <% } else { %>
+      <% Object.entries(grouped).forEach(([month, exams]) => { %>
+
+        <div class="month-wrapper">
+          <div class="month-header">
+            <span class="month-name"><%= month %></span>
+            <span class="month-count"><%= exams.length %> exams</span>
+          </div>
+
+          <div class="cards-grid">
+            <% exams.forEach(exam => { %>
+              <%
+                const startFmt = fmtDate(exam.applyStartDate);
+                const endFmt   = fmtDate(exam.applyLastDate, { day:'numeric', month:'short' });
+                const examDtFmt = exam.examDateRaw;
+                const orgSite  = exam.officialSite || exam.applyLink;
+              %>
+
+              <div class="exam-card">
+
+                <!-- Top row: date badge + official tag -->
+                <div class="card-top">
+                  <div class="date-badge">
+                    📅
+                    <% if (startFmt) { %>
+                      <%= startFmt %><% if (endFmt && endFmt !== startFmt) { %> – <%= endFmt %><% } %>
+                    <% } else { %>TBA<% } %>
+                  </div>
+                  <% if (exam.isOfficial) { %>
+                    <span class="official-tag">✓ Official</span>
+                  <% } %>
+                </div>
+
+                <!-- Title -->
+                <div class="exam-title"><%= exam.title %></div>
+
+                <!-- Meta info -->
+                <div class="exam-meta">
+                  <% if (exam.organization) { %>
+                    <span class="meta-item">🏢 <%= exam.organization %></span>
+                  <% } %>
+                  <% if (examDtFmt) { %>
+                    <span class="meta-item meta-highlight">📝 Exam: <%= examDtFmt %></span>
+                  <% } %>
+                  <% if (exam.totalPosts) { %>
+                    <span class="meta-item meta-vacancy">
+                      👥 <%= typeof exam.totalPosts === 'number' ? exam.totalPosts.toLocaleString('en-IN') : exam.totalPosts %> vacancies
+                    </span>
+                  <% } %>
+                </div>
+
+                <!-- Actions -->
+                <div class="card-actions">
+                  <a href="/nokari/exam/<%= exam.type %>/<%= exam._id %>" class="btn-view">View Details →</a>
+                  <% if (orgSite) { %>
+                    <a href="<%= orgSite %>" target="_blank" rel="noopener noreferrer" class="btn-site">Official Site ↗</a>
+                  <% } else { %>
+                    <span class="btn-site btn-disabled">Official Site ↗</span>
+                  <% } %>
+                </div>
+
+              </div>
+            <% }) %>
+          </div>
+        </div>
+
+      <% }) %>
+    <% } %>
+
+  </div>
+</div>
+
+<style>
+:root {
+  --th-bg:           #f5f6fa;
+  --th-surface:      #ffffff;
+  --th-surface2:     #f0f4ff;
+  --th-border:       #e2e8f0;
+  --th-primary:      #2a3f5f;
+  --th-primary-dark: #083d5d;
+  --th-primary-light:#eff6ff;
+  --th-green:        #16a34a;
+  --th-green-light:  #f0fdf4;
+  --th-text:         #0f172a;
+  --th-text2:        #475569;
+  --th-text3:        #94a3b8;
+  --th-radius:       12px;
+  --th-radius-lg:    18px;
+  --th-shadow-lg:    0 8px 32px rgba(37,99,235,.12), 0 2px 8px rgba(0,0,0,.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--th-bg);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--th-text);
+}
+
+.calendar-page {
+  padding-top: 80px;
+}
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, #083d5d, #1565C0);
+  color: white;
+  padding: 20px 18px;
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin:  auto;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  z-index: 0;
+}
+
+.hero-container {
+  position: relative;
+  z-index: 1;
+  padding: 0 28px;
+}
+
+.hero h1 {
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.hero h1 span { color: #a5d8ff; }
+
+.hero p {
+  font-size: 15px;
+  opacity: 0.88;
+  max-width:fit-content;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.stats-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.stat-pill {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 100px;
+  padding: 5px 16px;
+  font-size: 13px;
+  color: white;
+}
+
+.stat-pill strong {
+  font-weight: 700;
+  margin-right: 4px;
+}
+
+/* ── Content ── */
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+
+/* ── Filter ── */
+.filter-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-scroll::-webkit-scrollbar { height: 3px; }
+
+.filter-pill {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: var(--th-surface);
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--th-text);
+  text-decoration: none;
+  border: 1.5px solid var(--th-border);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filter-pill span {
+  font-size: 11px;
+  color: var(--th-text3);
+  background: #f1f5f9;
+  padding: 1px 6px;
+  border-radius: 20px;
+}
+
+.filter-pill.active {
+  background: linear-gradient(135deg, var(--th-primary), var(--th-primary-dark));
+  color: white;
+  border-color: transparent;
+}
+
+.filter-pill.active span {
+  background: rgba(255,255,255,.2);
+  color: white;
+}
+
+.filter-pill:hover:not(.active) {
+  border-color: var(--th-primary);
+  transform: translateY(-1px);
+}
+
+/* ── Month ── */
+.month-wrapper { margin-bottom: 32px; }
+
+.month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--th-border);
+}
+
+.month-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--th-primary);
+}
+
+.month-count {
+  font-size: 12px;
+  color: var(--th-text3);
+  background: var(--th-surface2);
+  padding: 3px 12px;
+  border-radius: 30px;
+}
+
+/* ── Cards Grid ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+/* ── Exam Card ── */
+.exam-card {
+  background: var(--th-surface);
+  border-radius: var(--th-radius);
+  padding: 14px 16px;
+  border: 1px solid var(--th-border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.exam-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--th-shadow-lg);
+  border-color: var(--th-primary);
+}
+
+/* Top row */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--th-primary);
+  background: var(--th-primary-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.official-tag {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--th-green-light);
+  color: var(--th-green);
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Title */
+.exam-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--th-text);
+  line-height: 1.35;
+}
+
+/* Meta */
+.exam-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.meta-item {
+  font-size: 11px;
+  color: var(--th-text2);
+  background: var(--th-surface2);
+  padding: 3px 10px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-vacancy {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* Actions */
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--th-border);
+}
+
+.btn-view, .btn-site {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 6px;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-view {
+  background: linear-gradient(135deg, var(--th-primary), var(--th-primary-dark));
+  color: white;
+}
+
+.btn-view:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(8,61,93,0.3);
+}
+
+.btn-site {
+  background: white;
+  color: var(--th-primary);
+  border: 1.5px solid var(--th-border);
+}
+
+.btn-site:hover {
+  background: var(--th-primary-light);
+  border-color: var(--th-primary);
+}
+
+.btn-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--th-surface);
+  border-radius: var(--th-radius-lg);
+  color: var(--th-text2);
+  font-size: 15px;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1024px) {
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .calendar-page { padding-top: 65px; }
+
+ .hero {
+  margin: 0 12px;
+  margin-top: 14px;
+  border-radius: 14px;
+  padding: 20px 16px;
+}
+
+  .hero-container { padding: 0 16px; }
+  .hero h1 { font-size: 20px; margin-bottom: 8px; }
+  .hero p { font-size: 13px; margin-bottom: 14px; }
+  .stat-pill { font-size: 11px; padding: 4px 12px; }
+
+  .content-container { padding: 18px 12px 40px; }
+
+  .filter-pill { padding: 6px 12px; font-size: 12px; }
+  .filter-scroll { margin-bottom: 18px; }
+
+  .month-name { font-size: 16px; }
+  .month-count { font-size: 11px; }
+
+  .cards-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  .exam-card { padding: 12px 13px; gap: 7px; }
+  .exam-title { font-size: 14px; }
+  .date-badge { font-size: 10px; }
+
+  .btn-view, .btn-site { font-size: 12px; padding: 7px 8px; }
+}
+
+@media (max-width: 480px) {
+.eligibility-page .hero {
+  margin: 60px 8px 0;
+  border-radius: 12px;
+  padding: 16px 14px;
+}
+  .hero h1 { font-size: 18px; }
+  .stats-ribbon { gap: 6px; }
+
+  .exam-title { font-size: 13px; }
+  .btn-view, .btn-site { font-size: 11px; }
+  .month-name { font-size: 15px; }
+}
+</style>
+
+<%- include('common/footer') %>

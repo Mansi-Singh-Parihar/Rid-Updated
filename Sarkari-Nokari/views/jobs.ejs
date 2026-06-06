@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest Govt Jobs - Sarkari Naukari</title>
+  <link rel="stylesheet" href="/nokari/css/common/navbar.css">
+  <link rel="stylesheet" href="/nokari/css/common/subnavbar.css">
+
+  <link rel="stylesheet" href="/nokari/css/common/footer.css">
+  <link rel="stylesheet" href="/nokari/css/pages/jobs.css">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="jobs-page">
+
+  <%- include('common/navbar') %>
+  <%- include('common/subnavbar') %>
+
+<%
+  function fmtDate(val) {
+    if (!val) return null;
+    const d = new Date(val);
+    if (isNaN(d)) return String(val);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function getStateName(code) {
+    const states = {
+      central: "Central Govt / All India",
+      ap: "Andhra Pradesh",
+      ar: "Arunachal Pradesh",
+      as: "Assam",
+      br: "Bihar",
+      cg: "Chhattisgarh",
+      ga: "Goa",
+      gj: "Gujarat",
+      hr: "Haryana",
+      hp: "Himachal Pradesh",
+      jh: "Jharkhand",
+      ka: "Karnataka",
+      kl: "Kerala",
+      mp: "Madhya Pradesh",
+      mh: "Maharashtra",
+      mn: "Manipur",
+      ml: "Meghalaya",
+      mz: "Mizoram",
+      nl: "Nagaland",
+      od: "Odisha",
+      pb: "Punjab",
+      rj: "Rajasthan",
+      sk: "Sikkim",
+      tn: "Tamil Nadu",
+      tg: "Telangana",
+      tr: "Tripura",
+      up: "Uttar Pradesh",
+      uk: "Uttarakhand",
+      wb: "West Bengal",
+      dl: "Delhi (NCT)",
+      jk: "Jammu & Kashmir",
+      la: "Ladakh",
+      ch: "Chandigarh",
+      dd: "Dadra & Nagar Haveli",
+      py: "Puducherry"
+    };
+    return states[code] || code;
+  }
+%>
+
+  <div class="page-wrapper">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1><span>🔥</span> Latest Govt Jobs</h1>
+      </div>
+
+            <!-- Intro Card -->
+      <div class="intro-card">
+        <div class="intro-text">
+          Welcome to <a href="#">Sarkari Naukari</a> Stay informed about latest government jobs across India.
+        
+          <div class="disclaimer-box">
+            ⚠️ <strong class="d-label">Disclaimer:</strong>
+            Vacancy count, dates, fees and eligibility shown here are for informational purposes only.
+            Candidates must verify all details on the
+            <strong class="d-link">official website</strong>
+            before applying. We are not liable for any discrepancy, loss or inconvenience.
+          </div>
+        </div>
+       <a href="https://whatsapp.com/channel/0029VbCxUkXCMY0PLcmcOt0O" 
+          class="update-btn" 
+          target="_blank" 
+          rel="noopener noreferrer">
+          📢 Join WhatsApp
+        </a>
+      </div>
+
+
+
+        <!-- Quick Job Index -->
+        <div class="job-index-box">
+        <div class="job-index-header">
+        <span>All Latest Jobs</span>
+        <span class="badge-count" id="jobCountBadge"><%= jobs.length %> Available</span>
+      </div>          
+            <% if (jobs.length === 0) { %>
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <p>No jobs available right now. Please check back soon.</p>
+        </div>
+      <% } %>
+      <div class="job-index-list">
+            <% jobs.forEach(function(job, i) { %>
+              <a class="job-index-item" href="#<%= job._id %>" data-category="<%= job.category || '' %>">
+              <span class="job-index-num"><%= i + 1 %>.</span>
+              <span class="job-index-title"><%= job.title %></span>
+              <% if (job.totalPosts) { %>
+                <span class="job-index-posts"><%= job.totalPosts.toLocaleString('en-IN') %> Posts</span>
+              <% } %>
+
+              </a>
+            <% }); %>
+          </div>
+        </div>
+      <!-- Cards -->
+      <div class="card-grid">
+        <% jobs.forEach(function(job) {
+
+          /* ── Build flat items array ── */
+          const items = [];
+
+          if (job.applyStartDate)
+            items.push({ label: 'Online Apply Start Date', value: fmtDate(job.applyStartDate) });
+
+          if (job.lastDate)
+            items.push({ label: 'Online Apply Last Date', value: fmtDate(job.lastDate), cls: 'danger' });
+
+          if (job.feeLastDate)
+            items.push({ label: 'Last Date Pay Exam Fee', value: fmtDate(job.feeLastDate) });
+
+          if (job.examDate)
+            items.push({ label: 'Exam Date', value: job.examDate, cls: 'highlight' });
+
+          if (job.admitCardInfo)
+            items.push({ label: 'Admit Card', value: job.admitCardInfo, cls: 'highlight' });
+
+          if (job.resultDate)
+            items.push({ label: 'Result Declare Date', value: job.resultDate, cls: 'highlight' });
+
+          if (job.notificationDate)
+            items.push({ label: 'Notification Date', value: fmtDate(job.notificationDate) });
+
+          if (job.feeGeneral)
+            items.push({ label: 'For General, OBC, EWS', value: '₹ ' + job.feeGeneral + '/-' });
+
+          if (job.feeSCST)
+            items.push({ label: 'For SC, ST, PH', value: '₹ ' + job.feeSCST + '/-' });
+
+          if (job.ageMin || job.ageMax) {
+            let ageVal = '';
+            if (job.ageMin && job.ageMax) ageVal = job.ageMin + ' – ' + job.ageMax + ' Years';
+            else if (job.ageMax)          ageVal = 'Up to ' + job.ageMax + ' Years';
+            else                          ageVal = 'Min ' + job.ageMin + ' Years';
+            items.push({ label: 'Age Limit', value: ageVal });
+          }
+
+          if (job.totalPosts)
+            items.push({ label: 'Total Posts', value: job.totalPosts.toLocaleString('en-IN') + '+', cls: 'highlight' });
+
+          if (job.eligibility)
+            items.push({ label: 'Qualification', value: job.eligibility });
+
+          /* vacancy as single string */
+          const vd = job.vacancyDetails || {};
+          const vacancyParts = [];
+          if (vd.UR)  vacancyParts.push('UR: ' + vd.UR);
+          if (vd.OBC) vacancyParts.push('OBC: ' + vd.OBC);
+          if (vd.EWS) vacancyParts.push('EWS: ' + vd.EWS);
+          if (vd.SC)  vacancyParts.push('SC: ' + vd.SC);
+          if (vd.ST)  vacancyParts.push('ST: ' + vd.ST);
+          if (vacancyParts.length)
+            items.push({ label: 'Vacancy Breakup', value: vacancyParts.join(' | ') });
+
+          /* selection process */
+          if (job.selectionProcess && job.selectionProcess.length)
+            items.push({ label: 'Selection Process', value: job.selectionProcess.join(' → ') });
+
+          /* Split into left / right halves */
+          const half       = Math.ceil(items.length / 2);
+          const leftItems  = items.slice(0, half);
+          const rightItems = items.slice(half);
+          const isOdd      = items.length % 2 !== 0;
+        %>
+
+          <div
+            class="modern-card"
+            id="<%= job._id %>"
+            data-category="<%= job.category || '' %>"
+            data-organization="<%= job.organization || '' %>"
+          >
+
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="card-title"><%= job.title %></div>
+            <% if (job.organization) { %>
+              <div class="card-org"><%= job.organization %></div>
+            <% } %>
+            <div class="card-badges">
+                <% if (job.category) { %>
+                  <div class="category-badge">
+                    <%= job.category %>
+                  </div>
+                <% } %>
+
+                <% if (job.state) { %>
+                  <div class="category-badge">
+                    📌 <%= getStateName(job.state) %>
+                  </div>
+                <% } %>
+              </div>
+          </div>
+
+          <%
+            /* ── Icon map ── */
+            const iconMap = {
+              'Online Apply Start Date':    '📅',
+              'Online Apply Last Date':     '⏰',
+              'Last Date Pay Exam Fee':     '💳',
+              'Exam Date':                  '📝',
+              'Admit Card':                 '🎫',
+              'Result Declare Date':        '📊',
+              'Notification Date':          '📋',
+              'For General, OBC, EWS':      '💰',
+              'For SC, ST, PH':             '💰',
+              'Age Limit':                  '👤',
+              'Total Posts':                '📈',
+              'Qualification':              '🎓',
+              'Vacancy Breakup':            '📌',
+              'Selection Process':          '⚙️',
+            };
+          %>
+
+          <!-- Info Body: two-column icon+label panel -->
+          <div class="info-body">
+
+            <!-- Left Panel -->
+            <div class="info-panel info-panel--left">
+              <% leftItems.forEach(function(item, i) { %>
+                <div class="info-item">
+                  <span class="info-icon"><%= iconMap[item.label] || '🔹' %></span>
+                  <div class="info-text">
+                    <span class="info-label"><%= item.label %> :</span>
+                    <span class="info-value <%= item.cls || '' %>"><%= item.value %></span>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="info-panel info-panel--right">
+              <% rightItems.forEach(function(item, i) { %>
+                <div class="info-item">
+                  <span class="info-icon"><%= iconMap[item.label] || '🔹' %></span>
+                  <div class="info-text">
+                    <span class="info-label"><%= item.label %> :</span>
+                    <span class="info-value <%= item.cls || '' %>"><%= item.value %></span>
+                  </div>
+                </div>
+              <% }); %>
+              <% if (isOdd) { %>
+                <div class="info-item info-item--empty">
+                  <span class="info-icon"></span>
+                  <div class="info-text"><span class="info-label"></span><span class="info-value"></span></div>
+                </div>
+              <% } %>
+            </div>
+
+          </div>
+          <!-- /info-body -->
+
+          <!-- Card Footer -->
+           <!-- Card Footer -->
+          <div class="card-footer">
+
+            <% if (job.officialSite) { %>
+              <a class="footer-btn btn-official" href="<%= job.officialSite %>" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                Official Site
+              </a>
+            <% } %>
+
+            <% if (job.notificationLink) { %>
+              <a class="footer-btn btn-secondary" href="<%= job.notificationLink %>" target="_blank">
+                📄 Notification
+              </a>
+            <% } %>
+
+            <% if (job.applyLink) { %>
+              <a class="footer-btn btn-primary" href="<%= job.applyLink %>" target="_blank">
+                ✏️ Apply Now
+              </a>
+            <% } else { %>
+              <span class="btn-disabled">🔒 Not Active</span>
+            <% } %>
+
+            <a class="footer-btn btn-guide" href="/nokari/exam/job/<%= job._id %>">
+              📘 Detail Guide
+            </a>
+
+          </div>
+
+
+        </div>
+        <% }); %>
+      </div>
+
+    </div>
+  </div>
+
+  <%- include('common/footer') %>
+  <script src="/nokari/js/jobs.js"></script>
+</body>
+</html>

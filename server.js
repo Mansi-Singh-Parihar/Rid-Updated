@@ -14,6 +14,10 @@ const nodemailer = require("nodemailer");
 const dashboardRoutes = require("./routes/dashboard-count-all-system.js");
 const candidateRoutes = require("./routes/candidateRoutes.js");
 const configureMiddleware = require("./config/middleware");
+
+// tracker
+const {startTracker}=require("./Sarkari-Nokari/tracker");
+
 dotenv.config();
 // Initialize express app
 const app = express();
@@ -122,7 +126,8 @@ const configureViews = () => {
     path.join(__dirname, "views", "ebook"),
     path.join(__dirname, "views"),
     path.join(__dirname, "code", "views"),   // 🔥 ADD THIS
-    path.join(__dirname,"DCA","views")
+    path.join(__dirname,"DCA","views"),
+    path.join(__dirname, "Sarkari-Nokari", "views") // 👈 ADD THIS
 
   ]);
 
@@ -130,6 +135,7 @@ const configureViews = () => {
   app.use(express.static(path.join(__dirname, "public")));        // main public
   app.use(express.static(path.join(__dirname, "code", "public"))); // 🔥 code/public
   app.use(express.static(path.join(__dirname,"DCA","public")))
+  app.use("/nokari",express.static(path.join(__dirname, "Sarkari-Nokari", "public")));
 };
 //=========================RTS MIDDLEWIRE=====================
 const rtsApp = require("./RTS/rtsmiddlewire");
@@ -603,12 +609,18 @@ app.use("/National-Test-Series", testRoutes);
 // all india test routes 
 const shortsRoutes = require("./routes/nationalTestSeries/shortroutes");
 app.use("/", shortsRoutes);
+const monetizationRoutes = require("./routes/nationalTestSeries/MonetizationRouters/MonetizationApplication");
+app.use("/", monetizationRoutes);
+const adminMonetizationRoutes =require("./routes/admin/monetization");
+app.use("/admin", adminMonetizationRoutes);
 const myteam=require("./routes/myteampages/myteam.js")
 app.use("/",myteam)
 // ===== TECH INTERVIEW SERVER CONNECT =====
 const techInterviewApp = require("./code/server");
 // middleware mount
 app.use("/tech-interview", techInterviewApp);
+const sarkariNokariApp = require("./Sarkari-Nokari/server");
+app.use("/nokari", sarkariNokariApp);
 configureRoutes();
 // ========== START SERVER ==========
 // ================== DB + SERVER START ==================
@@ -617,6 +629,7 @@ async function startServer() {
     console.log("🔗 Connecting MongoDB...");
 
     await mongoose.connect(process.env.MONGODB_URI);
+    startTracker();
 
     console.log("✅ MongoDB Connected Successfully");
 

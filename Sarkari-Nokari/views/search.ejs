@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results - <%= query %></title>
+
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/nokari/css/common/navbar.css">
+  <link rel="stylesheet" href="/nokari/css/common/footer.css">
+  <link rel="stylesheet" href="/nokari/css/common/whatsapp.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: #f1f5fb;
+      color: #1a1a1a;
+      line-height: 1.6;
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .main-content { flex: 1; }
+
+    .page-wrapper { padding: 2.5rem 1rem 4rem; }
+
+    .container {
+      max-width: 1250px;
+      margin: 60px auto;
+    }
+
+    /* INTRO CARD */
+    .intro-card {
+      background: #083d5d;
+      border-radius: 18px;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .intro-card h1 {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .intro-card h1 span.query-text { color: #e85c1a; }
+
+    /* 3-COLUMN GRID */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) { .results-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) {
+      .results-grid { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 1.3rem; }
+    }
+
+    /* SECTION BOX */
+    .result-section {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    /* SECTION HEADER — all blue */
+    .section-header {
+      background: linear-gradient(90deg, #083d5d 0%, #083d5d 100%);
+      color: #fff;
+      font-family: 'Baloo 2', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 20px 18px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-header .badge {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 0.78rem;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-family: Arial, sans-serif;
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    /* ROWS */
+    .result-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      text-decoration: none;
+      color: #0000CD;
+      font-family: Arial, sans-serif;
+      font-size: 0.87rem;
+      border-bottom: 1px solid #f0f4f8;
+      transition: background 0.15s, padding-left 0.15s;
+    }
+
+    .result-card:last-child { border-bottom: none; }
+
+    .result-card:hover {
+      background: #eef4ff;
+      padding-left: 22px;
+      color: #551A8B;
+      text-decoration: underline;
+    }
+
+    .result-card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+    .card-num {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      min-width: 22px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .card-title-text {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 400;
+    }
+
+    .card-arrow {
+      color: #94a3b8;
+      font-size: 12px;
+      opacity: 0;
+      transform: translateX(-5px);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    /* NO RESULT */
+    .no-result {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #475569;
+      grid-column: 1 / -1;
+    }
+
+    .no-result .empty-icon { font-size: 3rem; margin-bottom: 0.75rem; }
+
+    .no-result h3 {
+      font-family: 'Baloo 2', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #083d5d;
+      margin-bottom: 0.4rem;
+    }
+
+    .no-result p { font-size: 0.9rem; margin-bottom: 1.2rem; }
+
+    .try-btn {
+      display: inline-block;
+      background: #e85c1a;
+      color: #fff;
+      padding: 0.45rem 1.3rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: background 0.2s;
+    }
+
+    .try-btn:hover { background: #c94d0f; }
+  </style>
+</head>
+
+<body>
+
+  <%- include("common/navbar.ejs") %>
+
+  <main class="main-content">
+    <div class="page-wrapper">
+      <div class="container">
+
+        <!-- Intro Card -->
+        <div class="intro-card" style="display: none;">
+          <h1>Results</h1>
+        </div>
+
+        <!-- 3-Column Results -->
+        <div class="results-grid">
+
+          <!-- JOBS -->
+          <% if (jobs && jobs.length > 0) { %>
+            <div class="result-section">
+              <div class="section-header">
+                <i class="fa-solid fa-briefcase"></i>
+                Latest Jobs
+                <span class="badge"><%= jobs.length %> found</span>
+              </div>
+              <% jobs.forEach((item, i) => { %>
+                <a href="/nokari/jobs#<%= item._id %>" class="result-card">
+                  <span class="card-num"><%= i + 1 %>.</span>
+                  <span class="card-title-text"><%= item.title %></span>
+                  <i class="fa-solid fa-chevron-right card-arrow"></i>
+                </a>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <!-- ADMIT CARDS -->
+          <% if (admits && admits.length > 0) { %>
+            <div class="result-section">
+              <div class="section-header">
+                <i class="fa-solid fa-id-card"></i>
+                Admit Cards
+                <span class="badge"><%= admits.length %> found</span>
+              </div>
+              <% admits.forEach((item, i) => { %>
+                <a href="/nokari/admit#<%= item._id %>" class="result-card">
+                  <span class="card-num"><%= i + 1 %>.</span>
+                  <span class="card-title-text"><%= item.title %></span>
+                  <i class="fa-solid fa-chevron-right card-arrow"></i>
+                </a>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <!-- RESULTS -->
+          <% if (results && results.length > 0) { %>
+            <div class="result-section">
+              <div class="section-header">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                Results
+                <span class="badge"><%= results.length %> found</span>
+              </div>
+              <% results.forEach((item, i) => { %>
+                <a href="/nokari/result#<%= item._id %>" class="result-card">
+                  <span class="card-num"><%= i + 1 %>.</span>
+                  <span class="card-title-text"><%= item.title %></span>
+                  <i class="fa-solid fa-chevron-right card-arrow"></i>
+                </a>
+              <% }) %>
+            </div>
+          <% } %>
+
+          <!-- NO RESULTS -->
+          <% if ((!jobs || jobs.length === 0) && (!admits || admits.length === 0) && (!results || results.length === 0)) { %>
+            <div class="no-result">
+              <div class="empty-icon">📭</div>
+              <h3>No results found</h3>
+              <p>No jobs, admit cards, or results found for "<%= query %>"</p>
+              <a href="/nokari" class="try-btn">🏠 Back to Home</a>
+            </div>
+          <% } %>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <%- include("common/footer.ejs") %>
+  <script src="/nokari/js/navbar.js"></script>
+
+</body>
+</html>

@@ -293,6 +293,19 @@
             object-fit: cover;
             transition: transform 0.3s;
         }
+        .thumbnail-placeholder{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+    color:#fff;
+    font-size:24px;
+    font-weight:700;
+    line-height:1.4;
+}
 
         .test-card:hover .thumbnail img {
             transform: scale(1.02);
@@ -613,172 +626,185 @@
 
         /* ================= LIVE BADGE ================= */
 
-.live-badge{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:#ff0000;
-    color:#fff;
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:700;
-    z-index:5;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    box-shadow:0 2px 10px rgba(255,0,0,.3);
-}
+        .live-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, .3);
+        }
 
-.live-dot{
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background:#fff;
-    animation:pulse 1s infinite;
-}
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #fff;
+            animation: pulse 1s infinite;
+        }
 
-@keyframes pulse{
-    0%{transform:scale(1);opacity:1;}
-    50%{transform:scale(1.4);opacity:.5;}
-    100%{transform:scale(1);opacity:1;}
-}
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
 
-/* ================= MENU ================= */
+            50% {
+                transform: scale(1.4);
+                opacity: .5;
+            }
 
-.test-card{
-    position:relative;
-}
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
 
-.test-menu{
-    position:absolute;
-    top:12px;
-    right:12px;
-    z-index:20;
-}
+        /* ================= MENU ================= */
 
-.test-menu-btn{
-    width:38px;
-    height:38px;
-    border:none;
-    border-radius:50%;
-    background:rgba(0,0,0,.6);
-    color:#fff;
-    cursor:pointer;
-    backdrop-filter:blur(6px);
-}
+        .test-card {
+            position: relative;
+        }
 
-.test-dropdown{
-    position:absolute;
-    top:45px;
-    right:0;
-    background:#fff;
-    min-width:150px;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
-    display:none;
-}
+        .test-menu {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 20;
+        }
 
-.test-menu.active .test-dropdown{
-    display:block;
-}
+        .test-menu-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+        }
 
-.test-dropdown button{
-    width:100%;
-    border:none;
-    background:none;
-    padding:12px;
-    text-align:left;
-    cursor:pointer;
-    font-weight:600;
-}
+        .test-dropdown {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: #fff;
+            min-width: 150px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+            display: none;
+        }
 
-.test-dropdown button:hover{
-    background:#f1f5f9;
-}
-/* ================= NOT LIVE POPUP ================= */
+        .test-menu.active .test-dropdown {
+            display: block;
+        }
 
-.not-live-popup{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    opacity:0;
-    visibility:hidden;
-    transition:.25s;
-    padding:20px;
-}
+        .test-dropdown button {
+            width: 100%;
+            border: none;
+            background: none;
+            padding: 12px;
+            text-align: left;
+            cursor: pointer;
+            font-weight: 600;
+        }
 
-.not-live-popup.active{
-    opacity:1;
-    visibility:visible;
-}
+        .test-dropdown button:hover {
+            background: #f1f5f9;
+        }
 
-.not-live-box{
-    width:100%;
-    max-width:360px;
-    background:#fff;
-    border-radius:24px;
-    padding:28px 24px;
-    text-align:center;
-    animation:popupScale .25s ease;
-    box-shadow:0 20px 50px rgba(0,0,0,.2);
-}
+        /* ================= NOT LIVE POPUP ================= */
 
-@keyframes popupScale{
-    from{
-        transform:scale(.8);
-        opacity:0;
-    }
-    to{
-        transform:scale(1);
-        opacity:1;
-    }
-}
+        .not-live-popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            opacity: 0;
+            visibility: hidden;
+            transition: .25s;
+            padding: 20px;
+        }
 
-.not-live-icon{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    background:#fff3cd;
-    color:#ff9800;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:38px;
-}
+        .not-live-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-.not-live-title{
-    margin-top:18px;
-    font-size:22px;
-    font-weight:800;
-    color:#0f172a;
-}
+        .not-live-box {
+            width: 100%;
+            max-width: 360px;
+            background: #fff;
+            border-radius: 24px;
+            padding: 28px 24px;
+            text-align: center;
+            animation: popupScale .25s ease;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .2);
+        }
 
-.not-live-text{
-    margin-top:10px;
-    font-size:15px;
-    color:#64748b;
-    line-height:1.6;
-}
+        @keyframes popupScale {
+            from {
+                transform: scale(.8);
+                opacity: 0;
+            }
 
-.not-live-btn{
-    margin-top:22px;
-    width:100%;
-    border:none;
-    background:#2563eb;
-    color:#fff;
-    height:48px;
-    border-radius:14px;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-}
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .not-live-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #fff3cd;
+            color: #ff9800;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+        }
+
+        .not-live-title {
+            margin-top: 18px;
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .not-live-text {
+            margin-top: 10px;
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .not-live-btn {
+            margin-top: 22px;
+            width: 100%;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            height: 48px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -865,89 +891,121 @@
                     <div class="tests-grid">
                         <% if (tests && tests.length> 0) { %>
                             <% tests.forEach(t=> { %>
+                                <%
+const gradients = [
+"linear-gradient(135deg,#667eea,#764ba2)",
+"linear-gradient(135deg,#f093fb,#f5576c)",
+"linear-gradient(135deg,#4facfe,#00f2fe)",
+"linear-gradient(135deg,#43e97b,#38f9d7)",
+"linear-gradient(135deg,#fa709a,#fee140)",
+"linear-gradient(135deg,#30cfd0,#330867)",
+"linear-gradient(135deg,#5ee7df,#b490ca)",
+"linear-gradient(135deg,#ff9966,#ff5e62)"
+];
+
+let hash = 0;
+
+for(let i = 0; i < t.name.length; i++){
+    hash += t.name.charCodeAt(i);
+}
+
+const bgColor = gradients[hash % gradients.length];
+%>
                                 <div class="test-card">
 
-    <% if(t.status === "published"){ %>
+                                    <% if(t.status==="published" ){ %>
 
-        <div class="live-badge">
-            <span class="live-dot"></span>
-            LIVE
+                                        <div class="live-badge">
+                                            <span class="live-dot"></span>
+                                            LIVE
+                                        </div>
+
+                                        <% } %>
+
+                                            <!-- THREE DOT -->
+                                            <div class="test-menu">
+
+                                                <button class="test-menu-btn"
+                                                    onclick="event.stopPropagation(); toggleMenu(this)">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+
+                                                <div class="test-dropdown">
+
+                                                    <% if(t.status !=="published" ){ %>
+
+                                                        <button
+                                                            onclick="event.stopPropagation(); makeLive('<%= t._id %>')">
+                                                            🔴 Publish (Public)
+                                                        </button>
+
+                                                        <% } else { %>
+
+                                                            <button disabled>
+                                                                Already Live
+                                                            </button>
+
+                                                            <% } %>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div onclick="handleTestClick('<%= t._id %>', '<%= t.status %>')">
+
+                                               <div class="thumbnail">
+
+    <% if (t.thumbnail && t.thumbnail.trim() !== "") { %>
+
+        <img src="<%= t.thumbnail %>"
+             alt="thumbnail">
+
+    <% } else { %>
+
+        <div class="thumbnail-placeholder"
+             style="background:<%= bgColor %>">
+
+            <span><%= t.name %></span>
+
         </div>
 
     <% } %>
 
-    <!-- THREE DOT -->
-    <div class="test-menu">
-
-        <button class="test-menu-btn"
-            onclick="event.stopPropagation(); toggleMenu(this)">
-            <i class="fas fa-ellipsis-v"></i>
-        </button>
-
-        <div class="test-dropdown">
-
-            <% if(t.status !== "published"){ %>
-
-                <button
-                    onclick="event.stopPropagation(); makeLive('<%= t._id %>')">
-                    🔴 Publish (Public)
-                </button>
-
-            <% } else { %>
-
-                <button disabled>
-                     Already Live
-                </button>
-
-            <% } %>
-
-        </div>
-
-    </div>
-
-    <div onclick="handleTestClick('<%= t._id %>', '<%= t.status %>')">
-
-        <div class="thumbnail">
-
-            <img src="<%= t.thumbnail && t.thumbnail !== '' ? t.thumbnail : 'https://picsum.photos/300/200?random=' + t._id %>"
-                alt="test thumbnail"
-                onerror="this.src='https://picsum.photos/300/200?random=<%= t._id %>'">
-
-        </div>
-
-        <div class="video-details">
-
-            <div class="channel-avatar">
-                <%= teacher.name?.charAt(0).toUpperCase() || "T" %>
-            </div>
-
-            <div class="video-info">
-
-                <div class="video-title">
-                    <%= t.name %>
-                </div>
-
-                <div class="channel-name">
-                    👨‍🏫 <%= teacher.name %>
-                </div>
-
-                <div class="video-stats">
-                    📅 <%= new Date(t.createdAt).toLocaleDateString() %>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
 </div>
-                                   <% }) %>
+
+                                                <div class="video-details">
+
+                                                    <div class="channel-avatar">
+                                                        <%= teacher.name?.charAt(0).toUpperCase() || "T" %>
+                                                    </div>
+
+                                                    <div class="video-info">
+
+                                                        <div class="video-title">
+                                                            <%= t.name %>
+                                                        </div>
+
+                                                        <div class="channel-name">
+                                                            👨‍🏫 <%= teacher.name %>
+                                                        </div>
+
+                                                        <div class="video-stats">
+                                                            📅 <%= new Date(t.createdAt).toLocaleDateString() %>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                </div>
+                                <% }) %>
                                     <% } else { %>
                                         <div class="empty-tests">
                                             <i class="fas fa-flask" style="font-size: 36px; opacity: 0.5;"></i>
                                             <p style="margin-top: 12px;">📭 No tests created yet. Stay tuned!</p>
-                                </div>
+                                        </div>
                                         <% } %>
                     </div>
                 </div>
@@ -1248,8 +1306,8 @@
                         try {
 
                             const res = await fetch(`/api/follow/${targetId}`, {
-    method: "POST"
-})
+                                method: "POST"
+                            })
 
                             const data = await res.json();
 
@@ -1295,213 +1353,212 @@
 
             //live section 
 
-            function toggleMenu(btn){
+            function toggleMenu(btn) {
 
-    const menu = btn.closest(".test-menu");
+                const menu = btn.closest(".test-menu");
 
-    document.querySelectorAll(".test-menu").forEach(m=>{
-        if(m !== menu){
-            m.classList.remove("active");
-        }
-    });
+                document.querySelectorAll(".test-menu").forEach(m => {
+                    if (m !== menu) {
+                        m.classList.remove("active");
+                    }
+                });
 
-    menu.classList.toggle("active");
-}
-
-document.addEventListener("click",()=>{
-    document.querySelectorAll(".test-menu")
-    .forEach(m=>m.classList.remove("active"));
-});
-
-async function makeLive(testId){
-
-    try{
-
-        const res = await fetch(
-            `/National-Test-Series/live/${testId}`,
-            {
-                method:"POST"
+                menu.classList.toggle("active");
             }
-        );
 
-        const data = await res.json();
+            document.addEventListener("click", () => {
+                document.querySelectorAll(".test-menu")
+                    .forEach(m => m.classList.remove("active"));
+            });
 
-        console.log(data);
+            async function makeLive(testId) {
 
-        if(data.success){
+                try {
 
-            location.reload();
+                    const res = await fetch(
+                        `/National-Test-Series/live/${testId}`,
+                        {
+                            method: "POST"
+                        }
+                    );
 
-        }else{
+                    const data = await res.json();
 
-            alert(data.msg || "Failed");
+                    console.log(data);
 
-        }
+                    if (data.success) {
 
-    }catch(err){
+                        location.reload();
 
-        console.log(err);
+                    } else {
 
-    }
+                        alert(data.msg || "Failed");
 
-}
-function handleTestClick(testId, status){
+                    }
 
-    if(status === "published"){
+                } catch (err) {
 
-        window.location.href =
-        `/National-Test-Series/test/${testId}`;
+                    console.log(err);
 
-    }else{
+                }
 
-        showNotLivePopup();
+            }
+            function handleTestClick(testId, status) {
 
-    }
+                if (status === "published") {
 
-}
-function showNotLivePopup(){
+                    window.location.href =
+                        `/National-Test-Series/test/${testId}`;
 
-    document
-    .getElementById("notLivePopup")
-    .classList.add("active");
+                } else {
 
-}
+                    showNotLivePopup();
 
-function closeNotLivePopup(){
+                }
 
-    document
-    .getElementById("notLivePopup")
-    .classList.remove("active");
+            }
+            function showNotLivePopup() {
 
-}
-
-// ================= PROFILE PAGE SEARCH =================
-
-const desktopSearchInput =
-    document.getElementById("desktopSearchInput");
-
-const desktopSearchBtn =
-    document.getElementById("desktopSearchBtn");
-
-// 🔍 SEARCH FUNCTION
-function executeProfileSearch(query) {
-
-    const cards =
-        document.querySelectorAll(".test-card");
-
-    const q =
-        query.toLowerCase().trim();
-
-    cards.forEach(card => {
-
-        const text =
-            card.innerText.toLowerCase();
-
-        // 🔥 SHOW ALL
-        if (q === "") {
-
-            card.style.display = "block";
-            return;
-
-        }
-
-        // 🔥 MATCH
-        if (text.includes(q)) {
-
-            card.style.display = "block";
-
-        }
-
-        // ❌ NO MATCH
-        else {
-
-            card.style.display = "none";
-
-        }
-
-    });
-
-}
-
-// 🔍 UPDATE SEARCH
-function updateProfileSearch() {
-
-    const query =
-        desktopSearchInput.value.trim();
-
-    executeProfileSearch(query);
-
-}
-
-// 🔘 BUTTON CLICK
-if (desktopSearchBtn) {
-
-    desktopSearchBtn.addEventListener(
-        "click",
-        updateProfileSearch
-    );
-
-}
-
-// ⌨️ ENTER PRESS
-if (desktopSearchInput) {
-
-    desktopSearchInput.addEventListener(
-        "keypress",
-        (e) => {
-
-            if (e.key === "Enter") {
-
-                updateProfileSearch();
+                document
+                    .getElementById("notLivePopup")
+                    .classList.add("active");
 
             }
 
-        }
-    );
+            function closeNotLivePopup() {
 
-}
+                document
+                    .getElementById("notLivePopup")
+                    .classList.remove("active");
 
-// 🔥 LIVE SEARCH
-if (desktopSearchInput) {
+            }
 
-    desktopSearchInput.addEventListener(
-        "input",
-        function () {
+            // ================= PROFILE PAGE SEARCH =================
 
-            executeProfileSearch(this.value);
+            const desktopSearchInput =
+                document.getElementById("desktopSearchInput");
 
-        }
-    );
+            const desktopSearchBtn =
+                document.getElementById("desktopSearchBtn");
 
-}
+            // 🔍 SEARCH FUNCTION
+            function executeProfileSearch(query) {
+
+                const cards =
+                    document.querySelectorAll(".test-card");
+
+                const q =
+                    query.toLowerCase().trim();
+
+                cards.forEach(card => {
+
+                    const text =
+                        card.innerText.toLowerCase();
+
+                    // 🔥 SHOW ALL
+                    if (q === "") {
+
+                        card.style.display = "block";
+                        return;
+
+                    }
+
+                    // 🔥 MATCH
+                    if (text.includes(q)) {
+
+                        card.style.display = "block";
+
+                    }
+
+                    // ❌ NO MATCH
+                    else {
+
+                        card.style.display = "none";
+
+                    }
+
+                });
+
+            }
+
+            // 🔍 UPDATE SEARCH
+            function updateProfileSearch() {
+
+                const query =
+                    desktopSearchInput.value.trim();
+
+                executeProfileSearch(query);
+
+            }
+
+            // 🔘 BUTTON CLICK
+            if (desktopSearchBtn) {
+
+                desktopSearchBtn.addEventListener(
+                    "click",
+                    updateProfileSearch
+                );
+
+            }
+
+            // ⌨️ ENTER PRESS
+            if (desktopSearchInput) {
+
+                desktopSearchInput.addEventListener(
+                    "keypress",
+                    (e) => {
+
+                        if (e.key === "Enter") {
+
+                            updateProfileSearch();
+
+                        }
+
+                    }
+                );
+
+            }
+
+            // 🔥 LIVE SEARCH
+            if (desktopSearchInput) {
+
+                desktopSearchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        executeProfileSearch(this.value);
+
+                    }
+                );
+
+            }
         </script>
-<!-- ================= NOT LIVE POPUP ================= -->
+        <!-- ================= NOT LIVE POPUP ================= -->
 
-<div class="not-live-popup" id="notLivePopup">
+        <div class="not-live-popup" id="notLivePopup">
 
-    <div class="not-live-box">
+            <div class="not-live-box">
 
-        <div class="not-live-icon">
-            🚫
+                <div class="not-live-icon">
+                    🚫
+                </div>
+
+                <div class="not-live-title">
+                    Test Not Live
+                </div>
+
+                <div class="not-live-text">
+                    This test is currently unavailable.
+                    Please wait until the teacher publishes it.
+                </div>
+
+                <button class="not-live-btn" onclick="closeNotLivePopup()">
+                    OK
+                </button>
+
+            </div>
+
         </div>
-
-        <div class="not-live-title">
-            Test Not Live
-        </div>
-
-        <div class="not-live-text">
-            This test is currently unavailable.
-            Please wait until the teacher publishes it.
-        </div>
-
-        <button class="not-live-btn"
-            onclick="closeNotLivePopup()">
-            OK
-        </button>
-
-    </div>
-
-</div>
 </body>
 
 </html>

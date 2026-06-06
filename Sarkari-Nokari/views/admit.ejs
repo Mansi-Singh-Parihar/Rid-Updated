@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admit Card - Sarkari Naukari</title>
+  <link rel="stylesheet" href="/nokari/css/common/navbar.css">
+  <link rel="stylesheet" href="/nokari/css/common/footer.css">
+  <link rel="stylesheet" href="/nokari/css/pages/admit.css">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="admit-page">
+
+  <%- include('common/navbar') %>
+  <%- include('common/subnavbar') %>
+  
+
+<%
+  function fmtDate(val) {
+    if (!val) return null;
+    const d = new Date(val);
+    if (isNaN(d)) return String(val);
+    return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function getStateName(code) {
+    const states = {
+      central: "Central Govt / All India",
+      ap: "Andhra Pradesh",
+      ar: "Arunachal Pradesh",
+      as: "Assam",
+      br: "Bihar",
+      cg: "Chhattisgarh",
+      ga: "Goa",
+      gj: "Gujarat",
+      hr: "Haryana",
+      hp: "Himachal Pradesh",
+      jh: "Jharkhand",
+      ka: "Karnataka",
+      kl: "Kerala",
+      mp: "Madhya Pradesh",
+      mh: "Maharashtra",
+      mn: "Manipur",
+      ml: "Meghalaya",
+      mz: "Mizoram",
+      nl: "Nagaland",
+      od: "Odisha",
+      pb: "Punjab",
+      rj: "Rajasthan",
+      sk: "Sikkim",
+      tn: "Tamil Nadu",
+      tg: "Telangana",
+      tr: "Tripura",
+      up: "Uttar Pradesh",
+      uk: "Uttarakhand",
+      wb: "West Bengal",
+      dl: "Delhi (NCT)",
+      jk: "Jammu & Kashmir",
+      la: "Ladakh",
+      ch: "Chandigarh",
+      dd: "Dadra & Nagar Haveli",
+      py: "Puducherry"
+    };
+    return states[code] || code;
+  }
+%>
+
+  <div class="page-wrapper">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1><span>🎫</span> Latest Admit Cards</h1>
+      </div>
+      
+
+        <div class="intro-card">
+          <div class="intro-text">
+            Welcome to <a href="#">Sarkari Naukari</a> — Stay informed about latest admit cards across India.
+
+            <div class="disclaimer-box">
+              ⚠️ <strong class="d-label">Disclaimer:</strong>
+              Admit card release dates and exam schedules shown here are for informational purposes only.
+              Candidates must verify all details on the
+              <strong class="d-link">official website</strong>
+              before appearing for the exam. We are not liable for any discrepancy, loss or inconvenience.
+            </div>
+          </div>
+          <a href="https://whatsapp.com/channel/0029VbCxUkXCMY0PLcmcOt0O"
+            class="update-btn"
+            target="_blank"
+            rel="noopener noreferrer">
+            📢 Join WhatsApp
+          </a>
+        </div>
+
+      
+<!-- Quick admit Index -->
+<div class="admit-index-box">
+      <div class="admit-index-header">
+        <span>All Admit Cards</span>
+        <span class="badge-count" id="admitCountBadge" ><%= admits.length %> Available</span>
+      </div>
+  <% if (admits.length === 0) { %>
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>No admit cards available right now. Please check back soon.</p>
+    </div>
+  <% } %>
+  <div class="admit-index-list">
+    <% admits.forEach(function(admit, i) { %>
+      <a class="admit-index-item" href="#<%= admit._id %>" data-category="<%= admit.category || '' %>">
+        <span class="admit-index-num"><%= i + 1 %>.</span>
+        <span class="admit-index-title"><%= admit.title %></span>
+             <% if (admit.totalPosts) { %>
+                <span class="admit-index-posts"><%= admit.totalPosts.toLocaleString('en-IN') %> Posts</span>
+              <% } %>
+
+      </a>
+    <% }); %>
+  </div>
+</div>
+      <!-- Cards -->
+      <div class="card-grid">
+        <% admits.forEach(function(admit) {
+
+          /* ── Build flat items array ── */
+          const items = [];
+
+          if (admit.applyStartDate)
+            items.push({ label: 'Apply Start Date', value: fmtDate(admit.applyStartDate) });
+
+          if (admit.applyLastDate)
+            items.push({ label: 'Apply Last Date', value: fmtDate(admit.applyLastDate), cls: 'danger' });
+
+          if (admit.examDate)
+            items.push({ label: 'Exam Date', value: admit.examDate, cls: 'highlight' });
+
+          if (admit.releaseDate)
+            items.push({ label: 'Admit Card Date', value: fmtDate(admit.releaseDate), cls: 'highlight' });
+
+          if (admit.reportingTime)
+            items.push({ label: 'Reporting Time', value: admit.reportingTime });
+
+          if (admit.totalPosts)
+            items.push({ label: 'Total Posts', value: admit.totalPosts.toLocaleString('en-IN') + '+', cls: 'highlight' });
+
+          if (admit.eligibility)
+            items.push({ label: 'Qualification', value: admit.eligibility });
+
+          if (admit.ageLimit && (admit.ageLimit.min || admit.ageLimit.max)) {
+            let ageVal = '';
+            if (admit.ageLimit.min && admit.ageLimit.max) ageVal = admit.ageLimit.min + ' – ' + admit.ageLimit.max + ' Years';
+            else if (admit.ageLimit.max)                  ageVal = 'Up to ' + admit.ageLimit.max + ' Years';
+            else                                          ageVal = 'Min ' + admit.ageLimit.min + ' Years';
+            items.push({ label: 'Age Limit', value: ageVal });
+          }
+
+          if (admit.fee && (admit.fee.general || admit.fee.scSt)) {
+            const feeParts = [];
+            if (admit.fee.general) feeParts.push('Gen: ₹' + admit.fee.general);
+            if (admit.fee.scSt)    feeParts.push('SC/ST: ₹' + admit.fee.scSt);
+            if (admit.fee.female)  feeParts.push('Female: ₹' + admit.fee.female);
+            if (feeParts.length)
+              items.push({ label: 'Application Fee', value: feeParts.join(' | ') });
+          }
+
+          if (admit.selectionProcess && admit.selectionProcess.length)
+            items.push({ label: 'Selection Process', value: admit.selectionProcess.join(' → ') });
+
+          /* Split into left / right halves */
+          const half       = Math.ceil(items.length / 2);
+          const leftItems  = items.slice(0, half);
+          const rightItems = items.slice(half);
+          const isOdd      = items.length % 2 !== 0;
+        %>
+
+            <div
+              class="modern-card"
+              id="<%= admit._id %>"
+              data-category="<%= admit.category || '' %>"
+              data-organization="<%= admit.organization || '' %>"
+            >
+          <!-- Card Header -->
+          <div class="card-header">
+            <div class="card-title"><%= admit.title %></div>
+            <% if (admit.organization) { %>
+              <div class="card-org"><%= admit.organization %></div>
+            <% } %>
+            <div class="card-badges">
+                <% if (admit.category) { %>
+                  <div class="category-badge">
+                    <%= admit.category %>
+                  </div>
+                <% } %>
+
+                <% if (admit.state) { %>
+                  <div class="category-badge">
+                    📌 <%= getStateName(admit.state) %>
+                  </div>
+                <% } %>
+              </div>
+          </div>
+
+          <%
+            const iconMap = {
+              'Apply Start Date':    '📅',
+              'Apply Last Date':     '⏰',
+              'Exam Date':           '📝',
+              'Admit Card Date':     '🎫',
+              'Reporting Time':      '🕐',
+              'Total Posts':         '📈',
+              'Qualification':       '🎓',
+              'Age Limit':           '👤',
+              'Application Fee':     '💰',
+              'Selection Process':   '⚙️',
+            };
+          %>
+
+          <!-- Info Body: two-column icon+label panel -->
+          <div class="info-body">
+
+            <!-- Left Panel -->
+            <div class="info-panel info-panel--left">
+              <% leftItems.forEach(function(item) { %>
+                <div class="info-item">
+                  <span class="info-icon"><%= iconMap[item.label] || '🔹' %></span>
+                  <div class="info-text">
+                    <span class="info-label"><%= item.label %> :</span>
+                    <span class="info-value <%= item.cls || '' %>"><%= item.value %></span>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="info-panel info-panel--right">
+              <% rightItems.forEach(function(item) { %>
+                <div class="info-item">
+                  <span class="info-icon"><%= iconMap[item.label] || '🔹' %></span>
+                  <div class="info-text">
+                    <span class="info-label"><%= item.label %> :</span>
+                    <span class="info-value <%= item.cls || '' %>"><%= item.value %></span>
+                  </div>
+                </div>
+              <% }); %>
+              <% if (isOdd) { %>
+                <div class="info-item info-item--empty">
+                  <span class="info-icon"></span>
+                  <div class="info-text"><span class="info-label"></span><span class="info-value"></span></div>
+                </div>
+              <% } %>
+            </div>
+
+          </div>
+          <!-- /info-body -->
+
+          <!-- Note Section
+          <% if (admit.note) { %>
+          <div class="note-section">
+            <span class="note-icon">📌</span>
+            <span><%= admit.note %></span>
+          </div>
+          <% } %> -->
+
+          <!-- Card Footer -->
+          <div class="card-footer">
+
+            <% if (admit.officialSite) { %>
+              <a class="footer-btn btn-official" href="<%= admit.officialSite %>" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                Official Site
+              </a>
+            <% } %>
+
+            <% if (admit.downloadLink) { %>
+              <a class="footer-btn btn-primary" href="<%= admit.downloadLink %>" target="_blank">
+                ⬇ Download Admit Card
+              </a>
+            <% } else { %>
+              <span class="btn-disabled">🔒 Link Not Available Yet</span>
+            <% } %>
+
+
+            <a class="footer-btn btn-guide" href="/nokari/exam/admit/<%= admit._id %>">
+              📘 Detail Guide
+            </a>
+
+          </div>
+
+
+        </div>
+        <% }); %>
+      </div>
+
+    </div>
+  </div>
+
+  <%- include('common/footer') %>
+  <script src="/nakori/js/admit.js"></script>
+</body>
+</html>

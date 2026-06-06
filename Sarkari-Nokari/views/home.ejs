@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarkari Naukri - Latest Jobs, Results, Admit Cards</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/nokari/css/common/navbar.css">
+  <link rel="stylesheet" href="/nokari/css/common/footer.css">
+  <link rel="stylesheet" href="/nokari/css/pages/home.css">
+  <link rel="stylesheet" href="/nokari/css/common/whatsapp.css">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <%- include("common/navbar.ejs") %>
+
+  <main class="main-content">
+
+    <!-- GOVT JOBS BY STATES -->
+    <div class="state-section-box">
+      <div class="state-section-header">
+        📍 Vacancies by States
+      </div>
+      <div class="state-grid">
+
+        <%
+          const stateList = [
+
+              // MOST ACTIVE GOVT EXAM STATES
+              { code: 'central', name: 'Central Govt', count: '' },
+
+              { code: 'up', name: 'Uttar Pradesh', count: '' },
+              { code: 'br', name: 'Bihar', count: '' },
+              { code: 'mp', name: 'Madhya Pradesh', count: '' },
+              { code: 'rj', name: 'Rajasthan', count: '' },
+              { code: 'hr', name: 'Haryana', count: '' },
+              { code: 'jh', name: 'Jharkhand', count: '' },
+
+              // HIGH TRAFFIC STATES
+              { code: 'dl', name: 'Delhi (NCT)', count: '' },
+              { code: 'wb', name: 'West Bengal', count: '' },
+              { code: 'cg', name: 'Chhattisgarh', count: '' },
+              { code: 'od', name: 'Odisha', count: '' },
+              { code: 'pb', name: 'Punjab', count: '' },
+
+              // SOUTH INDIA
+              { code: 'tn', name: 'Tamil Nadu', count: '' },
+              { code: 'ka', name: 'Karnataka', count: '' },
+              { code: 'kl', name: 'Kerala', count: '' },
+              { code: 'tg', name: 'Telangana', count: '' },
+              { code: 'ap', name: 'Andhra Pradesh', count: '' },
+
+              // WEST INDIA
+              { code: 'mh', name: 'Maharashtra', count: '' },
+              { code: 'gj', name: 'Gujarat', count: '' },
+              { code: 'ga', name: 'Goa', count: '' },
+
+              // NORTH / HIMALAYAN
+              { code: 'hp', name: 'Himachal Pradesh', count: '' },
+              { code: 'uk', name: 'Uttarakhand', count: '' },
+              { code: 'jk', name: 'Jammu & Kashmir', count: '' },
+              { code: 'la', name: 'Ladakh', count: '' },
+
+              // NORTH EAST
+              { code: 'as', name: 'Assam', count: '' },
+              { code: 'ar', name: 'Arunachal Pradesh', count: '' },
+              { code: 'mn', name: 'Manipur', count: '' },
+              { code: 'ml', name: 'Meghalaya', count: '' },
+              { code: 'mz', name: 'Mizoram', count: '' },
+              { code: 'nl', name: 'Nagaland', count: '' },
+              { code: 'sk', name: 'Sikkim', count: '' },
+              { code: 'tr', name: 'Tripura', count: '' },
+
+              // UNION TERRITORIES
+              { code: 'ch', name: 'Chandigarh', count: '' },
+              { code: 'dd', name: 'Dadra & Nagar Haveli', count: '' },
+              { code: 'py', name: 'Puducherry', count: '' }
+
+            ];
+        %>
+
+        <% stateList.forEach((state, index) => { %>
+          <%
+            const stateJobs = jobs ? jobs.filter(j => j.state === state.code) : [];
+            const jobCount = stateJobs.reduce(
+              (sum, job) => sum + (job.totalPosts || 0),
+              0
+            );
+          %>
+            <a 
+              href="/nokari/jobs?state=<%= state.code %>" 
+              class="state-card <%= index >= 9 ? 'extra-state hidden-state' : '' %>"
+            >            
+            <div class="state-top">
+              <div class="state-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              </div>
+              <span class="state-name"><%= state.name %></span>
+            </div>
+            <span class="state-count"><%= jobCount %> Vacancy</span>
+          </a>
+        <% }) %>
+        <div class="state-card view-more-card" id="toggleStatesBtn">
+          <div class="view-more-inner">
+            <span class="plus-icon">+</span>
+            <span>View More States</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTIONS (Results, Admit Cards, Latest Jobs) -->
+    <div class="sections">
+
+      <div class="section-box">
+        <div class="card-header">💼 Latest Jobs</div>
+        <div class="section-list">
+          <% jobs.forEach(job => { %>
+            <div class="list-item">
+              <a href="/nokari/jobs#<%= job._id %>"><%= job.title %></a>
+            </div>
+          <% }) %>
+          <% if (jobs.length === 0) { %>
+            <div class="list-item">No jobs added yet.</div>
+          <% } %>
+        </div>
+        <div class="view-more-container">
+          <a href="/nokari/jobs" class="view-more-btn view-more-jobs">💼 View More Jobs</a>
+        </div>
+      </div>
+      
+      <!-- ADMIT CARDS -->
+      <div class="section-box">
+        <div class="card-header">🎫 Admit Cards</div>
+        <div class="section-list">
+          <% admits.forEach(admit => { %>
+            <div class="list-item">
+              <a href="/nokari/admit#<%= admit._id %>"><%= admit.title %></a>
+            </div>
+          <% }) %>
+          <% if (admits.length === 0) { %>
+            <div class="list-item">No admit cards added yet.</div>
+          <% } %>
+        </div>
+        <div class="view-more-container">
+          <a href="/nokari/admit" class="view-more-btn view-more-admit">🎟️ View More Admit Cards</a>
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="section-box">
+        <div class="card-header">📋 Results</div>
+        <div class="section-list">
+          <% results.forEach(result => { %>
+            <div class="list-item">
+              <a href="/nokari/result#<%= result._id %>"><%= result.title %></a>
+            </div>
+          <% }) %>
+          <% if (results.length === 0) { %>
+            <div class="list-item">No results added yet.</div>
+          <% } %>
+        </div>
+        <div class="view-more-container">
+          <a href="/nokari/result" class="view-more-btn view-more-results">🔍 View More Results</a>
+        </div>
+      </div>
+      <!-- LATEST JOBS -->
+      
+
+    </div>
+
+
+     <!-- ========================================
+     FAQ SECTION — Apna Naukari
+======================================== -->
+
+
+<!-- FAQ HTML — paste where you want it on the page -->
+<section class="faq-section">
+  <span class="faq-badge">FAQ</span>
+  <h2>Frequently Asked <span>Questions</span></h2>
+  <p class="faq-sub">Find answers to the most common questions about Sarkari Naukari</p>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How do I find the last date to apply for a government job?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>Every job card clearly shows the 'Online Apply Last Date'. We update it as soon as the notification is released. You can also subscribe via the 📢 Let's Update button to stay notified.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Does this website list private jobs as well?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>No. Apna Naukari lists only government (sarkari) jobs — Central, State, PSU, Railways, Defence, SSC/UPSC, Banking, and Teaching positions.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How and when can I download the admit card?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>When the admit card is released, a direct download link will appear in the 'Admit Card' row of the job card. If it shows 'Before Exam' or 'Notify Later', please wait — we update it as soon as it is available.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">The Apply Now button is not working. What should I do?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>This means the official application portal has not opened yet. Once the application window goes live, the button will become active automatically. Please check back later.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">What do UR, OBC, EWS, SC, and ST mean in vacancy details?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>These are category-wise reservation seats: UR = Unreserved (General), OBC = Other Backward Classes, EWS = Economically Weaker Section, SC = Scheduled Caste, ST = Scheduled Tribe.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Can I find results and merit lists on this website?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>Yes! The 'Result' section in the top navigation bar contains the latest results, merit lists, and cut-offs. Select the specific exam to view the details.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">How will I know when a new notification is released?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>We update the website as soon as new notifications arrive. Bookmark the page and check regularly, or use the 📢 Let's Update option on the home page to stay informed.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-q-text">Is there age relaxation for SC, ST, and OBC candidates?</span>
+      <span class="faq-icon">&#8963;</span>
+    </div>
+    <div class="faq-a">
+      <p>Yes. As per government rules, SC/ST candidates generally get 5 years of age relaxation and OBC candidates get 3 years. Always refer to the official notification for exact details of each post.</p>
+    </div>
+  </div>
+
+</section>
+  </main>
+
+  <%- include("common/footer.ejs") %>
+
+  <script src="/nokari/js/navbar.js"></script>
+  <script src="/nokari/js/home.js"></script>
+ 
+
+</body>
+</html>

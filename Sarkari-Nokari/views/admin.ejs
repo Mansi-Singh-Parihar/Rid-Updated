@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GovJob Admin Panel | भारत सरकार</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ <link rel="stylesheet" href="/nokari/css/pages/admin.css">
+
+</head>
+<body>
+
+<!-- ════════════ LOGIN ════════════ -->
+<div id="loginSection" class="login-wrap">
+  <div class="login-card">
+    <div class="login-head">
+      <div class="login-emblem"><i class="fas fa-landmark"></i></div>
+      <h2>Admin Portal</h2>
+      <p>Sarkari Naukari</p>
+    </div>
+    <div class="login-body">
+      <div class="l-field">
+        <label><i class="fas fa-envelope"></i> Official Email ID</label>
+        <input type="email" id="email" placeholder="admin@gov.in" autocomplete="email">
+      </div>
+      <div class="l-field">
+        <label><i class="fas fa-lock"></i> Secure Password</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-login" onclick="login()"><i class="fas fa-sign-in-alt"></i> Sign In to Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ DASHBOARD ════════════ -->
+<div id="dashboardSection" class="hidden">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-logo">
+      <div class="topbar-icon"><i class="fas fa-landmark"></i></div>
+      <div>
+        <div class="topbar-title">Naukari Admin</div>
+        <div class="topbar-sub">All Update</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="badge-admin"><i class="fas fa-shield-alt"></i> Super Admin</div>
+      <button class="topbar-logout" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+
+
+
+  <!-- Body -->
+  <div class="app-body">
+
+    <!-- Sidebar (desktop) -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Manage Pages</div>
+      <div class="nav-item active" id="snav-jobs" onclick="switchPanel('jobs')">
+        <i class="fas fa-briefcase"></i> Jobs <span class="nav-badge">Page</span>
+      </div>
+
+      <div class="nav-item" id="snav-admit" onclick="switchPanel('admit')">
+        <i class="fas fa-id-card"></i> Admit Cards <span class="nav-badge">Page</span>
+      </div>
+      <div class="nav-item" id="snav-results" onclick="switchPanel('results')">
+        <i class="fas fa-trophy"></i> Results <span class="nav-badge">Page</span>
+      </div>
+      <div class="nav-item" id="snav-eligibility" onclick="switchPanel('eligibility')">
+  <i class="fas fa-graduation-cap"></i> Exam Guide <span class="nav-badge">Page</span>
+</div>
+      <div class="nav-item" id="snav-tracker" onclick="switchPanel('tracker')">
+        <i class="fas fa-satellite-dish"></i> Live Tracker <span class="nav-badge" style="background:rgba(29,185,84,0.25);color:#1db954;">Live</span>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="sidebar-label">Account</div>
+      <div class="nav-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+
+
+<!-- ──────── JOBS ──────── -->
+
+<div id="panel-jobs" class="panel active">
+  <div class="page-head">
+    <div>
+      <div class="page-head-title">🧾 Latest Govt Jobs</div>
+      <div class="page-head-sub">Post new government job vacancies to the jobs page</div>
+    </div>
+  </div>
+
+  <div class="form-card">
+    <div class="form-card-title">
+      <div class="card-icon"><i class="fas fa-plus"></i></div>
+      Post New Job Vacancy
+    </div>
+
+    <!-- JSON IMPORT — TOP -->
+    <div class="json-box">
+      <div class="json-box-head">
+        <div class="json-box-title"><i class="fas fa-code"></i> Paste Job JSON</div>
+        <button type="button" class="btn btn-json" onclick="fillJobFromJson()">
+          <i class="fas fa-bolt"></i> Fill Data
+        </button>
+      </div>
+      <textarea id="job_json" placeholder='{
+  "title": "RRB ALP Recruitment 2026",
+  "organization": "Railway Recruitment Board",
+  "category": "Railway",
+  "state":"mp",
+  "notificationDate": "2026-05-13",
+  "applyStartDate": "2026-05-15",
+  "lastDate": "2026-06-14",
+  "examDate": "Notify Later",
+  "admitCardInfo": "04 Days Before Exam",
+  "totalPosts": 11127,
+  "eligibility": "10th + ITI",
+  "ageMin": 18,
+  "ageMax": 30,
+  "feeGeneral": 500,
+  "feeSCST": 250,
+  "vacancyDetails": { "UR": 4860, "OBC": 2598, "EWS": 1004, "SC": 1746, "ST": 919 },
+  "selectionProcess": ["CBT 1", "CBT 2", "Document Verification", "Medical"],
+  "applyLink": "https://rrbapply.gov.in",
+  "notificationLink": "https://example.pdf"
+}'></textarea>
+    </div>
+
+    <!-- BASIC INFO -->
+    <div class="fdiv">Basic Information</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-tag"></i> Job Title <span class="req">*</span></label>
+        <input type="text" id="job_title" placeholder="e.g., Junior Engineer, Clerk">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-book"></i> Exam Guide Slug</label>
+        <input 
+          type="text" 
+          id="job_examguideslug" 
+          list="job-slug-list"
+          placeholder="Select or type — e.g. ssc-cgl"
+          autocomplete="off"
+        >
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-building"></i> Organization <span class="req">*</span></label>
+        <input type="text" id="job_org" placeholder="e.g., Railway Recruitment Board">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-layer-group"></i> Category <span class="req">*</span></label>
+        <input type="text" id="job_cat" placeholder="e.g., Railway, Police, Banking">
+      </div>
+    </div>
+
+    <!-- DATES -->
+    <div class="fdiv">Important Dates</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-calendar-plus"></i> Notification Date</label>
+        <input type="date" id="job_notifdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-check"></i> Apply Start Date</label>
+        <input type="date" id="job_startdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-times"></i> Last Date to Apply</label>
+        <input type="date" id="job_lastdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-file-alt"></i> Exam Date</label>
+        <input type="text" id="job_examdate" placeholder="e.g., Notify Later, 15 Aug 2026">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-id-card"></i> Admit Card Info</label>
+        <input type="text" id="job_admitcard" placeholder="e.g., 04 Days Before Exam">
+      </div>
+    </div>
+
+    <!-- VACANCY & ELIGIBILITY -->
+    <div class="fdiv">Vacancy & Eligibility</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-users"></i> Total Posts</label>
+        <input type="number" id="job_totalposts" placeholder="e.g., 11127">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-graduation-cap"></i> Eligibility</label>
+        <input type="text" id="job_eligibility" placeholder="e.g., 10th + ITI, Graduation">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-user"></i> Age Min</label>
+        <input type="number" id="job_agemin" placeholder="e.g., 18">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-user-clock"></i> Age Max</label>
+        <input type="number" id="job_agemax" placeholder="e.g., 30">
+      </div>
+    </div>
+
+    <!-- FEE -->
+    <div class="fdiv">Application Fee</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-rupee-sign"></i> Fee – General/OBC (₹)</label>
+        <input type="number" id="job_feelgeneral" placeholder="e.g., 500">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-rupee-sign"></i> Fee – SC/ST (₹)</label>
+        <input type="number" id="job_feescst" placeholder="e.g., 250">
+      </div>
+    </div>
+
+    <!-- VACANCY BREAKDOWN -->
+    <div class="fdiv">Vacancy Breakdown (Category Wise)</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label>UR</label>
+        <input type="number" id="job_vac_ur" placeholder="e.g., 4860">
+      </div>
+      <div class="ff">
+        <label>OBC</label>
+        <input type="number" id="job_vac_obc" placeholder="e.g., 2598">
+      </div>
+      <div class="ff">
+        <label>EWS</label>
+        <input type="number" id="job_vac_ews" placeholder="e.g., 1004">
+      </div>
+      <div class="ff">
+        <label>SC</label>
+        <input type="number" id="job_vac_sc" placeholder="e.g., 1746">
+      </div>
+      <div class="ff">
+        <label>ST</label>
+        <input type="number" id="job_vac_st" placeholder="e.g., 919">
+      </div>
+    </div>
+
+    <!-- SELECTION PROCESS -->
+    <div class="fdiv">Selection Process</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-list-ol"></i> Selection Steps (comma separated)</label>
+        <input type="text" id="job_selection" placeholder="e.g., CBT 1, CBT 2, Document Verification, Medical">
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="fdiv">Links</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-pen-square"></i> Apply Link</label>
+        <input type="url" id="job_applylink" placeholder="https://rrbapply.gov.in">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-file-pdf"></i> Notification Link</label>
+        <input type="url" id="job_notiflink" placeholder="https://example.gov.in/notification.pdf">
+      </div>
+      <div class="ff">
+    <label><i class="fas fa-globe"></i> Official Site</label>
+    <input type="url" id="job_officialsite" placeholder="https://rrb.gov.in">
+  </div>
+    </div>
+        <!-- STATE -->
+    <div class="fdiv">State</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-map-marker-alt"></i> State</label>
+        <input
+          type="text"
+          id="jobs_state"
+          placeholder="State short code (mp, up, central)"
+        >
+      </div>
+    </div>
+    
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+      <button class="btn btn-pub" onclick="addJob()">
+        <i class="fas fa-paper-plane"></i> Publish Job
+      </button>
+      <button class="btn btn-clr" onclick="clearJobForm()">
+        <i class="fas fa-undo"></i> Clear Fields
+      </button>
+    </div>
+
+  </div>
+
+  <!-- LIST CARD -->
+<div class="list-card">
+  <div class="list-head">
+    <div class="list-head-left">
+      <div class="list-head-icon"><i class="fas fa-trash-alt"></i></div>
+      Existing Job Entries
+    </div>
+    <span class="entry-count" id="jobs-count">0 entries</span>
+  </div>
+  <!-- SEARCH BAR -->
+  <div class="list-search">
+    <i class="fas fa-search list-search-icon"></i>
+    <input type="text" id="jobs-search" placeholder="Search by title, organization, category…" oninput="filterList('jobs')">
+    <span class="search-hint" id="jobs-search-hint"></span>
+  </div>
+  <div id="jobs-list">
+    <div class="list-loading"><span class="spinner"></span> Loading entries…</div>
+  </div>
+</div>
+</div>
+
+
+<!-- ──────── ADMIT CARDS ──────── -->
+
+<div id="panel-admit" class="panel">
+
+  <div class="page-head">
+    <div>
+      <div class="page-head-title">🪪 Admit Cards</div>
+      <div class="page-head-sub">Post admit card download notifications to the admit card page</div>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-card-title">
+      <div class="card-icon"><i class="fas fa-plus"></i></div>
+      Add Admit Card Entry
+    </div>
+
+    <!-- JSON IMPORT — TOP -->
+    <div class="json-box">
+      <div class="json-box-head">
+        <div class="json-box-title"><i class="fas fa-code"></i> Paste Admit Card JSON</div>
+        <button type="button" class="btn btn-json" onclick="fillAdmitFromJson()">
+          <i class="fas fa-bolt"></i> Fill Data
+        </button>
+      </div>
+      <textarea id="admit_json" placeholder='{
+  "title": "SSC CGL Tier 1 Admit Card 2026",
+  "organization": "SSC",
+  "category": "Central Government",
+  "applyStartDate": "2026-07-01",
+  "applyLastDate": "2026-07-31",
+  "releaseDate": "2026-08-10",
+  "examDate": "2026-09-01",
+  "reportingTime": "09:00",
+  "totalPosts": 17727,
+  "eligibility": "Graduation",
+  "ageLimit": { "min": 18, "max": 32 },
+  "fee": { "general": "100", "scSt": "0", "female": "0" },
+  "selectionProcess": ["Tier 1", "Tier 2", "Document Verification"],
+  "downloadLink": "https://ssc.gov.in/admit-card",
+  "applyLink": "https://ssc.gov.in/apply",
+  "officialSite": "https://ssc.gov.in",
+
+}'></textarea>
+    </div>
+
+    <!-- EXAM INFO -->
+    <div class="fdiv">Exam Information</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-tag"></i> Exam / Post Name <span class="req">*</span></label>
+        <input type="text" id="admit_title" placeholder="e.g., SSC CGL 2025 Tier-1">
+      </div>
+      <div class="ff">
+      <label><i class="fas fa-book"></i> Exam Guide Slug</label>
+      <input 
+        type="text" 
+        id="admit_examguideslug" 
+        list="admit-slug-list"
+        placeholder="Select or type — e.g. ssc-cgl"
+        autocomplete="off"
+      >
+    </div>
+      <div class="ff">
+        <label><i class="fas fa-building"></i> Organization <span class="req">*</span></label>
+        <input type="text" id="admit_org" placeholder="e.g., SSC, IBPS, Railway">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-layer-group"></i> Category</label>
+        <input type="text" id="admit_cat" placeholder="e.g., Central Govt, Banking">
+      </div>
+    </div>
+
+    <!-- DATES -->
+    <div class="fdiv">Important Dates</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-calendar-plus"></i> Apply Start Date</label>
+        <input type="date" id="admit_applystartdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-times"></i> Apply Last Date</label>
+        <input type="date" id="admit_applylastdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-check"></i> Admit Card Release Date</label>
+        <input type="date" id="admit_releasedate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-alt"></i> Exam Date <span class="req">*</span></label>
+        <input type="text" id="admit_examdate" placeholder="e.g., 2026-09-01 or Notify Later">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-clock"></i> Reporting Time</label>
+        <input type="time" id="admit_time">
+      </div>
+    </div>
+
+    <!-- VACANCY & ELIGIBILITY -->
+    <div class="fdiv">Vacancy & Eligibility</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-users"></i> Total Posts</label>
+        <input type="number" id="admit_totalposts" placeholder="e.g., 17727">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-graduation-cap"></i> Eligibility</label>
+        <input type="text" id="admit_eligibility" placeholder="e.g., Graduation, 12th Pass">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-user"></i> Age Min</label>
+        <input type="number" id="admit_agemin" placeholder="e.g., 18">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-user-clock"></i> Age Max</label>
+        <input type="number" id="admit_agemax" placeholder="e.g., 32">
+      </div>
+    </div>
+
+    <!-- FEE -->
+    <div class="fdiv">Application Fee</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-rupee-sign"></i> Fee – General (₹)</label>
+        <input type="text" id="admit_fee_general" placeholder="e.g., 100">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-rupee-sign"></i> Fee – SC/ST (₹)</label>
+        <input type="text" id="admit_fee_scst" placeholder="e.g., 0">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-rupee-sign"></i> Fee – Female (₹)</label>
+        <input type="text" id="admit_fee_female" placeholder="e.g., 0">
+      </div>
+    </div>
+
+    <!-- SELECTION PROCESS -->
+    <div class="fdiv">Selection Process</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-list-ol"></i> Selection Steps (comma separated)</label>
+        <input type="text" id="admit_selection" placeholder="e.g., Tier 1, Tier 2, Document Verification">
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="fdiv">Links</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-download"></i> Download Link <span class="req">*</span></label>
+        <input type="url" id="admit_link" placeholder="https://ssc.gov.in/admit-card">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-pen-square"></i> Apply Link</label>
+        <input type="url" id="admit_applylink" placeholder="https://ssc.gov.in/apply">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-globe"></i> Official Site</label>
+        <input type="url" id="admit_officialsite" placeholder="https://ssc.gov.in">
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <!-- <div class="fdiv">Additional Info</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-sticky-note"></i> Important Note</label>
+        <input type="text" id="admit_note" placeholder="e.g., Carry admit card and valid photo ID">
+      </div>
+    </div> -->
+    <!-- STATE -->
+    <div class="fdiv">State</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-map-marker-alt"></i> State</label>
+        <input
+          type="text"
+          id="admit_state"
+          placeholder="State short code (mp, up, central)"
+        >
+      </div>
+    </div>
+    
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+      <button class="btn btn-pub" onclick="addAdmit()">
+        <i class="fas fa-paper-plane"></i> Publish Admit Card
+      </button>
+      <button class="btn btn-clr" onclick="clearAdmitForm()">
+        <i class="fas fa-undo"></i> Clear Fields
+      </button>
+    </div>
+
+  </div>
+
+  <!-- LIST -->
+<div class="list-card">
+  <div class="list-head">
+    <div class="list-head-left">
+      <div class="list-head-icon"><i class="fas fa-trash-alt"></i></div>
+      Existing Admit Card Entries
+    </div>
+    <span class="entry-count" id="admits-count">0 entries</span>
+  </div>
+  <!-- SEARCH BAR -->
+  <div class="list-search">
+    <i class="fas fa-search list-search-icon"></i>
+    <input type="text" id="admits-search" placeholder="Search by title, organization, category…" oninput="filterList('admits')">
+    <span class="search-hint" id="admits-search-hint"></span>
+  </div>
+  <div id="admits-list">
+    <div class="list-loading"><span class="spinner"></span> Loading entries…</div>
+  </div>
+</div>
+
+</div>
+
+<!-- ──────── RESULTS ──────── -->
+<!-- ──────── RESULTS ──────── -->
+<div id="panel-results" class="panel">
+
+  <div class="page-head">
+    <div>
+      <div class="page-head-title">🏆 Results</div>
+      <div class="page-head-sub">Post exam result announcements to the results page</div>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-card-title">
+      <div class="card-icon"><i class="fas fa-plus"></i></div>
+      Add Result Entry
+    </div>
+
+    <!-- JSON IMPORT — TOP -->
+    <div class="json-box">
+      <div class="json-box-head">
+        <div class="json-box-title"><i class="fas fa-code"></i> Paste Result JSON</div>
+        <button type="button" class="btn btn-json" onclick="fillResultFromJson()">
+          <i class="fas fa-bolt"></i> Fill Data
+        </button>
+      </div>
+      <textarea id="result_json" placeholder='{
+  "title": "SSC CGL 2024 Final Result",
+  "organization": "SSC",
+  "category": "Central Government",
+  "applyStartDate": "2025-09-15",
+  "applyLastDate": "2025-10-14",
+  "examDate": "15 March 2025",
+  "resultDate": "2026-03-12",
+  "resultType": "Final Result",
+  "totalPosts": 7510,
+  "selectionProcess": ["Written Test", "Interview", "Document Verification"],
+  "resultLink": "https://ssc.gov.in/results",
+  "officialSite": "https://ssc.gov.in",
+  "meritListLink": "https://ssc.gov.in/merit-list.pdf"
+  "state": "central",
+}'></textarea>
+    </div>
+
+    <!-- EXAM INFO -->
+    <div class="fdiv">Exam Information</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-tag"></i> Result Title <span class="req">*</span></label>
+        <input type="text" id="result_title" placeholder="e.g., SSC CGL 2024 Final Result">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-book"></i> Exam Guide Slug</label>
+        <input 
+          type="text" 
+          id="result_examguideslug" 
+          list="result-slug-list"
+          placeholder="Select or type — e.g. ssc-cgl"
+          autocomplete="off"
+        >
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-building"></i> Organization <span class="req">*</span></label>
+        <input type="text" id="result_org" placeholder="e.g., SSC, UPSC, IBPS">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-layer-group"></i> Category</label>
+        <input type="text" id="result_cat" placeholder="e.g., Central Govt, State Govt">
+      </div>
+    </div>
+
+    <!-- IMPORTANT DATES -->
+    <div class="fdiv">Important Dates</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-calendar-plus"></i> Apply Start Date</label>
+        <input type="date" id="result_applystartdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-times"></i> Apply Last Date</label>
+        <input type="date" id="result_applylastdate">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-alt"></i> Exam Date</label>
+        <input type="text" id="result_examdate" placeholder="e.g., 15 March 2025 / Ongoing">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-calendar-check"></i> Result Date <span class="req">*</span></label>
+        <input type="date" id="result_date">
+      </div>
+    </div>
+
+    <!-- RESULT DETAILS -->
+    <div class="fdiv">Result Details</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-list-ol"></i> Result Type</label>
+        <select id="result_type">
+          <option value="">Select type…</option>
+          <option>Prelims Result</option>
+          <option>Mains Result</option>
+          <option>Skill Test Result</option>
+          <option>Final Result</option>
+          <option>Scorecard</option>
+          <option>Merit List</option>
+          <option>Interview List</option>
+          <option>Cut Off Marks</option>
+        </select>
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-users"></i> Total Posts</label>
+        <input type="number" id="result_totalposts" placeholder="e.g., 7510">
+      </div>
+    </div>
+
+    <!-- SELECTION PROCESS -->
+    <div class="fdiv">Selection Process</div>
+    <div class="fgrid g1">
+      <div class="ff">
+        <label><i class="fas fa-list-ol"></i> Selection Steps (comma separated)</label>
+        <input type="text" id="result_selection" placeholder="e.g., Written Test, Interview, Document Verification">
+        <small style="color:#888; margin-top:4px; display:block;">Separate each step with a comma</small>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="fdiv">Links</div>
+    <div class="fgrid g3">
+      <div class="ff">
+        <label><i class="fas fa-external-link-alt"></i> Result Link <span class="req">*</span></label>
+        <input type="url" id="result_link" placeholder="https://ssc.nic.in/result/2024">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-globe"></i> Official Site</label>
+        <input type="url" id="result_officialsite" placeholder="https://ssc.nic.in">
+      </div>
+      <div class="ff">
+        <label><i class="fas fa-file-pdf"></i> Merit List Link (optional)</label>
+        <input type="url" id="result_meritlink" placeholder="https://ssc.nic.in/merit-list.pdf">
+      </div>
+    </div>
+    <!-- STATE -->
+<div class="fdiv">State</div>
+<div class="fgrid g1">
+  <div class="ff">
+    <label><i class="fas fa-map-marker-alt"></i> State</label>
+      <input
+        type="text"
+        id="result_state"
+        placeholder="State short code (mp, up, central)"
+      >
+  </div>
+</div>
+
+    <!-- BUTTONS -->
+    <div class="btn-row">
+      <button class="btn btn-pub" onclick="addResult()">
+        <i class="fas fa-paper-plane"></i> Publish Result
+      </button>
+      <button class="btn btn-clr" onclick="clearResultForm()">
+        <i class="fas fa-undo"></i> Clear Fields
+      </button>
+    </div>
+
+  </div>
+
+  <!-- LIST -->
+<div class="list-card">
+  <div class="list-head">
+    <div class="list-head-left">
+      <div class="list-head-icon"><i class="fas fa-trash-alt"></i></div>
+      Existing Result Entries
+    </div>
+    <span class="entry-count" id="results-count">0 entries</span>
+  </div>
+  <!-- SEARCH BAR -->
+  <div class="list-search">
+    <i class="fas fa-search list-search-icon"></i>
+    <input type="text" id="results-search" placeholder="Search by title, organization, result type…" oninput="filterList('results')">
+    <span class="search-hint" id="results-search-hint"></span>
+  </div>
+  <div id="results-list">
+    <div class="list-loading"><span class="spinner"></span> Loading entries…</div>
+  </div>
+</div>
+
+</div>
+<!-- exam guide══════════════════════════════════════════════════════ --> 
+ 
+<div id="panel-eligibility" class="panel">
+ 
+  <!-- ── Page Header ─────────────────────────────────────── -->
+  <div class="page-head">
+    <div>
+      <div class="page-head-title">📚 Exam Guides</div>
+      <div class="page-head-sub">Manage complete exam guides shown on the ExamGuide pages</div>
+    </div>
+  </div>
+ 
+  <!-- ── Form Card ───────────────────────────────────────── -->
+  <div class="form-card" id="examguide-form-card">
+ 
+    <div class="form-card-title">
+      <div class="card-icon"><i class="fas fa-book-open"></i></div>
+      Add / Update Exam Guide (JSON Only)
+    </div>
+ 
+    <!-- ── JSON INPUT ──────────────────────────────────── -->
+    <div class="json-box">
+      <div class="json-box-head">
+        <div class="json-box-title">
+          <i class="fas fa-code"></i> Paste ExamGuide JSON
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn btn-json" onclick="previewExamGuideJson()">
+            <i class="fas fa-eye"></i> Preview
+          </button>
+          <button type="button" class="btn btn-json" onclick="clearExamGuideForm()" style="background:rgba(220,38,38,0.12);color:#dc2626;border-color:rgba(220,38,38,0.25);">
+            <i class="fas fa-trash"></i> Clear
+          </button>
+        </div>
+      </div>
+ 
+      <textarea
+        id="examguide_json"
+        rows="22"
+        style="font-size:0.78rem;line-height:1.6;font-family:'Fira Code','Consolas',monospace;"
+        placeholder='{
+  "slug": "ssc-cgl-2026",
+  "title": "SSC CGL 2026 – Complete Exam Guide",
+  "category": "SSC",
+  "overview": "SSC CGL is conducted by Staff Selection Commission for Group B & C posts...",
+  "alertNote": "Applications open from 01 Jun 2026",
+ 
+  "stages": [
+    { "name": "Tier I",  "type": "CBT", "papers": "1", "totalMarks": "200", "nature": "Qualifying" },
+    { "name": "Tier II", "type": "CBT", "papers": "3", "totalMarks": "390", "nature": "Merit" }
+  ],
+  "structureNote": "Tier I is qualifying; final merit is based on Tier II marks.",
+ 
+  "roadmap": [
+    { "step": 1, "title": "Know the Syllabus", "desc": "Download official syllabus and mark high-weightage topics.", "tag": "Week 1" },
+    { "step": 2, "title": "Build Basics",      "desc": "Cover Quant and English foundations from standard books.",   "tag": "Month 1-2" }
+  ],
+ 
+  "syllabus": [
+    { "paperName": "General Intelligence", "marks": 50,  "colorClass": "blue",   "topics": ["Analogies","Classification","Series","Coding-Decoding"] },
+    { "paperName": "General Awareness",    "marks": 50,  "colorClass": "green",  "topics": ["Current Affairs","Static GK","Science"] },
+    { "paperName": "Quantitative Aptitude","marks": 50,  "colorClass": "orange", "topics": ["Arithmetic","Algebra","Geometry","Data Interpretation"] },
+    { "paperName": "English Language",     "marks": 50,  "colorClass": "purple", "topics": ["Reading Comprehension","Error Spotting","Vocabulary"] }
+  ],
+ 
+  "books": [
+    { "title": "Quantitative Aptitude",        "author": "R.S. Aggarwal",   "subject": "Maths",   "color": "blue"   },
+    { "title": "Objective General English",    "author": "S.P. Bakshi",     "subject": "English", "color": "green"  },
+    { "title": "Lucent General Knowledge",     "author": "Lucent",          "subject": "GK",      "color": "orange" }
+  ],
+ 
+  "eligibility": {
+    "nationality": "Indian Citizen",
+    "ageMin": 18,
+    "ageMax": 32,
+    "ageRelaxation": { "sc_st": 5, "obc": 3, "pwd": 10, "ews": 0 },
+    "education": "Graduation from recognised university",
+    "qualificationRequired": ["Graduation"],
+    "categoryEligibility": ["General","OBC","SC","ST","EWS"],
+    "genderEligibility": "All",
+    "stateEligibility": ["All India"],
+    "attemptsGen":  "9",
+    "attemptsOBC":  "6",
+    "attemptsScSt": "Unlimited",
+    "ageRelaxNote": "Age relaxation as per Govt. rules."
+  },
+ 
+  "salaryRange": { "min": 25500, "max": 81100, "grade": "Pay Level 4-8" },
+ 
+  "examType":      "National",
+  "examFrequency": "Yearly",
+  "totalVacancies": 17727,
+  "tags": ["ssc","graduate","central","group-b","group-c"],
+  "featured": true,
+  "active":   true,
+ 
+  "officialSite":        "https://ssc.gov.in",
+  "applyLink":           "https://ssc.gov.in/apply",
+  "notificationPdfLink": "https://ssc.gov.in/notification.pdf",
+  "admitCardLink":       "",
+ 
+  "tips": "Focus on Tier II maths heavily — it carries 180 marks. Attempt 400+ previous year questions per topic.",
+  "isPublished": true
+}'></textarea>
+    </div>
+ 
+    <!-- ── JSON PREVIEW PANEL ───────────────────────────── -->
+    <div id="examguide-preview" class="examguide-preview hidden">
+      <div class="examguide-preview-head">
+        <i class="fas fa-eye"></i> JSON Preview
+        <span id="examguide-preview-slug" class="eg-slug-badge"></span>
+      </div>
+      <div id="examguide-preview-body" class="examguide-preview-body"></div>
+    </div>
+ 
+    <!-- ── PUBLISH BUTTONS ─────────────────────────────── -->
+    <div class="btn-row" style="margin-top:1.25rem">
+      <button class="btn btn-pub" id="examguide-pub-btn" onclick="addExamGuide()">
+        <i class="fas fa-paper-plane"></i> Publish Exam Guide
+      </button>
+      <button class="btn btn-clr" onclick="clearExamGuideForm()">
+        <i class="fas fa-undo"></i> Clear
+      </button>
+    </div>
+ 
+  </div><!-- /form-card -->
+ 
+  <!-- ── LIST CARD ───────────────────────────────────────── -->
+  <div class="list-card">
+    <div class="list-head">
+      <div class="list-head-left">
+        <div class="list-head-icon"><i class="fas fa-book"></i></div>
+        Existing Exam Guide Entries
+      </div>
+      <span class="entry-count" id="examguides-count">0 entries</span>
+    </div>
+ 
+    <div class="list-search">
+      <i class="fas fa-search list-search-icon"></i>
+      <input
+        type="text"
+        id="examguides-search"
+        placeholder="Search by title, slug, category…"
+        oninput="filterList('examguides')"
+      >
+      <span class="search-hint" id="examguides-search-hint"></span>
+    </div>
+ 
+    <div id="examguides-list">
+      <div class="list-loading"><span class="spinner"></span> Loading entries…</div>
+    </div>
+  </div>
+ 
+</div><!-- /panel-eligibility -->
+
+      <!-- ──────── LIVE TRACKER ──────── -->
+      <div id="panel-tracker" class="panel">
+        <div class="page-head">
+          <div>
+            <div class="page-head-title">📡 Live Sarkari Updates</div>
+            <div class="page-head-sub">Latest items detected from SarkariResult — click a card to expand</div>
+          </div>
+          <button class="refresh-btn" id="refreshBtn" onclick="loadTrackerUpdates()"><i class="fas fa-sync-alt"></i> Refresh</button>
+        </div>
+
+        <!-- 3 stat cards on top -->
+        <div class="tracker-stat-row">
+          <div class="tracker-stat-card active" id="tsc-jobs" onclick="switchTrackerTab('jobs')">
+            <div class="ts-icon jobs"><i class="fas fa-briefcase"></i></div>
+            <div class="ts-body">
+              <div class="ts-label">Latest Jobs</div>
+              <div class="ts-count" id="tc-jobs">0</div>
+              <div class="ts-updated" id="tu-jobs">—</div>
+            </div>
+            <div class="ts-arrow"><i class="fas fa-chevron-right"></i></div>
+          </div>
+          <div class="tracker-stat-card" id="tsc-results" onclick="switchTrackerTab('results')">
+            <div class="ts-icon results"><i class="fas fa-chart-bar"></i></div>
+            <div class="ts-body">
+              <div class="ts-label">Results</div>
+              <div class="ts-count" id="tc-results">0</div>
+              <div class="ts-updated" id="tu-results">—</div>
+            </div>
+            <div class="ts-arrow"><i class="fas fa-chevron-right"></i></div>
+          </div>
+          <div class="tracker-stat-card" id="tsc-admit" onclick="switchTrackerTab('admit')">
+            <div class="ts-icon admit"><i class="fas fa-id-card"></i></div>
+            <div class="ts-body">
+              <div class="ts-label">Admit Cards</div>
+              <div class="ts-count" id="tc-admit">0</div>
+              <div class="ts-updated" id="tu-admit">—</div>
+            </div>
+            <div class="ts-arrow"><i class="fas fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <!-- Expandable list panel below -->
+        <div class="tracker-panel-wrap">
+
+          <div class="t-panel active" id="tpanel-jobs">
+            <div class="tracker-panel-head">
+              <div class="tracker-panel-head-left">
+                <div class="tp-icon jobs"><i class="fas fa-briefcase"></i></div>
+                <div>
+                  <div class="tracker-panel-title">Latest Jobs</div>
+                  <div class="tracker-panel-sub" id="tracker-jobs-scrape">Scraped —</div>
+                </div>
+              </div>
+              <span class="entry-count" id="tracker-jobs-count">0 items</span>
+            </div>
+            <div id="tracker-jobs-list"><div class="tracker-empty"><i class="fas fa-satellite-dish"></i><span>Click Refresh to load live updates</span></div></div>
+          </div>
+
+          <div class="t-panel" id="tpanel-results">
+            <div class="tracker-panel-head">
+              <div class="tracker-panel-head-left">
+                <div class="tp-icon results"><i class="fas fa-trophy"></i></div>
+                <div>
+                  <div class="tracker-panel-title">Results</div>
+                  <div class="tracker-panel-sub" id="tracker-results-scrape">Scraped —</div>
+                </div>
+              </div>
+              <span class="entry-count" id="tracker-results-count">0 items</span>
+            </div>
+            <div id="tracker-results-list"><div class="tracker-empty"><i class="fas fa-satellite-dish"></i><span>Click Refresh to load live updates</span></div></div>
+          </div>
+
+          <div class="t-panel" id="tpanel-admit">
+            <div class="tracker-panel-head">
+              <div class="tracker-panel-head-left">
+                <div class="tp-icon admit"><i class="fas fa-id-card"></i></div>
+                <div>
+                  <div class="tracker-panel-title">Admit Cards</div>
+                  <div class="tracker-panel-sub" id="tracker-admit-scrape">Scraped —</div>
+                </div>
+              </div>
+              <span class="entry-count" id="tracker-admit-count">0 items</span>
+            </div>
+            <div id="tracker-admit-list"><div class="tracker-empty"><i class="fas fa-satellite-dish"></i><span>Click Refresh to load live updates</span></div></div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="mobile-nav">
+    <button class="mobile-nav-item active" id="mnav-jobs" onclick="switchPanel('jobs')">
+      <i class="fas fa-briefcase"></i><span>Jobs</span>
+    </button>
+     
+    <button class="mobile-nav-item" id="mnav-admit" onclick="switchPanel('admit')">
+      <i class="fas fa-id-card"></i><span>Admit</span>
+    </button>
+    <button class="mobile-nav-item" id="mnav-results" onclick="switchPanel('results')">
+      <i class="fas fa-trophy"></i><span>Results</span>
+    </button>
+    <button class="mobile-nav-item" id="mnav-eligibility" onclick="switchPanel('eligibility')">
+      <i class="fas fa-graduation-cap"></i><span>Exams Guide</span>
+    </button>
+
+    <button class="mobile-nav-item" id="mnav-tracker" onclick="switchPanel('tracker')">
+      <i class="fas fa-satellite-dish"></i><span>Tracker</span>
+    </button>
+</nav>
+    <!-- <button class="mobile-nav-item" id="mnav-tracker" onclick="switchPanel('tracker')">
+      <i class="fas fa-satellite-dish"></i><span>Tracker</span>
+    </button> -->
+  </nav>
+  <div id="dsOverlay" class="ds-overlay hidden" onclick="closeDsModal(event)">
+  <div class="ds-modal">
+    <div class="ds-modal-head">
+      <div class="ds-modal-title">
+        <div class="ds-icon"><i class="fas fa-search"></i></div>
+        Deep Scrape Result
+      </div>
+      <button class="ds-close" onclick="closeDsModal(null)"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ds-modal-body" id="dsModalBody">
+      <div class="ds-loading"><span class="spinner"></span><p>Scraping page…</p></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Alert -->
+<div id="alertMessage" class="alert"></div>
+<script src="/nokari/js/admin.js"></script>
+</body>
+</html>
