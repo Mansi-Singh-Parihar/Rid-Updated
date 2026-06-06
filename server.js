@@ -328,6 +328,8 @@ app.listen = function () {
     res.render("index.ejs")
   });
 
+
+
   app.get("/searchResult", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "searchResult.html"));
   });

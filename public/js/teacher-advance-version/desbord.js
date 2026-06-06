@@ -1,19 +1,23 @@
-function openRequestModal() {
+  function openRequestModal() {
   document.getElementById("requestModal").style.display = "block";
 }
 
+
 function submitRequest() {
+  const bannerFile = document.getElementById("banner").files[0];
   const notesFile = document.getElementById("notes").files[0];
   const description = document.getElementById("description").value.trim();
   const testName = document.getElementById("testName").value.trim();
   const subject = document.getElementById("subject").value.trim();
 
+  if (!bannerFile) return alert("Please upload banner.");
   if (!notesFile) return alert("Please upload notes.");
   if (!description) return alert("Please enter description.");
   if (!testName) return alert("Please enter test name.");
   if (!subject) return alert("Please enter subject.");
 
   const formData = new FormData();
+  formData.append("banner", bannerFile);
   formData.append("notes", notesFile);
   formData.append("description", description);
   formData.append("testName", testName);
@@ -27,6 +31,7 @@ function submitRequest() {
     .then(data => {
       if (data.success) {
         alert("Request Sent Successfully!");
+        document.getElementById("banner").value = "";
         document.getElementById("notes").value = "";
         document.getElementById("description").value = "";
         document.getElementById("testName").value = "";
@@ -3454,5 +3459,3 @@ function shareInviteLink() {
     window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
   }
 }
-
- 

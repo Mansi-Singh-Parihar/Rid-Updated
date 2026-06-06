@@ -688,7 +688,8 @@
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script>
-     async function showTestRequests() {
+     
+async function showTestRequests() {
   document.getElementById('dashboardContent').style.display = 'none';
 
   const dynamic = document.getElementById('dynamicContent');
@@ -722,9 +723,10 @@
           ${requests.map(r => `
             <div class="request-card">
               <div class="request-card-header">
-                <h3>${r.teacherId?.name || "Unknown Teacher"}</h3>
+                <h3>${r.testName || "Untitled Test"}</h3>
                 <div class="request-meta">
-                  <span class="badge"><i class="fas fa-user"></i> ${r.teacherId?.role || "Teacher"}</span>
+                  <span class="badge"><i class="fas fa-user"></i> ${r.teacherId?.name || r.teacherName || "Unknown Teacher"}</span>
+                  <span class="badge"><i class="fas fa-book"></i> ${r.subject || "No Subject"}</span>
                   <span class="badge"><i class="fas fa-clock"></i> Pending</span>
                 </div>
               </div>
@@ -732,8 +734,8 @@
               <div class="request-card-body">
                 ${r.banner ? `<img src="${r.banner}" class="request-banner" alt="Request banner">` : ""}
 
-                ${r.notesFile ? `
-                  <a href="${r.notesFile}" target="_blank" class="request-link">
+                ${(r.notes || r.notesFile) ? `
+                  <a href="${r.notes || r.notesFile}" target="_blank" class="request-link">
                     <i class="fas fa-file-pdf"></i> View Notes
                   </a>
                 ` : ""}
@@ -754,7 +756,7 @@
 
                 <div class="request-actions">
                   <button class="btn-approve" onclick="approveRequest('${r._id}')">
-                    <i class="fas fa-check"></i> Approve
+                    <i class="fas fa-check"></i> Send Questions
                   </button>
                   <button class="btn-cancel" onclick="cancelRequest('${r._id}')">
                     <i class="fas fa-times"></i> Cancel

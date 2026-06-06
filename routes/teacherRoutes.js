@@ -232,32 +232,51 @@ router.get("/teacher/send-test-page/:testId", ensureTeacher, async (req,res)=>{
      publicLink
   });
 });
+
 router.get("/teacher/my-tests", ensureTeacher, async (req, res) => {
   try {
-    const tests = await Test.find({
+    const teacherId = req.user._id;
+
+    const regularTests = await Test.find({
       $or: [
-        { teacherId: req.user._id },
-        { teacherId: { $exists: false } } // fallback for old tests
+        { teacherId },
+        { teacherId: { $exists: false } }
       ]
     }).sort({ createdAt: -1 });
 
-    const fullTests = await Promise.all(
-      tests.map(async (test) => {
+    const teacherTests = await TeacherTest.find({
+      createdBy: teacherId,
+      creatorModel: "Teacher"
+    }).sort({ createdAt: -1 });
+
+    const fullTests = await Promise.all([
+      ...regularTests.map(async (test) => {
         const questions = await Question.find({ testId: test._id });
         const attemptCount = await require("../models/TestAttempt")
           .countDocuments({ testId: test._id });
 
         return {
           ...test.toObject(),
+          name: test.title || test.name || "Untitled Test",
           questions,
           submissions: attemptCount,
           startDate: test.startDate,
-          endDate: test.endDate
+          endDate: test.endDate,
+          status: test.status || "published"
         };
-      })
-    );
+      }),
+      ...teacherTests.map((test) => ({
+        ...test.toObject(),
+        name: test.name || "Untitled Test",
+        questions: Array.isArray(test.questions) ? test.questions : [],
+        submissions: test.submissions || 0,
+        startDate: test.startDate,
+        endDate: test.endDate,
+        status: test.status || "approved"
+      }))
+    ]);
 
-    res.json(fullTests);
+    res.json(fullTests.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)));
 
   } catch (err) {
     console.log("Load Tests Error:", err);
@@ -301,7 +320,7 @@ router.post("/teacher/create-test", ensureTeacher, async (req, res) => {
 
     // 2️⃣ Save all Questions
    const questionDocs = questions.map(q => ({
-  testId: newTest._id,
+  testId: req.params.testId,
   type: q.type || "mcq",
   text: q.text,
   points: q.points || 1,
@@ -426,7 +445,7 @@ router.put("/teacher/update-test/:testId", ensureTeacher, async (req, res) => {
 
     // Insert new questions
    const questionDocs = questions.map(q => ({
-  testId: newTest._id,
+  testId: req.params.testId,
   type: q.type || "mcq",
   text: q.text,
   points: q.points || 1,
@@ -490,7 +509,7 @@ router.put("/teacher/update-class/:id", ensureTeacher, async (req, res) => {
 
     // 🔥 update students also
    await Student.updateMany(
-  { teacherId: req.user._id, class: deleted.name },
+  { teacherId: req.user._id, class: oldClass.name },
   { $set: { class: "Unassigned" } }
 );
 
@@ -565,25 +584,56 @@ router.get("/advance-version", ensureTeacher, async (req, res) => {
 router.get("/teacher/channel", ensureTeacher, async (req, res) => {
   try {
 
+
 router.post("/teacher/send-request", async (req, res) => {
   try {
     const token = req.cookies.token;
-    const decoded = require("jsonwebtoken").verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const newRequest = new TestRequest({
-      teacherId: decoded.userId,
-      banner: req.body.banner,
-      notes: req.body.notes,
-      description: req.body.description
+    const requestStorage = multer.diskStorage({
+      destination: "public/uploads/",
+      filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+      }
     });
 
-    await newRequest.save();
+    const requestUpload = multer({ storage: requestStorage });
 
-    res.json({ success: true });
+    requestUpload.fields([
+      { name: "banner", maxCount: 1 },
+      { name: "notes", maxCount: 1 }
+    ])(req, res, async (err) => {
+      try {
+        if (err) {
+          console.log("Multer Error:", err);
+          return res.status(400).json({ success: false, message: err.message });
+        }
 
+        const bannerFile = req.files?.banner?.[0];
+        const notesFile = req.files?.notes?.[0];
+
+        const newRequest = new TestRequest({
+          teacherId: decoded.userId,
+          teacherName: req.user?.name || "",
+          testName: req.body.testName || "",
+          subject: req.body.subject || "",
+          banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
+          notes: notesFile ? `/uploads/${notesFile.filename}` : "",
+          description: req.body.description || "",
+          status: "pending"
+        });
+
+        await newRequest.save();
+
+        res.json({ success: true, request: newRequest });
+      } catch (saveErr) {
+        console.log("Send Request Save Error:", saveErr);
+        res.status(500).json({ success: false, message: saveErr.message });
+      }
+    });
   } catch (err) {
     console.log("Send Request Error:", err);
-    res.json({ success: false });
+    res.status(500).json({ success: false, message: err.message });
   }
 });
 
@@ -698,31 +748,48 @@ router.post(
 
       const newRequest = new TestRequest({
         teacherId: decoded.userId,
+        teacherName: req.body.teacherName || "",
+        testName: req.body.testName || "",
+        subject: req.body.subject || "",
         banner: bannerFile ? "/uploads/" + bannerFile.filename : "",
-        notes: notesFile ? "/uploads/" + notesFile.filename : "",
-        description: req.body.description || ""
+        notesFile: notesFile ? "/uploads/" + notesFile.filename : "",
+        description: req.body.description || "",
+        status: "pending"
       });
 
       await newRequest.save();
       res.json({ success: true });
     } catch (err) {
       console.log("Send Request Error:", err);
-      res.json({ success: false, error: err.message });
+      res.status(500).json({ success: false, error: err.message });
     }
   }
 );
 // Student Register Page
 router.get(
-    "/teacher/student-register/:teacherId",
-    async (req, res) => {
+  "/teacher/student-register/:teacherId",
+  async (req, res) => {
+    try {
 
-        res.render(
-            "tracher_deshboard/advance-version/student-register.ejs",
-            {
-                teacherId: req.params.teacherId
-            }
-        );
+      const teacher = await Teacher.findById(req.params.teacherId);
+
+      if (!teacher) {
+        return res.send("Teacher not found");
+      }
+
+      res.render(
+        "tracher_deshboard/advance-version/student-register.ejs",
+        {
+          teacher,
+          teacherId: req.params.teacherId
+        }
+      );
+
+    } catch (err) {
+      console.log("Student Register Error:", err);
+      res.status(500).send("Server Error");
     }
+  }
 );
 // ================= PUBLIC ADD STUDENT =================
 
@@ -783,4 +850,9 @@ router.post(
     }
   }
 );
+
+
+ router.get("/main", (req, res) => {
+  res.render("index.ejs")
+});
 module.exports = router;

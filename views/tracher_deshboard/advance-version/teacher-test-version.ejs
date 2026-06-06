@@ -13,7 +13,7 @@
 <body>
     <script>
         const TEACHER_ID = "<%= teacher._id %>";
-        const initialStudents = <% - JSON.stringify(students || []) %>;
+        const initialStudents = <%- JSON.stringify(students || []) %>;
     </script>
     <div class="main-container">
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -1417,16 +1417,19 @@
     </div>
 
     <!-- MODAL -->
-   <div id="requestModal" class="modal-overlay">
+   <div id="requestModal" class="modal-overlay" style="display:none;">
   <div class="modal-box">
     <span class="close-btn" onclick="closeRequestModal()">&times;</span>
-    <h3>Send Test Request</h3>
+    <h3>Send Request For Create Test</h3>
 
     <label>Test Name</label>
     <input type="text" id="testName" placeholder="Test name">
 
     <label>Subject</label>
     <input type="text" id="subject" placeholder="Math, Science, English...">
+
+    <label>Upload Banner</label>
+    <input type="file" id="banner" accept=".jpg,.jpeg,.png,.webp"><br><br>
 
     <label>Upload Notes (PDF)</label>
     <input type="file" id="notes" accept=".pdf,.doc,.docx"><br><br>
@@ -1436,7 +1439,6 @@
     <button onclick="submitRequest()">Send</button>
   </div>
 </div>
-    
 
     <div id="viewStudentModal" class="student-modal">
 
@@ -1501,7 +1503,7 @@
         </div>
     </div>
 </div>
-    <script src="/js/teacher-advance-version/desbord.js"></script>
+    <script src="js/teacher-advance-version/desbord.js"> </script>
      
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>

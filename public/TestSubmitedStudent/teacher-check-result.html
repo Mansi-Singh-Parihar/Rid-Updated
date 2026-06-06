@@ -506,12 +506,12 @@
 
 
             <div class="button-container">
-                <a href="/index.html" class="result-button visit-website-btn" onclick="goHome(event)">
+                <a href="/main" class="result-button visit-website-btn">
                     <i class="fas fa-globe button-icon"></i>
                     Visit Website
                 </a>
 
-                <a href="/index.html" class="result-button ok-btn" onclick="goHome(event)">
+                <a href="/main" class="result-button ok-btn" ">
                     <i class="fas fa-check-circle button-icon"></i>
                     OK
                 </a>
@@ -581,16 +581,7 @@
             }
             lastTouchEnd = now;
         }, false);
-        history.pushState(null, null, location.href);
-        window.onpopstate = function () {
-            window.location.href = "/index.html";
-        };
-        function goHome(e) {
-    e.preventDefault();
-
-    // Replace current history entry
-    window.location.replace("/index.html");
-}
+       
     </script>
 </body>
 

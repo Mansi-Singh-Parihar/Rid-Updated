@@ -1,4 +1,66 @@
-   
+/* Modern Dashboard Override */
+
+/* FULL PROFESSIONAL DASHBOARD REDESIGN */
+body,.content-area,.page-content-wrapper{
+background:#f8fafc!important;
+font-family:'Segoe UI',sans-serif!important;
+}
+header{
+background:#0f172a!important;
+border-bottom:1px solid #1e293b!important;
+box-shadow:none!important;
+}
+.sidebar{
+background:#08142f!important;
+}
+.top-navbar{
+background:#ffffff!important;
+height:60px!important;
+border-bottom:1px solid #e5e7eb!important;
+}
+.top-navbar a{
+color:#475569!important;
+font-weight:600!important;
+}
+.top-navbar a:hover{
+background:#eff6ff!important;
+color:#2563eb!important;
+}
+.card,.dashboard-card,.animated-stat-card,.chart-container,.recent-activity,
+.analytics-card,.test-service-card,.course-card,.quick-create-section{
+background:#fff!important;
+border:1px solid #e5e7eb!important;
+border-radius:14px!important;
+box-shadow:0 2px 10px rgba(0,0,0,.05)!important;
+}
+.dashboard-welcome,.service-header{
+background:#2563eb!important;
+}
+input,select,textarea{
+background:#fff!important;
+border:1px solid #d1d5db!important;
+border-radius:8px!important;
+}
+.btn-primary{background:#2563eb!important;}
+.btn-success{background:#16a34a!important;}
+.btn-danger{background:#dc2626!important;}
+.btn{
+box-shadow:none!important;
+border-radius:8px!important;
+}
+.stat-card{
+background:#fff!important;
+border:1px solid #e5e7eb!important;
+}
+.analytics-table thead{
+background:#f1f5f9!important;
+color:#334155!important;
+}
+.footer-compact{
+background:#0f172a!important;
+border:none!important;
+}
+
       /* Reset and Base Styles */
 * {
     margin: 0;
