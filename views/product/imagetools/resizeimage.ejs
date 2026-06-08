@@ -1,1000 +1,549 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
-<title>Resize Image – RID Bharat</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" type="image/png" href="/assets/signup.png">
-<style>
-/* ============================================================
-   RESET
-   ============================================================ */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
-/* ============================================================
-   RID BHARAT CSS VARIABLES (header/footer)
-   ============================================================ */
-:root{
-  --primary:#083d5d;--primary-dark:#062a41;--secondary:#4da8da;
-  --accent:#ff6b35;--light:#f2f7fc;--dark:#333;--gray:#555;
-  --light-gray:#e0e0e0;--white:#ffffff;
-  --shadow:0 5px 15px rgba(0,0,0,.08);--transition:all 0.3s ease;
-
-  /* Resize tool variables */
-  --bg:#eef0f5;--surface:#ffffff;--surface2:#f4f5f9;
-  --border:#dde0ea;--text:#14161f;--text-muted:#6e7491;
-  --tool-accent:#4f6ef7;--accent2:#a78bfa;
-  --accent-glow:rgba(79,110,247,0.16);
-  --tool-shadow:0 8px 40px rgba(14,16,31,0.10);
-  --radius:20px;--radius-sm:12px;
-  --tool-transition:all 0.3s cubic-bezier(.4,0,.2,1);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Image Merger Tool – Merge with live preview</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    @media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        top: 77px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        display: none;
+        padding: 30px 20px 20px;
+        overflow-y: auto;
+        z-index: 999;
+        transform: translateX(-100%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 }
-[data-theme="dark"]{
-  --bg:#0f1018;--surface:#181a26;--surface2:#1f2133;
-  --border:#2a2d42;--text:#eef0f5;--text-muted:#7a7e9a;
-  --tool-accent:#6b8aff;--accent2:#b39dfa;
-  --accent-glow:rgba(107,138,255,0.18);
-  --tool-shadow:0 8px 40px rgba(0,0,0,0.45);
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            padding-top: 130px;
+        }
 
-/* ============================================================
-   BASE BODY
-   ============================================================ */
-html{height:100%;}
-body{
-  font-family:'Poppins',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  background-color:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  /* desktop: top-bar 40px + nav 90px = 130px */
-  padding-top:130px;
-  overflow-x:hidden;
-  font-weight:400;
-   overflow-y:auto;
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  min-height:100%;
-  display:flex;
-  flex-direction:column;
-  transition:background .3s,color .3s;
-}
-input,button,textarea,select{font-family:inherit;font-size:inherit;line-height:inherit;}
-a{text-decoration:none;color:inherit;transition:var(--transition);}
-ul{list-style:none;}
-button{cursor:pointer;border:none;outline:none;transition:var(--transition);}
-img{max-width:100%;height:auto;display:block;}
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
 
-/* ============================================================
-   HEADER
-   ============================================================ */
-.header-container{position:fixed;top:0;left:0;width:100%;z-index:1000;}
+        /* Flex container – items align at top, no automatic stretching */
+        .app {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
 
-.top-header{
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(90deg,#062a41 0%,#0a4d6e 100%);
-  color:#fff;padding:0 20px;height:40px;font-size:14px;
-  letter-spacing:.3px;box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-.web-text p{display:inline-block;font-size:.6rem;font-weight:700;}
-.web-text p span{font-weight:300;}
-.web-text p::after{content:"|";margin:0 10px;color:#fff;font-weight:300;}
-.web-text p:last-child::after{content:"";}
-.right-text{display:flex;}
-.right-text a{font-size:.6rem;color:white;text-decoration:none;}
-.right-text a::after{content:"|";margin:0 8px;color:#fff;font-weight:300;}
-.right-text a:last-child::after{content:"";}
+        /* LEFT PANEL – height will be set dynamically by JS to match right panel */
+        .previewSection {
+            width: 55%;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            transition: height 0.2s ease;
+        }
 
-.main-header{
-  backdrop-filter:blur(10px);
-  background:rgba(255,255,255,.92);
-  border-bottom:1px solid rgba(77,168,218,.3);
-  box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-.nav{
-  display:flex;justify-content:space-between;align-items:center;
-  height:90px;padding:0 20px;transition:all .3s ease;
-}
-.logo{display:flex;align-items:center;flex:1;}
-.logo img{height:80px;max-height:80px;transition:all .3s ease;}
+        .previewHeader h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #818cf8, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.6rem;
+        }
 
-/* Menu wrapper */
-.menu{display:flex;justify-content:flex-end;align-items:flex-end;flex-direction:column;}
+        .previewCanvasWrap {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 0.8rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            flex: 1; /* allows canvas wrap to take remaining space */
+        }
 
-/* Upper nav */
-.upperNav{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:nowrap;}
+        #previewCanvas {
+            background: #0f172a;
+            border-radius: 16px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-.nav-button{
-  display:flex;justify-content:center;align-items:center;gap:5px;
-  font-size:.9rem;font-weight:600;padding:8px 15px;border-radius:30px;
-  transition:all .3s ease;cursor:pointer;border:none;outline:none;
-  box-shadow:0 4px 10px rgba(0,53,84,.2);
-}
-#onlineTest1{background:linear-gradient(145deg,#dc143c,#b22222);color:#fff;}
-#ebookBtn{background:#c67534;color:#fff;}
-#certificate{background:linear-gradient(145deg,#0b5e0b,#0a470a);color:#fff;}
-#onlineTest1:hover,#ebookBtn:hover,#certificate:hover{background:#000;transform:translateY(-2px);}
+        .emptyState {
+            text-align: center;
+            color: #94a3b8;
+        }
+        .emptyState div {
+            font-size: 2.5rem;
+            opacity: 0.6;
+        }
+        .emptyState h3 {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .emptyState p {
+            margin-top: 0.2rem;
+            font-size: 0.7rem;
+        }
 
-/* Login/Register toggle — NO OVERLAP FIX */
-.btn-box{
-  width:220px;display:flex;flex-shrink:0;
-  box-shadow:0 2px 4px rgba(0,0,0,.1);
-  border-radius:30px;position:relative;
-  background:rgba(240,240,240,.6);
-  backdrop-filter:blur(4px);
-  border:1px solid rgba(8,61,93,.2);
-  overflow:hidden;
-}
-.toggle-btn{
-  padding:8px 0;position:relative;outline:none;border:none;
-  background:transparent;font-size:.85rem;color:#000;
-  display:flex;justify-content:center;align-items:center;gap:4px;
-  z-index:1;width:50%;cursor:pointer;transition:color .3s ease;font-weight:600;
-  white-space:nowrap;
-}
-#swap-btn{
-  position:absolute;top:0;left:0;width:50%;height:100%;
-  background:#083d5d;border-radius:30px;transition:all .4s ease;z-index:0;
-}
-#logInButton{color:white;}
-#signUpBtn{color:#333;}
+        /* RIGHT PANEL – unchanged, height remains fit‑content */
+        .controlsSection {
+            width: 45%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            backdrop-filter: blur(8px);
+            height: fit-content;
+        }
 
-/* Lower nav */
-.lowerNav{display:flex;gap:22px;}
-.lowerNav ul{display:flex;gap:20px;}
-.lowerNav li{position:relative;}
-.lowerNav li a{font-size:.9rem;color:#333;font-weight:500;}
-.menu-link{display:flex;align-items:center;cursor:pointer;padding:8px 0;}
-.menu-link:hover{color:#083d5d;}
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .header p {
+            margin-top: 0.2rem;
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
 
-/* Hamburger */
-.menu-icon{
-  display:none;flex-direction:column;justify-content:space-between;
-  width:30px;height:21px;cursor:pointer;margin-left:auto;z-index:1001;
-}
-.menu-icon span{display:block;height:3px;width:100%;background:var(--primary);border-radius:3px;transition:all .3s ease;}
-.menu-icon.active span:nth-child(1){transform:translateY(9px) rotate(45deg);}
-.menu-icon.active span:nth-child(2){opacity:0;}
-.menu-icon.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+        .uploader {
+            display: block;
+            margin-top: 1rem;
+            border: 2px dashed rgba(129, 140, 248, 0.3);
+            border-radius: 20px;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(129, 140, 248, 0.03);
+        }
+        .uploader:hover {
+            border-color: #818cf8;
+            background: rgba(129, 140, 248, 0.08);
+            transform: translateY(-2px);
+        }
+        .uploadIcon {
+            font-size: 1.8rem;
+        }
+        .uploadTitle {
+            margin-top: 0.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .uploadText {
+            margin-top: 0.1rem;
+            color: #94a3b8;
+            font-size: 0.65rem;
+        }
+        input[type="file"] {
+            display: none;
+        }
 
-/* Desktop hover underline */
-@media(min-width:769px){
-  .menu-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:#083d5d;transition:width .3s ease;}
-  .menu-link:hover::after{width:100%;}
-}
+        .controls {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        select,
+        .numberInput,
+        button {
+            padding: 0.4rem 0.7rem;
+            border: none;
+            border-radius: 40px;
+            background: #1e293b;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        select {
+            flex: 1;
+            min-width: 120px;
+            background: #1e293b;
+            border: 1px solid #475569;
+        }
+        .numberInput {
+            width: 80px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            text-align: center;
+        }
+        button {
+            background: #334155;
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+        .addMoreBtn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .downloadBtn {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            color: white;
+        }
+        .clearBtn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
 
-/* Dropdown */
-.dropdown-toggle .fa-chevron-down{margin-left:.3rem;font-size:.8rem;transition:transform .3s ease;}
-.dropdown-menu{
-  display:none;position:absolute;left:0;top:100%;background:#fff;
-  box-shadow:0 5px 15px rgba(0,0,0,.1);border-radius:8px;padding:10px 0;
-  min-width:220px;z-index:1000;
-}
-.dropdown.active .dropdown-menu{display:block;}
-.dropdown-menu .nav-link{
-  padding:12px 20px;border-bottom:1px solid #f0f0f0;display:flex;
-  align-items:center;width:100%;color:#333;font-size:.9rem;transition:all .3s ease;
-}
-.dropdown-menu .nav-link:hover{background:#f8f9fa;color:#083d5d;padding-left:25px;}
-@media(min-width:769px){.dropdown:hover .dropdown-menu{display:block;}.dropdown:hover .fa-chevron-down{transform:rotate(180deg);}}
+        .grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.6rem;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.25s;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+        }
+        .card img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+        .cardFooter {
+            padding: 0.3rem;
+        }
+        .removeBtn {
+            width: 100%;
+            background: rgba(239, 68, 68, 0.8);
+            border: none;
+            border-radius: 30px;
+            padding: 0.25rem;
+            font-size: 0.55rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+        .removeBtn:hover {
+            background: #ef4444;
+        }
 
-/* ============================================================
-   MAIN CONTENT WRAPPER
-   ============================================================ */
-.page-main{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:40px 20px;
-  min-height:calc(100vh - 130px);
-}
-
-/* ============================================================
-   RESIZE TOOL — noise background
-   ============================================================ */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.5;
-}
-
-/* Card */
-.card{
-  position:relative;z-index:1;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:28px;
-  box-shadow:var(--tool-shadow);
-  width:100%;max-width:780px;
-  padding:36px 40px 32px;
-  transition:var(--tool-transition);
-}
-
-/* Topbar inside card */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
-.page-title{
-  font-family:'Syne',sans-serif;
-  font-size:1.55rem;font-weight:800;letter-spacing:-.03em;color:var(--text);
-  display:flex;align-items:center;gap:10px;
-}
-.page-title .dot{
-  width:10px;height:10px;border-radius:50%;background:var(--tool-accent);
-  box-shadow:0 0 12px var(--accent-glow);display:inline-block;
-}
-.theme-btn{
-  background:var(--surface2);border:1px solid var(--border);border-radius:50px;
-  padding:7px 16px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;
-  color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:7px;
-  transition:var(--tool-transition);
-}
-.theme-btn:hover{background:var(--tool-accent);color:#fff;border-color:var(--tool-accent);}
-
-/* Layout */
-.main-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-
-/* Upload zone */
-.upload-zone{
-  border:2px dashed var(--border);border-radius:var(--radius);
-  background:var(--surface2);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;cursor:pointer;
-  transition:var(--tool-transition);min-height:260px;position:relative;overflow:hidden;
-}
-.upload-zone:hover,.upload-zone.dragover{border-color:var(--tool-accent);background:var(--accent-glow);}
-.upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.upload-icon{
-  width:56px;height:56px;background:var(--accent-glow);border-radius:16px;
-  display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:var(--tool-transition);
-}
-.upload-zone:hover .upload-icon{transform:scale(1.08);background:var(--tool-accent);}
-.upload-label{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:5px;}
-.upload-sub{font-size:.78rem;color:var(--text-muted);text-align:center;}
-.upload-preview{width:100%;height:100%;position:absolute;inset:0;display:none;}
-.upload-preview img{width:100%;height:100%;object-fit:cover;border-radius:calc(var(--radius) - 2px);}
-.upload-preview .change-overlay{
-  position:absolute;inset:0;background:rgba(0,0,0,.45);border-radius:calc(var(--radius) - 2px);
-  display:flex;align-items:center;justify-content:center;opacity:0;transition:var(--tool-transition);
-  font-family:'Syne',sans-serif;color:#fff;font-size:.85rem;font-weight:700;
-}
-.upload-preview:hover .change-overlay{opacity:1;}
-.dim-badge{
-  position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
-  border-radius:8px;padding:4px 10px;font-family:'Syne',sans-serif;font-size:.72rem;font-weight:700;color:#fff;display:none;
-}
-
-/* Right panel */
-.right-panel{display:flex;flex-direction:column;gap:14px;}
-
-/* Stats */
-.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 15px;transition:var(--tool-transition);}
-.stat-label{font-size:.68rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
-.stat-value{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);}
-.stat-value.new{color:var(--tool-accent);}
-
-/* Mode toggle */
-.mode-toggle{
-  display:flex;background:var(--surface2);border:1px solid var(--border);
-  border-radius:50px;padding:4px;gap:4px;
-}
-.mode-btn{
-  flex:1;border:none;border-radius:50px;padding:7px 10px;
-  font-family:'Syne',sans-serif;font-size:.73rem;font-weight:700;
-  color:var(--text-muted);background:transparent;cursor:pointer;
-  transition:var(--tool-transition);white-space:nowrap;
-}
-.mode-btn.active{background:var(--tool-accent);color:#fff;box-shadow:0 2px 10px var(--accent-glow);}
-
-/* Dimension inputs */
-.dim-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:15px 16px;}
-.dim-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.dim-row:last-of-type{margin-bottom:0;}
-.dim-input-label{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:var(--text-muted);width:18px;flex-shrink:0;}
-.dim-input-wrap{
-  flex:1;display:flex;align-items:center;background:var(--surface);
-  border:1.5px solid var(--border);border-radius:9px;overflow:hidden;transition:var(--tool-transition);
-}
-.dim-input-wrap:focus-within{border-color:var(--tool-accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.dim-input{
-  flex:1;border:none;background:transparent;font-family:'Syne',sans-serif;
-  font-size:.95rem;font-weight:700;color:var(--text);padding:9px 12px;outline:none;min-width:0;
-}
-.dim-unit{padding:9px 12px 9px 0;font-size:.75rem;color:var(--text-muted);font-weight:500;}
-.lock-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:2px 0 10px;}
-.lock-line{flex:1;height:1px;background:var(--border);}
-.lock-btn{
-  background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;
-  font-size:.75rem;color:var(--text-muted);cursor:pointer;display:flex;align-items:center;gap:5px;
-  font-family:'Syne',sans-serif;font-weight:700;transition:var(--tool-transition);
-}
-.lock-btn.locked{border-color:var(--tool-accent);color:var(--tool-accent);background:var(--accent-glow);}
-.lock-btn:hover{border-color:var(--tool-accent);color:var(--tool-accent);}
-
-/* Percent block */
-.percent-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:15px 16px;display:none;}
-.pct-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.pct-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--text);}
-.pct-badge{background:var(--tool-accent);color:#fff;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:50px;min-width:50px;text-align:center;}
-input[type="range"]{-webkit-appearance:none;width:100%;height:6px;border-radius:50px;background:var(--border);outline:none;cursor:pointer;}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--tool-accent);box-shadow:0 0 0 4px var(--accent-glow);cursor:pointer;transition:var(--tool-transition);}
-input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2);}
-.pct-hints{display:flex;justify-content:space-between;margin-top:6px;}
-.pct-hints span{font-size:.68rem;color:var(--text-muted);}
-
-/* Preset chips */
-.preset-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
-.chip{
-  background:var(--surface);border:1.5px solid var(--border);border-radius:50px;padding:4px 11px;
-  font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
-  color:var(--text-muted);cursor:pointer;transition:var(--tool-transition);
-}
-.chip:hover{border-color:var(--tool-accent);color:var(--tool-accent);background:var(--accent-glow);}
-.chip.active{background:var(--tool-accent);border-color:var(--tool-accent);color:#fff;}
-
-/* Format */
-.format-block{display:flex;gap:6px;}
-.fmt-btn{
-  background:var(--surface2);border:1.5px solid var(--border);border-radius:9px;padding:8px 12px;
-  font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;
-  color:var(--text-muted);cursor:pointer;transition:var(--tool-transition);
-}
-.fmt-btn:hover{border-color:var(--tool-accent);color:var(--tool-accent);}
-.fmt-btn.active{background:var(--tool-accent);border-color:var(--tool-accent);color:#fff;box-shadow:0 3px 12px var(--accent-glow);}
-
-/* Progress */
-.progress-wrap{display:none;background:var(--border);border-radius:50px;height:6px;overflow:hidden;}
-.progress-bar{height:100%;background:linear-gradient(90deg,var(--tool-accent),var(--accent2));border-radius:50px;width:0%;transition:width .4s ease;}
-
-/* Saved badge */
-.saved-badge{
-  display:none;align-items:center;justify-content:center;gap:6px;
-  background:var(--accent-glow);border:1px solid var(--tool-accent);border-radius:50px;padding:7px 16px;
-  font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;color:var(--tool-accent);
-  animation:popIn .4s cubic-bezier(.4,0,.2,1);
-}
-@keyframes popIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
-
-/* Resize button */
-.resize-btn{
-  width:100%;background:var(--tool-accent);color:#fff;
-  border:none;border-radius:var(--radius-sm);padding:15px;
-  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
-  transition:var(--tool-transition);letter-spacing:-.01em;position:relative;overflow:hidden;
-}
-.resize-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);pointer-events:none;}
-.resize-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px var(--accent-glow);}
-.resize-btn:active{transform:translateY(0);}
-.resize-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;}
-
-/* Download button */
-.download-btn{
-  width:100%;background:transparent;color:var(--tool-accent);
-  border:1.5px solid var(--tool-accent);border-radius:var(--radius-sm);padding:12px;
-  font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;
-  cursor:pointer;display:none;align-items:center;justify-content:center;gap:8px;
-  transition:var(--tool-transition);
-}
-.download-btn:hover{background:var(--tool-accent);color:#fff;}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer{
-  background:linear-gradient(145deg,#0a3750,#031f2f);
-  color:#fff;padding:30px 0 0;position:relative;overflow:hidden;width:100%;
-}
-footer::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:4px;
-  background:linear-gradient(90deg,var(--accent),var(--secondary),var(--accent));
-}
-.container{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;}
-.footer-content{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;}
-.footer-logo{display:flex;flex-direction:column;}
-.footer-logo img{max-width:180px;height:auto;margin-bottom:10px;background:#fff;padding:5px;border-radius:6px;}
-.footer-logo p{margin-bottom:8px;color:var(--light-gray);font-size:.8rem;line-height:1.4;}
-.contact-info{margin-top:5px;}
-.contact-info p{margin-bottom:4px;display:flex;align-items:center;gap:6px;font-size:.8rem;}
-.contact-info i{color:var(--secondary);width:14px;font-size:.8rem;}
-.footer-links h3,.footer-social h3{font-size:1rem;margin-bottom:12px;position:relative;padding-bottom:6px;font-weight:600;}
-.footer-links h3::after,.footer-social h3::after{content:'';position:absolute;left:0;bottom:0;width:30px;height:2px;background:var(--secondary);border-radius:2px;}
-.footer-links ul li{margin-bottom:8px;transition:transform .3s;}
-.footer-links ul li:hover{transform:translateX(5px);}
-.footer-links a{color:var(--light-gray);display:flex;align-items:center;gap:5px;font-size:.8rem;}
-.footer-links a:hover{color:#fff;}
-.footer-links a i{color:var(--secondary);font-size:.7rem;}
-.footer-social ul{display:flex;flex-wrap:wrap;gap:8px;}
-.footer-social a{display:flex;align-items:center;gap:5px;color:var(--light-gray);transition:all .3s;padding:5px 10px;background:rgba(255,255,255,.1);border-radius:5px;font-size:.8rem;}
-.footer-social a:hover{color:#fff;background:rgba(77,168,218,.3);transform:translateY(-3px);}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding:15px 0;text-align:center;color:var(--light-gray);font-size:.75rem;position:relative;z-index:1;}
-.footer-links-bottom{display:flex;justify-content:center;gap:12px;margin-top:8px;flex-wrap:wrap;}
-.footer-links-bottom a{color:#b0d4ed;font-size:.75rem;position:relative;}
-.footer-links-bottom a:not(:last-child)::after{content:'|';position:absolute;right:-8px;color:var(--secondary);}
-.footer-links-bottom a:hover{color:var(--accent);}
-
-/* ============================================================
-   RESPONSIVE — MOBILE (≤ 768px)
-   ============================================================ */
-@media(max-width:768px){
-  body{padding-top:80px;}
-  .top-header{display:none;}
-  .menu-icon{display:flex;}
-  .nav{flex-direction:row;height:auto;padding:10px 20px;}
-  .logo img{height:60px;}
-
-  /* Fullscreen mobile menu */
-  .menu{
-    position:fixed;top:80px;left:0;width:100%;height:calc(100vh - 80px);
-    background:rgba(255,255,255,.98);backdrop-filter:blur(15px);
-    flex-direction:column;align-items:flex-start;justify-content:flex-start;
-    display:none;padding:20px 16px;overflow-y:auto;z-index:999;
-    transform:translateX(-100%);box-shadow:0 5px 15px rgba(0,0,0,.1);
-  }
-  .menu.active{display:flex;transform:translateX(0);}
-
-  /* Upper nav stacks vertically */
-  .upperNav{
-    flex-direction:column;width:100%;gap:10px;margin-bottom:20px;
-    align-items:stretch;
-  }
-  .nav-button{
-    width:100%;text-align:center;height:46px;font-size:.95rem;
-    justify-content:center;border-radius:12px;
-  }
-
-  /* LOGIN/REGISTER — FIXED NO OVERLAP */
-  .btn-box{
-    width:100%;height:44px;border-radius:12px;
-    background:#f0f0f0;overflow:hidden;
-    flex-direction:row;position:relative;
-    border:1px solid #ddd;
-  }
-  .toggle-btn{
-    width:50%;height:100%;font-size:.82rem;padding:0;
-    z-index:1;display:flex;align-items:center;justify-content:center;gap:4px;
-  }
-  #swap-btn{
-    position:absolute;top:0;left:0;width:50%;height:100%;
-    border-radius:12px;z-index:0;display:block;
-  }
-  #logInButton{color:#fff;}
-  #signUpBtn{color:#333;}
-
-  /* Lower nav */
-  .lowerNav{flex-direction:column;width:100%;gap:0;margin-top:10px;}
-  .lowerNav ul{flex-direction:column;gap:0;width:100%;}
-  .lowerNav li{border-bottom:1px solid #f0f0f0;}
-  .menu-link{padding:14px 0;width:100%;}
-  .dropdown-menu{position:static;box-shadow:none;width:100%;display:none;padding-left:20px;background:transparent;}
-  .dropdown.active .dropdown-menu{display:block;}
-
-  /* Main content */
-  .page-main{padding:20px 12px;min-height:calc(100vh - 80px);align-items:flex-start;}
-
-  /* Tool card */
-  .card{padding:22px 16px;border-radius:18px;}
-  .main-layout{grid-template-columns:1fr;}
-  .upload-zone{min-height:200px;}
-  .page-title{font-size:1.2rem;}
-
-  /* Footer */
-  .footer-content{grid-template-columns:1fr;text-align:center;gap:25px;}
-  .footer-logo{align-items:center;}
-  .footer-logo img{margin:0 auto 10px;}
-  .contact-info p{justify-content:center;}
-  .footer-links ul,.footer-social ul{justify-content:center;align-items:center;}
-  .footer-links h3::after,.footer-social h3::after{left:50%;transform:translateX(-50%);}
-  .footer-links a{justify-content:center;}
-}
-
-@media(max-width:992px){
-  .footer-content{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:600px){
-  .footer-content{grid-template-columns:1fr;text-align:center;gap:25px;}
-  .footer-logo{align-items:center;}
-  .footer-links h3::after,.footer-social h3::after{left:50%;transform:translateX(-50%);}
-}
-@media(max-width:480px){
-  .card{padding:18px 12px;}
-  .page-title{font-size:1.1rem;}
-  .preset-chips{gap:4px;}
-}
-</style>
+        @media (max-width: 1000px) {
+            .main-container {
+                max-width: 100%;
+                padding: 0.5rem;
+            }
+            .app {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .previewSection, .controlsSection {
+                width: 100%;
+            }
+            .controlsSection {
+                height: auto;
+            }
+            /* On mobile, no forced height matching */
+            .previewSection {
+                height: auto !important;
+            }
+        }
+        @media (max-width: 700px) {
+            .controls {
+                flex-direction: column;
+            }
+            select, .numberInput, button {
+                width: 100%;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            .card img {
+                height: 70px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
-<div class="header-container">
-  <div class="top-header">
-    <div class="web-text">
-      <p><span>RID Bharat Run by TWF</span></p>
-      <p>Helpline: <span>+91-9202707903</span></p>
-      <p>Email: <span>ridorg.in@gmail.com</span></p>
-    </div>
-    <div class="right-text">
-      <a href="#">ISO:9001:2015 Certified</a>
-      <a href="#">TWF</a>
-      <a href="#">Reg.No:048884</a>
-      <a href="#">ESTD:2020</a>
-    </div>
-  </div>
+    <!-- HEADER (EJS include) -->
+    <%- include("common/header.ejs") %>
 
-  <div class="main-header">
-    <div class="nav">
-        <div class="logo">
-    <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-      onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat'">
-        <div class="menu-icon" id="menuIcon">
-          <span></span><span></span><span></span>
-        </div>
-      </div>
+    <div class="main-container">
+        <div class="app">
 
-      <div class="menu" id="innerCont">
-        <div class="upperNav">
-          <a href="/RTS/public/main.html" class="nav-button" id="onlineTest1">
-            <i class="fa-brands fa-servicestack"></i> Test Series
-          </a>
-          <button class="nav-button" id="ebookBtn"><i class="fa-solid fa-book"></i> Service</button>
-          <a href="/Certificate-Verification/verify.html">
-            <button class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</button>
-          </a>
-
-          <!-- LOGIN / REGISTER — clean fix, no overlap -->
-          <div class="btn-box">
-            <div id="swap-btn"></div>
-            <a href="/login" style="width:50%;z-index:1;display:flex;">
-              <button class="toggle-btn" id="logInButton" style="width:100%;">
-                <i class="fa-solid fa-right-to-bracket"></i> Login
-              </button>
-            </a>
-            <a href="/form" style="width:50%;z-index:1;display:flex;">
-              <button class="toggle-btn" id="signUpBtn" style="width:100%;color:#333;">
-                <i class="fa-solid fa-user-plus"></i> Register
-              </button>
-            </a>
-          </div>
-        </div>
-
-        <ul class="lowerNav">
-          <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i>&nbsp;Home</a></li>
-          <li><a class="menu-link" href="about/about.html"><i class="fa-solid fa-circle-info"></i>&nbsp;About Us</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;Research Papers</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;Internship</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;E-Book</a></li>
-          <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i>&nbsp;Tech Interview</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============================================================
-     MAIN — RESIZE TOOL
-     ============================================================ -->
-<main class="page-main">
-  <div class="card">
-    <!-- Topbar -->
-    <div class="topbar">
-      <div class="page-title">
-        <span class="dot"></span>
-        Resize Image
-      </div>
-      <button class="theme-btn" onclick="toggleTheme()">
-        <span class="theme-icon">🌙</span>
-        <span class="theme-label">Dark</span>
-      </button>
-    </div>
-
-    <div class="main-layout">
-
-      <!-- Left: Upload -->
-      <div class="upload-zone" id="uploadZone">
-        <input type="file" id="fileInput" accept="image/*" onchange="handleFile(event)"/>
-        <div class="upload-preview" id="uploadPreview">
-          <img id="previewImg" src="" alt=""/>
-          <div class="change-overlay">Click to change</div>
-        </div>
-        <div class="dim-badge" id="dimBadge"></div>
-        <div class="upload-content" id="uploadContent">
-          <div class="upload-icon">
-            <svg width="26" height="26" fill="none" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="3" stroke="var(--tool-accent)" stroke-width="2.2"/>
-              <path d="M3 9h18M9 3v18" stroke="var(--tool-accent)" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-              <path d="M14 14l3 3m0 0l-3 0m3 0l0-3" stroke="var(--tool-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="upload-label">Drop image here</div>
-          <div class="upload-sub">or click to browse<br/>JPG, PNG, WebP supported</div>
-        </div>
-      </div>
-
-      <!-- Right Panel -->
-      <div class="right-panel">
-
-        <!-- Stats -->
-        <div class="stats-row">
-          <div class="stat-box">
-            <div class="stat-label">Original</div>
-            <div class="stat-value" id="origDim">— × —</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">New Size</div>
-            <div class="stat-value new" id="newDim">— × —</div>
-          </div>
-        </div>
-
-        <!-- Mode Toggle -->
-        <div class="mode-toggle">
-          <button class="mode-btn active" id="modePx" onclick="switchMode('px')">📐 Pixels</button>
-          <button class="mode-btn" id="modePct" onclick="switchMode('pct')">% Percentage</button>
-        </div>
-
-        <!-- Pixel Dimensions -->
-        <div class="dim-block" id="pxBlock">
-          <div class="dim-row">
-            <span class="dim-input-label">W</span>
-            <div class="dim-input-wrap">
-              <input type="number" class="dim-input" id="inputW" placeholder="—" min="1" oninput="onWChange()"/>
-              <span class="dim-unit">px</span>
+            <!-- LEFT PREVIEW – height will be set to match right panel -->
+            <div class="previewSection" id="previewSection">
+                <div class="previewHeader">
+                    <h2>📸 Live Preview</h2>
+                </div>
+                <div class="previewCanvasWrap">
+                    <div class="emptyState" id="emptyState">
+                        <div>🖼️</div>
+                        <h3>No Images Uploaded</h3>
+                        <p>Upload images to see merged preview</p>
+                    </div>
+                    <canvas id="previewCanvas" style="display:none;"></canvas>
+                </div>
             </div>
-          </div>
-          <div class="lock-row">
-            <div class="lock-line"></div>
-            <button class="lock-btn locked" id="lockBtn" onclick="toggleLock()">
-              <span id="lockIcon">🔒</span>
-              <span id="lockLabel">Ratio Locked</span>
-            </button>
-            <div class="lock-line"></div>
-          </div>
-          <div class="dim-row">
-            <span class="dim-input-label">H</span>
-            <div class="dim-input-wrap">
-              <input type="number" class="dim-input" id="inputH" placeholder="—" min="1" oninput="onHChange()"/>
-              <span class="dim-unit">px</span>
+
+            <!-- RIGHT PANEL – reference for height -->
+            <div class="controlsSection" id="controlsSection">
+                <div class="header">
+                    <h1>✨ Image Merger Tool</h1>
+                    <p>Merge multiple images – horizontal, vertical or grid</p>
+                </div>
+
+                <label class="uploader" id="dropZone">
+                    <div class="uploadIcon">📤</div>
+                    <div class="uploadTitle">Upload Images</div>
+                    <div class="uploadText">Drag & Drop or Click Here</div>
+                    <input type="file" id="fileInput" multiple accept="image/*">
+                </label>
+
+                <div class="controls">
+                    <select id="mergeType">
+                        <option value="horizontal">Horizontal Merge</option>
+                        <option value="vertical">Vertical Merge</option>
+                        <option value="grid">Grid Merge</option>
+                    </select>
+                    <input type="number" class="numberInput" id="equalWidth" placeholder="Width" value="300">
+                    <input type="number" class="numberInput" id="equalHeight" placeholder="Height" value="300">
+                    <button class="addMoreBtn" id="addMoreBtn">➕ Add More</button>
+                    <button class="downloadBtn" onclick="downloadMerged()">⬇️ Download</button>
+                    <button class="clearBtn" onclick="clearAll()">🗑️ Clear</button>
+                </div>
+
+                <div class="grid" id="grid"></div>
             </div>
-          </div>
-          <div class="preset-chips" id="presetChips">
-            <span class="chip" onclick="setPreset(320)">320px</span>
-            <span class="chip" onclick="setPreset(640)">640px</span>
-            <span class="chip" onclick="setPreset(800)">800px</span>
-            <span class="chip" onclick="setPreset(1280)">1280px</span>
-            <span class="chip" onclick="setPreset(1920)">1920px</span>
-          </div>
         </div>
-
-        <!-- Percentage -->
-        <div class="percent-block" id="pctBlock">
-          <div class="pct-header">
-            <span class="pct-title">Scale</span>
-            <span class="pct-badge" id="pctVal">50%</span>
-          </div>
-          <input type="range" id="pctSlider" min="5" max="200" value="50" oninput="onPctChange(this.value)"/>
-          <div class="pct-hints">
-            <span>Smaller</span><span>Original</span><span>Larger</span>
-          </div>
-          <div class="preset-chips" style="margin-top:10px;">
-            <span class="chip" onclick="setPct(25)">25%</span>
-            <span class="chip active" onclick="setPct(50)">50%</span>
-            <span class="chip" onclick="setPct(75)">75%</span>
-            <span class="chip" onclick="setPct(100)">100%</span>
-            <span class="chip" onclick="setPct(150)">150%</span>
-          </div>
-        </div>
-
-        <!-- Format -->
-        <div class="format-block">
-          <button class="fmt-btn active" onclick="setFormat('jpeg',this)">JPG</button>
-          <button class="fmt-btn" onclick="setFormat('png',this)">PNG</button>
-          <button class="fmt-btn" onclick="setFormat('webp',this)">WebP</button>
-        </div>
-
-        <!-- Progress -->
-        <div class="progress-wrap" id="progressWrap">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-
-        <!-- Saved badge -->
-        <div class="saved-badge" id="savedBadge">
-          ✦ <span id="savedText">Resized!</span>
-        </div>
-
-        <!-- Resize -->
-        <button class="resize-btn" id="resizeBtn" onclick="resizeImage()" disabled>
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
-            <rect x="2" y="2" width="9" height="9" rx="2" stroke="#fff" stroke-width="2.2"/>
-            <rect x="13" y="13" width="9" height="9" rx="2" stroke="#fff" stroke-width="2.2" opacity="0.5"/>
-            <path d="M13 6h5v5M11 13H6v-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Resize Image
-        </button>
-
-        <!-- Download -->
-        <button class="download-btn" id="downloadBtn">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
-            <path d="M12 4v12M8 12l4 4 4-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4 20h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-          Download Resized
-        </button>
-
-      </div>
     </div>
-  </div>
-</main>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer>
-  <div class="container">
-    <div class="footer-content">
-      <div class="footer-logo">
-        <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-          onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat'">
-        <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-        <div class="contact-info">
-          <p><i class="fas fa-envelope"></i><a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-          <p><i class="fas fa-phone"></i><a href="tel:+919202707903">+91-9202707903</a></p>
-        </div>
-      </div>
-      <div class="footer-links">
-        <h3>Research Topics</h3>
-        <ul>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Computers &amp; Technology</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> AI &amp; Machine Learning</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> About RID</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Events &amp; Workshops</a></li>
-        </ul>
-      </div>
-      <div class="footer-social">
-        <h3>Follow Us</h3>
-        <ul>
-          <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-          <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-          <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-          <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-          <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-          <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-      <div class="footer-links-bottom">
-        <a href="#">About Us</a>
-        <a href="#">Terms &amp; Conditions</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Disclaimer</a>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-  </div>
-</footer>
+    <!-- FOOTER (EJS include) -->
+    <%- include("common/footer.ejs") %>
 
-<!-- ============================================================
-     SCRIPTS
-     ============================================================ -->
-<script>
-/* ── HEADER: mobile menu ── */
-(function(){
-  const menuIcon=document.getElementById('menuIcon');
-  const menu=document.getElementById('innerCont');
-  if(menuIcon){
-    menuIcon.addEventListener('click',function(e){
-      e.stopPropagation();
-      this.classList.toggle('active');
-      menu.classList.toggle('active');
-    });
-    document.addEventListener('click',function(e){
-      if(!menu.contains(e.target)&&!menuIcon.contains(e.target)){
-        menu.classList.remove('active');
-        menuIcon.classList.remove('active');
-      }
-    });
-  }
-  document.querySelectorAll('.dropdown').forEach(dd=>{
-    const toggle=dd.querySelector('.dropdown-toggle');
-    if(toggle) toggle.addEventListener('click',function(e){
-      e.preventDefault();
-      if(window.innerWidth<=768) dd.classList.toggle('active');
-    });
-  });
-})();
+    <script>
+        // DOM elements
+        const fileInput = document.getElementById("fileInput");
+        const dropZone = document.getElementById("dropZone");
+        const addMoreBtn = document.getElementById("addMoreBtn");
+        const grid = document.getElementById("grid");
+        const mergeType = document.getElementById("mergeType");
+        const equalWidth = document.getElementById("equalWidth");
+        const equalHeight = document.getElementById("equalHeight");
+        const canvas = document.getElementById("previewCanvas");
+        const ctx = canvas.getContext("2d");
+        const emptyState = document.getElementById("emptyState");
+        const previewSection = document.getElementById("previewSection");
+        const controlsSection = document.getElementById("controlsSection");
 
-/* ── LOGIN/REGISTER SLIDE ── */
-const loginBtn=document.getElementById('logInButton');
-const registerBtn=document.getElementById('signUpBtn');
-const swapBtn=document.getElementById('swap-btn');
-if(loginBtn) loginBtn.addEventListener('click',()=>{
-  swapBtn.style.left='0%';
-  loginBtn.style.color='white';
-  registerBtn.style.color='#333';
-});
-if(registerBtn) registerBtn.addEventListener('click',()=>{
-  swapBtn.style.left='50%';
-  registerBtn.style.color='white';
-  loginBtn.style.color='#333';
-});
+        let images = [];
 
-/* ── RESIZE TOOL ── */
-let currentFile=null,originalW=0,originalH=0;
-let resizedBlob=null,selectedFormat='jpeg';
-let isDark=false,resizeMode='px',aspectLocked=true;
+        // Function to make left panel height equal to right panel's height
+        function matchLeftPanelHeight() {
+            if (window.innerWidth > 1000) { // only on desktop, not on mobile
+                const rightHeight = controlsSection.offsetHeight;
+                previewSection.style.height = rightHeight + "px";
+            } else {
+                previewSection.style.height = "auto";
+            }
+        }
 
-function toggleTheme(){
-  isDark=!isDark;
-  document.documentElement.setAttribute('data-theme',isDark?'dark':'');
-  const btn=document.querySelector('.theme-btn');
-  btn.querySelector('.theme-icon').textContent=isDark?'☀️':'🌙';
-  btn.querySelector('.theme-label').textContent=isDark?'Light':'Dark';
-}
+        // Call after any layout change (images added/removed, window resize)
+        function updateLayout() {
+            matchLeftPanelHeight();
+        }
 
-function switchMode(mode){
-  resizeMode=mode;
-  document.getElementById('modePx').classList.toggle('active',mode==='px');
-  document.getElementById('modePct').classList.toggle('active',mode==='pct');
-  document.getElementById('pxBlock').style.display=mode==='px'?'block':'none';
-  document.getElementById('pctBlock').style.display=mode==='pct'?'block':'none';
-  updateNewDimPreview();
-}
+        // Call renderPreview and then update height
+        function renderPreviewAndMatch() {
+            renderPreview();
+            setTimeout(updateLayout, 10); // small delay to let canvas render
+        }
 
-function toggleLock(){
-  aspectLocked=!aspectLocked;
-  const btn=document.getElementById('lockBtn');
-  document.getElementById('lockIcon').textContent=aspectLocked?'🔒':'🔓';
-  document.getElementById('lockLabel').textContent=aspectLocked?'Ratio Locked':'Ratio Free';
-  btn.classList.toggle('locked',aspectLocked);
-}
+        // File handling
+        function handleFiles(files) {
+            const fileArray = [...files];
+            if (fileArray.length === 0) return;
 
-function onWChange(){
-  const w=parseInt(document.getElementById('inputW').value);
-  if(aspectLocked&&originalW&&w) document.getElementById('inputH').value=Math.round(w*originalH/originalW);
-  updateNewDimPreview();clearChips();
-}
-function onHChange(){
-  const h=parseInt(document.getElementById('inputH').value);
-  if(aspectLocked&&originalH&&h) document.getElementById('inputW').value=Math.round(h*originalW/originalH);
-  updateNewDimPreview();clearChips();
-}
+            fileArray.forEach(file => {
+                if (!file.type.startsWith("image/")) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        images.push(img);
+                        renderGrid();
+                        renderPreviewAndMatch();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            fileInput.value = '';
+        }
 
-function setPreset(w){
-  document.getElementById('inputW').value=w;
-  if(originalW) document.getElementById('inputH').value=Math.round(w*originalH/originalW);
-  document.querySelectorAll('#presetChips .chip').forEach(c=>c.classList.toggle('active',parseInt(c.textContent)===w));
-  updateNewDimPreview();
-}
-function clearChips(){document.querySelectorAll('#presetChips .chip').forEach(c=>c.classList.remove('active'));}
+        fileInput.addEventListener("change", (e) => handleFiles(e.target.files));
+        addMoreBtn.addEventListener("click", () => fileInput.click());
 
-function onPctChange(val){
-  document.getElementById('pctVal').textContent=val+'%';
-  document.querySelectorAll('#pctBlock .chip').forEach(c=>c.classList.toggle('active',parseInt(c.textContent)===parseInt(val)));
-  updateNewDimPreview();
-}
-function setPct(val){document.getElementById('pctSlider').value=val;onPctChange(val);}
+        dropZone.addEventListener("dragover", (e) => e.preventDefault());
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
 
-function updateNewDimPreview(){
-  if(!originalW)return;
-  let nw,nh;
-  if(resizeMode==='px'){
-    nw=parseInt(document.getElementById('inputW').value)||0;
-    nh=parseInt(document.getElementById('inputH').value)||0;
-  }else{
-    const pct=parseInt(document.getElementById('pctSlider').value)/100;
-    nw=Math.round(originalW*pct);nh=Math.round(originalH*pct);
-  }
-  document.getElementById('newDim').textContent=nw&&nh?`${nw} × ${nh}`:'— × —';
-}
+        function renderGrid() {
+            grid.innerHTML = "";
+            images.forEach((img, idx) => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `
+                    <img src="${img.src}">
+                    <div class="cardFooter">
+                        <button class="removeBtn">Remove</button>
+                    </div>
+                `;
+                card.querySelector(".removeBtn").onclick = () => {
+                    images.splice(idx, 1);
+                    renderGrid();
+                    renderPreviewAndMatch();
+                };
+                grid.appendChild(card);
+            });
+            updateLayout(); // grid height may change
+        }
 
-function setFormat(fmt,el){
-  selectedFormat=fmt;
-  document.querySelectorAll('.fmt-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-}
+        function renderPreview() {
+            if (images.length === 0) {
+                canvas.style.display = "none";
+                emptyState.style.display = "block";
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+            canvas.style.display = "block";
+            emptyState.style.display = "none";
 
-function handleFile(e){const f=e.target.files[0];if(f)loadFile(f);}
-function loadFile(file){
-  currentFile=file;resizedBlob=null;
-  const img=new Image(),reader=new FileReader();
-  reader.onload=e=>{
-    img.onload=()=>{
-      originalW=img.width;originalH=img.height;
-      document.getElementById('origDim').textContent=`${originalW} × ${originalH}`;
-      document.getElementById('dimBadge').textContent=`${originalW} × ${originalH} px`;
-      document.getElementById('dimBadge').style.display='block';
-      const defW=Math.round(originalW*.5),defH=Math.round(originalH*.5);
-      document.getElementById('inputW').value=defW;
-      document.getElementById('inputH').value=defH;
-      document.getElementById('newDim').textContent=`${defW} × ${defH}`;
-      document.getElementById('previewImg').src=e.target.result;
-      document.getElementById('uploadPreview').style.display='block';
-      document.getElementById('uploadContent').style.display='none';
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
-  document.getElementById('resizeBtn').disabled=false;
-  document.getElementById('downloadBtn').style.display='none';
-  document.getElementById('savedBadge').style.display='none';
-}
+            const type = mergeType.value;
+            const w = parseInt(equalWidth.value) || 300;
+            const h = parseInt(equalHeight.value) || 300;
 
-/* Drag & drop */
-const zone=document.getElementById('uploadZone');
-zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
-zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
-zone.addEventListener('drop',e=>{
-  e.preventDefault();zone.classList.remove('dragover');
-  const f=e.dataTransfer.files[0];
-  if(f&&f.type.startsWith('image/'))loadFile(f);
-});
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-function resizeImage(){
-  if(!currentFile||!originalW)return;
-  let targetW,targetH;
-  if(resizeMode==='px'){
-    targetW=parseInt(document.getElementById('inputW').value);
-    targetH=parseInt(document.getElementById('inputH').value);
-  }else{
-    const pct=parseInt(document.getElementById('pctSlider').value)/100;
-    targetW=Math.round(originalW*pct);targetH=Math.round(originalH*pct);
-  }
-  if(!targetW||!targetH)return;
-  const progressWrap=document.getElementById('progressWrap');
-  const progressBar=document.getElementById('progressBar');
-  progressWrap.style.display='block';progressBar.style.width='0%';
-  setTimeout(()=>progressBar.style.width='50%',60);
-  const img=new Image(),reader=new FileReader();
-  reader.onload=e=>{
-    img.onload=()=>{
-      const canvas=document.createElement('canvas');
-      canvas.width=targetW;canvas.height=targetH;
-      const ctx=canvas.getContext('2d');
-      ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-      ctx.drawImage(img,0,0,targetW,targetH);
-      progressBar.style.width='85%';
-      const mimeType=selectedFormat==='png'?'image/png':`image/${selectedFormat}`;
-      canvas.toBlob(blob=>{
-        resizedBlob=blob;progressBar.style.width='100%';
-        setTimeout(()=>{
-          document.getElementById('newDim').textContent=`${targetW} × ${targetH}`;
-          const badge=document.getElementById('savedBadge');
-          const sizeKB=(blob.size/1024).toFixed(1);
-          document.getElementById('savedText').textContent=`${targetW}×${targetH} · ${sizeKB} KB`;
-          badge.style.display='flex';
-          const dlBtn=document.getElementById('downloadBtn');
-          dlBtn.style.display='flex';
-          dlBtn.onclick=()=>{
-            const a=document.createElement('a');
-            a.href=URL.createObjectURL(resizedBlob);
-            a.download=`resized_${targetW}x${targetH}.${selectedFormat==='jpeg'?'jpg':selectedFormat}`;
-            a.click();
-          };
-          progressWrap.style.display='none';progressBar.style.width='0%';
-        },250);
-      },mimeType,.92);
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(currentFile);
-}
-</script>
+            if (type === "horizontal") {
+                canvas.width = images.length * w;
+                canvas.height = h;
+                let x = 0;
+                images.forEach(img => {
+                    ctx.drawImage(img, x, 0, w, h);
+                    x += w;
+                });
+            } 
+            else if (type === "vertical") {
+                canvas.width = w;
+                canvas.height = images.length * h;
+                let y = 0;
+                images.forEach(img => {
+                    ctx.drawImage(img, 0, y, w, h);
+                    y += h;
+                });
+            } 
+            else {
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const rows = Math.ceil(images.length / cols);
+                canvas.width = cols * w;
+                canvas.height = rows * h;
+                images.forEach((img, idx) => {
+                    const x = (idx % cols) * w;
+                    const y = Math.floor(idx / cols) * h;
+                    ctx.drawImage(img, x, y, w, h);
+                });
+            }
+        }
+
+        mergeType.addEventListener("change", () => renderPreviewAndMatch());
+        equalWidth.addEventListener("input", () => renderPreviewAndMatch());
+        equalHeight.addEventListener("input", () => renderPreviewAndMatch());
+
+        function downloadMerged() {
+            if (images.length === 0) {
+                alert("Please upload images first.");
+                return;
+            }
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "merged-image.png";
+            link.click();
+        }
+
+        function clearAll() {
+            images = [];
+            renderGrid();
+            renderPreviewAndMatch();
+        }
+
+        window.downloadMerged = downloadMerged;
+        window.clearAll = clearAll;
+
+        // Initial height match + on window resize
+        window.addEventListener("resize", () => {
+            updateLayout();
+            renderPreview(); // re-render canvas to avoid distortion
+        });
+        setTimeout(updateLayout, 100);
+    </script>
+
 </body>
 </html>

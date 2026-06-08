@@ -18,6 +18,10 @@ router.get("/convertimage",(req,res)=>{
 router.get("/cropimage",(req,res)=>{
   res.render("product/imagetools/crop")
   })
+
+  router.get("/resize-image",(req,res)=>{
+  res.render("product/imagetools/resizeimage.ejs")
+  })
 // router.get("/imagebackgroundremover",(req,res)=>{
 //   res.render("product/imagetools/imagebackground")
 //   })

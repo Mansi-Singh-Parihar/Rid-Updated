@@ -400,7 +400,7 @@ doc.fillColor('#8AACCC').font('Helvetica').fontSize(6.5)
       doc.fillColor('#111111').font('Helvetica-Bold').fontSize(10)
          .text('Mr.Gautam Kumar', lSigX, sigY + 33, { width: sigW, align: 'center' });
       doc.fillColor('#777777').font('Helvetica').fontSize(9.5)
-         .text('Head Of Event', lSigX, sigY + 47, { width: sigW, align: 'center' });
+         .text('CFO', lSigX, sigY + 47, { width: sigW, align: 'center' });
 
       // ── Right: Ajay Katana ──
       doc.fillColor('#1A1A1A').font('Helvetica-BoldOblique').fontSize(20)

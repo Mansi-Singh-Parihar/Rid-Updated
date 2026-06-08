@@ -1,879 +1,514 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>Image Merger Pro | RID Bharat</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" type="image/png" href="/assets/signup.png">
-  <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Image Merger Tool – Merge with live preview</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    @media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        top: 77px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        display: none;
+        padding: 30px 20px 20px;
+        overflow-y: auto;
+        z-index: 999;
+        transform: translateX(-100%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            padding-top: 130px; /* space for fixed header */
+        }
 
-    :root {
-      --primary:      #083d5d;
-      --primary-dark: #062a41;
-      --secondary:    #4da8da;
-      --accent:       #ff6b35;
-      --light-gray:   #e0e0e0;
-      --white:        #ffffff;
-      --transition:   all 0.3s ease;
-    }
+        .main-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
 
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f2f2f2;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 130px;  /* top-bar 40 + nav 90 */
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+        /* Container now takes only needed height */
+        .app {
+            display: flex;
+            gap: 1rem;
+        }
 
-    a    { text-decoration:none; color:inherit; transition:var(--transition); }
-    ul   { list-style:none; }
-    button { cursor:pointer; border:none; outline:none; transition:var(--transition); }
-    img  { max-width:100%; height:auto; display:block; }
-    input,button,textarea,select { font-family:inherit; font-size:inherit; }
-    .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
+        /* LEFT PANEL */
+        .previewSection {
+            width: 55%;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+        }
 
-    /* ══════════════════════════════════════
-       HEADER
-    ══════════════════════════════════════ */
-    .header-container { position:fixed; top:0; left:0; width:100%; z-index:1000; }
+        .previewHeader h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #818cf8, #a78bfa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.6rem;
+        }
 
-    /* top bar */
-    .top-header {
-      display:flex; justify-content:space-between; align-items:center;
-      background:linear-gradient(90deg,#062a41,#0a4d6e);
-      color:#fff; padding:0 20px; height:40px; font-size:14px;
-      letter-spacing:.3px; box-shadow:0 2px 10px rgba(0,0,0,.1);
-    }
-    .web-text p { display:inline-block; font-size:.6rem; font-weight:700; }
-    .web-text p span { font-weight:300; }
-    .web-text p::after { content:"|"; margin:0 10px; color:#fff; font-weight:300; }
-    .web-text p:last-child::after { content:""; }
-    .right-text { display:flex; }
-    .right-text a { font-size:.6rem; color:white; }
-    .right-text a::after { content:"|"; margin:0 8px; color:#fff; font-weight:300; }
-    .right-text a:last-child::after { content:""; }
+        /* Reduced canvas wrap height */
+        .previewCanvasWrap {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 0.8rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            min-height: 200px;   /* was 280px */
+            max-height: 250px;   /* limits height */
+        }
 
-    /* main nav */
-    .main-header {
-      backdrop-filter:blur(10px);
-      background:rgba(255,255,255,.95);
-      border-bottom:1px solid rgba(77,168,218,.3);
-      box-shadow:0 2px 10px rgba(0,0,0,.1);
-    }
-    .nav {
-      display:flex; justify-content:space-between; align-items:center;
-      height:90px; padding:0 20px; transition:var(--transition);
-    }
-    .logo { display:flex; align-items:center; flex:1; }
-    .logo img { height:80px; transition:var(--transition); }
+        #previewCanvas {
+            background: #0f172a;
+            border-radius: 16px;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
 
-    .menu { display:flex; justify-content:flex-end; align-items:flex-end; flex-direction:column; }
-    .upperNav { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+        .emptyState {
+            text-align: center;
+            color: #94a3b8;
+        }
+        .emptyState div {
+            font-size: 2.5rem;
+            opacity: 0.6;
+        }
+        .emptyState h3 {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .emptyState p {
+            margin-top: 0.2rem;
+            font-size: 0.7rem;
+        }
 
-    .nav-button {
-      display:inline-flex; justify-content:center; align-items:center; gap:5px;
-      font-size:.9rem; font-weight:600; padding:8px 15px;
-      border-radius:30px; cursor:pointer; border:none; outline:none;
-      transition:var(--transition);
-      background:linear-gradient(135deg,var(--primary),#1e5a7a); color:#fff;
-    }
-    #onlineTest1 { background:linear-gradient(145deg,#dc143c,#b22222); color:#fff; }
-    #certificate  { background:linear-gradient(145deg,#0b5e0b,#0a470a); color:#fff; }
-    #onlineTest1:hover,#certificate:hover { background:#000; transform:translateY(-2px); }
+        /* RIGHT PANEL */
+        .controlsSection {
+            width: 45%;
+            padding: 1rem;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            backdrop-filter: blur(8px);
+        }
 
-    /* ── Login / Register pill ──
-       KEY: buttons are DIRECT flex children of .btn-box (no <a> wrappers inside)
-       #swap-btn is absolute z-index:0, buttons are z-index:1                    */
-    .btn-box {
-      width: 230px;
-      height: 38px;
-      display: flex;
-      flex-direction: row;
-      position: relative;
-      border-radius: 30px;
-      background: #f0f0f0;
-      border: 1px solid rgba(8,61,93,.2);
-      box-shadow: 0 2px 4px rgba(0,0,0,.08);
-      overflow: hidden;
-    }
-    #swap-btn {
-      position: absolute;
-      top: 0; left: 0;
-      width: 50%; height: 100%;
-      background: var(--primary);
-      border-radius: 30px;
-      transition: left .35s ease;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .toggle-btn {
-      position: relative; z-index: 1;
-      width: 50%; height: 100%;
-      background: transparent; border: none; outline: none;
-      font-size: .82rem; font-weight: 600; color: #333;
-      display: flex; align-items: center; justify-content: center; gap: 4px;
-      cursor: pointer; transition: color .3s ease;
-      padding: 0 4px; white-space: nowrap;
-    }
-    #logInButton { color: #fff; }
+        .header h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .header p {
+            margin-top: 0.2rem;
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
 
-    /* lower nav */
-    .lowerNav { display:flex; gap:22px; }
-    .lowerNav ul { display:flex; gap:20px; }
-    .lowerNav li { position:relative; list-style:none; }
-    .lowerNav li a { font-size:.9rem; display:flex; align-items:center; color:#333; font-weight:500; }
-    .menu-link { display:flex; align-items:center; cursor:pointer; padding:8px 0; gap:6px; }
-    .menu-link:hover { color:var(--primary); }
+        /* Upload area compact */
+        .uploader {
+            display: block;
+            margin-top: 1rem;
+            border: 2px dashed rgba(129, 140, 248, 0.3);
+            border-radius: 20px;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(129, 140, 248, 0.03);
+        }
+        .uploader:hover {
+            border-color: #818cf8;
+            background: rgba(129, 140, 248, 0.08);
+            transform: translateY(-2px);
+        }
+        .uploadIcon {
+            font-size: 1.8rem;
+        }
+        .uploadTitle {
+            margin-top: 0.2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .uploadText {
+            margin-top: 0.1rem;
+            color: #94a3b8;
+            font-size: 0.65rem;
+        }
+        input[type="file"] {
+            display: none;
+        }
 
-    @media (min-width:769px) {
-      .menu-link { position:relative; }
-      .menu-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--primary); transition:width .3s; }
-      .menu-link:hover::after { width:100%; }
-    }
+        .controls {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        select,
+        .numberInput,
+        button {
+            padding: 0.4rem 0.7rem;
+            border: none;
+            border-radius: 40px;
+            background: #1e293b;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        select {
+            flex: 1;
+            min-width: 120px;
+            background: #1e293b;
+            border: 1px solid #475569;
+        }
+        .numberInput {
+            width: 80px;
+            background: #1e293b;
+            border: 1px solid #475569;
+            text-align: center;
+        }
+        button {
+            background: #334155;
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
+        .addMoreBtn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .downloadBtn {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            color: white;
+        }
+        .clearBtn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
 
-    /* hamburger */
-    .menu-icon {
-      display:none; flex-direction:column; justify-content:space-between;
-      width:30px; height:21px; cursor:pointer; margin-left:auto; z-index:1001;
-    }
-    .menu-icon span { display:block; height:3px; width:100%; background:var(--primary); border-radius:3px; transition:var(--transition); }
-    .menu-icon.active span:nth-child(1) { transform:translateY(9px) rotate(45deg); }
-    .menu-icon.active span:nth-child(2) { opacity:0; }
-    .menu-icon.active span:nth-child(3) { transform:translateY(-9px) rotate(-45deg); }
+        /* Image grid – smaller cards */
+        .grid {
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.6rem;
+        }
+        .card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.25s;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+        }
+        .card img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+        }
+        .cardFooter {
+            padding: 0.3rem;
+        }
+        .removeBtn {
+            width: 100%;
+            background: rgba(239, 68, 68, 0.8);
+            border: none;
+            border-radius: 30px;
+            padding: 0.25rem;
+            font-size: 0.55rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+        .removeBtn:hover {
+            background: #ef4444;
+        }
 
-    /* ══════════════════════════════════════
-       CENTER — IMAGE MERGER
-       Goal: wide card, compact height, NO USER SCROLL
-    ══════════════════════════════════════ */
-    .merger-section {
-      width: 100%;
-      min-height: calc(100vh - 130px);  /* fills space between header and footer */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 20px 32px;
-      background: linear-gradient(135deg,#f0f4fb 0%,#e4eaf6 100%);
-    }
-
-    /* Wide card — matches compressor page style */
-    .merger-card {
-      width: 100%;
-      max-width: 1000px;          /* wide, not the old 560px */
-      background: #fff;
-      border-radius: 24px;
-      box-shadow: 0 10px 48px rgba(8,61,93,.10), 0 1px 3px rgba(0,0,0,.04);
-      border: 1px solid rgba(77,168,218,.18);
-      overflow: hidden;
-    }
-
-    .merger-header {
-      padding: 16px 32px 14px;
-      border-bottom: 1px solid #e9ecef;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 8px;
-    }
-    .merger-header h2 {
-      font-size: 1.5rem; font-weight: 700; color: var(--primary);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .merger-header p { color:#718096; font-size:.72rem; }
-
-    /* Two-column layout inside card */
-    .merger-body {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      min-height: 0;
-    }
-
-    /* LEFT: controls */
-    .merger-left {
-      padding: 18px 20px;
-      border-right: 1px solid #e9ecef;
-      display: flex; flex-direction: column; gap: 12px;
-    }
-
-    /* RIGHT: preview */
-    .merger-right {
-      padding: 18px 20px;
-      display: flex; flex-direction: column; gap: 10px;
-    }
-
-    /* section label */
-    .sec-lbl {
-      font-size: .62rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .08em; color: #718096; margin-bottom: 2px;
-    }
-
-    /* Upload zone */
-    .upload-zone {
-      background: #f7fafc; border: 2px dashed #cbd5e0;
-      border-radius: 14px; padding: 14px 12px; text-align: center;
-      cursor: pointer; transition: all .2s; position: relative;
-    }
-    .upload-zone:hover, .upload-zone.dragover { border-color:var(--primary); background:#f0f6fc; }
-    .upload-zone input[type="file"] {
-      position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; z-index:3;
-    }
-    .upload-icon { font-size:24px; margin-bottom:4px; }
-    .upload-btn-face {
-      display:inline-block; background:var(--primary); color:#fff;
-      padding:5px 16px; border-radius:40px; font-size:.72rem; font-weight:600; margin:4px 0;
-    }
-    .upload-hint { color:#a0aec0; font-size:.6rem; }
-
-    /* Add more */
-    .add-more-wrap { position:relative; }
-    .add-more-wrap input[type="file"] {
-      position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; z-index:3;
-    }
-    .add-more-face {
-      width:100%; background:transparent; border:1.5px dashed #cbd5e0;
-      border-radius:10px; padding:7px; display:flex;
-      align-items:center; justify-content:center; gap:5px;
-      color:var(--primary); font-size:.72rem; font-weight:600;
-      transition:all .2s; pointer-events:none;
-    }
-    .add-more-wrap:hover .add-more-face { border-color:var(--primary); background:#f0f6fc; }
-
-    /* File list */
-    .files-header {
-      display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;
-    }
-    .file-badge {
-      background:var(--primary); color:#fff;
-      padding:2px 8px; border-radius:20px; font-size:.6rem; font-weight:600;
-    }
-    .clear-all-btn {
-      background:#edf2f7; border:none; color:#718096;
-      padding:2px 8px; border-radius:20px; font-size:.6rem; cursor:pointer;
-    }
-    .clear-all-btn:hover { background:#e2e8f0; }
-    .files-grid {
-      max-height: 120px; overflow-y:auto;
-      display:flex; flex-direction:column; gap:5px;
-      scrollbar-width:thin; scrollbar-color:#cbd5e0 transparent;
-    }
-    .files-grid::-webkit-scrollbar { width:3px; }
-    .files-grid::-webkit-scrollbar-thumb { background:#cbd5e0; border-radius:3px; }
-    .empty-message { text-align:center; padding:10px; color:#a0aec0; font-size:.7rem; }
-
-    .file-item-card {
-      background:#fff; border:1px solid #e2e8f0; border-radius:8px;
-      padding:5px 8px; display:flex; align-items:center; gap:8px;
-    }
-    .file-icon-small {
-      width:28px; height:28px; background:#f7fafc; border-radius:5px;
-      display:flex; align-items:center; justify-content:center; overflow:hidden; flex-shrink:0;
-    }
-    .file-icon-small img { width:100%; height:100%; object-fit:cover; }
-    .file-info-text { flex:1; min-width:0; }
-    .file-name-text { font-size:.68rem; font-weight:500; color:#2d3748; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .file-size-text { font-size:.58rem; color:#a0aec0; }
-    .remove-single-btn {
-      background:#edf2f7; border:none; width:22px; height:22px;
-      border-radius:5px; color:#a0aec0; cursor:pointer; font-size:.75rem;
-      display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    }
-    .remove-single-btn:hover { background:#fed7d7; color:#e53e3e; }
-
-    /* Settings */
-    .controls-wrapper { display:flex; gap:10px; }
-    .control-box { flex:1; background:#f7fafc; border-radius:10px; padding:10px; }
-    .control-title { font-size:.6rem; color:#718096; font-weight:700; margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; }
-    .radio-options { display:flex; gap:10px; flex-wrap:wrap; }
-    .radio-options label { font-size:.72rem; color:#4a5568; display:flex; align-items:center; gap:4px; cursor:pointer; }
-    .radio-options input { accent-color:var(--primary); width:12px; height:12px; }
-
-    /* Action buttons */
-    .action-buttons { display:flex; gap:10px; }
-    .action-btn {
-      flex:1; padding:10px; border:none; border-radius:40px;
-      font-weight:700; font-size:.8rem; cursor:pointer;
-      display:flex; align-items:center; justify-content:center; gap:5px;
-      transition:all .2s;
-    }
-    .merge-btn { background:var(--primary); color:#fff; }
-    .merge-btn:hover:not(:disabled) { background:var(--primary-dark); transform:translateY(-1px); }
-    .download-btn { background:#edf2f7; color:#4a5568; border:1px solid #e2e8f0; }
-    .download-btn:hover:not(:disabled) { background:#e2e8f0; }
-    .action-btn:disabled { opacity:.45; cursor:not-allowed; transform:none !important; }
-
-    /* Spinner */
-    .spinner-small {
-      width:13px; height:13px; border:2px solid rgba(255,255,255,.3);
-      border-top-color:#fff; border-radius:50%; animation:spin .6s linear infinite; display:none;
-    }
-    @keyframes spin { to { transform:rotate(360deg); } }
-
-    /* Preview (right side) */
-    .preview-header { display:flex; justify-content:space-between; align-items:center; }
-    .preview-header span:first-child { font-size:.75rem; font-weight:600; color:#4a5568; }
-    .preview-dimension {
-      background:#edf2f7; padding:2px 8px; border-radius:20px;
-      font-size:.6rem; color:var(--primary); font-weight:600;
-    }
-    .canvas-container {
-      flex:1; background:#f7fafc; border-radius:12px; border:1px solid #e2e8f0;
-      display:flex; align-items:center; justify-content:center;
-      min-height: 200px; overflow:hidden; position:relative;
-    }
-    /* grid bg */
-    .canvas-container::before {
-      content:''; position:absolute; inset:0;
-      background-image: linear-gradient(#e2e8f0 1px,transparent 1px),linear-gradient(90deg,#e2e8f0 1px,transparent 1px);
-      background-size:20px 20px; opacity:.5;
-    }
-    #mergedCanvas {
-      max-width:100%; max-height:320px;
-      display:block; position:relative; z-index:1;
-      border-radius:6px;
-    }
-    .preview-placeholder {
-      text-align:center; color:#a0aec0; position:relative; z-index:1;
-    }
-    .preview-placeholder .ph-icon { font-size:2.5rem; opacity:.3; margin-bottom:8px; }
-    .preview-placeholder p { font-size:.75rem; }
-    .preview-placeholder small { font-size:.62rem; }
-    .hidden { display:none !important; }
-
-    /* Toast */
-    .success-toast {
-      position:fixed; bottom:24px; left:50%;
-      transform:translateX(-50%) translateY(20px);
-      background:#38a169; color:#fff; padding:6px 16px; border-radius:40px;
-      font-size:.72rem; font-weight:600; z-index:2000; opacity:0;
-      transition:all .3s; pointer-events:none;
-    }
-    .success-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-    /* ══════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════ */
-    footer {
-      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-      color:#fff; padding:30px 0 0; position:relative; overflow:hidden;
-    }
-    footer::before {
-      content:''; position:absolute; top:0; left:0; width:100%; height:4px;
-      background:linear-gradient(90deg,var(--accent),var(--secondary),var(--accent));
-    }
-    .footer-content { display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
-    .footer-logo { display:flex; flex-direction:column; }
-    .footer-logo img { max-width:180px; margin-bottom:10px; background:#fff; padding:5px; border-radius:6px; }
-    .footer-logo p { color:var(--light-gray); font-size:.8rem; line-height:1.4; margin-bottom:8px; }
-    .contact-info p { margin-bottom:4px; display:flex; align-items:center; gap:6px; font-size:.8rem; }
-    .contact-info i { color:var(--secondary); width:14px; font-size:.8rem; }
-    .footer-links h3,.footer-social h3 { font-size:1rem; margin-bottom:12px; position:relative; padding-bottom:6px; font-weight:600; }
-    .footer-links h3:after,.footer-social h3:after { content:''; position:absolute; left:0; bottom:0; width:30px; height:2px; background:var(--secondary); border-radius:2px; }
-    .footer-links ul li { margin-bottom:8px; transition:transform .3s; }
-    .footer-links ul li:hover { transform:translateX(5px); }
-    .footer-links a { color:var(--light-gray); display:flex; align-items:center; gap:5px; font-size:.8rem; transition:color .3s; }
-    .footer-links a:hover { color:#fff; }
-    .footer-links a i { color:var(--secondary); font-size:.7rem; }
-    .footer-social ul { display:flex; flex-wrap:wrap; gap:8px; }
-    .footer-social a { display:flex; align-items:center; gap:5px; color:var(--light-gray); padding:5px 10px; background:rgba(255,255,255,.1); border-radius:5px; font-size:.8rem; transition:all .3s; }
-    .footer-social a:hover { color:#fff; background:rgba(77,168,218,.3); transform:translateY(-3px); }
-    .footer-bottom { border-top:1px solid rgba(255,255,255,.1); padding:15px 0; text-align:center; color:var(--light-gray); font-size:.75rem; margin-top:30px; }
-    .footer-links-bottom { display:flex; justify-content:center; gap:12px; margin-top:8px; flex-wrap:wrap; }
-    .footer-links-bottom a { color:var(--light-gray); font-size:.75rem; transition:color .3s; }
-    .footer-links-bottom a:hover { color:var(--accent); }
-
-    /* scrollbar */
-    ::-webkit-scrollbar { width:8px; }
-    ::-webkit-scrollbar-track { background:#e2ecf5; }
-    ::-webkit-scrollbar-thumb { background:linear-gradient(145deg,#083d5d,#1f6991); border-radius:10px; }
-    ::-webkit-scrollbar-thumb:hover { background:var(--accent); }
-
-    /* ══════════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════════ */
-    @media (max-width:768px) {
-      body { padding-top:90px; }
-      .top-header { display:none; }
-      .menu-icon { display:flex; }
-      .nav { height:auto; padding:10px 20px; }
-      .logo img { height:60px; }
-
-      .menu {
-        position:fixed; top:90px; left:0;
-        width:100%; height:calc(100vh - 90px);
-        background:rgba(255,255,255,.98); backdrop-filter:blur(12px);
-        flex-direction:column; align-items:flex-start; justify-content:flex-start;
-        display:none; padding:24px 20px 30px; overflow-y:auto;
-        z-index:999; transform:translateX(-100%); transition:transform .3s ease;
-      }
-      .menu.active { display:flex; transform:translateX(0); }
-      .upperNav { flex-direction:column; width:100%; gap:10px; margin-bottom:18px; }
-      .upperNav .nav-button { width:100%; height:44px; font-size:.95rem; justify-content:center; }
-      #certificate { width:100%; }
-      .btn-box { width:100%; height:42px; }
-      .toggle-btn { font-size:.8rem; }
-      .lowerNav { flex-direction:column; width:100%; gap:0; margin-top:6px; }
-      .lowerNav ul { flex-direction:column; gap:0; width:100%; }
-      .lowerNav li { border-bottom:1px solid #f0f0f0; }
-      .menu-link { padding:13px 0; width:100%; font-size:.95rem; }
-
-      /* merger on mobile */
-      .merger-section { padding:14px 8px 24px; align-items:flex-start; padding-top:20px; }
-      .merger-card { border-radius:16px; }
-      .merger-header { padding:14px 16px 12px; }
-      .merger-header h2 { font-size:1.2rem; }
-      .merger-body { grid-template-columns:1fr; }
-      .merger-left { border-right:none; border-bottom:1px solid #e9ecef; padding:14px 16px; }
-      .merger-right { padding:14px 16px; }
-      .controls-wrapper { flex-direction:column; gap:8px; }
-      .canvas-container { min-height:140px; }
-      #mergedCanvas { max-height:180px; }
-    }
-
-    @media (max-width:480px) {
-      .merger-header h2 { font-size:1rem; }
-      .action-buttons { flex-direction:column; }
-    }
-
-    @media (max-width:992px) { .footer-content { grid-template-columns:repeat(2,1fr); } }
-    @media (max-width:600px) {
-      .footer-content { grid-template-columns:1fr; text-align:center; }
-      .footer-logo { align-items:center; }
-      .footer-logo img { margin:0 auto 10px; }
-      .contact-info p { justify-content:center; }
-      .footer-links ul,.footer-social ul { justify-content:center; }
-      .footer-links h3::after,.footer-social h3::after { left:50%; transform:translateX(-50%); }
-      .footer-links a { justify-content:center; }
-    }
-  </style>
+        @media (max-width: 1000px) {
+            .main-container {
+                max-width: 100%;
+                padding: 0.5rem;
+            }
+            .app {
+                flex-direction: column;
+            }
+            .previewSection, .controlsSection {
+                width: 100%;
+            }
+            .previewCanvasWrap {
+                min-height: 180px;
+                max-height: 200px;
+            }
+        }
+        @media (max-width: 700px) {
+            .controls {
+                flex-direction: column;
+            }
+            select, .numberInput, button {
+                width: 100%;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            .card img {
+                height: 70px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91-9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
+    <!-- HEADER (EJS include) -->
+    <%- include("common/header.ejs") %>
 
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
+    <div class="main-container">
+        <div class="app">
 
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/RTS/public/main.html">
-              <button class="nav-button" id="onlineTest1">
-                <i class="fa-brands fa-servicestack"></i> Test Series
-              </button>
-            </a>
-            <button class="nav-button" style="background:linear-gradient(145deg,#c67534,#a05a20);color:#fff;">
-              <i class="fa-solid fa-book"></i> Service
-            </button>
-            <a href="/Certificate-Verification/verify.html">
-              <button class="nav-button" id="certificate">
-                <i class="fa-solid fa-certificate"></i> Certificate
-              </button>
-            </a>
-            <!-- FIX: buttons are DIRECT children of .btn-box — no <a> wrappers inside -->
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <button class="toggle-btn" id="logInButton" onclick="window.location.href='/login'">
-                <i class="fa-solid fa-right-to-bracket"></i> Login
-              </button>
-              <button class="toggle-btn" id="signUpBtn" onclick="window.location.href='/form'">
-                <i class="fa-solid fa-user-plus"></i> Register
-              </button>
-            </div>
-          </div>
-
-          <ul class="lowerNav">
-            <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="about/about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== CENTER — IMAGE MERGER ===== -->
-  <div class="merger-section">
-    <div class="merger-card">
-
-      <!-- Header row -->
-      <div class="merger-header">
-        <h2><span>🔗</span> Image Merger </h2>
-       
-      </div>
-
-      <!-- Two-column body -->
-      <div class="merger-body">
-
-        <!-- LEFT: controls -->
-        <div class="merger-left">
-
-          <!-- Upload -->
-          <div>
-            <div class="sec-lbl"> Add Images</div>
-            <div class="upload-zone" id="uploadZone">
-              <input type="file" id="fileInput" multiple accept="image/*">
-              <div class="upload-icon">🖼️</div>
-              <div class="upload-btn-face">Choose Images</div>
-              <div class="upload-hint">JPG · PNG · WEBP · GIF</div>
-            </div>
-          </div>
-
-          <!-- Add more -->
-          <div class="add-more-wrap">
-            <input type="file" id="addMoreInput" multiple accept="image/*">
-            <div class="add-more-face">＋ Add More Images</div>
-          </div>
-
-          <!-- File list -->
-          <div>
-            <div class="sec-lbl">02 · Queue</div>
-            <div class="files-header">
-              <span class="file-badge" id="fileCountDisplay">0</span>
-              <button class="clear-all-btn" id="clearAllButton">Clear all</button>
-            </div>
-            <div class="files-grid" id="filesGridContainer">
-              <div class="empty-message">No images selected. Add 2 or more.</div>
-            </div>
-          </div>
-
-          <!-- Settings -->
-          <div>
-            <div class="sec-lbl">03 · Settings</div>
-            <div class="controls-wrapper">
-              <div class="control-box">
-                <div class="control-title">Direction</div>
-                <div class="radio-options">
-                  <label><input type="radio" name="direction" value="horizontal" checked> ↔ Horizontal</label>
-                  <label><input type="radio" name="direction" value="vertical"> ↕ Vertical</label>
+            <!-- LEFT PREVIEW -->
+            <div class="previewSection">
+                <div class="previewHeader">
+                    <h2>📸 Live Preview</h2>
                 </div>
-              </div>
-              <div class="control-box">
-                <div class="control-title">Format</div>
-                <div class="radio-options">
-                  <label><input type="radio" name="format" value="png" checked> PNG</label>
-                  <label><input type="radio" name="format" value="jpeg"> JPEG</label>
+                <div class="previewCanvasWrap">
+                    <div class="emptyState" id="emptyState">
+                        <div>🖼️</div>
+                        <h3>No Images Uploaded</h3>
+                        <p>Upload images to see merged preview</p>
+                    </div>
+                    <canvas id="previewCanvas" style="display:none;"></canvas>
                 </div>
-              </div>
             </div>
-          </div>
 
-          <!-- Action buttons -->
-          <div class="action-buttons">
-            <button class="action-btn merge-btn" id="mergeButton" disabled>
-              <span class="spinner-small" id="mergeSpinner"></span>
-              <span id="mergeBtnText">🔄 Merge Images</span>
-            </button>
-            <button class="action-btn download-btn" id="downloadButton" disabled>⬇️ Download</button>
-          </div>
+            <!-- RIGHT PANEL -->
+            <div class="controlsSection">
+                <div class="header">
+                    <h1>✨ Image Merger Tool</h1>
+                    <p>Merge multiple images – horizontal, vertical or grid</p>
+                </div>
 
-        </div><!-- /merger-left -->
+                <label class="uploader" id="dropZone">
+                    <div class="uploadIcon">📤</div>
+                    <div class="uploadTitle">Upload Images</div>
+                    <div class="uploadText">Drag & Drop or Click Here</div>
+                    <input type="file" id="fileInput" multiple accept="image/*">
+                </label>
 
-        <!-- RIGHT: preview -->
-        <div class="merger-right">
-          <div class="preview-header">
-            <span>Preview</span>
-            <span class="preview-dimension" id="dimensionLabel">—</span>
-          </div>
-          <div class="canvas-container" id="canvasContainer">
-            <canvas id="mergedCanvas"></canvas>
-            <div id="previewPlaceholder" class="preview-placeholder">
-              <div class="ph-icon">🎨</div>
-              <p>Merged image preview</p>
-              <small>Select 2+ images and click Merge</small>
+                <div class="controls">
+                    <select id="mergeType">
+                        <option value="horizontal">Horizontal Merge</option>
+                        <option value="vertical">Vertical Merge</option>
+                        <option value="grid">Grid Merge</option>
+                    </select>
+                    <input type="number" class="numberInput" id="equalWidth" placeholder="Width" value="300">
+                    <input type="number" class="numberInput" id="equalHeight" placeholder="Height" value="300">
+                    <button class="addMoreBtn" id="addMoreBtn">➕ Add More</button>
+                    <button class="downloadBtn" onclick="downloadMerged()">⬇️ Download</button>
+                    <button class="clearBtn" onclick="clearAll()">🗑️ Clear</button>
+                </div>
+
+                <div class="grid" id="grid"></div>
             </div>
-          </div>
-        </div><!-- /merger-right -->
-
-      </div><!-- /merger-body -->
-    </div><!-- /merger-card -->
-  </div><!-- /merger-section -->
-
-  <!-- ===== FOOTER ===== -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/180x60/083d5d/FFFFFF?text=RID+Bharat'">
-          <p>Mig 72, Rajiv Nagar A Sector, Aayodhya Bypass Bhopal, MP, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i><a href="mailto:ridorg.in@gmail.com" style="color:var(--light-gray)">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i><a href="tel:+919202707903" style="color:var(--light-gray)">+91-9202707903</a></p>
-          </div>
         </div>
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
-        </div>
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
-        </div>
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="#">About Us</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
     </div>
-  </footer>
 
-  <!-- ===== SCRIPTS ===== -->
-  <script>
-  /* ── Hamburger ── */
-  (function(){
-    var icon = document.getElementById('menuIcon');
-    var menu = document.getElementById('innerCont');
-    if(!icon) return;
-    icon.addEventListener('click', function(e){
-      e.stopPropagation();
-      icon.classList.toggle('active');
-      menu.classList.toggle('active');
-    });
-    document.addEventListener('click', function(e){
-      if(!menu.contains(e.target) && !icon.contains(e.target)){
-        icon.classList.remove('active');
-        menu.classList.remove('active');
-      }
-    });
-  })();
+    <!-- FOOTER (EJS include) -->
+    <%- include("common/footer.ejs") %>
 
-  /* ── Login / Register pill ── */
-  (function(){
-    var loginBtn = document.getElementById('logInButton');
-    var regBtn   = document.getElementById('signUpBtn');
-    var slider   = document.getElementById('swap-btn');
-    if(!loginBtn||!regBtn||!slider) return;
-    loginBtn.addEventListener('mousedown', function(){
-      slider.style.left    = '0%';
-      loginBtn.style.color = '#fff';
-      regBtn.style.color   = '#333';
-    });
-    regBtn.addEventListener('mousedown', function(){
-      slider.style.left   = '50%';
-      regBtn.style.color  = '#fff';
-      loginBtn.style.color = '#333';
-    });
-  })();
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const dropZone = document.getElementById("dropZone");
+        const addMoreBtn = document.getElementById("addMoreBtn");
+        const grid = document.getElementById("grid");
+        const mergeType = document.getElementById("mergeType");
+        const equalWidth = document.getElementById("equalWidth");
+        const equalHeight = document.getElementById("equalHeight");
+        const canvas = document.getElementById("previewCanvas");
+        const ctx = canvas.getContext("2d");
+        const emptyState = document.getElementById("emptyState");
 
-  /* ── Image Merger ── */
-  (function(){
-    var fileInput    = document.getElementById('fileInput');
-    var addMoreInput = document.getElementById('addMoreInput');
-    var uploadZone   = document.getElementById('uploadZone');
-    var filesGrid    = document.getElementById('filesGridContainer');
-    var fileCount    = document.getElementById('fileCountDisplay');
-    var clearBtn     = document.getElementById('clearAllButton');
-    var mergeBtn     = document.getElementById('mergeButton');
-    var mergeSpinner = document.getElementById('mergeSpinner');
-    var mergeBtnText = document.getElementById('mergeBtnText');
-    var dlBtn        = document.getElementById('downloadButton');
-    var canvas       = document.getElementById('mergedCanvas');
-    var placeholder  = document.getElementById('previewPlaceholder');
-    var dimLabel     = document.getElementById('dimensionLabel');
-    var dirRadios    = document.getElementsByName('direction');
-    var fmtRadios    = document.getElementsByName('format');
+        let images = [];
 
-    var files = [];
-    var mergedBlob = null;
-    var toastTimer = null;
+        function handleFiles(files) {
+            const fileArray = [...files];
+            if (fileArray.length === 0) return;
 
-    /* toast */
-    function toast(msg){
-      var el = document.querySelector('.success-toast');
-      if(!el){ el = document.createElement('div'); el.className='success-toast'; document.body.appendChild(el); }
-      el.textContent = msg; el.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function(){ el.classList.remove('show'); }, 2000);
-    }
-
-    function fmtBytes(b){
-      if(b<1024) return b+' B';
-      if(b<1048576) return (b/1024).toFixed(1)+' KB';
-      return (b/1048576).toFixed(2)+' MB';
-    }
-
-    function render(){
-      fileCount.textContent = files.length;
-      mergeBtn.disabled = files.length < 2;
-      if(!files.length){
-        filesGrid.innerHTML = '<div class="empty-message">No images selected. Add 2 or more.</div>';
-        return;
-      }
-      filesGrid.innerHTML = '';
-      files.forEach(function(f,i){
-        var item = document.createElement('div');
-        item.className = 'file-item-card';
-        var thumb = document.createElement('div'); thumb.className='file-icon-small';
-        var img = document.createElement('img');
-        var url = URL.createObjectURL(f);
-        img.src = url; img.onload = function(){ URL.revokeObjectURL(url); };
-        thumb.appendChild(img);
-        var info = document.createElement('div'); info.className='file-info-text';
-        info.innerHTML='<div class="file-name-text">'+(f.name.length>22?f.name.slice(0,19)+'…':f.name)+'</div><div class="file-size-text">'+fmtBytes(f.size)+'</div>';
-        var del = document.createElement('button'); del.className='remove-single-btn'; del.textContent='✕';
-        del.addEventListener('click',(function(idx){ return function(){ removeAt(idx); }; })(i));
-        item.appendChild(thumb); item.appendChild(info); item.appendChild(del);
-        filesGrid.appendChild(item);
-      });
-    }
-
-    function removeAt(i){
-      files.splice(i,1); mergedBlob=null; dlBtn.disabled=true; resetPreview(); render();
-      if(files.length) toast('Image removed');
-    }
-
-    function resetPreview(){
-      var ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      canvas.width=0; canvas.height=0;
-      placeholder.classList.remove('hidden');
-      dimLabel.textContent='—'; mergedBlob=null; dlBtn.disabled=true;
-    }
-
-    function addFiles(incoming){
-      var arr = Array.from(incoming).filter(function(f){ return f.type.startsWith('image/'); });
-      if(!arr.length) return;
-      var added=0;
-      arr.forEach(function(f){
-        if(!files.some(function(e){ return e.name===f.name&&e.size===f.size; })){ files.push(f); added++; }
-      });
-      if(added){ render(); resetPreview(); toast(added+' image'+(added>1?'s':'')+' added'); }
-    }
-
-    /* file inputs */
-    fileInput.addEventListener('change',function(){ if(this.files.length) addFiles(this.files); this.value=''; });
-    addMoreInput.addEventListener('change',function(){ if(this.files.length) addFiles(this.files); this.value=''; });
-
-    /* drag & drop */
-    ['dragover','dragenter'].forEach(function(ev){
-      uploadZone.addEventListener(ev,function(e){ e.preventDefault(); uploadZone.classList.add('dragover'); });
-    });
-    ['dragleave','drop'].forEach(function(ev){
-      uploadZone.addEventListener(ev,function(e){
-        e.preventDefault(); uploadZone.classList.remove('dragover');
-        if(ev==='drop'&&e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-      });
-    });
-
-    /* clear */
-    clearBtn.addEventListener('click',function(){
-      if(!files.length) return;
-      files=[]; mergedBlob=null; render(); resetPreview(); toast('All cleared');
-    });
-
-    /* merge */
-    mergeBtn.addEventListener('click',async function(){
-      if(files.length<2){ toast('Need at least 2 images!'); return; }
-      mergeBtn.disabled=true;
-      mergeSpinner.style.display='inline-block';
-      mergeBtnText.textContent='Merging…';
-      try {
-        var dir = Array.from(dirRadios).find(function(r){ return r.checked; }).value;
-        var fmt = Array.from(fmtRadios).find(function(r){ return r.checked; }).value;
-        var imgs = await Promise.all(files.map(function(f){
-          return new Promise(function(res,rej){
-            var r=new FileReader();
-            r.onload=function(ev){ var im=new Image(); im.onload=function(){ res(im); }; im.onerror=rej; im.src=ev.target.result; };
-            r.onerror=rej; r.readAsDataURL(f);
-          });
-        }));
-        var ctx = canvas.getContext('2d');
-        if(dir==='horizontal'){
-          var maxH=Math.max.apply(null,imgs.map(function(im){ return im.height; }));
-          var sc=imgs.map(function(im){ var s=maxH/im.height; return {im:im,w:Math.round(im.width*s),h:maxH}; });
-          canvas.width=sc.reduce(function(a,b){ return a+b.w; },0); canvas.height=maxH;
-          ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-          var x=0; sc.forEach(function(s){ ctx.drawImage(s.im,x,0,s.w,s.h); x+=s.w; });
-        } else {
-          var maxW=Math.max.apply(null,imgs.map(function(im){ return im.width; }));
-          var scv=imgs.map(function(im){ var s=maxW/im.width; return {im:im,w:maxW,h:Math.round(im.height*s)}; });
-          canvas.height=scv.reduce(function(a,b){ return a+b.h; },0); canvas.width=maxW;
-          ctx.fillStyle='#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
-          var y=0; scv.forEach(function(s){ ctx.drawImage(s.im,0,y,s.w,s.h); y+=s.h; });
+            fileArray.forEach(file => {
+                if (!file.type.startsWith("image/")) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        images.push(img);
+                        renderGrid();
+                        renderPreview();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            fileInput.value = '';
         }
-        dimLabel.textContent=canvas.width+'×'+canvas.height;
-        placeholder.classList.add('hidden');
-        canvas.toBlob(function(blob){
-          mergedBlob=blob; dlBtn.disabled=false; toast('✅ Merged successfully!');
-        },'image/'+fmt,0.92);
-      } catch(err){ toast('Error: '+err.message); }
-      finally {
-        mergeBtn.disabled=files.length<2;
-        mergeSpinner.style.display='none';
-        mergeBtnText.textContent='🔄 Merge Images';
-      }
-    });
 
-    /* download */
-    dlBtn.addEventListener('click',function(){
-      if(!mergedBlob) return;
-      var fmt=Array.from(fmtRadios).find(function(r){ return r.checked; }).value;
-      var a=document.createElement('a'); var url=URL.createObjectURL(mergedBlob);
-      a.href=url; a.download='merged-'+Date.now()+'.'+(fmt==='png'?'png':'jpg');
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function(){ URL.revokeObjectURL(url); },400);
-      toast('⬇ Download started!');
-    });
+        fileInput.addEventListener("change", (e) => handleFiles(e.target.files));
+        addMoreBtn.addEventListener("click", () => fileInput.click());
 
-    render(); resetPreview();
-  })();
-  </script>
+        dropZone.addEventListener("dragover", (e) => e.preventDefault());
+        dropZone.addEventListener("drop", (e) => {
+            e.preventDefault();
+            handleFiles(e.dataTransfer.files);
+        });
+
+        function renderGrid() {
+            grid.innerHTML = "";
+            images.forEach((img, idx) => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `
+                    <img src="${img.src}">
+                    <div class="cardFooter">
+                        <button class="removeBtn">Remove</button>
+                    </div>
+                `;
+                card.querySelector(".removeBtn").onclick = () => {
+                    images.splice(idx, 1);
+                    renderGrid();
+                    renderPreview();
+                };
+                grid.appendChild(card);
+            });
+        }
+
+        function renderPreview() {
+            if (images.length === 0) {
+                canvas.style.display = "none";
+                emptyState.style.display = "block";
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+            canvas.style.display = "block";
+            emptyState.style.display = "none";
+
+            const type = mergeType.value;
+            const w = parseInt(equalWidth.value) || 300;
+            const h = parseInt(equalHeight.value) || 300;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (type === "horizontal") {
+                canvas.width = images.length * w;
+                canvas.height = h;
+                let x = 0;
+                images.forEach(img => {
+                    ctx.drawImage(img, x, 0, w, h);
+                    x += w;
+                });
+            } 
+            else if (type === "vertical") {
+                canvas.width = w;
+                canvas.height = images.length * h;
+                let y = 0;
+                images.forEach(img => {
+                    ctx.drawImage(img, 0, y, w, h);
+                    y += h;
+                });
+            } 
+            else {
+                const cols = Math.ceil(Math.sqrt(images.length));
+                const rows = Math.ceil(images.length / cols);
+                canvas.width = cols * w;
+                canvas.height = rows * h;
+                images.forEach((img, idx) => {
+                    const x = (idx % cols) * w;
+                    const y = Math.floor(idx / cols) * h;
+                    ctx.drawImage(img, x, y, w, h);
+                });
+            }
+        }
+
+        mergeType.addEventListener("change", renderPreview);
+        equalWidth.addEventListener("input", renderPreview);
+        equalHeight.addEventListener("input", renderPreview);
+
+        function downloadMerged() {
+            if (images.length === 0) {
+                alert("Please upload images first.");
+                return;
+            }
+            const link = document.createElement("a");
+            link.href = canvas.toDataURL("image/png");
+            link.download = "merged-image.png";
+            link.click();
+        }
+
+        function clearAll() {
+            images = [];
+            grid.innerHTML = "";
+            renderPreview();
+        }
+
+        window.downloadMerged = downloadMerged;
+        window.clearAll = clearAll;
+    </script>
+
 </body>
 </html>

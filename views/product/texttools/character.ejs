@@ -1,831 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>RID Bharat – Character Counter</title>
-<link rel="icon" type="image/png" href="/assets/signup.png">
-  <!-- Google Fonts + Font Awesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Character Counter</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        /* ========== PAGE-SPECIFIC STYLES (footer at bottom, no header/footer changes) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    /* ========== GLOBAL & HEADER STYLES ========== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #083d5d;
-      --primary-dark: #062a41;
-      --secondary: #4da8da;
-      --accent: #ff6b35;
-      --light: #f2f7fc;
-      --dark: #333;
-      --gray: #555;
-      --light-gray: #e0e0e0;
-      --white: #ffffff;
-      --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f2f2f2;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 130px;
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-    }
-
-    input, button, textarea, select {
-      font-family: inherit;
-      font-size: inherit;
-      line-height: inherit;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: var(--transition);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-      transition: var(--transition);
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ===== HEADER STYLES ===== */
-    .header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #062a41 0%, #0a4d6e 100%);
-      color: #fff;
-      padding: 0 20px;
-      height: 40px;
-      font-size: 14px;
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .web-text p {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-    }
-
-    .web-text p span {
-      font-weight: 300;
-    }
-
-    .web-text p::after {
-      content: "|";
-      margin: 0 10px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .web-text p:last-child::after {
-      content: "";
-    }
-
-    .right-text {
-      display: flex;
-    }
-
-    .right-text a {
-      font-size: 0.6rem;
-      transition: all 0.3s ease;
-      color: white;
-      text-decoration: none;
-    }
-
-    .right-text a::after {
-      content: "|";
-      margin: 0 8px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .right-text a:last-child::after {
-      content: "";
-    }
-
-    .main-header {
-      border-bottom: 1px solid #083d5d;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 90px;
-      padding: 0 20px;
-      transition: all 0.3s ease;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-
-    .logo img {
-      height: 100px;
-      max-height: 80px;
-      transition: all 0.3s ease;
-    }
-
+              @media (max-width: 768px) {
     .menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      flex-direction: column;
-    }
-
-    .upperNav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .nav-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 8px 15px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, var(--primary) 0%, #1e5a7a 100%);
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 53, 84, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    #onlineTest1 {
-      background: linear-gradient(145deg, #dc143c, #b22222);
-    }
-
-    #certificate {
-      background: linear-gradient(145deg, #0b5e0b, #0a470a);
-    }
-
-    .btn-box {
-      width: 220px;
-      height: 40px;
-      display: flex;
-      flex-direction: row;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 30px;
-      position: relative;
-      background: rgba(240, 240, 240, 0.6);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(8, 61, 93, 0.2);
-      overflow: hidden;
-    }
-
-    .btn-box a {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-      text-decoration: none;
-    }
-
-    .toggle-btn {
-      width: 100%;
-      height: 100%;
-      padding: 0 8px;
-      position: relative;
-      outline: none;
-      border: none;
-      background: transparent;
-      font-size: 0.82rem;
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      z-index: 1;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    #swap-btn {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #083d5d;
-      border-radius: 30px;
-      transition: all 0.4s ease;
-      z-index: 0;
-    }
-
-    #logInButton {
-      color: white;
-    }
-
-    .lowerNav {
-      display: flex;
-      gap: 22px;
-    }
-
-    .lowerNav ul {
-      display: flex;
-      gap: 20px;
-    }
-
-    .lowerNav li {
-      position: relative;
-      list-style-type: none;
-    }
-
-    .lowerNav li a {
-      font-size: 0.9rem;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 8px 0;
-    }
-
-    .menu-link:hover {
-      color: #083d5d;
-    }
-
-    .menu-icon {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30px;
-      height: 21px;
-      cursor: pointer;
-      margin-left: auto;
-      z-index: 1001;
-    }
-
-    .menu-icon span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: var(--primary);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-icon.active span:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-icon.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-icon.active span:nth-child(3) {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-
-    /* Desktop hover */
-    @media (min-width: 769px) {
-      .menu-link {
-        position: relative;
-      }
-      .menu-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: #083d5d;
-        transition: width 0.3s ease;
-      }
-      .menu-link:hover::after {
-        width: 100%;
-      }
-    }
-
-    /* ===== CHARACTER COUNTER CARD ===== */
-    .main-content-area {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 0.5rem 1.5rem 2rem 1.5rem;
-    }
-
-    .app-container {
-      max-width: 800px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 2.2rem;
-      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(168, 85, 247, 0.1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      animation: floatIn 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-
-    @keyframes floatIn {
-      0% { opacity: 0; transform: scale(0.96) translateY(12px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .site-header {
-      background: linear-gradient(110deg, #f8f9ff, #ffffff);
-      color: #1e1a3a;
-      padding: 0.85rem 1.5rem;
-      text-align: center;
-      position: relative;
-      flex-shrink: 0;
-      border-bottom: 1px solid #f0eef7;
-    }
-
-    .site-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 10%;
-      width: 80%;
-      height: 2px;
-      background: linear-gradient(90deg, #c084fc, #a855f7, #c084fc);
-      border-radius: 4px;
-      opacity: 0.7;
-    }
-
-    .site-header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 10%;
-      width: 80%;
-      height: 2px;
-      background: linear-gradient(90deg, #c084fc, #a855f7, #c084fc);
-      border-radius: 4px;
-    }
-
-    .site-header h1 {
-      font-size: 1.45rem;
-      font-weight: 750;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #4a2c8c, #9b4dff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .tagline {
-      margin-top: 0.2rem;
-      font-size: 0.7rem;
-      opacity: 0.7;
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      font-weight: 500;
-      color: #5a4a7a;
-    }
-
-    .main-content {
-      flex: 1;
-      background: #ffffff;
-      overflow-y: auto;
-      padding: 1rem 1.5rem;
-      scrollbar-width: thin;
-    }
-
-    .counter-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .textarea-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .label-text {
-      font-size: 0.85rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #4a2c8c, #9b4dff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-icon {
-      background: #f5f3ff;
-      border: 1px solid #e9e4ff;
-      padding: 0.3rem 0.9rem;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #5b3f9e;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .btn-icon:hover {
-      background: linear-gradient(135deg, #6e48aa, #9b4dff);
-      color: white;
-      transform: translateY(-1px);
-    }
-
-    textarea {
-      width: 100%;
-      height: 140px;
-      padding: 0.8rem;
-      font-size: 0.85rem;
-      border: 1.5px solid #e9e2ff;
-      border-radius: 1.2rem;
-      font-family: 'Inter', monospace;
-      resize: vertical;
-      transition: 0.2s;
-      background: #fefcff;
-    }
-
-    textarea:focus {
-      border-color: #a56eff;
-      box-shadow: 0 0 0 3px rgba(165, 110, 255, 0.1);
-    }
-
-    .stats-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin: 0.2rem 0;
-    }
-
-    .stat-card {
-      flex: 1;
-      min-width: 100px;
-      background: #ffffff;
-      border-radius: 1rem;
-      padding: 0.55rem 0.2rem;
-      text-align: center;
-      border: 1px solid #f0ebff;
-      transition: 0.2s;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-2px);
-      border-color: #d9caff;
-    }
-
-    .stat-label {
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-      color: #7c6aa0;
-    }
-
-    .stat-value {
-      font-size: 1.7rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #2c1f4e, #7c3fff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      line-height: 1.1;
-    }
-
-    .stat-sub {
-      font-size: 0.55rem;
-      color: #a396c2;
-    }
-
-    .info-row {
-      background: #faf9ff;
-      border-radius: 1rem;
-      padding: 0.45rem 0.9rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
-      border-left: 3px solid #c084fc;
-    }
-
-    .space-badge {
-      background: #f0ebff;
-      padding: 0.2rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      color: #6949c7;
-    }
-
-    .dynamic-note {
-      font-size: 0.68rem;
-      color: #6b5b8e;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* ===== FOOTER STYLES (as provided) ===== */
-    footer {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-      padding: 30px 0 0;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      margin: 0;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-
-    .footer-logo {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .footer-logo img {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 10px;
-      background: #fff;
-      padding: 5px;
-      border-radius: 6px;
-    }
-
-    .footer-logo p {
-      margin-bottom: 8px;
-      color: var(--light-gray);
-      font-size: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .contact-info {
-      margin-top: 5px;
-    }
-
-    .contact-info p {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-    }
-
-    .contact-info i {
-      color: var(--secondary);
-      width: 14px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links h3,
-    .footer-social h3,
-    .footer-newsletter h3 {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      position: relative;
-      padding-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .footer-links h3:after,
-    .footer-social h3:after,
-    .footer-newsletter h3:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 30px;
-      height: 2px;
-      background: var(--secondary);
-      border-radius: 2px;
-    }
-
-    .footer-links ul li {
-      margin-bottom: 8px;
-      transition: transform 0.3s;
-    }
-
-    .footer-links ul li:hover {
-      transform: translateX(5px);
-    }
-
-    .footer-links a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .footer-links a i {
-      color: var(--secondary);
-      font-size: 0.7rem;
-    }
-
-    .footer-social ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--light-gray);
-      transition: all 0.3s;
-      padding: 5px 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-      font-size: 0.8rem;
-      border-radius: 40px !important;
-    }
-
-    .footer-social a:hover {
-      color: var(--white);
-      background: rgba(77, 168, 218, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 0;
-      text-align: center;
-      color: var(--light-gray);
-      font-size: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links-bottom {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links-bottom a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      position: relative;
-      font-size: 0.75rem;
-    }
-
-    .footer-links-bottom a:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      right: -8px;
-      color: var(--secondary);
-    }
-
-    .footer-links-bottom a:hover {
-      color: var(--white);
-    }
-
-    .back-to-top {
-      position: absolute;
-      right: 15px;
-      top: 0px;
-      background: var(--secondary);
-      color: var(--white);
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      body {
-        padding-top: 90px;
-      }
-      .top-header {
-        display: none;
-      }
-      .menu-icon {
-        display: flex;
-      }
-      .nav {
-        flex-direction: row;
-        height: auto;
-        padding: 10px 20px;
-      }
-      .logo {
-        width: 100%;
-      }
-      .logo img {
-        height: 70px;
-      }
-      .menu {
         position: fixed;
-        top: 90px;
+        top: 77px;
         left: 0;
         width: 100%;
         height: calc(100vh - 90px);
         background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -835,419 +34,333 @@
         z-index: 999;
         transform: translateX(-100%);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      .menu.active {
-        display: flex;
-        transform: translateX(0);
-      }
-      .upperNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        margin-bottom: 25px;
-      }
-      .upperNav .nav-button {
-        width: 90%;
-        text-align: center;
-        height: 48px;
-        font-size: 1rem;
-        justify-content: center;
-      }
-      .btn-box {
-        width: 90%;
-        height: 38px;
-        flex-direction: row;
-        border-radius: 25px;
-        background: #f0f0f0;
-        overflow: hidden;
-        margin-top: 10px;
-        position: relative;
-      }
-      .btn-box .toggle-btn {
-        width: 50%;
-        font-size: 0.85rem;
-        padding: 0;
-      }
-      #swap-btn {
-        display: block;
-        width: 50%;
-        height: 100%;
-        border-radius: 25px;
-      }
-      #certificate {
-        width: 90%;
-        max-width: 280px;
-        height: 48px;
-        font-size: 0.95rem;
-        margin: 0 auto;
-      }
-      .lowerNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-        margin-top: 10px;
-      }
-      .lowerNav ul {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-      }
-      .lowerNav li {
-        border-bottom: 1px solid #f0f0f0;
-      }
-      .menu-link {
-        padding: 16px 0;
-        width: 100%;
-      }
-      .dropdown-menu {
-        position: static;
-        box-shadow: none;
-        width: 100%;
-        display: none;
-        padding-left: 20px;
-        background: transparent;
-      }
-      .dropdown.active .dropdown-menu {
-        display: block;
-      }
-      .main-content-area {
-        padding: 0.25rem 1rem 1.5rem;
-      }
-      .stat-value {
-        font-size: 1.4rem;
-      }
-      textarea {
-        height: 115px;
-      }
     }
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;    /* footer stays at bottom */
+            padding-top: 130px;        /* space for fixed header */
+        }
 
-    @media (max-width: 992px) {
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+        /* main content – grows to fill space, pushes footer down */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
 
-    @media (max-width: 600px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .footer-logo {
-        align-items: center;
-      }
-      .footer-logo img {
-        margin: 0 auto 10px auto;
-      }
-      .contact-info p {
-        justify-content: center;
-      }
-      .footer-links ul,
-      .footer-social ul {
-        justify-content: center;
-        align-items: center;
-      }
-      .footer-links h3::after,
-      .footer-social h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .footer-links a {
-        justify-content: center;
-      }
-      .stat-value {
-        font-size: 1.2rem;
-      }
-      .stat-card {
-        min-width: 70px;
-        padding: 0.4rem 0.1rem;
-      }
-      textarea {
-        height: 105px;
-      }
-    }
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    /* custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #e2ecf5;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(145deg, #083d5d, #1f6991);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent);
-    }
+        .two-columns {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
 
-    footer .container {
-      max-width: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  </style>
+        /* LEFT PANEL – stats cards */
+        .stats-panel {
+            flex: 0.9;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            padding: 1.8rem;
+        }
+
+        .stats-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.25rem;
+        }
+        .stats-header p {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            transition: all 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4);
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #a5b4fc;
+            line-height: 1.2;
+        }
+
+        /* RIGHT PANEL – text editor */
+        .editor-panel {
+            flex: 1.2;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 32px;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .editor-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .editor-header h3 i {
+            color: #818cf8;
+        }
+
+        textarea {
+            width: 100%;
+            height: 280px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 20px;
+            padding: 1rem;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        textarea:focus {
+            border-color: #818cf8;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #334155;
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        .btn-clear {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+        .btn-sample {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .info-note {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 850px) {
+            .two-columns {
+                flex-direction: column;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            body {
+                padding-top: 90px;  /* mobile header */
+            }
+        }
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91- 9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo" onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/rts/dashboard" class="nav-button" id="onlineTest1"><i class="fa-brands fa-servicestack"></i> Test Series</a>
-            <a href="/service" class="nav-button"><i class="fa-solid fa-book"></i> Service</a>
-            <div class="certificate">
-              <a href="/Certificate-Verification/verify.html" class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</a>
+    <!-- HEADER (EJS include) – unchanged -->
+    <%- include("common/header.ejs") %>
+
+    <!-- MAIN CONTENT – pushes footer to bottom -->
+    <div class="main-content">
+        <div class="app-container">
+            <div class="two-columns">
+
+                <!-- LEFT: statistics panel -->
+                
+                <!-- RIGHT: text editor -->
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h3><span>✍️</span> Your Text</h3>
+                    </div>
+                    <textarea id="textInput" placeholder="Type, paste, or click 'Sample Text'..."></textarea>
+                    <div class="button-group">
+                        <button id="clearBtn" class="btn-clear">🗑️ Clear text</button>
+                        <button id="sampleBtn" class="btn-sample">📋 Insert sample</button>
+                    </div>
+                    <div class="info-note">
+                        ⚡ Every character, space, and line break is counted live.
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stats-header">
+                        <h2>🔢 Character Counter</h2>
+                        <p>Live character & text analysis – type, paste, or load sample</p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">🔤 Total characters</div>
+                            <div class="stat-value" id="totalChars">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">✂️ Without spaces</div>
+                            <div class="stat-value" id="charsNoSpaces">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">📝 Word count</div>
+                            <div class="stat-value" id="wordCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">📖 Sentences</div>
+                            <div class="stat-value" id="sentenceCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">📄 Paragraphs</div>
+                            <div class="stat-value" id="paragraphCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <a href="/login" class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-              <a href="/form" class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</a>
-            </div>
-          </div>
-          <ul class="lowerNav">
-            <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="/research"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="/internship"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
-          </ul>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- ========== CHARACTER COUNTER SECTION ========== -->
-  <div class="main-content-area" id="mainContentArea">
-    <div class="app-container">
-      <header class="site-header">
-        <h1><i class="fas fa-gem"></i> Character or word •Counter</h1>
-        <div class="tagline"><i class="fas fa-dot-circle"></i> live precision · minimal core <i class="fas fa-arrows-alt"></i></div>
-      </header>
-      <main class="main-content">
-        <div class="counter-panel">
-          <div class="textarea-label">
-            <div class="label-text"><i class="fas fa-feather-alt"></i> your text</div>
-            <div class="action-buttons">
-              <button class="btn-icon" id="demoBtn"><i class="fas fa-cloud-moon"></i> Sample</button>
-              <button class="btn-icon" id="clearTextBtn"><i class="fas fa-eraser"></i> Clear</button>
-            </div>
-          </div>
-          <textarea id="textInput" placeholder="Type something — each letter, space & line gets counted..."></textarea>
-          <div class="stats-grid">
-            <div class="stat-card"><div class="stat-label"><i class="fas fa-text-width"></i> TOTAL</div><div class="stat-value" id="totalChars">0</div><div class="stat-sub">chars + spaces</div></div>
-            <div class="stat-card"><div class="stat-label"><i class="fas fa-code"></i> NO SPACE</div><div class="stat-value" id="charsNoSpace">0</div><div class="stat-sub">actual symbols</div></div>
-            <div class="stat-card"><div class="stat-label"><i class="fas fa-comment-dots"></i> WORDS</div><div class="stat-value" id="wordCount">0</div><div class="stat-sub">lexical flow</div></div>
-            <div class="stat-card"><div class="stat-label"><i class="fas fa-align-left"></i> LINES</div><div class="stat-value" id="lineBreaks">0</div><div class="stat-sub">newline count</div></div>
-          </div>
-          <div class="info-row">
-            <div class="space-badge"><i class="fas fa-arrow-wide"></i> <span id="spaceCountDisplay">0</span> spaces</div>
-            <div class="dynamic-note"><i class="fas fa-waveform"></i> <span id="extraNote">center mode · ready</span></div>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
+    <!-- FOOTER (EJS include) – unchanged -->
+    <%- include("common/footer.ejs") %>
 
-  <!-- ========== FOOTER ========== -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo" onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
-          </div>
-        </div>
+    <script>
+        const textarea = document.getElementById('textInput');
+        const totalCharsSpan = document.getElementById('totalChars');
+        const charsNoSpacesSpan = document.getElementById('charsNoSpaces');
+        const wordCountSpan = document.getElementById('wordCount');
+        const sentenceCountSpan = document.getElementById('sentenceCount');
+        const paragraphCountSpan = document.getElementById('paragraphCount');
 
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="about/about.html">About Us</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="Privacy Policy.html">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="contact.html">Contact</a>
-        </div>
-      </div>
-
-      <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
-    </div>
-  </footer>
-
-  <script>
-    (function() {
-      // Mobile menu toggle
-      const menuIcon = document.getElementById('menuIcon');
-      const menu = document.getElementById('innerCont');
-      if (menuIcon && menu) {
-        menuIcon.addEventListener('click', function(e) {
-          e.stopPropagation();
-          this.classList.toggle('active');
-          menu.classList.toggle('active');
-        });
-        // Close menu when clicking on any menu link
-        const allLinks = menu.querySelectorAll('a');
-        allLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menuIcon.classList.remove('active');
-            menu.classList.remove('active');
-          });
-        });
-      }
-
-      // Login/Register slide effect
-      const loginBtn = document.getElementById("logInButton");
-      const registerBtn = document.getElementById("signUpBtn");
-      const swapBtn = document.getElementById("swap-btn");
-      if (loginBtn && registerBtn && swapBtn) {
-        loginBtn.addEventListener("click", function() {
-          swapBtn.style.left = "0%";
-          loginBtn.style.color = "white";
-          registerBtn.style.color = "#000";
-        });
-        registerBtn.addEventListener("click", function() {
-          swapBtn.style.left = "50%";
-          registerBtn.style.color = "white";
-          loginBtn.style.color = "#000";
-        });
-      }
-
-      // Adjust main content spacing based on header height
-      const mainArea = document.getElementById('mainContentArea');
-      const headerContainer = document.querySelector('.header-container');
-      function adjustSpacing() {
-        if (!headerContainer || !mainArea) return;
-        const headerHeight = headerContainer.offsetHeight;
-        mainArea.style.marginTop = headerHeight + 'px';
-      }
-      window.addEventListener('load', adjustSpacing);
-      window.addEventListener('resize', adjustSpacing);
-
-      // Character Counter logic
-      const textarea = document.getElementById('textInput');
-      const totalCharsSpan = document.getElementById('totalChars');
-      const charsNoSpaceSpan = document.getElementById('charsNoSpace');
-      const wordCountSpan = document.getElementById('wordCount');
-      const lineBreaksSpan = document.getElementById('lineBreaks');
-      const spaceCountSpan = document.getElementById('spaceCountDisplay');
-      const extraNoteSpan = document.getElementById('extraNote');
-      const clearBtn = document.getElementById('clearTextBtn');
-      const demoBtn = document.getElementById('demoBtn');
-
-      function animateNumber(element, newValue) {
-        const current = parseInt(element.innerText);
-        if (current === newValue) return;
-        element.style.transform = 'scale(1.07)';
-        element.innerText = newValue;
-        setTimeout(() => element.style.transform = '', 110);
-      }
-
-      function updateCounters() {
-        const rawText = textarea.value;
-        const totalChars = rawText.length;
-        let spaceCount = 0, lineBreakCount = 0;
-        for (let ch of rawText) {
-          if (ch === ' ') spaceCount++;
-          else if (ch === '\n') lineBreakCount++;
+        function countSentences(text) {
+            const matches = text.match(/[.!?]+(\s|$)/g);
+            return matches ? matches.length : 0;
         }
-        const charsWithoutSpace = totalChars - spaceCount;
-        let wordCount = 0;
-        if (rawText.trim().length > 0) wordCount = rawText.trim().split(/\s+/).length;
-        
-        animateNumber(totalCharsSpan, totalChars);
-        animateNumber(charsNoSpaceSpan, charsWithoutSpace);
-        animateNumber(wordCountSpan, wordCount);
-        animateNumber(lineBreaksSpan, lineBreakCount);
-        animateNumber(spaceCountSpan, spaceCount);
-        
-        if (totalChars === 0) extraNoteSpan.innerHTML = '<i class="fas fa-crown"></i> start typing · center mode';
-        else if (wordCount === 0 && totalChars > 0) extraNoteSpan.innerHTML = '<i class="fas fa-star-of-life"></i> symbols only · still magic';
-        else if (totalChars > 280) extraNoteSpan.innerHTML = '<i class="fas fa-dragon"></i> legendary length!';
-        else if (totalChars > 120) extraNoteSpan.innerHTML = '<i class="fas fa-fire"></i> flourishing text!';
-        else if (totalChars > 30) extraNoteSpan.innerHTML = '<i class="fas fa-chart-line"></i> realtime analyzer';
-        else extraNoteSpan.innerHTML = '<i class="fas fa-feather"></i> crisp & centered';
-      }
 
-      function clearText() { textarea.value = ""; updateCounters(); textarea.focus(); }
-      function insertSample() {
-        textarea.value = `✦ Center Character Counter ✦\n\n• Emojis 🎯✨💎 & special symbols\n• Spaces & line breaks tracked\n• Real-time metrics in compact style\n→ Total chars, words & spaces update live.`;
-        updateCounters();
-        textarea.focus();
-      }
+        function countParagraphs(text) {
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+            return paragraphs.length;
+        }
 
-      let updateScheduled = false;
-      function scheduleUpdate() {
-        if (updateScheduled) return;
-        updateScheduled = true;
-        requestAnimationFrame(() => { updateCounters(); updateScheduled = false; });
-      }
-      textarea.addEventListener('input', scheduleUpdate);
-      clearBtn.addEventListener('click', clearText);
-      demoBtn.addEventListener('click', insertSample);
-      
-      updateCounters();
-      textarea.focus();
-    })();
-  </script>
+        function updateCounts() {
+            const text = textarea.value;
+            
+            // Total characters (including spaces, line breaks)
+            const totalChars = text.length;
+            
+            // Characters without spaces (space, tab, newline removed)
+            const charsNoSpaces = text.replace(/\s/g, '').length;
+            
+            // Words (split by whitespace, ignore empty)
+            const words = text.trim() === '' ? [] : text.trim().split(/\s+/);
+            const wordCount = words.length;
+            
+            // Sentences
+            const sentenceCount = countSentences(text);
+            
+            // Paragraphs
+            const paragraphCount = countParagraphs(text);
+            
+            totalCharsSpan.textContent = totalChars;
+            charsNoSpacesSpan.textContent = charsNoSpaces;
+            wordCountSpan.textContent = wordCount;
+            sentenceCountSpan.textContent = sentenceCount;
+            paragraphCountSpan.textContent = paragraphCount;
+        }
+
+        function clearText() {
+            textarea.value = '';
+            updateCounts();
+        }
+
+        function insertSample() {
+            const sample = `Character counters are useful for writers, editors, and social media managers.
+
+Every letter, space, and punctuation mark matters. For example, Twitter posts have a 280-character limit.
+
+"Short sentences? Yes!" – they count too.`;
+            textarea.value = sample;
+            updateCounts();
+        }
+
+        textarea.addEventListener('input', updateCounts);
+        document.getElementById('clearBtn').addEventListener('click', clearText);
+        document.getElementById('sampleBtn').addEventListener('click', insertSample);
+
+        updateCounts();
+    </script>
 </body>
 </html>

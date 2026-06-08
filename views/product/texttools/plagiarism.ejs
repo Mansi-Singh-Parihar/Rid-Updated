@@ -1,778 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>RID Bharat – Plagiarism Checker</title>
-<link rel="icon" type="image/png" href="/assets/signup.png">
-  <!-- Google Fonts + Font Awesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    /* ========== GLOBAL RESET & VARIABLES ========== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #083d5d;
-      --primary-dark: #062a41;
-      --secondary: #4da8da;
-      --accent: #ff6b35;
-      --light: #f2f7fc;
-      --dark: #333;
-      --gray: #555;
-      --light-gray: #e0e0e0;
-      --white: #ffffff;
-      --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    body {
-      font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: #f2f5f9;
-      color: #1e2a3a;
-      line-height: 1.5;
-      padding-top: 130px;
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: var(--transition);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: none;
-      font-family: inherit;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ========== HEADER STYLES (unchanged) ========== */
-    .header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #083d5d;
-      color: #fff;
-      padding: 0 20px;
-      height: 40px;
-      font-size: 14px;
-      background: linear-gradient(90deg, #062a41 0%, #0a4d6e 100%);
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .web-text p {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-    }
-
-    .web-text p span {
-      font-weight: 300;
-    }
-
-    .web-text p::after {
-      content: "|";
-      margin: 0 10px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .web-text p:last-child::after {
-      content: "";
-    }
-
-    .right-text {
-      display: flex;
-    }
-
-    .right-text a {
-      font-size: 0.6rem;
-      transition: all 0.3s ease;
-      color: white;
-    }
-
-    .right-text a::after {
-      content: "|";
-      margin: 0 8px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .right-text a:last-child::after {
-      content: "";
-    }
-
-    .main-header {
-      border-bottom: 1px solid #083d5d;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.85);
-      border-bottom: 1px solid rgba(77, 168, 218, 0.3);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 90px;
-      padding: 0 20px;
-      transition: all 0.3s ease;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-
-    .logo img {
-      height: 100px;
-      max-height: 80px;
-      transition: all 0.3s ease;
-    }
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Plagiarism Checker</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <!-- Lucide Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        
+              @media (max-width: 768px) {
     .menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      flex-direction: column;
-    }
-
-    .upperNav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .nav-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 8px 15px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--primary) 0%, #1e5a7a 100%);
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 53, 84, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    #onlineTest1 {
-      background: linear-gradient(145deg, #dc143c, #b22222);
-    }
-
-    #certificate {
-      background: linear-gradient(145deg, #0b5e0b, #0a470a);
-    }
-
-    .btn-box {
-      width: 250px;
-      display: flex;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 30px;
-      position: relative;
-      background: rgba(240, 240, 240, 0.6);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(8, 61, 93, 0.2);
-      overflow: hidden;
-    }
-
-    .toggle-btn {
-      padding: 8px 26px;
-      position: relative;
-      outline: none;
-      border: none;
-      background: transparent;
-      font-size: 0.9rem;
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      z-index: 1;
-      width: 50%;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      font-weight: 600;
-    }
-
-    #swap-btn {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #083d5d;
-      border-radius: 30px;
-      transition: all 0.4s ease;
-      z-index: 0;
-    }
-
-    #logInButton {
-      color: white;
-    }
-
-    .lowerNav {
-      display: flex;
-      gap: 22px;
-    }
-
-    .lowerNav ul {
-      display: flex;
-      gap: 20px;
-    }
-
-    .lowerNav li {
-      position: relative;
-      list-style-type: none;
-    }
-
-    .lowerNav li a {
-      font-size: 0.9rem;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 8px 0;
-    }
-
-    .menu-link:hover {
-      color: #083d5d;
-    }
-
-    /* Menu Icon */
-    .menu-icon {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30px;
-      height: 21px;
-      cursor: pointer;
-      margin-left: auto;
-      z-index: 1001;
-    }
-
-    .menu-icon span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: var(--primary);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-icon.active span:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-icon.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-icon.active span:nth-child(3) {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-
-    /* ========== PLAGIARISM CHECKER SECTION ========== */
-    .plagiarism-section {
-      min-height: auto;
-      padding: 1.5rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .plagiarism-card {
-      max-width: 1300px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 2rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.03);
-      overflow: hidden;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .card-header {
-      padding: 1.5rem 2rem 0.5rem 2rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .card-header h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(125deg, #1e2b3c, #2c3f66, #1e2b3c);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .card-header h1:before {
-      content: "🔍";
-      font-size: 2rem;
-      background: none;
-      -webkit-background-clip: unset;
-      color: #2c3e66;
-    }
-
-    .subhead {
-      color: #5a6e8a;
-      margin-top: 0.3rem;
-      font-weight: 450;
-      font-size: 0.9rem;
-      border-left: 3px solid #8aa1c0;
-      padding-left: 0.75rem;
-    }
-
-    .compare-container {
-      padding: 1.5rem 2rem 1rem 2rem;
-    }
-
-    .text-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .text-box {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .text-box label {
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .text-box textarea {
-      width: 100%;
-      height: 220px;
-      padding: 1rem 1.2rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      font-family: 'Inter', 'SF Mono', monospace;
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 1.2rem;
-      resize: vertical;
-      outline: none;
-      transition: all 0.25s ease;
-      color: #1a2a3f;
-    }
-
-    .text-box textarea:focus {
-      border-color: #7c9bc0;
-      box-shadow: 0 0 0 3px rgba(108, 143, 189, 0.2);
-    }
-
-    .action-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      margin: 1rem 0 1.5rem;
-    }
-
-    .btn {
-      border: none;
-      padding: 0.7rem 1.8rem;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-radius: 2rem;
-      background: #f0f4fa;
-      color: #2c3e5c;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: inherit;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .btn-primary {
-      background: #1f2f47;
-      color: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .btn-primary:hover {
-      background: #2a3d5a;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      border: 1px solid #d9e4ef;
-      color: #2c3e5c;
-    }
-
-    .btn-secondary:hover {
-      background: #f8fafd;
-      border-color: #bfd2e5;
-      transform: translateY(-1px);
-    }
-
-    .result-area {
-      background: #f8fafc;
-      border-radius: 1.2rem;
-      padding: 1.2rem;
-      margin-top: 0.5rem;
-      border: 1px solid #e2edf5;
-      transition: all 0.3s;
-    }
-
-    .similarity-meter {
-      margin-bottom: 1rem;
-    }
-
-    .similarity-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 0.4rem;
-    }
-
-    .progress-bar-bg {
-      background: #e2e8f0;
-      border-radius: 30px;
-      height: 12px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: linear-gradient(90deg, var(--secondary), #2c7cb6);
-      border-radius: 30px;
-      transition: width 0.5s ease;
-    }
-
-    .similarity-percent {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-top: 0.5rem;
-      text-align: center;
-      color: #1e2f46;
-    }
-
-    .verdict {
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 0.5rem;
-      padding: 0.5rem;
-      border-radius: 2rem;
-      background: #eef2ff;
-      display: inline-block;
-      width: auto;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .sample-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: flex-end;
-      margin-top: 0.8rem;
-    }
-
-    .small-btn {
-      font-size: 0.75rem;
-      padding: 0.4rem 1rem;
-      background: #eef2f8;
-      border-radius: 2rem;
-      color: #2c3e5c;
-      transition: 0.2s;
-    }
-
-    .small-btn:hover {
-      background: #dce5f0;
-    }
-
-    /* ========== FOOTER STYLES (unchanged) ========== */
-    footer {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-      padding: 30px 0 0;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      margin: 0;
-      margin-top: 1rem;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-
-    .footer-logo {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .footer-logo img {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 10px;
-      background: #fff;
-      padding: 5px;
-      border-radius: 6px;
-    }
-
-    .footer-logo p {
-      margin-bottom: 8px;
-      color: var(--light-gray);
-      font-size: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .contact-info {
-      margin-top: 5px;
-    }
-
-    .contact-info p {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-    }
-
-    .contact-info i {
-      color: var(--secondary);
-      width: 14px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links h3,
-    .footer-social h3 {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      position: relative;
-      padding-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .footer-links h3:after,
-    .footer-social h3:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 30px;
-      height: 2px;
-      background: var(--secondary);
-      border-radius: 2px;
-    }
-
-    .footer-links ul li {
-      margin-bottom: 8px;
-      transition: transform 0.3s;
-    }
-
-    .footer-links ul li:hover {
-      transform: translateX(5px);
-    }
-
-    .footer-links a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .footer-links a i {
-      color: var(--secondary);
-      font-size: 0.7rem;
-    }
-
-    .footer-social ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--light-gray);
-      transition: all 0.3s;
-      padding: 5px 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-      font-size: 0.8rem;
-      border-radius: 40px !important;
-    }
-
-    .footer-social a:hover {
-      color: var(--white);
-      background: rgba(77, 168, 218, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 0;
-      text-align: center;
-      color: var(--light-gray);
-      font-size: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links-bottom {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links-bottom a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      position: relative;
-      font-size: 0.75rem;
-    }
-
-    .footer-links-bottom a:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      right: -8px;
-      color: var(--secondary);
-    }
-
-    .footer-links-bottom a:hover {
-      color: var(--white);
-    }
-
-    .back-to-top {
-      position: absolute;
-      right: 15px;
-      top: 0px;
-      background: var(--secondary);
-      color: var(--white);
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-      body {
-        padding-top: 90px;
-      }
-      .top-header {
-        display: none;
-      }
-      .menu-icon {
-        display: flex;
-      }
-      .nav {
-        flex-direction: row;
-        height: auto;
-        padding: 10px 20px;
-      }
-      .logo {
-        width: 100%;
-      }
-      .logo img {
-        height: 70px;
-      }
-      .menu {
         position: fixed;
-        top: 90px;
+        top: 77px;
         left: 0;
         width: 100%;
         height: calc(100vh - 90px);
         background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -782,448 +34,421 @@
         z-index: 999;
         transform: translateX(-100%);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      .menu.active {
-        display: flex;
-        transform: translateX(0);
-      }
-      .upperNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        margin-bottom: 25px;
-      }
-      .upperNav .nav-button {
-        width: 90%;
-        text-align: center;
-        height: 48px;
-        font-size: 1rem;
-        justify-content: center;
-      }
-      .btn-box {
-        width: 90%;
-        height: 38px;
-        flex-direction: row;
-        border-radius: 25px;
-        background: #f0f0f0;
-        overflow: hidden;
-        margin-top: 10px;
-      }
-      .toggle-btn {
-        width: 50%;
-        font-size: 0.85rem;
-        padding: 0;
-      }
-      #swap-btn {
-        width: 50%;
-        height: 100%;
-        border-radius: 25px;
-      }
-      #certificate {
-        width: 90%;
-        max-width: 280px;
-        height: 48px;
-        font-size: 0.95rem;
-        margin: 0 auto;
-      }
-      .lowerNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-        margin-top: 10px;
-      }
-      .lowerNav ul {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-      }
-      .lowerNav li {
-        border-bottom: 1px solid #f0f0f0;
-      }
-      .menu-link {
-        padding: 16px 0;
-        width: 100%;
-      }
-      .text-pair {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .compare-container {
-        padding: 1rem 1.2rem;
-      }
-      .action-buttons {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .btn {
-        justify-content: center;
-      }
-      .card-header {
-        padding: 1rem 1.2rem;
-      }
-      .card-header h1 {
-        font-size: 1.6rem;
-      }
     }
-
-    @media (max-width: 992px) {
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .footer-logo {
-        align-items: center;
-      }
-      .footer-logo img {
-        margin: 0 auto 10px auto;
-      }
-      .contact-info p {
-        justify-content: center;
-      }
-      .footer-links ul,
-      .footer-social ul {
-        justify-content: center;
-        align-items: center;
-      }
-      .footer-links h3::after,
-      .footer-social h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .footer-links a {
-        justify-content: center;
-      }
-    }
-
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #e2ecf5;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(145deg, #083d5d, #1f6991);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent);
-    }
-
-    footer .container {
-      max-width: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  </style>
+}
+        body {
+            background-color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-top: 130px;   /* space for fixed header */
+        }
+        
+        /* main content wrapper pushes footer down */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 28px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .plag-textarea {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            border-radius: 1.2rem;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .plag-textarea:focus {
+            outline: none;
+            border-color: #818cf8;
+            box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.2);
+        }
+        
+        .action-btn {
+            transition: all 0.2s ease;
+        }
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+        
+        .output-placeholder {
+            color: #94a3b8;
+        }
+        
+        .output-expand {
+            overflow-y: visible;
+            max-height: none;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        
+        .match-highlight {
+            background-color: rgba(239, 68, 68, 0.4);
+            border-bottom: 1px solid #ef4444;
+            border-radius: 4px;
+            padding: 0 2px;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding-top: 90px; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ========== HEADER (exactly as before) ========== -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91- 9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
+    <!-- HEADER (EJS include) – unchanged -->
+    <%- include("common/header.ejs") %>
 
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/rts/dashboard" class="nav-button" id="onlineTest1">
-              <i class="fa-brands fa-servicestack"></i> Test Series
-            </a>
-            <a href="/service" class="nav-button"><i class="fa-solid fa-book"></i> Service</a>
-            <div class="certificate">
-              <a href="/Certificate-Verification/verify.html" class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</a>
+    <div class="main-content">
+        <div style="max-width: 780px; width: 100%; margin: 0 auto;">
+            <div class="glass-card w-full">
+                <!-- Reduced padding from p-5 md:p-6 to p-4 md:p-5 -->
+                <div class="p-4 md:p-5">
+                    
+                    <!-- Header -->
+                    <div class="text-center mb-3">
+                        <div class="flex justify-center mb-1">
+                            <i data-lucide="scroll-text" class="w-8 h-8 text-indigo-400"></i>
+                        </div>
+                        <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">Plagiarism Checker</h1>
+                        <p class="text-slate-400 mt-1 text-xs md:text-sm">
+                            Compare two texts · Detect similarity & matching phrases
+                        </p>
+                    </div>
+                    
+                    <!-- Two text areas – reduced gap from gap-4 to gap-3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                        <!-- Left: Your Text -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-slate-300 text-xs font-semibold flex items-center gap-1">
+                                    <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-400"></i> Your Text
+                                </label>
+                                <button id="loadExampleInput" class="text-indigo-400 hover:text-indigo-300 text-xs flex items-center gap-1 bg-slate-800/60 px-2 py-0.5 rounded-full transition-all action-btn">
+                                    <i data-lucide="file-code" class="w-3 h-3"></i> Example
+                                </button>
+                            </div>
+                            <!-- rows changed from 4 to 3 -->
+                            <textarea id="inputText" rows="3" class="plag-textarea p-3 text-sm" placeholder="Paste your content here..."></textarea>
+                        </div>
+                        
+                        <!-- Right: Source Text -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-slate-300 text-xs font-semibold flex items-center gap-1">
+                                    <i data-lucide="library" class="w-3.5 h-3.5 text-indigo-400"></i> Source Text
+                                </label>
+                                <button id="loadExampleSource" class="text-indigo-400 hover:text-indigo-300 text-xs flex items-center gap-1 bg-slate-800/60 px-2 py-0.5 rounded-full transition-all action-btn">
+                                    <i data-lucide="file-code" class="w-3 h-3"></i> Example
+                                </button>
+                            </div>
+                            <textarea id="sourceText" rows="3" class="plag-textarea p-3 text-sm" placeholder="Compare against this text..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Check button – reduced margin from mb-5 to mb-4 -->
+                    <div class="flex justify-center mb-4">
+                        <button id="checkBtn" class="action-btn bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold py-2.5 px-8 rounded-full flex items-center gap-2 shadow-lg transition-all text-sm">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            Check Plagiarism
+                        </button>
+                    </div>
+                    
+                    <!-- Results section -->
+                    <div class="mb-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-slate-300 text-xs font-semibold flex items-center gap-1">
+                                <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 text-indigo-400"></i> Similarity Result
+                            </label>
+                            <button id="copyResultBtn" class="text-indigo-400 hover:text-indigo-300 text-xs flex items-center gap-1 bg-slate-800/60 px-2.5 py-1 rounded-full transition-all action-btn">
+                                <i data-lucide="copy" class="w-3 h-3"></i> Copy Result
+                            </button>
+                        </div>
+                        <div id="resultArea" class="plag-textarea p-3 text-sm bg-slate-900/40 text-slate-200 whitespace-pre-wrap break-words output-expand" style="border-color: rgba(71,85,105,0.5); min-height: 100px;">
+                            ✨ Click "Check Plagiarism" to compare texts.
+                        </div>
+                    </div>
+                    
+                    <!-- Additional actions -->
+                    <div class="flex flex-wrap justify-center gap-3 mt-2">
+                        <button id="clearAllBtn" class="action-btn bg-red-500/20 hover:bg-red-500/30 text-red-400 font-medium py-1.5 px-4 rounded-lg flex items-center gap-1.5 transition-all text-xs">
+                            <i data-lucide="eraser" class="w-3.5 h-3.5"></i> Clear All
+                        </button>
+                        <button id="swapTextsBtn" class="action-btn bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium py-1.5 px-4 rounded-lg flex items-center gap-1.5 transition-all text-xs">
+                            <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i> Swap Texts
+                        </button>
+                    </div>
+                    
+                    <!-- Character counter hint -->
+                    <div class="text-right text-slate-500 text-[0.7rem] mt-4 flex justify-between items-center border-t border-slate-700/50 pt-3">
+                        <span class="flex items-center gap-1"><i data-lucide="info" class="w-3 h-3"></i> Detects direct & paraphrased similarity</span>
+                        <span id="charCounter" class="font-mono">0 / 0 characters</span>
+                    </div>
+                </div>
             </div>
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <a href="/login" class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-              <a href="/form" class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</a>
-            </div>
-          </div>
-          <ul class="lowerNav">
-            <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="/research"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="/internship"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
-          </ul>
         </div>
-      </div>
+        
+        <!-- Toast Notifications -->
+        <div id="toastMsg" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium shadow-lg z-50 backdrop-blur-sm text-sm"></div>
     </div>
-  </div>
 
-  <!-- ========== PLAGIARISM CHECKER SECTION ========== -->
-  <div class="plagiarism-section">
-    <div class="plagiarism-card">
-      <div class="card-header">
-        <h1>Plagiarism Checker</h1>
-        <div class="subhead">Compare two texts and detect similarity · Jaccard word overlap algorithm · Instant results</div>
-      </div>
+    <!-- FOOTER (EJS include) – unchanged -->
+    <%- include("common/footer.ejs") %>
 
-      <div class="compare-container">
-        <div class="text-pair">
-          <div class="text-box">
-            <label><i class="fas fa-file-alt"></i> Original Text</label>
-            <textarea id="text1" placeholder="Paste the original content here..."></textarea>
-          </div>
-          <div class="text-box">
-            <label><i class="fas fa-copy"></i> Text to Check</label>
-            <textarea id="text2" placeholder="Paste the content you want to check for plagiarism..."></textarea>
-          </div>
-        </div>
-
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="checkBtn"><i class="fas fa-search"></i> Check Plagiarism</button>
-          <button class="btn btn-secondary" id="clearBtn"><i class="fas fa-eraser"></i> Clear All</button>
-        </div>
-
-        <div class="sample-buttons">
-          <button class="small-btn" id="sampleSimilar"><i class="fas fa-chart-line"></i> Load Similar Texts</button>
-          <button class="small-btn" id="sampleDifferent"><i class="fas fa-random"></i> Load Different Texts</button>
-        </div>
-
-        <div class="result-area" id="resultArea">
-          <div class="similarity-meter">
-            <div class="similarity-label">Similarity Score</div>
-            <div class="progress-bar-bg">
-              <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="similarity-percent" id="similarityPercent">0%</div>
-          </div>
-          <div id="verdictText" class="verdict">✨ Enter text and click "Check Plagiarism"</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========== FOOTER (exactly as before) ========== -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
-          </div>
-        </div>
-
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="about/about.html">About Us</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="Privacy Policy.html">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="contact.html">Contact</a>
-        </div>
-      </div>
-
-      <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-      </a>
-    </div>
-  </footer>
-
-  <script>
-    // ========== HEADER FUNCTIONALITY (mobile menu & toggle) ==========
-    (function () {
-      const menuIcon = document.getElementById('menuIcon');
-      const menu = document.getElementById('innerCont');
-      if (menuIcon) {
-        menuIcon.addEventListener('click', function (e) {
-          e.stopPropagation();
-          this.classList.toggle('active');
-          menu.classList.toggle('active');
+    <script>
+        // DOM Elements
+        const inputTextarea = document.getElementById('inputText');
+        const sourceTextarea = document.getElementById('sourceText');
+        const checkBtn = document.getElementById('checkBtn');
+        const resultArea = document.getElementById('resultArea');
+        const copyResultBtn = document.getElementById('copyResultBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const swapTextsBtn = document.getElementById('swapTextsBtn');
+        const loadExampleInput = document.getElementById('loadExampleInput');
+        const loadExampleSource = document.getElementById('loadExampleSource');
+        const charCounterSpan = document.getElementById('charCounter');
+        
+        function updateCharCounter() {
+            const inputLen = inputTextarea.value.length;
+            const sourceLen = sourceTextarea.value.length;
+            charCounterSpan.textContent = `${inputLen} / ${sourceLen} chars`;
+        }
+        
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = message;
+            toast.classList.remove('hidden', 'bg-emerald-500', 'bg-red-500', 'bg-blue-500');
+            if (type === 'error') toast.classList.add('bg-red-500');
+            else if (type === 'info') toast.classList.add('bg-blue-500');
+            else toast.classList.add('bg-emerald-500');
+            setTimeout(() => toast.classList.add('hidden'), 2500);
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+        
+        function checkPlagiarism(text1, text2) {
+            if (!text1.trim() || !text2.trim()) {
+                return { percentage: 0, matches: [], message: "Both texts are required." };
+            }
+            
+            function normalize(str) {
+                return str.toLowerCase().replace(/[^\w\s]/g, '').trim();
+            }
+            
+            const normalized1 = normalize(text1);
+            const normalized2 = normalize(text2);
+            
+            const words1 = normalized1.split(/\s+/).filter(w => w.length > 1);
+            const words2 = normalized2.split(/\s+/).filter(w => w.length > 1);
+            
+            if (words1.length === 0 || words2.length === 0) {
+                return { percentage: 0, matches: [], message: "Not enough meaningful words." };
+            }
+            
+            const set2 = new Set(words2);
+            let matchCount = 0;
+            for (let word of words1) {
+                if (set2.has(word)) matchCount++;
+            }
+            
+            const uniqueWords = new Set([...words1, ...words2]);
+            const similarity = (matchCount / uniqueWords.size) * 100;
+            
+            const matches = [];
+            const text1Lower = normalized1;
+            const text2Lower = normalized2;
+            
+            function getNGrams(str, n) {
+                const words = str.split(/\s+/);
+                const grams = [];
+                for (let i = 0; i <= words.length - n; i++) {
+                    grams.push(words.slice(i, i + n).join(' '));
+                }
+                return grams;
+            }
+            
+            for (let n = 6; n >= 3; n--) {
+                const grams1 = getNGrams(text1Lower, n);
+                for (let gram of grams1) {
+                    if (text2Lower.includes(gram) && !matches.includes(gram) && gram.length > 5) {
+                        matches.push(gram);
+                    }
+                }
+            }
+            
+            matches.sort((a,b) => b.length - a.length);
+            const uniqueMatches = [...new Set(matches)].slice(0, 5);
+            
+            let message = '';
+            if (similarity < 20) message = '✅ Low similarity — likely original content.';
+            else if (similarity < 50) message = '⚠️ Moderate similarity — some matching phrases found.';
+            else if (similarity < 80) message = '🔴 High similarity — significant overlap detected.';
+            else message = '🚨 Very high similarity — potential plagiarism.';
+            
+            return {
+                percentage: Math.round(similarity),
+                matches: uniqueMatches,
+                message: message
+            };
+        }
+        
+        function highlightMatches(text, matches) {
+            if (!matches.length) return escapeHtml(text);
+            let highlighted = escapeHtml(text);
+            for (let match of matches) {
+                const escapedMatch = match.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedMatch})`, 'gi');
+                highlighted = highlighted.replace(regex, `<span class="match-highlight">$1</span>`);
+            }
+            return highlighted;
+        }
+        
+        function runCheck() {
+            const userText = inputTextarea.value;
+            const sourceText = sourceTextarea.value;
+            
+            if (!userText.trim()) {
+                resultArea.innerHTML = '⚠️ Please enter some text in "Your Text" field.';
+                resultArea.classList.add('output-placeholder');
+                showToast('Your text is empty', 'error');
+                return;
+            }
+            if (!sourceText.trim()) {
+                resultArea.innerHTML = '⚠️ Please enter source text to compare against.';
+                resultArea.classList.add('output-placeholder');
+                showToast('Source text is empty', 'error');
+                return;
+            }
+            
+            const { percentage, matches, message } = checkPlagiarism(userText, sourceText);
+            
+            let resultHtml = `
+                <div class="mb-2 flex items-center gap-2">
+                    <span class="text-sm font-semibold">Similarity:</span>
+                    <span class="text-lg font-bold ${percentage > 50 ? 'text-red-400' : percentage > 20 ? 'text-yellow-400' : 'text-green-400'}">${percentage}%</span>
+                    <span class="text-xs text-slate-400">${message}</span>
+                </div>
+            `;
+            
+            if (matches.length > 0) {
+                resultHtml += `<div class="mt-3"><span class="text-xs font-semibold text-indigo-400">🔍 Matching phrases found:</span>
+                <div class="flex flex-wrap gap-1 mt-1">`;
+                matches.forEach(m => {
+                    resultHtml += `<span class="bg-red-500/20 text-red-300 text-xs px-2 py-0.5 rounded-full">${escapeHtml(m)}</span>`;
+                });
+                resultHtml += `</div></div>`;
+                
+                const highlightedText = highlightMatches(userText, matches);
+                resultHtml += `<div class="mt-3 pt-2 border-t border-slate-700/50">
+                    <span class="text-xs font-semibold text-slate-300">📝 Your text with highlights:</span>
+                    <div class="text-xs mt-1 p-2 bg-slate-800/40 rounded-lg whitespace-pre-wrap">${highlightedText}</div>
+                </div>`;
+            } else if (percentage > 0) {
+                resultHtml += `<div class="mt-3 text-xs text-slate-400">No exact phrase matches, but word-level similarity detected.</div>`;
+            } else {
+                resultHtml += `<div class="mt-3 text-xs text-slate-400">No significant similarity detected.</div>`;
+            }
+            
+            resultArea.innerHTML = resultHtml;
+            resultArea.classList.remove('output-placeholder');
+        }
+        
+        function clearAll() {
+            inputTextarea.value = '';
+            sourceTextarea.value = '';
+            resultArea.innerHTML = '✨ Click "Check Plagiarism" to compare texts.';
+            resultArea.classList.add('output-placeholder');
+            updateCharCounter();
+            showToast('All fields cleared', 'info');
+        }
+        
+        function swapTexts() {
+            const temp = inputTextarea.value;
+            inputTextarea.value = sourceTextarea.value;
+            sourceTextarea.value = temp;
+            updateCharCounter();
+            showToast('Texts swapped', 'success');
+            resultArea.innerHTML = '✨ Swapped. Click check to compare.';
+            resultArea.classList.add('output-placeholder');
+        }
+        
+        function loadExampleInputText() {
+            inputTextarea.value = `The quick brown fox jumps over the lazy dog. This is a well-known pangram used to display font samples. Many designers use this phrase to test typography.`;
+            updateCharCounter();
+            showToast('Example loaded in "Your Text"', 'success');
+        }
+        
+        function loadExampleSourceText() {
+            sourceTextarea.value = `The fast brown fox leaps over the sleepy dog. This famous pangram is commonly utilized for demonstrating typefaces. Numerous graphic designers employ this sentence for font testing.`;
+            updateCharCounter();
+            showToast('Example loaded in "Source Text"', 'success');
+        }
+        
+        async function copyResult() {
+            const resultText = resultArea.innerText || resultArea.textContent;
+            if (resultText === '✨ Click "Check Plagiarism" to compare texts.' || resultText.includes('⚠️')) {
+                showToast('Nothing to copy. Run a check first.', 'error');
+                return;
+            }
+            try {
+                await navigator.clipboard.writeText(resultText);
+                showToast('Result copied to clipboard');
+            } catch (err) {
+                showToast('Copy failed', 'error');
+            }
+        }
+        
+        checkBtn.addEventListener('click', () => {
+            runCheck();
+            lucide.createIcons();
         });
-      }
-
-      const loginBtn = document.getElementById("logInButton");
-      const registerBtn = document.getElementById("signUpBtn");
-      const swapBtn = document.getElementById("swap-btn");
-      if (loginBtn && registerBtn && swapBtn) {
-        loginBtn.addEventListener("click", function () {
-          swapBtn.style.left = "0%";
-          loginBtn.style.color = "white";
-          registerBtn.style.color = "#000";
+        clearAllBtn.addEventListener('click', () => {
+            clearAll();
+            lucide.createIcons();
         });
-        registerBtn.addEventListener("click", function () {
-          swapBtn.style.left = "50%";
-          registerBtn.style.color = "white";
-          loginBtn.style.color = "#000";
+        swapTextsBtn.addEventListener('click', () => {
+            swapTexts();
+            lucide.createIcons();
         });
-      }
-    })();
-
-    // ========== PLAGIARISM CHECKER LOGIC ==========
-    const text1 = document.getElementById('text1');
-    const text2 = document.getElementById('text2');
-    const checkBtn = document.getElementById('checkBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const sampleSimilar = document.getElementById('sampleSimilar');
-    const sampleDifferent = document.getElementById('sampleDifferent');
-    const progressFill = document.getElementById('progressFill');
-    const similarityPercentSpan = document.getElementById('similarityPercent');
-    const verdictDiv = document.getElementById('verdictText');
-
-    // Helper: clean text -> lowercase, remove punctuation, split into words
-    function tokenize(str) {
-      return str.toLowerCase()
-                .replace(/[^\w\s]/g, '')
-                .split(/\s+/)
-                .filter(word => word.length > 0);
-    }
-
-    // Jaccard similarity = intersection size / union size
-    function jaccardSimilarity(tokens1, tokens2) {
-      if (tokens1.length === 0 && tokens2.length === 0) return 0;
-      const set1 = new Set(tokens1);
-      const set2 = new Set(tokens2);
-      const intersection = new Set([...set1].filter(x => set2.has(x)));
-      const union = new Set([...set1, ...set2]);
-      return (intersection.size / union.size) * 100;
-    }
-
-    function updateResult(percent) {
-      const rounded = Math.round(percent);
-      progressFill.style.width = `${rounded}%`;
-      similarityPercentSpan.innerText = `${rounded}%`;
-      let verdict = '';
-      let bgColor = '#eef2ff';
-      if (rounded >= 80) {
-        verdict = '⚠️ High Plagiarism Detected! Significant overlap.';
-        bgColor = '#ffe6e6';
-      } else if (rounded >= 50) {
-        verdict = '📝 Moderate Similarity — some parts match. Consider rewriting.';
-        bgColor = '#fff0db';
-      } else if (rounded >= 20) {
-        verdict = '✅ Low Similarity — mostly original content.';
-        bgColor = '#e6f7e6';
-      } else {
-        verdict = '✨ Very Low or No Plagiarism — content appears unique.';
-        bgColor = '#e6f7f0';
-      }
-      verdictDiv.innerText = verdict;
-      verdictDiv.style.backgroundColor = bgColor;
-    }
-
-    function computeAndDisplay() {
-      const raw1 = text1.value;
-      const raw2 = text2.value;
-      if (raw1.trim() === '' && raw2.trim() === '') {
-        updateResult(0);
-        verdictDiv.innerText = '⚠️ Please enter text in both fields.';
-        verdictDiv.style.backgroundColor = '#ffe6e6';
-        return;
-      }
-      if (raw1.trim() === '') {
-        updateResult(0);
-        verdictDiv.innerText = '📄 Original text is empty. Add content to compare.';
-        verdictDiv.style.backgroundColor = '#fff0db';
-        return;
-      }
-      if (raw2.trim() === '') {
-        updateResult(0);
-        verdictDiv.innerText = '📄 Text to check is empty. Add content to compare.';
-        verdictDiv.style.backgroundColor = '#fff0db';
-        return;
-      }
-      const tokens1 = tokenize(raw1);
-      const tokens2 = tokenize(raw2);
-      const similarity = jaccardSimilarity(tokens1, tokens2);
-      updateResult(similarity);
-    }
-
-    checkBtn.addEventListener('click', computeAndDisplay);
-
-    clearBtn.addEventListener('click', () => {
-      text1.value = '';
-      text2.value = '';
-      updateResult(0);
-      verdictDiv.innerText = '✨ Text cleared. Ready for new comparison.';
-      verdictDiv.style.backgroundColor = '#eef2ff';
-    });
-
-    // Sample similar texts (high similarity)
-    sampleSimilar.addEventListener('click', () => {
-      text1.value = `Artificial Intelligence is transforming the world. Machine learning algorithms help computers learn from data. AI applications include healthcare, finance, and autonomous vehicles.`;
-      text2.value = `Artificial Intelligence is changing the world. Machine learning algorithms enable computers to learn from data. AI applications cover healthcare, finance, and self-driving cars.`;
-      computeAndDisplay();
-    });
-
-    // Sample different texts (low similarity)
-    sampleDifferent.addEventListener('click', () => {
-      text1.value = `The quick brown fox jumps over the lazy dog. This pangram contains every letter of the English alphabet. It is often used for font demonstrations.`;
-      text2.value = `Space exploration has advanced rapidly. Mars rovers are sending valuable data. The James Webb Telescope reveals distant galaxies.`;
-      computeAndDisplay();
-    });
-
-    // Initial placeholder
-    updateResult(0);
-    verdictDiv.innerText = '✨ Enter text and click "Check Plagiarism"';
-    verdictDiv.style.backgroundColor = '#eef2ff';
-  </script>
+        loadExampleInput.addEventListener('click', () => {
+            loadExampleInputText();
+            lucide.createIcons();
+        });
+        loadExampleSource.addEventListener('click', () => {
+            loadExampleSourceText();
+            lucide.createIcons();
+        });
+        copyResultBtn.addEventListener('click', () => {
+            copyResult();
+            lucide.createIcons();
+        });
+        inputTextarea.addEventListener('input', updateCharCounter);
+        sourceTextarea.addEventListener('input', updateCharCounter);
+        
+        updateCharCounter();
+        resultArea.classList.add('output-placeholder');
+        lucide.createIcons();
+    </script>
 </body>
 </html>

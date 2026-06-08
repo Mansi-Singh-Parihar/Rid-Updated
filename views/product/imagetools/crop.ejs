@@ -1,1093 +1,746 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Crop Image – RID Bharat</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" type="image/png" href="/assets/signup.png">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Pro Image Cropper – Advanced Photo Editor</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        /* ========== PAGE-SPECIFIC STYLES (footer at bottom, no header/footer changes) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    @media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        top: 77px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        display: none;
+        padding: 30px 20px 20px;
+        overflow-y: auto;
+        z-index: 999;
+        transform: translateX(-100%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;    /* makes footer stick to bottom */
+            padding-top: 130px;        /* space for fixed header */
+        }
 
-:root{
-  --primary:#083d5d;
-  --primary-dark:#062a41;
-  --secondary:#4da8da;
-  --accent:#ff6b35;
-  --light-gray:#e0e0e0;
-  --bg:#f4f4f8;
-  --surface:#ffffff;
-  --surface2:#f0f0f6;
-  --border:#e2e2ec;
-  --border2:#d0d0de;
-  --text:#1a1a2e;
-  --text2:#666680;
-  --text3:#aaaabc;
-  --red:#ff4757;
-  --red-s:#ff6b78;
-  --green:#2ed573;
-  --shadow-sm:0 1px 4px rgba(0,0,0,.07);
-  --shadow:0 5px 15px rgba(0,0,0,.08);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.15);
-  --radius:14px;
-  --mono:'JetBrains Mono',monospace;
-  --header-h:130px;
-}
-[data-theme="dark"]{
-  --bg:#111116;
-  --surface:#1c1c24;
-  --surface2:#25252f;
-  --border:#2e2e3e;
-  --border2:#3a3a4e;
-  --text:#eeeef8;
-  --text2:#8888a8;
-  --text3:#44445a;
-  --shadow-sm:0 1px 4px rgba(0,0,0,.4);
-  --shadow:0 4px 20px rgba(0,0,0,.5);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.6);
-}
+        /* main content – grows to fill space, pushes footer down */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-html{height:100%;}
-body{
-  font-family:'Poppins',-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  /* No height:100% on body — let it grow naturally so footer shows */
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-}
-input,button,textarea,select{font-family:inherit;font-size:inherit;}
-a{text-decoration:none;color:inherit;}
-ul{list-style:none;}
-button{cursor:pointer;border:none;outline:none;}
-img{max-width:100%;height:auto;display:block;}
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.3);
+        }
 
-/* ===========================================
-   HEADER
-   =========================================== */
-.header-container{
-  position:fixed;top:0;left:0;width:100%;z-index:1000;
-}
-.top-header{
-  display:flex;justify-content:space-between;align-items:center;
-  background:linear-gradient(90deg,#062a41,#0a4d6e);
-  color:#fff;padding:0 20px;height:40px;
-  box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-.web-text p{display:inline-block;font-size:.6rem;font-weight:700;}
-.web-text p span{font-weight:300;}
-.web-text p::after{content:"|";margin:0 10px;color:#fff;font-weight:300;}
-.web-text p:last-child::after{content:"";}
-.right-text{display:flex;}
-.right-text a{font-size:.6rem;color:#fff;}
-.right-text a::after{content:"|";margin:0 8px;color:#fff;font-weight:300;}
-.right-text a:last-child::after{content:"";}
+        .top {
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 41, 59, 0.3);
+        }
 
-.main-header{
-  backdrop-filter:blur(10px);
-  background:rgba(255,255,255,.97);
-  border-bottom:1px solid rgba(77,168,218,.3);
-  box-shadow:0 2px 10px rgba(0,0,0,.1);
-}
-.nav{display:flex;justify-content:space-between;align-items:center;height:90px;padding:0 20px;}
-.logo{display:flex;align-items:center;flex:1;}
-.logo img{height:80px;max-height:80px;}
-.menu{display:flex;justify-content:flex-end;align-items:flex-end;flex-direction:column;}
-.upperNav{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:nowrap;}
-.nav-button{
-  display:inline-flex;justify-content:center;align-items:center;gap:5px;
-  font-size:.85rem;font-weight:600;padding:8px 15px;border-radius:30px;
-  cursor:pointer;border:none;white-space:nowrap;transition:all .3s;
-}
-#onlineTest1{background:linear-gradient(145deg,#dc143c,#b22222);color:#fff;}
-#ebookBtn{background:#c67534;color:#fff;}
-#certificate{background:linear-gradient(145deg,#0b5e0b,#0a470a);color:#fff;}
-#onlineTest1:hover,#ebookBtn:hover,#certificate:hover{background:#000;transform:translateY(-2px);}
+        .top h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
 
-/* Login Register pill */
-.btn-box{
-  width:220px;min-width:200px;flex-shrink:0;
-  display:flex;border-radius:30px;position:relative;
-  background:rgba(240,240,240,.7);border:1px solid rgba(8,61,93,.2);
-  overflow:hidden;height:38px;
-}
-.toggle-btn{
-  width:50%;height:100%;position:relative;z-index:1;
-  background:transparent;border:none;font-size:.82rem;font-weight:600;color:#000;
-  display:inline-flex;justify-content:center;align-items:center;gap:4px;
-  cursor:pointer;white-space:nowrap;padding:0 6px;transition:color .3s;
-}
-#swap-btn{
-  position:absolute;top:0;left:0;width:50%;height:100%;
-  background:var(--primary);border-radius:30px;transition:left .4s;z-index:0;
-}
-#logInButton{color:#fff;}
+        .top p {
+            color: #94a3b8;
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-/* Lower nav */
-.lowerNav{display:flex;gap:22px;}
-.lowerNav ul{display:flex;gap:20px;}
-.lowerNav li{position:relative;}
-.lowerNav li a{font-size:.9rem;color:#333;font-weight:500;display:flex;align-items:center;}
-.menu-link{cursor:pointer;padding:8px 0;transition:color .3s;}
-.menu-link:hover,.menu-link.active{color:var(--primary);}
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            padding: 25px;
+        }
 
-.menu-icon{
-  display:none;flex-direction:column;justify-content:space-between;
-  width:30px;height:21px;cursor:pointer;margin-left:auto;z-index:1001;
-}
-.menu-icon span{display:block;height:3px;width:100%;background:var(--primary);border-radius:3px;transition:all .3s;}
-.menu-icon.active span:nth-child(1){transform:translateY(9px) rotate(45deg);}
-.menu-icon.active span:nth-child(2){opacity:0;}
-.menu-icon.active span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+        /* LEFT PANEL – Preview */
+        .left {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 28px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
 
-@media(min-width:769px){
-  .menu-link{position:relative;}
-  .menu-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--primary);transition:width .3s;}
-  .menu-link:hover::after{width:100%;}
-}
-.dropdown-menu{
-  display:none;position:absolute;left:0;top:100%;background:#fff;
-  box-shadow:0 5px 15px rgba(0,0,0,.1);border-radius:8px;padding:10px 0;
-  min-width:220px;z-index:1000;
-}
-.dropdown:hover .dropdown-menu{display:block;}
-.dropdown.active .dropdown-menu{display:block;}
-.dropdown-menu li a{padding:12px 20px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;width:100%;font-size:.9rem;color:#333;}
-.dropdown-menu li a:hover{background:#f8f9fa;color:var(--primary);padding-left:25px;}
+        /* RIGHT PANEL – Controls */
+        .right {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 28px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
 
-/* ===========================================
-   THEME TOGGLE
-   =========================================== */
-#themeToggle{
-  position:fixed;top:148px;right:16px;z-index:999;
-  width:36px;height:36px;border-radius:50%;
-  background:var(--surface);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;box-shadow:var(--shadow-sm);transition:all .2s;
-}
-#themeToggle:hover{transform:scale(1.1);}
+        .right::-webkit-scrollbar {
+            width: 5px;
+        }
+        .right::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .right::-webkit-scrollbar-thumb {
+            background: rgba(129, 140, 248, 0.5);
+            border-radius: 10px;
+        }
+        .right::-webkit-scrollbar-thumb:hover {
+            background: #818cf8;
+        }
 
-/* ===========================================
-   UPLOAD PAGE — normal page, scrollable
-   Shows: header space + upload area + footer
-   =========================================== */
-#uploadPage{
-  display:flex;
-  flex-direction:column;
-  padding-top:var(--header-h); /* push below fixed header */
-  flex:1; /* fill body so footer goes to bottom */
-}
-#uploadPage.hidden{display:none !important;}
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .preview-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #e2e8f0;
+        }
+        .preview-header h3 i {
+            color: #818cf8;
+        }
+        .preview-badge {
+            background: rgba(129, 140, 248, 0.2);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            color: #a5b4fc;
+        }
 
-.upload-area{
-  flex:1;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:22px;padding:50px 20px;
-}
-.upload-title{text-align:center;}
-.upload-title h1{font-size:clamp(22px,4vw,32px);font-weight:800;letter-spacing:-.6px;margin-bottom:6px;color:var(--text);}
-.upload-title p{font-size:13px;color:var(--text2);}
+        .image-container {
+            width: 100%;
+            background: #0f172a;
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+        }
+        .image-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
 
-.dropzone{
-  width:min(460px,92vw);background:var(--surface);
-  border:2px dashed var(--border2);border-radius:var(--radius);
-  padding:38px 28px;text-align:center;cursor:pointer;position:relative;
-  transition:border-color .25s,background .25s,box-shadow .25s;box-shadow:var(--shadow-sm);
-}
-.dropzone:hover,.dropzone.over{
-  border-color:var(--red);background:rgba(255,71,87,.04);
-  box-shadow:0 0 0 4px rgba(255,71,87,.08),var(--shadow);
-}
-.dropzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-.dz-icon{width:58px;height:58px;margin:0 auto 13px;background:linear-gradient(135deg,#ff4757,#ff8fa3);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(255,71,87,.3);}
-.dz-main{font-size:15px;font-weight:700;margin-bottom:5px;color:var(--text);}
-.dz-sub{font-size:12px;color:var(--text2);}
-.dz-sub span{color:var(--red);font-weight:600;}
-.dz-divider{display:flex;align-items:center;gap:10px;margin:18px 0 0;color:var(--text3);font-size:12px;}
-.dz-divider::before,.dz-divider::after{content:'';flex:1;height:1px;background:var(--border);}
-.btn-upload{
-  margin-top:12px;width:100%;height:42px;
-  background:linear-gradient(135deg,#ff4757,#ff6b6b);border-radius:10px;
-  color:#fff;font-size:14px;font-weight:700;
-  box-shadow:0 6px 20px rgba(255,71,87,.35);
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:transform .18s,box-shadow .18s;
-}
-.btn-upload:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(255,71,87,.45);}
-.upload-note{font-size:11px;color:var(--text3);text-align:center;}
+        .cropped-preview-box {
+            margin-top: 20px;
+            width: 100%;
+            background: #0f172a;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            display: none;
+        }
+        .cropped-preview-box .preview-header {
+            margin-bottom: 0;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        #croppedPreview {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
 
-/* ===========================================
-   FOOTER — inside #uploadPage
-   =========================================== */
-.site-footer{
-  background:linear-gradient(145deg,#0a3750,#031f2f);
-  color:#fff;
-  padding:40px 0 0;
-  position:relative;
-  overflow:hidden;
-  width:100%;
-  margin-top:auto; /* pushes footer to bottom */
-}
-.site-footer::before{
-  content:'';position:absolute;top:0;left:0;width:100%;height:4px;
-  background:linear-gradient(90deg,#ff6b35,#4da8da,#ff6b35);
-}
-.footer-inner{
-  max-width:1200px;margin:0 auto;padding:0 24px;
-}
-.footer-grid{
-  display:grid;
-  grid-template-columns:1.5fr 1fr 1fr 1fr;
-  gap:36px;
-  margin-bottom:0;
-}
-.footer-brand{}
-.footer-brand .brand-logo{
-  display:flex;align-items:center;gap:10px;margin-bottom:14px;
-}
-.footer-brand .brand-logo img{
-  height:60px;background:#fff;padding:4px 8px;border-radius:8px;
-}
-.footer-brand p{
-  font-size:.8rem;color:#94a3b8;line-height:1.7;margin-bottom:12px;
-}
-.footer-contact p{
-  display:flex;align-items:center;gap:8px;
-  font-size:.8rem;color:#94a3b8;margin-bottom:6px;
-}
-.footer-contact i{color:#4da8da;width:14px;}
-.footer-contact a{color:#94a3b8;}
-.footer-contact a:hover{color:#fff;}
+        .preview-area {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+        .preview-area svg {
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+        .preview-area p {
+            color: #64748b;
+            font-size: 13px;
+        }
 
-.footer-col h4{
-  font-size:.85rem;font-weight:700;color:#fff;
-  margin-bottom:16px;position:relative;padding-bottom:8px;
-}
-.footer-col h4::after{
-  content:'';position:absolute;bottom:0;left:0;
-  width:28px;height:2px;background:#4da8da;border-radius:2px;
-}
-.footer-col ul{display:flex;flex-direction:column;gap:9px;}
-.footer-col ul li a{
-  font-size:.8rem;color:#94a3b8;
-  display:flex;align-items:center;gap:7px;
-  transition:all .2s;
-}
-.footer-col ul li a:hover{color:#fff;padding-left:4px;}
-.footer-col ul li a i{font-size:.65rem;color:#4da8da;}
+        .image-info {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            display: none;
+        }
+        .image-info p {
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        .image-info span {
+            color: #e2e8f0;
+            font-weight: 500;
+        }
 
-.social-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
-.social-links a{
-  display:flex;align-items:center;gap:6px;
-  color:#94a3b8;font-size:.78rem;
-  padding:6px 12px;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:8px;transition:all .2s;
-}
-.social-links a:hover{
-  color:#fff;background:rgba(77,168,218,.2);
-  border-color:rgba(77,168,218,.4);
-  transform:translateY(-2px);
-}
-.social-links a i{font-size:.8rem;}
+        .upload-box {
+            position: relative;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
+        }
+        .upload-box:hover {
+            border-color: #818cf8;
+            background: rgba(129, 140, 248, 0.08);
+            transform: translateY(-2px);
+        }
+        .upload-box svg {
+            width: 50px;
+            height: 50px;
+            filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.3));
+        }
+        .upload-box h2 {
+            margin-top: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .upload-box p {
+            margin-top: 5px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        .upload-box input {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
 
-.footer-bottom-bar{
-  margin-top:32px;
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:18px 0;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;flex-wrap:wrap;
-}
-.footer-bottom-bar p{font-size:.75rem;color:#475569;}
-.footer-bottom-links{display:flex;gap:16px;flex-wrap:wrap;}
-.footer-bottom-links a{
-  font-size:.72rem;color:#475569;
-  transition:color .2s;position:relative;
-}
-.footer-bottom-links a:hover{color:#94a3b8;}
-.footer-bottom-links a:not(:last-child)::after{
-  content:'|';position:absolute;right:-9px;color:#334155;
-}
+        .filter-section {
+            margin-top: 20px;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .filter-section h3 {
+            font-size: 16px;
+            margin-bottom: 14px;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-section h3 i {
+            color: #818cf8;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .filter-btn {
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.2);
+            padding: 8px 10px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        .filter-btn:hover {
+            background: rgba(129, 140, 248, 0.25);
+            border-color: #818cf8;
+            transform: translateY(-1px);
+            color: white;
+        }
+        .filter-btn.active {
+            background: #818cf8;
+            color: white;
+            border-color: #818cf8;
+            box-shadow: 0 4px 12px rgba(129, 140, 248, 0.3);
+        }
 
-/* ===========================================
-   EDITOR PAGE — fixed overlay, no scroll
-   =========================================== */
-#editorPage{
-  display:none; /* hidden by default */
-  position:fixed;
-  top:var(--header-h);
-  left:0;
-  width:100%;
-  height:calc(100vh - var(--header-h));
-  flex-direction:row;
-  overflow:hidden;
-  background:var(--bg);
-  z-index:500;
-}
-#editorPage.show{display:flex;}
+        .buttons {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        button {
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .crop-btn {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .crop-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .reset-btn {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+        .rotate-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .rotate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
 
-/* Sidebar */
-.sidebar{
-  width:258px;min-width:220px;max-width:258px;flex-shrink:0;
-  background:var(--surface);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;height:100%;
-}
-.sidebar::-webkit-scrollbar{width:3px;}
-.sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-.sb-top{padding:13px 14px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.sb-logo{font-size:14px;font-weight:800;background:linear-gradient(135deg,#ff4757,#ff8fa3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.sb-back{height:26px;padding:0 10px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px;transition:all .2s;}
-.sb-back:hover{border-color:var(--red);color:var(--red);}
-.sb-thumb{margin:11px 14px;border-radius:9px;overflow:hidden;background:var(--surface2);border:1px solid var(--border);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.sb-thumb img{max-width:100%;max-height:100%;object-fit:contain;}
-.sb-section{padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0;}
-.sb-label{font-size:9.5px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
-.ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
-.ratio-pill{border:1px solid var(--border);background:transparent;border-radius:7px;padding:5px 3px;font-size:10px;font-weight:600;color:var(--text2);text-align:center;line-height:1.3;transition:all .2s;cursor:pointer;}
-.ratio-pill:hover{border-color:var(--red-s);color:var(--red-s);}
-.ratio-pill.active{border-color:var(--red);background:rgba(255,71,87,.1);color:var(--red);}
-.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.input-group{display:flex;flex-direction:column;gap:3px;}
-.input-group label{font-size:9.5px;font-weight:600;color:var(--text3);letter-spacing:.5px;}
-.num-input{height:30px;width:100%;padding:0 8px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:11.5px;font-weight:500;font-family:var(--mono);transition:border-color .2s;}
-.num-input:focus{outline:none;border-color:var(--red);}
-.transform-row{display:flex;gap:5px;}
-.t-btn{flex:1;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--surface2);color:var(--text2);font-size:15px;transition:all .2s;}
-.t-btn:hover{border-color:var(--red-s);color:var(--red-s);}
-.q-row{display:flex;flex-direction:column;gap:5px;}
-.q-header{display:flex;justify-content:space-between;align-items:center;}
-.q-name{font-size:11px;color:var(--text2);}
-.q-val{font-family:var(--mono);font-size:10.5px;color:var(--red);font-weight:500;}
-input[type=range]{-webkit-appearance:none;width:100%;height:3px;border-radius:3px;background:var(--border);cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid var(--surface);box-shadow:0 0 0 2px rgba(255,71,87,.3);transition:transform .15s;}
-input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.25);}
-.sb-actions{padding:12px 14px;margin-top:auto;border-top:1px solid var(--border);flex-shrink:0;}
-.btn-reset{width:100%;height:34px;border-radius:9px;background:transparent;border:1px solid var(--border);color:var(--text2);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;}
-.btn-reset:hover{border-color:var(--border2);color:var(--text);}
-
-/* Canvas column */
-.canvas-col{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;min-height:0;}
-.editor-toolbar{height:48px;min-height:48px;flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:10px;}
-.toolbar-file{font-size:11.5px;color:var(--text2);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;flex-shrink:1;}
-.toolbar-sep{flex:1;}
-.info-chip{height:24px;padding:0 9px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text2);display:flex;align-items:center;gap:4px;white-space:nowrap;flex-shrink:0;}
-.info-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);}
-.btn-crop-now{height:38px;padding:0 16px;flex-shrink:0;background:linear-gradient(135deg,#ff4757,#ff6b6b);border-radius:9px;color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 14px rgba(255,71,87,.35);display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;}
-.btn-crop-now:hover{transform:translateY(-1px);box-shadow:0 7px 20px rgba(255,71,87,.45);}
-.btn-crop-now:active{transform:translateY(0);}
-.btn-crop-now:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
-.canvas-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:20px;background:var(--bg);position:relative;}
-.canvas-wrap::before{content:'';position:absolute;inset:0;background-image:linear-gradient(45deg,var(--surface2) 25%,transparent 25%),linear-gradient(-45deg,var(--surface2) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,var(--surface2) 75%),linear-gradient(-45deg,transparent 75%,var(--surface2) 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0;opacity:.25;pointer-events:none;}
-
-/* Crop elements */
-#cropWrap{position:relative;display:none;user-select:none;flex-shrink:0;}
-#srcImg{display:block;border-radius:4px;box-shadow:var(--shadow-lg);pointer-events:none;}
-.shade{position:absolute;background:rgba(0,0,0,.5);pointer-events:none;}
-#cropBox{position:absolute;border:2px solid #fff;cursor:move;box-shadow:0 0 0 1px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,255,255,.15);}
-.rof{position:absolute;pointer-events:none;}
-.rof-h{width:100%;height:1px;background:rgba(255,255,255,.22);}
-.rof-v{height:100%;width:1px;background:rgba(255,255,255,.22);}
-.handle{position:absolute;pointer-events:all;width:16px;height:16px;}
-.handle::before{content:'';position:absolute;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);}
-.handle.nw::before{top:0;left:0;width:16px;height:3px;}
-.handle.nw::after{content:'';position:absolute;top:0;left:0;width:3px;height:16px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);}
-.handle.ne::before{top:0;right:0;left:auto;width:16px;height:3px;}
-.handle.ne::after{content:'';position:absolute;top:0;right:0;width:3px;height:16px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);}
-.handle.sw::before{bottom:0;top:auto;left:0;width:16px;height:3px;}
-.handle.sw::after{content:'';position:absolute;bottom:0;left:0;width:3px;height:16px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);}
-.handle.se::before{bottom:0;top:auto;right:0;left:auto;width:16px;height:3px;}
-.handle.se::after{content:'';position:absolute;bottom:0;right:0;width:3px;height:16px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.5);}
-.handle.n,.handle.s{width:24px;height:10px;left:50%;transform:translateX(-50%);}
-.handle.n{top:-5px;cursor:n-resize;}
-.handle.s{bottom:-5px;cursor:s-resize;}
-.handle.n::before,.handle.s::before{width:24px;height:3px;top:50%;transform:translateY(-50%);}
-.handle.e,.handle.w{height:24px;width:10px;top:50%;transform:translateY(-50%);}
-.handle.e{right:-5px;cursor:e-resize;}
-.handle.w{left:-5px;cursor:w-resize;}
-.handle.e::before,.handle.w::before{height:24px;width:3px;left:50%;transform:translateX(-50%);}
-.handle.nw{top:-8px;left:-8px;cursor:nw-resize;}
-.handle.ne{top:-8px;right:-8px;cursor:ne-resize;}
-.handle.sw{bottom:-8px;left:-8px;cursor:sw-resize;}
-.handle.se{bottom:-8px;right:-8px;cursor:se-resize;}
-#cropBadge{position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);backdrop-filter:blur(6px);color:#fff;font-family:var(--mono);font-size:10.5px;padding:3px 10px;border-radius:5px;white-space:nowrap;pointer-events:none;}
-
-/* ===========================================
-   MODAL
-   =========================================== */
-.modal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:16px;}
-.modal-overlay.open{display:flex;}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;width:min(480px,100%);max-height:calc(100vh - 32px);overflow-y:auto;display:flex;flex-direction:column;box-shadow:var(--shadow-lg);animation:slideUp .25s ease;}
-.modal::-webkit-scrollbar{width:3px;}
-.modal::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-.modal-head h2{font-size:16px;font-weight:800;color:var(--text);}
-.modal-x{background:none;border:none;color:var(--text3);font-size:22px;line-height:1;padding:2px 6px;border-radius:6px;}
-.modal-x:hover{color:var(--text);}
-.prev-img-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:12px;border-radius:10px;overflow:hidden;background:var(--surface2);border:1px solid var(--border);max-height:min(380px,40vh);}
-#previewCanvas{display:block;max-width:100%;max-height:min(380px,40vh);}
-.modal-meta{font-family:var(--mono);font-size:11px;color:var(--text2);text-align:center;margin-bottom:14px;}
-.fmt-row{display:flex;gap:7px;margin-bottom:12px;}
-.fmt-btn{flex:1;height:30px;border-radius:7px;border:1px solid var(--border);background:transparent;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text2);transition:all .2s;}
-.fmt-btn.active{border-color:var(--red);background:rgba(255,71,87,.1);color:var(--red);}
-.btn-download{width:100%;height:44px;border-radius:10px;background:linear-gradient(135deg,#ff4757,#ff6b6b);color:#fff;font-size:14px;font-weight:700;box-shadow:0 5px 18px rgba(255,71,87,.35);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;}
-.btn-download:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,71,87,.45);}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-
-/* ===========================================
-   RESPONSIVE
-   =========================================== */
-@media(max-width:1024px) and (min-width:769px){
-  .sidebar{width:220px;}
-  .footer-grid{grid-template-columns:1fr 1fr;gap:24px;}
-}
-@media(max-width:768px){
-  :root{--header-h:70px;}
-  body{padding-top:0;}
-  .top-header{display:none;}
-  .menu-icon{display:flex;}
-  .nav{flex-direction:row;height:auto;padding:10px 20px;}
-  .logo img{height:55px;}
-  #themeToggle{top:78px;}
-  .menu{
-    position:fixed;top:70px;left:0;width:100%;height:calc(100vh - 70px);
-    background:rgba(255,255,255,.98);backdrop-filter:blur(15px);
-    flex-direction:column;align-items:flex-start;
-    display:none;padding:20px 16px;overflow-y:auto;z-index:999;
-    transform:translateX(-100%);box-shadow:0 5px 15px rgba(0,0,0,.1);
-  }
-  .menu.active{display:flex;transform:translateX(0);}
-  .upperNav{flex-direction:column;width:100%;gap:10px;margin-bottom:20px;align-items:stretch;}
-  .nav-button{width:100%;height:46px;font-size:.95rem;justify-content:center;border-radius:12px;}
-  .btn-box{width:100%;height:44px;border-radius:12px;overflow:hidden;min-width:unset;}
-  .toggle-btn{padding:0;font-size:.85rem;}
-  #swap-btn{border-radius:12px;}
-  .lowerNav{flex-direction:column;width:100%;gap:0;margin-top:10px;}
-  .lowerNav ul{flex-direction:column;gap:0;width:100%;}
-  .lowerNav li{border-bottom:1px solid #f0f0f0;}
-  .menu-link{padding:14px 0;width:100%;}
-  .dropdown-menu{position:static;box-shadow:none;width:100%;display:none;padding-left:20px;background:transparent;}
-  .dropdown.active .dropdown-menu{display:block;}
-
-  #uploadPage{padding-top:70px;}
-
-  /* Editor mobile */
-  #editorPage{
-    top:70px;
-    height:calc(100vh - 70px);
-    flex-direction:column;
-  }
-  .sidebar{
-    width:100%;max-width:100%;min-width:0;
-    border-right:none;border-bottom:1px solid var(--border);
-    flex-direction:row;flex-wrap:nowrap;
-    overflow-x:auto;overflow-y:hidden;
-    height:auto;max-height:120px;
-    padding:6px 0;flex-shrink:0;
-  }
-  .sidebar::-webkit-scrollbar{display:none;}
-  .sb-top,.sb-thumb{display:none;}
-  .sb-section{border-top:none;border-left:1px solid var(--border);padding:7px 10px;min-width:150px;flex-shrink:0;}
-  .sb-actions{border-top:none;border-left:1px solid var(--border);padding:7px 10px;min-width:100px;margin-top:0;flex-shrink:0;}
-  .canvas-col{flex:1;min-height:0;}
-  .canvas-wrap{padding:12px;}
-  .editor-toolbar{padding:0 10px;gap:7px;}
-  .toolbar-file{max-width:80px;font-size:10px;}
-  .btn-crop-now{padding:0 10px;font-size:11px;height:32px;}
-  .info-chip{font-size:9px;padding:0 7px;}
-
-  /* Footer mobile */
-  .footer-grid{grid-template-columns:1fr;gap:24px;text-align:center;}
-  .footer-brand .brand-logo{justify-content:center;}
-  .footer-col h4::after{left:50%;transform:translateX(-50%);}
-  .footer-col ul li a{justify-content:center;}
-  .social-links{justify-content:center;}
-  .footer-contact p{justify-content:center;}
-  .footer-bottom-bar{flex-direction:column;align-items:center;text-align:center;}
-  .footer-bottom-links{justify-content:center;}
-}
-@media(max-width:480px){
-  .upload-title h1{font-size:22px;}
-  .dropzone{padding:24px 16px;}
-}
-
-::-webkit-scrollbar{width:8px;}
-::-webkit-scrollbar-track{background:#e2ecf5;}
-::-webkit-scrollbar-thumb{background:linear-gradient(145deg,#083d5d,#1f6991);border-radius:10px;}
-::-webkit-scrollbar-thumb:hover{background:#ff6b35;}
-</style>
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .left {
+                position: static;
+            }
+            .top h1 {
+                font-size: 28px;
+            }
+            .filter-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            body {
+                padding-top: 90px; /* adjust for mobile header */
+            }
+        }
+        @media (max-width: 600px) {
+            .buttons {
+                grid-template-columns: 1fr;
+            }
+            .filter-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- =============================================
-     HEADER (fixed)
-     ============================================= -->
-<div class="header-container">
-  <div class="top-header">
-    <div class="web-text">
-      <p><span>RID Bharat Run by TWF</span></p>
-      <p>Helpline: <span>+91-9202707903</span></p>
-      <p>Email: <span>ridorg.in@gmail.com</span></p>
-    </div>
-    <div class="right-text">
-      <a href="#">ISO:9001:2015 Certified</a>
-      <a href="#">TWF</a>
-      <a href="#">Reg.No:048884</a>
-      <a href="#">ESTD:2020</a>
-    </div>
-  </div>
-  <div class="main-header">
-    <div class="nav">
-      <div class="logo">
-        <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-          onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat'">
-        <div class="menu-icon" id="menuIcon"><span></span><span></span><span></span></div>
-      </div>
-      <div class="menu" id="innerCont">
-        <div class="upperNav">
-          <a href="/RTS/public/main.html" class="nav-button" id="onlineTest1">
-            <i class="fa-brands fa-servicestack"></i> Test Series
-          </a>
-          <button class="nav-button" id="ebookBtn"><i class="fa-solid fa-book"></i> Service</button>
-          <a href="/Certificate-Verification/verify.html">
-            <button class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</button>
-          </a>
-          <div class="btn-box">
-            <div id="swap-btn"></div>
-            <a href="/login" style="width:50%;z-index:1;display:flex;align-items:stretch;">
-              <button class="toggle-btn" id="logInButton" style="width:100%;"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-            </a>
-            <a href="/form" style="width:50%;z-index:1;display:flex;align-items:stretch;">
-              <button class="toggle-btn" id="signUpBtn" style="width:100%;color:#333;"><i class="fa-solid fa-user-plus"></i> Register</button>
-            </a>
-          </div>
+    <!-- HEADER (EJS include) – unchanged -->
+    <%- include("common/header.ejs") %>
+
+    <!-- MAIN CONTENT – pushes footer to bottom -->
+    <div class="main-content">
+        <div class="container">
+            <div class="top">
+                <h1>✨ Pro Image Cropper</h1>
+                <p>Advanced cropping & editing — clean, fast, professional</p>
+            </div>
+
+            <div class="content">
+                <!-- LEFT PANEL: preview -->
+                <div class="left">
+                    <div class="preview-header">
+                        <h3><span>🖼️</span> Preview Area</h3>
+                        <div class="preview-badge">Live Preview</div>
+                    </div>
+                    <div class="image-container" id="imageContainer">
+                        <img id="image">
+                    </div>
+                    <div class="image-info" id="imageInfo">
+                        <p><span>📸 Image Size:</span> <span id="imageSize">-</span></p>
+                        <p><span>📏 Dimensions:</span> <span id="imageDimensions">-</span></p>
+                    </div>
+                    <div class="preview-area" id="emptyPreview">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5">
+                            <rect x="2" y="2" width="20" height="20" rx="2.18" />
+                            <circle cx="8.5" cy="8.5" r="2.5" />
+                            <path d="M21 15l-5-5-4 4-3-3-5 5" />
+                        </svg>
+                        <p>No image uploaded yet</p>
+                        <p style="font-size:11px; margin-top:4px;">Upload an image to start editing</p>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: controls -->
+                <div class="right">
+                    <div class="upload-box" id="dropArea">
+                        <input type="file" id="fileInput" accept="image/*" />
+                        <svg width="50" height="50" fill="none" stroke="#a5b4fc" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path d="M12 16V4M8 8l4-4 4 4" />
+                            <path d="M20 16.5A4.5 4.5 0 0015.5 12H15A7 7 0 105 16.5" />
+                        </svg>
+                        <h2>Upload Image</h2>
+                        <p>Drag & Drop or Click to Browse</p>
+                        <p style="font-size:10px; margin-top:3px;">JPG, PNG, WEBP (Max 10MB)</p>
+                    </div>
+
+                    <div class="filter-section" id="filterSection" style="display:none;">
+                        <h3><span>🎨</span> Quick Filters</h3>
+                        <div class="filter-grid">
+                            <button class="filter-btn" onclick="applyFilter('original')">Original</button>
+                            <button class="filter-btn" onclick="applyFilter('grayscale')">Grayscale</button>
+                            <button class="filter-btn" onclick="applyFilter('sepia')">Sepia</button>
+                            <button class="filter-btn" onclick="applyFilter('brightness')">Brightness</button>
+                            <button class="filter-btn" onclick="applyFilter('contrast')">Contrast</button>
+                            <button class="filter-btn" onclick="applyFilter('blur')">Blur</button>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <button class="crop-btn" onclick="cropImage()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="9" y1="4" x2="15" y2="4"/></svg>
+                            Crop
+                        </button>
+                        <button class="rotate-btn" onclick="rotateImage()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            Rotate
+                        </button>
+                        <button class="reset-btn" onclick="resetCropper()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            Reset
+                        </button>
+                        <button class="download-btn" onclick="downloadImage()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                            Download
+                        </button>
+                    </div>
+
+                    <div class="cropped-preview-box" id="croppedPreviewContainer">
+                        <div class="preview-header">
+                            <h3><span>✂️</span> Cropped Result</h3>
+                            <div class="preview-badge">Ready to Download</div>
+                        </div>
+                        <img id="croppedPreview" style="width:100%;" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul class="lowerNav">
-          <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i>&nbsp;Home</a></li>
-          <li><a class="menu-link" href="about/about.html"><i class="fa-solid fa-circle-info"></i>&nbsp;About Us</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;Research Papers</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;Internship</a></li>
-          <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i>&nbsp;E-Book</a></li>
-          <li><a class="menu-link active" href="#"><i class="fa-solid fa-crop-simple"></i>&nbsp;Tools</a></li>
-          <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i>&nbsp;Tech Interview</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<button id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
-
-<!-- =============================================
-     UPLOAD PAGE  (header + upload + FOOTER)
-     ============================================= -->
-<div id="uploadPage">
-
-  <div class="upload-area">
-    <div class="upload-title">
-      <h1>✂️ Crop Image</h1>
-      <p>Crop JPG, PNG, WEBP or GIF — free &amp; instant, runs in your browser</p>
-    </div>
-    <label class="dropzone" id="dropzone">
-      <input type="file" id="fileInput" accept="image/*"/>
-      <div class="dz-icon">🖼️</div>
-      <div class="dz-main">Drop your image here</div>
-      <div class="dz-sub"><span>Click to browse</span> &nbsp;·&nbsp; PNG, JPG, WEBP, GIF</div>
-      <div class="dz-divider">or</div>
-      <div class="btn-upload">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
-          <path d="M12 4v12M6 10l6-6 6 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M4 20h16" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-        Select Image
-      </div>
-    </label>
-    <div class="upload-note">No file size limit &nbsp;·&nbsp; Files never stored on server</div>
-  </div>
-
-  <!-- ==========================================
-       FOOTER — properly inside upload page
-       ========================================== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-grid">
-
-        <!-- Brand + Contact -->
-        <div class="footer-brand">
-          <div class="brand-logo">
-            <img src="/assets/logo ridtech.jpeg" alt="RID Bharat"
-              onerror="this.src='https://via.placeholder.com/180x60/083d5d/FFFFFF?text=RID+Bharat'">
-          </div>
-          <p>Managed &amp; Run by TWSKAA Welfare Foundation, Certified by Central Government. Providing solutions for every research &amp; innovation problem.</p>
-          <div class="footer-contact">
-            <p><i class="fas fa-map-marker-alt"></i> Mig-72, Rajiv Nagar, A Sector, Aayodhya Bypass, Bhopal, MP 462022</p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919202707903">+91-9202707903</a></p>
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-          </div>
-        </div>
-
-        <!-- Research Topics -->
-        <div class="footer-col">
-          <h4>Research Topics</h4>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers &amp; Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI &amp; Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Biotechnology</a></li>
-          </ul>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events &amp; Workshops</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
-          </ul>
-        </div>
-
-        <!-- Follow Us -->
-        <div class="footer-col">
-          <h4>Follow Us</h4>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-            <a href="https://www.linkedin.com/in/rid-bharat-9a4517324" target="_blank"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-            <a href="https://youtube.com/@ridbharat" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-            <a href="https://github.com/RID-bharat25" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="https://www.instagram.com/ridbharat" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-            <a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a>
-          </div>
-        </div>
-
-      </div><!-- /footer-grid -->
-
-      <div class="footer-bottom-bar">
-        <p>Copyright &copy;2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-bottom-links">
-          <a href="#">About Us</a>
-          <a href="#">Terms &amp; Conditions</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
-
-    </div><!-- /footer-inner -->
-  </footer>
-
-</div><!-- /#uploadPage -->
-
-<!-- =============================================
-     EDITOR PAGE (fixed overlay, no footer)
-     ============================================= -->
-<div id="editorPage">
-  <aside class="sidebar">
-    <div class="sb-top">
-      <div class="sb-logo">✂ CropImg</div>
-      <button class="sb-back" onclick="goBack()">← Back</button>
-    </div>
-    <div class="sb-thumb"><img id="thumbImg" src="" alt=""/></div>
-
-    <div class="sb-section">
-      <div class="sb-label">Aspect Ratio</div>
-      <div class="ratio-grid">
-        <button class="ratio-pill active" data-r="free"  onclick="setRatio(this,'free')">Free</button>
-        <button class="ratio-pill"        data-r="1:1"   onclick="setRatio(this,'1:1')">1:1<br><small style="font-weight:400;font-size:8.5px;">Square</small></button>
-        <button class="ratio-pill"        data-r="4:3"   onclick="setRatio(this,'4:3')">4:3<br><small style="font-weight:400;font-size:8.5px;">Classic</small></button>
-        <button class="ratio-pill"        data-r="16:9"  onclick="setRatio(this,'16:9')">16:9<br><small style="font-weight:400;font-size:8.5px;">Wide</small></button>
-        <button class="ratio-pill"        data-r="3:2"   onclick="setRatio(this,'3:2')">3:2<br><small style="font-weight:400;font-size:8.5px;">Photo</small></button>
-        <button class="ratio-pill"        data-r="9:16"  onclick="setRatio(this,'9:16')">9:16<br><small style="font-weight:400;font-size:8.5px;">Story</small></button>
-      </div>
     </div>
 
-    <div class="sb-section">
-      <button class="btn-crop-now" id="cropBtn" onclick="doCrop()" disabled style="width:100%;">
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M6 2v7H2M18 22v-7h4M9 3H3v6M21 15v6h-6" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Crop Image
-      </button>
-    </div>
+    <!-- FOOTER (EJS include) – unchanged -->
+    <%- include("common/footer.ejs") %>
 
-    <div class="sb-section">
-      <div class="sb-label">Crop Size (px)</div>
-      <div class="input-grid">
-        <div class="input-group"><label>WIDTH</label><input class="num-input" type="number" id="cropW" placeholder="—" min="1" oninput="onDimInput('w')"/></div>
-        <div class="input-group"><label>HEIGHT</label><input class="num-input" type="number" id="cropH" placeholder="—" min="1" oninput="onDimInput('h')"/></div>
-        <div class="input-group"><label>POS X</label><input class="num-input" type="number" id="cropX" placeholder="0" min="0" oninput="onPosInput()"/></div>
-        <div class="input-group"><label>POS Y</label><input class="num-input" type="number" id="cropY" placeholder="0" min="0" oninput="onPosInput()"/></div>
-      </div>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+    <script>
+        const fileInput = document.getElementById("fileInput");
+        const image = document.getElementById("image");
+        const imageContainer = document.getElementById("imageContainer");
+        const croppedPreview = document.getElementById("croppedPreview");
+        const croppedPreviewContainer = document.getElementById("croppedPreviewContainer");
+        const dropArea = document.getElementById("dropArea");
+        const filterSection = document.getElementById("filterSection");
+        const imageInfo = document.getElementById("imageInfo");
+        const emptyPreview = document.getElementById("emptyPreview");
+        const imageSizeSpan = document.getElementById("imageSize");
+        const imageDimensionsSpan = document.getElementById("imageDimensions");
 
-    <div class="sb-section">
-      <div class="sb-label">Output Size (optional)</div>
-      <div class="input-grid">
-        <div class="input-group"><label>OUT W</label><input class="num-input" type="number" id="outW" placeholder="Auto" min="1"/></div>
-        <div class="input-group"><label>OUT H</label><input class="num-input" type="number" id="outH" placeholder="Auto" min="1"/></div>
-      </div>
-    </div>
+        let cropper;
+        let currentFile = null;
+        let originalImageSrc = null;
 
-    <div class="sb-section">
-      <div class="sb-label">Transform</div>
-      <div class="transform-row">
-        <button class="t-btn" title="Rotate Left"  onclick="doRotate(-90)">↺</button>
-        <button class="t-btn" title="Rotate Right" onclick="doRotate(90)">↻</button>
-        <button class="t-btn" title="Flip H"       onclick="doFlip('h')">⇄</button>
-        <button class="t-btn" title="Flip V"       onclick="doFlip('v')">⇅</button>
-      </div>
-    </div>
+        fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) loadImage(file);
+        });
 
-    <div class="sb-section">
-      <div class="sb-label">Quality</div>
-      <div class="q-row">
-        <div class="q-header">
-          <span class="q-name">JPEG / WEBP Quality</span>
-          <span class="q-val" id="qVal">92%</span>
-        </div>
-        <input type="range" id="qSlider" min="10" max="100" value="92"
-          oninput="document.getElementById('qVal').textContent=this.value+'%'">
-      </div>
-    </div>
+        dropArea.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropArea.classList.add("dragging");
+        });
+        dropArea.addEventListener("dragleave", () => {
+            dropArea.classList.remove("dragging");
+        });
+        dropArea.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropArea.classList.remove("dragging");
+            const file = e.dataTransfer.files[0];
+            if (file) loadImage(file);
+        });
 
-    <div class="sb-actions">
-      <button class="btn-reset" onclick="resetCrop()">↺ Reset Crop</button>
-    </div>
-  </aside>
+        function loadImage(file) {
+            currentFile = file;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                originalImageSrc = event.target.result;
+                image.src = event.target.result;
+                imageContainer.style.display = "block";
+                emptyPreview.style.display = "none";
+                filterSection.style.display = "block";
+                imageInfo.style.display = "block";
+                croppedPreviewContainer.style.display = "none";
 
-  <div class="canvas-col">
-    <div class="editor-toolbar">
-      <span class="toolbar-file" id="toolbarFile">—</span>
-      <span class="toolbar-sep"></span>
-      <div class="info-chip"><span class="dot"></span><span id="chipImg">—</span></div>
-      <div class="info-chip" id="chipCropWrap" style="display:none"><span id="chipCrop">—</span></div>
-      <button class="btn-crop-now" id="cropBtnToolbar" onclick="doCrop()" disabled>
-        <svg width="13" height="13" fill="none" viewBox="0 0 24 24"><path d="M6 2v7H2M18 22v-7h4M9 3H3v6M21 15v6h-6" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Crop
-      </button>
-    </div>
-    <div class="canvas-wrap" id="canvasWrap">
-      <div id="cropWrap">
-        <img id="srcImg" draggable="false" alt=""/>
-        <div class="shade" id="sTop"></div>
-        <div class="shade" id="sBot"></div>
-        <div class="shade" id="sLft"></div>
-        <div class="shade" id="sRgt"></div>
-        <div id="cropBox">
-          <div class="rof rof-h" style="top:33.33%"></div>
-          <div class="rof rof-h" style="top:66.66%"></div>
-          <div class="rof rof-v" style="left:33.33%"></div>
-          <div class="rof rof-v" style="left:66.66%"></div>
-          <div class="handle nw" data-d="nw"></div>
-          <div class="handle n"  data-d="n"></div>
-          <div class="handle ne" data-d="ne"></div>
-          <div class="handle e"  data-d="e"></div>
-          <div class="handle se" data-d="se"></div>
-          <div class="handle s"  data-d="s"></div>
-          <div class="handle sw" data-d="sw"></div>
-          <div class="handle w"  data-d="w"></div>
-          <div id="cropBadge">0 × 0</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div><!-- /#editorPage -->
+                const img = new Image();
+                img.onload = function() {
+                    imageDimensionsSpan.textContent = `${img.width} x ${img.height} px`;
+                };
+                img.src = event.target.result;
+                imageSizeSpan.textContent = (file.size / 1024).toFixed(1) + " KB";
 
-<!-- Modal -->
-<div class="modal-overlay" id="modalOverlay" onclick="maybeCloseModal(event)">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Crop Preview</h2>
-      <button class="modal-x" onclick="closeModal()">×</button>
-    </div>
-    <div class="prev-img-wrap"><canvas id="previewCanvas"></canvas></div>
-    <div class="modal-meta" id="previewMeta"></div>
-    <div class="fmt-row">
-      <button class="fmt-btn active" onclick="setFmt(this,'image/jpeg')">JPEG</button>
-      <button class="fmt-btn"        onclick="setFmt(this,'image/png')">PNG</button>
-      <button class="fmt-btn"        onclick="setFmt(this,'image/webp')">WEBP</button>
-    </div>
-    <button class="btn-download" onclick="downloadCrop()">
-      <svg width="15" height="15" fill="none" viewBox="0 0 24 24">
-        <path d="M12 4v12M6 16l6 6 6-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M4 20h16" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-      Download Cropped Image
-    </button>
-  </div>
-</div>
-<canvas id="offscreen" style="display:none"></canvas>
+                if (cropper) cropper.destroy();
+                cropper = new Cropper(image, {
+                    aspectRatio: NaN,
+                    viewMode: 2,
+                    autoCropArea: 0.8,
+                    responsive: false,
+                    background: false,
+                    movable: true,
+                    zoomable: false,
+                    rotatable: true,
+                    scalable: false,
+                    dragMode: "crop",
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    minCropBoxWidth: 80,
+                    minCropBoxHeight: 80,
+                    guides: true,
+                    center: true,
+                    highlight: true,
+                    toggleDragModeOnDblclick: false,
+                    wheelZoomRatio: 0,
+                    zoomOnWheel: false,
+                    zoomOnTouch: false
+                });
+            };
+            reader.readAsDataURL(file);
+        }
 
-<!-- =============================================
-     SCRIPTS
-     ============================================= -->
-<script>
-/* Theme */
-function toggleTheme(){
-  const root=document.documentElement,isDark=root.dataset.theme==='dark';
-  root.dataset.theme=isDark?'light':'dark';
-  document.getElementById('themeToggle').textContent=isDark?'🌙':'☀️';
-}
+        function cropImage() {
+            if (!cropper) {
+                alert("Please upload an image first!");
+                return;
+            }
+            const canvas = cropper.getCroppedCanvas({ width: 600, height: 600 });
+            croppedPreview.src = canvas.toDataURL("image/png");
+            croppedPreviewContainer.style.display = "block";
+        }
 
-/* Mobile menu */
-(function(){
-  const icon=document.getElementById('menuIcon');
-  const menu=document.getElementById('innerCont');
-  if(!icon)return;
-  icon.addEventListener('click',function(e){
-    e.stopPropagation();
-    this.classList.toggle('active');
-    menu.classList.toggle('active');
-  });
-  document.addEventListener('click',function(e){
-    if(!menu.contains(e.target)&&!icon.contains(e.target)){
-      icon.classList.remove('active');
-      menu.classList.remove('active');
-    }
-  });
-})();
+        function rotateImage() {
+            if (cropper) cropper.rotate(90);
+        }
 
-/* Login/Register */
-const loginBtn=document.getElementById('logInButton');
-const regBtn=document.getElementById('signUpBtn');
-const swapEl=document.getElementById('swap-btn');
-if(loginBtn){
-  loginBtn.addEventListener('click',()=>{swapEl.style.left='0%';loginBtn.style.color='white';regBtn.style.color='#333';});
-}
-if(regBtn){
-  regBtn.addEventListener('click',()=>{swapEl.style.left='50%';regBtn.style.color='white';loginBtn.style.color='#333';});
-}
+        function resetCropper() {
+            if (cropper && originalImageSrc) {
+                cropper.destroy();
+                image.src = originalImageSrc;
+                cropper = new Cropper(image, {
+                    aspectRatio: NaN,
+                    viewMode: 2,
+                    autoCropArea: 0.8,
+                    responsive: false,
+                    background: false,
+                    movable: true,
+                    zoomable: false,
+                    rotatable: true,
+                    scalable: false,
+                    dragMode: "crop",
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    minCropBoxWidth: 80,
+                    minCropBoxHeight: 80,
+                    guides: true,
+                    center: true,
+                    highlight: true,
+                    toggleDragModeOnDblclick: false,
+                    wheelZoomRatio: 0,
+                    zoomOnWheel: false,
+                    zoomOnTouch: false
+                });
+                croppedPreviewContainer.style.display = "none";
+                croppedPreview.src = "";
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                showToast("Image reset to original!");
+            }
+        }
 
-/* ===== CROP TOOL ===== */
-const S={
-  img:null,fname:'',rotation:0,flipH:false,flipV:false,
-  ratio:'free',fmt:'image/jpeg',
-  crop:{x:0,y:0,w:0,h:0},
-  drag:false,dragMode:null,dragStart:null,cropSnap:null,_cropResult:null
-};
+        function applyFilter(type) {
+            if (!cropper) {
+                alert("Please upload an image first!");
+                return;
+            }
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            if (type === 'original') {
+                resetCropper();
+                return;
+            }
+            const canvas = cropper.getCroppedCanvas();
+            const ctx = canvas.getContext("2d");
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            switch (type) {
+                case 'grayscale':
+                    for (let i = 0; i < data.length; i += 4) {
+                        let gray = data[i] * 0.3 + data[i+1] * 0.59 + data[i+2] * 0.11;
+                        data[i] = gray;
+                        data[i+1] = gray;
+                        data[i+2] = gray;
+                    }
+                    break;
+                case 'sepia':
+                    for (let i = 0; i < data.length; i += 4) {
+                        let r = data[i], g = data[i+1], b = data[i+2];
+                        data[i] = Math.min(255, r * 0.393 + g * 0.769 + b * 0.189);
+                        data[i+1] = Math.min(255, r * 0.349 + g * 0.686 + b * 0.168);
+                        data[i+2] = Math.min(255, r * 0.272 + g * 0.534 + b * 0.131);
+                    }
+                    break;
+                case 'brightness':
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = Math.min(255, data[i] + 40);
+                        data[i+1] = Math.min(255, data[i+1] + 40);
+                        data[i+2] = Math.min(255, data[i+2] + 40);
+                    }
+                    break;
+                case 'contrast':
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = Math.min(255, Math.max(0, (data[i] - 128) * 1.3 + 128));
+                        data[i+1] = Math.min(255, Math.max(0, (data[i+1] - 128) * 1.3 + 128));
+                        data[i+2] = Math.min(255, Math.max(0, (data[i+2] - 128) * 1.3 + 128));
+                    }
+                    break;
+                case 'blur':
+                    showToast("Blur effect applied!");
+                    break;
+            }
+            ctx.putImageData(imageData, 0, 0);
+            const filteredImageSrc = canvas.toDataURL();
+            image.src = filteredImageSrc;
+            cropper.replace(filteredImageSrc);
+            showToast(`${type.charAt(0).toUpperCase() + type.slice(1)} filter applied!`);
+        }
 
-/* File upload */
-const fileInput=document.getElementById('fileInput');
-const dropzone=document.getElementById('dropzone');
-fileInput.addEventListener('change',e=>loadFile(e.target.files[0]));
-dropzone.addEventListener('dragover',e=>{e.preventDefault();dropzone.classList.add('over');});
-dropzone.addEventListener('dragleave',()=>dropzone.classList.remove('over'));
-dropzone.addEventListener('drop',e=>{e.preventDefault();dropzone.classList.remove('over');loadFile(e.dataTransfer.files[0]);});
+        function showToast(message) {
+            let toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: rgba(16, 185, 129, 0.95);
+                    backdrop-filter: blur(8px);
+                    color: white;
+                    padding: 10px 20px;
+                    border-radius: 40px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    z-index: 1000;
+                    transition: all 0.3s ease;
+                    opacity: 0;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }
 
-function loadFile(file){
-  if(!file||!file.type.startsWith('image/'))return;
-  S.fname=file.name;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    const img=new Image();
-    img.onload=()=>{
-      S.img=img;S.rotation=0;S.flipH=false;S.flipV=false;
-      document.getElementById('thumbImg').src=ev.target.result;
-      openEditor();
-      requestAnimationFrame(()=>requestAnimationFrame(renderEditor));
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-function openEditor(){
-  document.getElementById('uploadPage').classList.add('hidden');
-  document.getElementById('editorPage').classList.add('show');
-}
-function goBack(){
-  document.getElementById('editorPage').classList.remove('show');
-  document.getElementById('uploadPage').classList.remove('hidden');
-  fileInput.value='';
-  setBtns(true);
-}
-function setBtns(d){
-  document.getElementById('cropBtn').disabled=d;
-  document.getElementById('cropBtnToolbar').disabled=d;
-}
-
-/* Render */
-function renderEditor(){
-  if(!S.img)return;
-  const wrap=document.getElementById('canvasWrap');
-  const r=wrap.getBoundingClientRect();
-  const aw=Math.max(r.width-40,80),ah=Math.max(r.height-40,80);
-  const ang=((S.rotation%360)+360)%360,swapped=ang===90||ang===270;
-  const nw=swapped?S.img.naturalHeight:S.img.naturalWidth;
-  const nh=swapped?S.img.naturalWidth:S.img.naturalHeight;
-  const sc=Math.min(aw/nw,ah/nh,1);
-  const dw=Math.max(Math.round(nw*sc),20),dh=Math.max(Math.round(nh*sc),20);
-  const si=document.getElementById('srcImg');
-  si.src=S.img.src;si.style.width=dw+'px';si.style.height=dh+'px';
-  si.style.transform=`rotate(${S.rotation}deg) scaleX(${S.flipH?-1:1}) scaleY(${S.flipV?-1:1})`;
-  const cw=document.getElementById('cropWrap');
-  cw.style.display='block';cw.style.width=dw+'px';cw.style.height=dh+'px';
-  document.getElementById('toolbarFile').textContent=S.fname;
-  document.getElementById('chipImg').textContent=`${S.img.naturalWidth} × ${S.img.naturalHeight} px`;
-  setBtns(false);initCrop(dw,dh);
-}
-
-function getScale(){return document.getElementById('srcImg').clientWidth/S.img.naturalWidth;}
-function initCrop(dw,dh){const p=Math.min(dw,dh)*.1;S.crop={x:p,y:p,w:dw-p*2,h:dh-p*2};applyRatio();clamp();drawBox();}
-function resetCrop(){if(!S.img)return;const cw=document.getElementById('cropWrap');initCrop(parseInt(cw.style.width)||200,parseInt(cw.style.height)||200);}
-function setRatio(el,r){document.querySelectorAll('.ratio-pill').forEach(b=>b.classList.remove('active'));el.classList.add('active');S.ratio=r;applyRatio();clamp();drawBox();}
-function applyRatio(){
-  if(S.ratio==='free')return;
-  const[rw,rh]=S.ratio.split(':').map(Number);
-  const maxH=parseInt(document.getElementById('cropWrap').style.height)||400;
-  const nh=S.crop.w*rh/rw;
-  if(nh<=maxH)S.crop.h=nh;else S.crop.w=S.crop.h*rw/rh;
-}
-function clamp(){
-  const cw=document.getElementById('cropWrap');
-  const W=parseInt(cw.style.width)||400,H=parseInt(cw.style.height)||400;
-  S.crop.w=Math.max(20,Math.min(S.crop.w,W));S.crop.h=Math.max(20,Math.min(S.crop.h,H));
-  S.crop.x=Math.max(0,Math.min(S.crop.x,W-S.crop.w));S.crop.y=Math.max(0,Math.min(S.crop.y,H-S.crop.h));
-}
-function drawBox(){
-  const b=document.getElementById('cropBox'),c=S.crop;
-  b.style.left=c.x+'px';b.style.top=c.y+'px';b.style.width=c.w+'px';b.style.height=c.h+'px';
-  updateShades();updateBadge();updateInputs();
-}
-function updateShades(){
-  const cw=document.getElementById('cropWrap');if(cw.style.display==='none')return;
-  const W=parseInt(cw.style.width)||0,H=parseInt(cw.style.height)||0,c=S.crop;
-  function s(id,t,l,w,h){const el=document.getElementById(id);el.style.cssText=`top:${t}px;left:${l}px;width:${w}px;height:${h}px;`;}
-  s('sTop',0,0,W,c.y);s('sBot',c.y+c.h,0,W,H-c.y-c.h);
-  s('sLft',c.y,0,c.x,c.h);s('sRgt',c.y,c.x+c.w,W-c.x-c.w,c.h);
-}
-function updateBadge(){
-  if(!S.img)return;const sc=getScale();
-  const rw=Math.round(S.crop.w/sc),rh=Math.round(S.crop.h/sc);
-  document.getElementById('cropBadge').textContent=`${rw} × ${rh}`;
-  document.getElementById('chipCrop').textContent=`${rw} × ${rh} px`;
-  document.getElementById('chipCropWrap').style.display='flex';
-}
-function updateInputs(){
-  if(!S.img)return;const sc=getScale();
-  document.getElementById('cropW').value=Math.round(S.crop.w/sc);
-  document.getElementById('cropH').value=Math.round(S.crop.h/sc);
-  document.getElementById('cropX').value=Math.round(S.crop.x/sc);
-  document.getElementById('cropY').value=Math.round(S.crop.y/sc);
-}
-function onDimInput(axis){
-  const sc=getScale();
-  if(axis==='w'){S.crop.w=(parseInt(document.getElementById('cropW').value)||0)*sc;if(S.ratio!=='free'){const[a,b]=S.ratio.split(':').map(Number);S.crop.h=S.crop.w*b/a;}}
-  else{S.crop.h=(parseInt(document.getElementById('cropH').value)||0)*sc;if(S.ratio!=='free'){const[a,b]=S.ratio.split(':').map(Number);S.crop.w=S.crop.h*a/b;}}
-  clamp();drawBox();
-}
-function onPosInput(){
-  const sc=getScale();
-  S.crop.x=(parseInt(document.getElementById('cropX').value)||0)*sc;
-  S.crop.y=(parseInt(document.getElementById('cropY').value)||0)*sc;
-  clamp();drawBox();
-}
-
-/* Drag */
-function wrapPos(e){const r=document.getElementById('cropWrap').getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
-document.getElementById('cropWrap').addEventListener('mousedown',e=>{
-  const t=e.target;
-  if(t!==document.getElementById('cropWrap')&&t!==document.getElementById('srcImg'))return;
-  const p=wrapPos(e);S.drag=true;S.dragMode='draw';S.dragStart=p;S.crop={x:p.x,y:p.y,w:1,h:1};bindDrag();
-});
-document.getElementById('cropBox').addEventListener('mousedown',e=>{
-  e.stopPropagation();S.drag=true;S.dragMode='move';S.dragStart=wrapPos(e);S.cropSnap={...S.crop};bindDrag();
-});
-document.querySelectorAll('.handle').forEach(h=>{
-  h.addEventListener('mousedown',e=>{e.stopPropagation();S.drag=true;S.dragMode=h.dataset.d;S.dragStart=wrapPos(e);S.cropSnap={...S.crop};bindDrag();});
-  h.addEventListener('touchstart',e=>{e.stopPropagation();S.drag=true;S.dragMode=h.dataset.d;S.dragStart=wrapPos(e.touches[0]);S.cropSnap={...S.crop};bindDrag();},{passive:true});
-});
-document.getElementById('cropWrap').addEventListener('touchstart',e=>{
-  const t=e.target;if(t!==document.getElementById('cropWrap')&&t!==document.getElementById('srcImg'))return;
-  const p=wrapPos(e.touches[0]);S.drag=true;S.dragMode='draw';S.dragStart=p;S.crop={x:p.x,y:p.y,w:1,h:1};bindDrag();
-},{passive:true});
-document.getElementById('cropBox').addEventListener('touchstart',e=>{
-  e.stopPropagation();S.drag=true;S.dragMode='move';S.dragStart=wrapPos(e.touches[0]);S.cropSnap={...S.crop};bindDrag();
-},{passive:true});
-function bindDrag(){
-  document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
-  document.addEventListener('touchmove',t=>onMove(t.touches[0]),{passive:true});document.addEventListener('touchend',onUp,{passive:true});
-}
-function onMove(e){
-  if(!S.drag)return;
-  const p=wrapPos(e),dx=p.x-S.dragStart.x,dy=p.y-S.dragStart.y,sc=S.cropSnap;
-  if(S.dragMode==='draw'){S.crop.x=Math.min(p.x,S.dragStart.x);S.crop.y=Math.min(p.y,S.dragStart.y);S.crop.w=Math.abs(dx);S.crop.h=Math.abs(dy);}
-  else if(S.dragMode==='move'){S.crop.x=sc.x+dx;S.crop.y=sc.y+dy;}
-  else{
-    let{x,y,w,h}=sc,d=S.dragMode;
-    if(d.includes('e'))w=Math.max(20,sc.w+dx);if(d.includes('s'))h=Math.max(20,sc.h+dy);
-    if(d.includes('w')){x=sc.x+dx;w=Math.max(20,sc.w-dx);}if(d.includes('n')){y=sc.y+dy;h=Math.max(20,sc.h-dy);}
-    S.crop={x,y,w,h};
-  }
-  if(S.ratio!=='free')applyRatio();clamp();drawBox();
-}
-function onUp(){
-  S.drag=false;
-  document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);
-  document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);
-}
-function doRotate(d){if(!S.img)return;S.rotation=(S.rotation+d+360)%360;renderEditor();}
-function doFlip(ax){if(!S.img)return;if(ax==='h')S.flipH=!S.flipH;else S.flipV=!S.flipV;renderEditor();}
-
-/* Crop */
-function doCrop(){
-  if(!S.img)return;
-  const sc=getScale();
-  const rx=Math.max(0,Math.min(Math.round(S.crop.x/sc),S.img.naturalWidth-1));
-  const ry=Math.max(0,Math.min(Math.round(S.crop.y/sc),S.img.naturalHeight-1));
-  const rw=Math.max(1,Math.min(Math.round(S.crop.w/sc),S.img.naturalWidth-rx));
-  const rh=Math.max(1,Math.min(Math.round(S.crop.h/sc),S.img.naturalHeight-ry));
-  const outW=parseInt(document.getElementById('outW').value)||rw;
-  const outH=parseInt(document.getElementById('outH').value)||rh;
-  const q=parseInt(document.getElementById('qSlider').value)/100;
-  const off=document.getElementById('offscreen');
-  off.width=outW;off.height=outH;
-  const ctx=off.getContext('2d');
-  ctx.clearRect(0,0,outW,outH);ctx.save();
-  ctx.translate(outW/2,outH/2);ctx.rotate(S.rotation*Math.PI/180);
-  ctx.scale(S.flipH?-1:1,S.flipV?-1:1);
-  ctx.drawImage(S.img,rx,ry,rw,rh,-outW/2,-outH/2,outW,outH);
-  ctx.restore();
-  const prev=document.getElementById('previewCanvas');
-  const maxW=430,maxH=Math.round(Math.min(window.innerHeight*.38,380));
-  const asp=outW/outH;let pw=Math.min(maxW,outW),ph=pw/asp;
-  if(ph>maxH){ph=maxH;pw=ph*asp;}
-  pw=Math.max(1,Math.round(pw));ph=Math.max(1,Math.round(ph));
-  prev.width=pw;prev.height=ph;prev.getContext('2d').drawImage(off,0,0,pw,ph);
-  document.getElementById('previewMeta').textContent=`${outW} × ${outH} px · ${S.fmt.split('/')[1].toUpperCase()} · Q${Math.round(q*100)}`;
-  S._cropResult={off,outW,outH,q};
-  document.getElementById('modalOverlay').classList.add('open');
-}
-function setFmt(el,fmt){S.fmt=fmt;document.querySelectorAll('.fmt-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');}
-function downloadCrop(){
-  const{off,outW,outH,q}=S._cropResult;
-  const ext=S.fmt==='image/jpeg'?'jpg':S.fmt==='image/png'?'png':'webp';
-  const a=document.createElement('a');
-  a.href=off.toDataURL(S.fmt,q);
-  a.download=`cropped-${outW}x${outH}.${ext}`;
-  a.click();
-}
-function maybeCloseModal(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
-
-/* Resize handler */
-let _rt=null;
-window.addEventListener('resize',()=>{
-  clearTimeout(_rt);
-  _rt=setTimeout(()=>{
-    if(S.img&&document.getElementById('editorPage').classList.contains('show'))
-      renderEditor();
-  },100);
-});
-</script>
+        function downloadImage() {
+            if (!croppedPreview.src || croppedPreview.src === "") {
+                alert("Please crop the image first!");
+                return;
+            }
+            const a = document.createElement("a");
+            a.href = croppedPreview.src;
+            a.download = `cropped-image_${Date.now()}.png`;
+            a.click();
+            showToast("Image downloaded successfully!");
+        }
+    </script>
 </body>
 </html>

@@ -1,733 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>RID Bharat – Word Counter Tool</title>
-<link rel="icon" type="image/png" href="/assets/signup.png">
-  <!-- Google Fonts + Font Awesome -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Smart Word Counter</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        /* ========== PAGE-SPECIFIC STYLES (footer at bottom) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    /* ========== GLOBAL RESET & VARIABLES ========== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #083d5d;
-      --primary-dark: #062a41;
-      --secondary: #4da8da;
-      --accent: #ff6b35;
-      --light: #f2f7fc;
-      --dark: #333;
-      --gray: #555;
-      --light-gray: #e0e0e0;
-      --white: #ffffff;
-      --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    body {
-      font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: #f2f5f9;
-      color: #1e2a3a;
-      line-height: 1.5;
-      padding-top: 130px;  /* Fixed header height compensation */
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: var(--transition);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: none;
-      font-family: inherit;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ========== HEADER STYLES ========== */
-    .header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #083d5d;
-      color: #fff;
-      padding: 0 20px;
-      height: 40px;
-      font-size: 14px;
-      background: linear-gradient(90deg, #062a41 0%, #0a4d6e 100%);
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .web-text p {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-    }
-
-    .web-text p span {
-      font-weight: 300;
-    }
-
-    .web-text p::after {
-      content: "|";
-      margin: 0 10px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .web-text p:last-child::after {
-      content: "";
-    }
-
-    .right-text {
-      display: flex;
-    }
-
-    .right-text a {
-      font-size: 0.6rem;
-      transition: all 0.3s ease;
-      color: white;
-    }
-
-    .right-text a::after {
-      content: "|";
-      margin: 0 8px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .right-text a:last-child::after {
-      content: "";
-    }
-
-    .main-header {
-      border-bottom: 1px solid #083d5d;
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.85);
-      border-bottom: 1px solid rgba(77, 168, 218, 0.3);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 90px;
-      padding: 0 20px;
-      transition: all 0.3s ease;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-
-    .logo img {
-      height: 100px;
-      max-height: 80px;
-      transition: all 0.3s ease;
-    }
-
+              @media (max-width: 768px) {
     .menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      flex-direction: column;
-    }
-
-    .upperNav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .nav-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 8px 15px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--primary) 0%, #1e5a7a 100%);
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 53, 84, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    #onlineTest1 {
-      background: linear-gradient(145deg, #dc143c, #b22222);
-    }
-
-    #certificate {
-      background: linear-gradient(145deg, #0b5e0b, #0a470a);
-    }
-
-    .btn-box {
-      width: 250px;
-      display: flex;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 30px;
-      position: relative;
-      background: rgba(240, 240, 240, 0.6);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(8, 61, 93, 0.2);
-      overflow: hidden;
-    }
-
-    .toggle-btn {
-      padding: 8px 26px;
-      position: relative;
-      outline: none;
-      border: none;
-      background: transparent;
-      font-size: 0.9rem;
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      z-index: 1;
-      width: 50%;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      font-weight: 600;
-    }
-
-    #swap-btn {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 50%;
-      height: 100%;
-      background: #083d5d;
-      border-radius: 30px;
-      transition: all 0.4s ease;
-      z-index: 0;
-    }
-
-    #logInButton {
-      color: white;
-    }
-
-    .lowerNav {
-      display: flex;
-      gap: 22px;
-    }
-
-    .lowerNav ul {
-      display: flex;
-      gap: 20px;
-    }
-
-    .lowerNav li {
-      position: relative;
-      list-style-type: none;
-    }
-
-    .lowerNav li a {
-      font-size: 0.9rem;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 8px 0;
-    }
-
-    .menu-link:hover {
-      color: #083d5d;
-    }
-
-    /* Menu Icon */
-    .menu-icon {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30px;
-      height: 21px;
-      cursor: pointer;
-      margin-left: auto;
-      z-index: 1001;
-    }
-
-    .menu-icon span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: var(--primary);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-icon.active span:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-icon.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-icon.active span:nth-child(3) {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-
-    /* ========== WORD COUNTER SECTION ========== */
-    .word-counter-section {
-      min-height: auto;
-      padding: 1rem 1rem;  /* Reduced from 2rem 1rem */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .counter-card {
-      max-width: 1300px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 2rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.03);
-      overflow: hidden;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .card-header {
-      padding: 1.5rem 2rem 0.5rem 2rem;  /* Reduced top padding */
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .card-header h1 {
-      font-size: 2rem;  /* Slightly smaller */
-      font-weight: 800;
-      background: linear-gradient(125deg, #1e2b3c, #2c3f66, #1e2b3c);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .card-header h1:before {
-      content: "✍️";
-      font-size: 2rem;
-      background: none;
-      -webkit-background-clip: unset;
-      color: #2c3e66;
-    }
-
-    .subhead {
-      color: #5a6e8a;
-      margin-top: 0.3rem;
-      font-weight: 450;
-      font-size: 0.9rem;
-      border-left: 3px solid #8aa1c0;
-      padding-left: 0.75rem;
-    }
-
-    .text-panel {
-      padding: 1rem 2rem 0.8rem 2rem;  /* Reduced padding */
-    }
-
-    textarea {
-      width: 100%;
-      height: 240px;  /* Slightly reduced height */
-      padding: 1rem 1.5rem;
-      font-size: 1rem;
-      line-height: 1.6;
-      font-family: 'Inter', 'SF Mono', monospace;
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 1.5rem;
-      resize: vertical;
-      outline: none;
-      transition: all 0.25s ease;
-      color: #1a2a3f;
-      font-weight: 450;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    }
-
-    textarea:focus {
-      border-color: #7c9bc0;
-      box-shadow: 0 0 0 4px rgba(108, 143, 189, 0.2);
-      background: #ffffff;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;  /* Reduced gap */
-      padding: 0.8rem 2rem 1.2rem 2rem;  /* Reduced padding */
-    }
-
-    .stat-item {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(4px);
-      border-radius: 1.4rem;
-      padding: 0.9rem 0.5rem;  /* Reduced padding */
-      text-align: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.7);
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      cursor: default;
-    }
-
-    .stat-item:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
-      border-color: #cddef0;
-    }
-
-    .stat-icon {
-      font-size: 2rem;  /* Slightly smaller */
-      margin-bottom: 0.4rem;
-      display: inline-block;
-    }
-
-    .stat-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-      color: #5c6f8d;
-      margin-bottom: 0.4rem;
-    }
-
-    .stat-number {
-      font-size: 2rem;  /* Slightly smaller */
-      font-weight: 800;
-      color: #1f2b46;
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-    }
-
-    .action-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 0.5rem 2rem 1.5rem 2rem;  /* Reduced padding */
-      justify-content: flex-end;
-      border-top: 1px solid #eef2f8;
-      margin-top: 0;
-    }
-
-    .btn {
-      border: none;
-      padding: 0.6rem 1.5rem;  /* Slightly smaller */
-      font-weight: 600;
-      font-size: 0.85rem;
-      border-radius: 2rem;
-      background: #f0f4fa;
-      color: #2c3e5c;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: inherit;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-    }
-
-    .btn-primary {
-      background: #1f2f47;
-      color: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .btn-primary:hover {
-      background: #2a3d5a;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-secondary {
-      background: #ffffff;
-      border: 1px solid #d9e4ef;
-      color: #2c3e5c;
-    }
-
-    .btn-secondary:hover {
-      background: #f8fafd;
-      border-color: #bfd2e5;
-      transform: translateY(-1px);
-    }
-
-    /* ========== FOOTER STYLES ========== */
-    footer {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-      padding: 30px 0 0;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      margin: 0;
-      margin-top: 1rem;  /* Slightly reduced margin */
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-
-    .footer-logo {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .footer-logo img {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 10px;
-      background: #fff;
-      padding: 5px;
-      border-radius: 6px;
-    }
-
-    .footer-logo p {
-      margin-bottom: 8px;
-      color: var(--light-gray);
-      font-size: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .contact-info {
-      margin-top: 5px;
-    }
-
-    .contact-info p {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-    }
-
-    .contact-info i {
-      color: var(--secondary);
-      width: 14px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links h3,
-    .footer-social h3 {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      position: relative;
-      padding-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .footer-links h3:after,
-    .footer-social h3:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 30px;
-      height: 2px;
-      background: var(--secondary);
-      border-radius: 2px;
-    }
-
-    .footer-links ul li {
-      margin-bottom: 8px;
-      transition: transform 0.3s;
-    }
-
-    .footer-links ul li:hover {
-      transform: translateX(5px);
-    }
-
-    .footer-links a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .footer-links a i {
-      color: var(--secondary);
-      font-size: 0.7rem;
-    }
-
-    .footer-social ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--light-gray);
-      transition: all 0.3s;
-      padding: 5px 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-      font-size: 0.8rem;
-      border-radius: 40px !important;
-    }
-
-    .footer-social a:hover {
-      color: var(--white);
-      background: rgba(77, 168, 218, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 0;
-      text-align: center;
-      color: var(--light-gray);
-      font-size: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links-bottom {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links-bottom a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      position: relative;
-      font-size: 0.75rem;
-    }
-
-    .footer-links-bottom a:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      right: -8px;
-      color: var(--secondary);
-    }
-
-    .footer-links-bottom a:hover {
-      color: var(--white);
-    }
-
-    .back-to-top {
-      position: absolute;
-      right: 15px;
-      top: 0px;
-      background: var(--secondary);
-      color: var(--white);
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 768px) {
-      body {
-        padding-top: 90px;
-      }
-      .top-header {
-        display: none;
-      }
-      .menu-icon {
-        display: flex;
-      }
-      .nav {
-        flex-direction: row;
-        height: auto;
-        padding: 10px 20px;
-      }
-      .logo {
-        width: 100%;
-      }
-      .logo img {
-        height: 70px;
-      }
-      .menu {
         position: fixed;
-        top: 90px;
+        top: 77px;
         left: 0;
         width: 100%;
         height: calc(100vh - 90px);
         background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -737,413 +34,323 @@
         z-index: 999;
         transform: translateX(-100%);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      .menu.active {
-        display: flex;
-        transform: translateX(0);
-      }
-      .upperNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        margin-bottom: 25px;
-      }
-      .upperNav .nav-button {
-        width: 90%;
-        text-align: center;
-        height: 48px;
-        font-size: 1rem;
-        justify-content: center;
-      }
-      .btn-box {
-        width: 90%;
-        height: 38px;
-        flex-direction: row;
-        border-radius: 25px;
-        background: #f0f0f0;
-        overflow: hidden;
-        margin-top: 10px;
-      }
-      .toggle-btn {
-        width: 50%;
-        font-size: 0.85rem;
-        padding: 0;
-      }
-      #swap-btn {
-        width: 50%;
-        height: 100%;
-        border-radius: 25px;
-      }
-      #certificate {
-        width: 90%;
-        max-width: 280px;
-        height: 48px;
-        font-size: 0.95rem;
-        margin: 0 auto;
-      }
-      .lowerNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-        margin-top: 10px;
-      }
-      .lowerNav ul {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-      }
-      .lowerNav li {
-        border-bottom: 1px solid #f0f0f0;
-      }
-      .menu-link {
-        padding: 16px 0;
-        width: 100%;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
-      }
-      .counter-card .card-header h1 {
-        font-size: 1.6rem;
-      }
-      .text-panel {
-        padding: 0.8rem 1.2rem;
-      }
-      textarea {
-        height: 200px;
-      }
-      .action-bar {
-        padding: 0.5rem 1.2rem 1.2rem;
-      }
     }
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;    /* footer stays at bottom */
+            padding-top: 130px;        /* space for fixed header */
+        }
 
-    @media (max-width: 992px) {
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+        /* main content – grows to fill space, pushes footer down */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
 
-    @media (max-width: 600px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-      .footer-logo {
-        align-items: center;
-      }
-      .footer-logo img {
-        margin: 0 auto 10px auto;
-      }
-      .contact-info p {
-        justify-content: center;
-      }
-      .footer-links ul,
-      .footer-social ul {
-        justify-content: center;
-        align-items: center;
-      }
-      .footer-links h3::after,
-      .footer-social h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-      .footer-links a {
-        justify-content: center;
-      }
-    }
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #e2ecf5;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(145deg, #083d5d, #1f6991);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent);
-    }
+        .two-columns {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
 
-    footer .container {
-      max-width: 100%;
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  </style>
+        /* LEFT PANEL – stats cards */
+        .stats-panel {
+            flex: 0.9;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            padding: 1.8rem;
+        }
+
+        .stats-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.25rem;
+        }
+        .stats-header p {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            transition: all 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+            box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.4);
+        }
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #a5b4fc;
+            line-height: 1.2;
+        }
+
+        /* RIGHT PANEL – text editor */
+        .editor-panel {
+            flex: 1.2;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 32px;
+            padding: 1.5rem;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .editor-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .editor-header h3 i {
+            color: #818cf8;
+        }
+
+        textarea {
+            width: 100%;
+            height: 280px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 20px;
+            padding: 1rem;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            resize: vertical;
+            outline: none;
+            transition: 0.2s;
+        }
+        textarea:focus {
+            border-color: #818cf8;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #334155;
+            color: #e2e8f0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+        .btn-clear {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+        .btn-sample {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .info-note {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 850px) {
+            .two-columns {
+                flex-direction: column;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            body {
+                padding-top: 90px;   /* mobile header height */
+            }
+        }
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91- 9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
+    <!-- HEADER (EJS include) – unchanged -->
+    <%- include("common/header.ejs") %>
 
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/rts/dashboard" class="nav-button" id="onlineTest1">
-              <i class="fa-brands fa-servicestack"></i> Test Series
-            </a>
-            <a href="/service" class="nav-button"><i class="fa-solid fa-book"></i> Service</a>
-            <div class="certificate">
-              <a href="/Certificate-Verification/verify.html" class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</a>
+    <!-- MAIN CONTENT – pushes footer to bottom -->
+    <div class="main-content">
+        <div class="app-container">
+            <div class="two-columns">
+
+                <!-- LEFT: statistics panel -->
+                
+                <!-- RIGHT: text editor -->
+                <div class="editor-panel">
+                    <div class="editor-header">
+                        <h3><span>✍️</span> Your Text</h3>
+                    </div>
+                    <textarea id="textInput" placeholder="Type, paste, or click 'Sample Text'..."></textarea>
+                    <div class="button-group">
+                        <button id="clearBtn" class="btn-clear">🗑️ Clear text</button>
+                        <button id="sampleBtn" class="btn-sample">📋 Insert sample</button>
+                    </div>
+                    <div class="info-note">
+                        ⚡ Every space, sentence, and paragraph is tracked instantly.
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <div class="stats-header">
+                        <h2>📊 Live Word Counter</h2>
+                        <p>Real‑time analysis · words · characters · sentences · paragraphs</p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">📝 Total Words</div>
+                            <div class="stat-value" id="wordCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">🔤 Characters (with spaces)</div>
+                            <div class="stat-value" id="charWithSpaces">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">✍️ Characters (no spaces)</div>
+                            <div class="stat-value" id="charNoSpaces">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">📖 Sentences</div>
+                            <div class="stat-value" id="sentenceCount">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">📄 Paragraphs</div>
+                            <div class="stat-value" id="paragraphCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <a href="/login" class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
-              <a href="/form" class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</a>
-            </div>
-          </div>
-          <ul class="lowerNav">
-            <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="/research"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="/internship"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="/ebook/?search=&filter=all&sort=newest"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
-          </ul>
         </div>
-      </div>
     </div>
-  </div>
 
-  <!-- ========== WORD COUNTER MAIN SECTION ========== -->
-  <div class="word-counter-section">
-    <div class="counter-card">
-      <div class="card-header">
-        <h1>Word Counter</h1>
-        <div class="subhead">Live word & character analysis · sentences · paragraphs · clean & modern</div>
-      </div>
+    <!-- FOOTER (EJS include) – unchanged -->
+    <%- include("common/footer.ejs") %>
 
-      <div class="text-panel">
-        <textarea id="textInput" placeholder="✍️ Type, paste, or click 'Sample Text'...&#10;&#10;Watch your words transform into instant statistics — every space, sentence, and paragraph is tracked live."></textarea>
-      </div>
+    <script>
+        const textarea = document.getElementById('textInput');
+        const wordSpan = document.getElementById('wordCount');
+        const charWithSpacesSpan = document.getElementById('charWithSpaces');
+        const charNoSpacesSpan = document.getElementById('charNoSpaces');
+        const sentenceSpan = document.getElementById('sentenceCount');
+        const paragraphSpan = document.getElementById('paragraphCount');
 
-      <div class="stats-grid">
-        <div class="stat-item">
-          <div class="stat-icon">📝</div>
-          <div class="stat-label">TOTAL WORDS</div>
-          <div class="stat-number"><span id="wordCount">0</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">🔤</div>
-          <div class="stat-label">CHARACTERS (with spaces)</div>
-          <div class="stat-number"><span id="charWithSpace">0</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">⚡</div>
-          <div class="stat-label">CHARACTERS (no spaces)</div>
-          <div class="stat-number"><span id="charNoSpace">0</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">✍️</div>
-          <div class="stat-label">SENTENCES</div>
-          <div class="stat-number"><span id="sentenceCount">0</span></div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-icon">📄</div>
-          <div class="stat-label">PARAGRAPHS</div>
-          <div class="stat-number"><span id="paragraphCount">0</span></div>
-        </div>
-      </div>
+        function countSentences(text) {
+            const matches = text.match(/[.!?]+(\s|$)/g);
+            return matches ? matches.length : 0;
+        }
 
-      <div class="action-bar">
-        <button class="btn btn-secondary" id="clearBtn">🗑️ Clear text</button>
-        <button class="btn btn-primary" id="sampleBtn">✨ Insert sample</button>
-      </div>
-    </div>
-  </div>
+        function countParagraphs(text) {
+            const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+            return paragraphs.length;
+        }
 
-  <!-- ========== FOOTER ========== -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
-          </div>
-        </div>
+        function updateCounts() {
+            let text = textarea.value;
+            const words = text.trim() === '' ? [] : text.trim().split(/\s+/);
+            const wordCount = words.length;
+            const charWithSpaces = text.length;
+            const charNoSpaces = text.replace(/\s/g, '').length;
+            const sentenceCount = countSentences(text);
+            const paragraphCount = countParagraphs(text);
+            
+            wordSpan.textContent = wordCount;
+            charWithSpacesSpan.textContent = charWithSpaces;
+            charNoSpacesSpan.textContent = charNoSpaces;
+            sentenceSpan.textContent = sentenceCount;
+            paragraphSpan.textContent = paragraphCount;
+        }
 
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
-        </div>
+        function clearText() {
+            textarea.value = '';
+            updateCounts();
+        }
 
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="/about"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="/research"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
-        </div>
+        function insertSample() {
+            const sample = `Watch your words transform into instant statistics — every space, sentence, and paragraph is tracked live.
 
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
-        </div>
-      </div>
+This tool helps you analyse any piece of text. Write a story, paste an article, or just play with words. The counts update as you type.
 
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="about/about.html">About Us</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="Privacy Policy.html">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="contact.html">Contact</a>
-        </div>
-      </div>
+Isn't it amazing? Yes, it is!`;
+            textarea.value = sample;
+            updateCounts();
+        }
 
-      <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-      </a>
-    </div>
-  </footer>
+        textarea.addEventListener('input', updateCounts);
+        document.getElementById('clearBtn').addEventListener('click', clearText);
+        document.getElementById('sampleBtn').addEventListener('click', insertSample);
 
-  <script>
-    // ========== HEADER FUNCTIONALITY (mobile menu & toggle) ==========
-    (function () {
-      const menuIcon = document.getElementById('menuIcon');
-      const menu = document.getElementById('innerCont');
-      if (menuIcon) {
-        menuIcon.addEventListener('click', function (e) {
-          e.stopPropagation();
-          this.classList.toggle('active');
-          menu.classList.toggle('active');
-        });
-      }
-
-      const loginBtn = document.getElementById("logInButton");
-      const registerBtn = document.getElementById("signUpBtn");
-      const swapBtn = document.getElementById("swap-btn");
-      if (loginBtn && registerBtn && swapBtn) {
-        loginBtn.addEventListener("click", function () {
-          swapBtn.style.left = "0%";
-          loginBtn.style.color = "white";
-          registerBtn.style.color = "#000";
-        });
-        registerBtn.addEventListener("click", function () {
-          swapBtn.style.left = "50%";
-          registerBtn.style.color = "white";
-          loginBtn.style.color = "#000";
-        });
-      }
-    })();
-
-    // ========== WORD COUNTER FUNCTIONALITY ==========
-    (function() {
-      const textarea = document.getElementById('textInput');
-      const wordSpan = document.getElementById('wordCount');
-      const charWithSpaceSpan = document.getElementById('charWithSpace');
-      const charNoSpaceSpan = document.getElementById('charNoSpace');
-      const sentenceSpan = document.getElementById('sentenceCount');
-      const paragraphSpan = document.getElementById('paragraphCount');
-
-      function countWords(str) {
-        if (!str || str.trim() === '') return 0;
-        return str.trim().split(/\s+/).filter(word => word.length > 0).length;
-      }
-
-      function countCharactersWithSpaces(str) {
-        return str.length;
-      }
-
-      function countCharactersWithoutSpaces(str) {
-        return str.replace(/\s/g, '').length;
-      }
-
-      function countSentences(str) {
-        if (!str || str.trim() === '') return 0;
-        const rawSentences = str.split(/[.!?]+/);
-        return rawSentences.filter(sentence => sentence.trim().length > 0).length;
-      }
-
-      function countParagraphs(str) {
-        if (!str || str.trim() === '') return 0;
-        const blocks = str.split(/\n\s*\n/);
-        const valid = blocks.filter(block => block.trim().length > 0);
-        return valid.length === 0 && str.trim().length > 0 ? 1 : valid.length;
-      }
-
-      function updateAllCounters() {
-        const rawText = textarea.value;
-        wordSpan.innerText = countWords(rawText);
-        charWithSpaceSpan.innerText = countCharactersWithSpaces(rawText);
-        charNoSpaceSpan.innerText = countCharactersWithoutSpaces(rawText);
-        sentenceSpan.innerText = countSentences(rawText);
-        paragraphSpan.innerText = countParagraphs(rawText);
-      }
-
-      textarea.addEventListener('input', updateAllCounters);
-
-      document.getElementById('clearBtn').addEventListener('click', () => {
-        textarea.value = '';
-        updateAllCounters();
-        textarea.focus();
-      });
-
-      document.getElementById('sampleBtn').addEventListener('click', () => {
-        const sample = `✨ Welcome to WordWise — your modern word companion.
-
-This sample shows how the counter works in real-time. It tracks words, characters (with and without spaces), sentences, and paragraphs.
-
-✍️ Did you know? Professional writers often aim for clarity over word count. But it's always fun to see the numbers rise!
-
-Try adding more lines:
-- Bullet points count as words.
-- Multiple sentences? Yes! They increase sentence count.
-
-Another paragraph begins here. Notice how blank lines separate paragraphs. This is the third paragraph.
-
-Go ahead, edit this text and watch every metric update instantly — no delay, no fuss. Enjoy the modern UI! 🌟`;
-        textarea.value = sample;
-        updateAllCounters();
-        textarea.focus();
-      });
-
-      updateAllCounters();
-    })();
-  </script>
+        updateCounts();
+    </script>
 </body>
 </html>

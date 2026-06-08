@@ -1,966 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <title>RID Bharat – Research Innovation Discovery | RID Image Converter </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Image Format Converter</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        /* ========== RESET & BASE (sticky footer) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- Google Fonts + fallback system fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="icon" type="image/png" href="/assets/signup.png">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #083d5d;
-      --primary-dark: #062a41;
-      --secondary: #4da8da;
-      --accent: #ff6b35;
-      --light: #f2f7fc;
-      --dark: #333;
-      --gray: #555;
-      --light-gray: #e0e0e0;
-      --white: #ffffff;
-      --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      --transition: all 0.3s ease;
-    }
-
-    /* ===== FULL CREATIVE FONT STACK – robust for all devices ===== */
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f2f2f2;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 130px;
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* all form elements inherit the creative font */
-    input,
-    button,
-    textarea,
-    select {
-      font-family: inherit;
-      font-size: inherit;
-      line-height: inherit;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-      transition: var(--transition);
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-      transition: var(--transition);
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* ===== HEADER STYLES ===== */
-    .header-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-    }
-
-    .top-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #062a41 0%, #0a4d6e 100%);
-      color: #fff;
-      padding: 0 20px;
-      height: 40px;
-      font-size: 14px;
-      letter-spacing: 0.3px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .web-text p {
-      display: inline-block;
-      font-size: 0.6rem;
-      font-weight: 700;
-    }
-
-    .web-text p span {
-      font-weight: 300;
-    }
-
-    .web-text p::after {
-      content: "|";
-      margin: 0 10px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .web-text p:last-child::after {
-      content: "";
-    }
-
-    .right-text {
-      display: flex;
-    }
-
-    .right-text a {
-      font-size: 0.6rem;
-      transition: all 0.3s ease;
-      color: white;
-      text-decoration: none;
-    }
-
-    .right-text a::after {
-      content: "|";
-      margin: 0 8px;
-      color: #fff;
-      font-weight: 300;
-    }
-
-    .right-text a:last-child::after {
-      content: "";
-    }
-
-    /* Navigation */
-    .main-header {
-      border-bottom: 1px solid #083d5d;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 90px;
-      padding: 0 20px;
-      transition: all 0.3s ease;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-
-    .logo img {
-      height: 100px;
-      max-height: 80px;
-      transition: all 0.3s ease;
-    }
-
+        @media (max-width: 768px) {
     .menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-end;
-      flex-direction: column;
-    }
-
-    .upperNav {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .nav-button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 8px 15px;
-      border-radius: 30px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      background: linear-gradient(135deg, var(--primary) 0%, #1e5a7a 100%);
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 53, 84, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    #onlineTest1 {
-      background: linear-gradient(145deg, #dc143c, #b22222);
-    }
-
-    #certificate {
-      background: linear-gradient(145deg, #0b5e0b, #0a470a);
-    }
-
-    #onlineTest1:hover,
-    #ebookBtn:hover,
-    #certificate:hover {
-      background: #000;
-      transform: translateY(-2px);
-    }
-
-   .btn-box {
-  width: 220px;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
-  position: relative;
-  background: rgba(240, 240, 240, 0.6);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(8, 61, 93, 0.2);
-  overflow: hidden;
-}
-
-.btn-box a {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  text-decoration: none;
-}
-
-.toggle-btn {
-  width: 100%;
-  height: 100%;
-  padding: 0 8px;
-  position: relative;
-  outline: none;
-  border: none;
-  background: transparent;
-  font-size: 0.82rem;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  z-index: 1;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-#swap-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: #083d5d;
-  border-radius: 30px;
-  transition: all 0.4s ease;
-  z-index: 0;
-}
-
-#logInButton {
-  color: white;
-}
-
-    .lowerNav {
-      display: flex;
-      gap: 22px;
-    }
-
-    .lowerNav ul {
-      display: flex;
-      gap: 20px;
-    }
-
-    .lowerNav li {
-      position: relative;
-      list-style-type: none;
-    }
-
-    .lowerNav li a {
-      font-size: 0.9rem;
-      transition: all 0.3s ease-in-out;
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-    }
-
-    .menu-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 8px 0;
-    }
-
-    .menu-link:hover {
-      color: #083d5d;
-    }
-
-    /* Menu Icon */
-    .menu-icon {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 30px;
-      height: 21px;
-      cursor: pointer;
-      margin-left: auto;
-      z-index: 1001;
-    }
-
-    .menu-icon span {
-      display: block;
-      height: 3px;
-      width: 100%;
-      background-color: var(--primary);
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-icon.active span:nth-child(1) {
-      transform: translateY(9px) rotate(45deg);
-    }
-
-    .menu-icon.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-icon.active span:nth-child(3) {
-      transform: translateY(-9px) rotate(-45deg);
-    }
-
-    /* Desktop hover */
-    @media (min-width: 769px) {
-      .menu-link {
-        position: relative;
-      }
-
-      .menu-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: #083d5d;
-        transition: width 0.3s ease;
-      }
-
-      .menu-link:hover::after {
-        width: 100%;
-      }
-    }
-
-    /* ===== IMAGE CONVERTER STYLES ===== */
-    /* Light theme (default) */
-    :root {
-      --bg-gradient: linear-gradient(145deg, #f0f5fc, #e3eaf2);
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --text-primary: #0b1f33;
-      --text-secondary: #1a3f63;
-      --border-light: #b9d1ec;
-      --accent: #f59e0b;
-      --accent-hover: #f5b342;
-      --preview-bg: #f1f8ff;
-      --preview-img-bg: #dae6f5;
-      --control-bg: #eaf0f8;
-      --control-border: #c5d9f0;
-      --rating-bg: #e5effa;
-      --icon-color: #809fc7;
-      --shadow: 0 20px 35px -18px #1f3b5c;
-    }
-
-    /* Dark theme */
-    [data-theme="dark"] {
-      --bg-gradient: linear-gradient(145deg, #121f2f, #0a1522);
-      --card-bg: rgba(18, 28, 40, 0.9);
-      --text-primary: #e6edf5;
-      --text-secondary: #b5cfec;
-      --border-light: #2d4b70;
-      --accent: #f59e0b;
-      --accent-hover: #ffb347;
-      --preview-bg: #1e3145;
-      --preview-img-bg: #253b52;
-      --control-bg: #1e3145;
-      --control-border: #3d5a7a;
-      --rating-bg: #1e3145;
-      --icon-color: #7f9fc7;
-      --shadow: 0 20px 35px -18px #00000080;
-    }
-
-    .converter-section {
-      background: var(--bg-gradient);
-      min-height: calc(100vh - 130px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 10px;
-    }
-
-    .card {
-      max-width: 780px;
-      width: 100%;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border-radius: 36px;
-      padding: 25px 30px 30px;
-      box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,0.3) inset;
-      border: 1px solid var(--accent)30;
-      margin: 0 auto;
-    }
-
-    /* Header with theme toggle */
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .header-left i {
-      font-size: 1.5rem;
-      color: var(--accent);
-      background: var(--control-bg);
-      padding: 6px;
-      border-radius: 14px;
-    }
-
-    .header-left h2 {
-      font-size: 1.4rem;
-      font-weight: 650;
-      background: linear-gradient(145deg, var(--text-primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .theme-toggle {
-      background: var(--control-bg);
-      border: 1px solid var(--control-border);
-      border-radius: 30px;
-      padding: 6px 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-primary);
-    }
-
-    .theme-toggle i {
-      font-size: 1rem;
-      color: var(--accent);
-    }
-
-    .upload-box {
-      border: 2px dashed var(--border-light);
-      background: var(--card-bg);
-      border-radius: 28px;
-      padding: 12px 10px;
-      text-align: center;
-      cursor: pointer;
-      margin-bottom: 16px;
-      max-width: 360px;
-      width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      transition: 0.1s;
-    }
-
-    .upload-box:hover {
-      border-color: var(--accent);
-      background: var(--preview-bg);
-    }
-
-    .upload-box i {
-      font-size: 2rem;
-      color: var(--text-secondary);
-      opacity: 0.8;
-    }
-
-    .upload-box p {
-      font-size: 1rem;
-      font-weight: 550;
-      color: var(--text-primary);
-      margin: 2px 0;
-    }
-
-    .upload-box small {
-      font-size: 0.7rem;
-      background: var(--control-bg);
-      padding: 3px 12px;
-      border-radius: 30px;
-      color: var(--text-secondary);
-    }
-
-    .preview-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .preview-item {
-      flex: 1 1 180px;
-      background: var(--preview-bg);
-      border-radius: 24px;
-      padding: 12px 8px 8px;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-
-    .preview-item h3 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .preview-item h3 i {
-      color: var(--accent);
-      font-size: 0.9rem;
-    }
-
-    .preview-img {
-      background: var(--preview-img-bg);
-      border-radius: 20px;
-      min-height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.3);
-    }
-
-    .preview-img img {
-      max-width: 100%;
-      max-height: 100px;
-      object-fit: contain;
-    }
-
-    .file-meta {
-      font-size: 0.7rem;
-      margin-top: 4px;
-      color: var(--text-secondary);
-    }
-
-    .action-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 8px 0 12px;
-    }
-
-    .format-pill, .quality-pill {
-      background: var(--control-bg);
-      border-radius: 40px;
-      padding: 4px 10px 4px 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border: 1px solid var(--control-border);
-    }
-
-    .format-pill label, .quality-pill label {
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: var(--text-primary);
-    }
-
-    .format-pill select, .quality-pill select {
-      background: var(--card-bg);
-      color: var(--text-primary);
-      border: 1px solid var(--control-border);
-      border-radius: 30px;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .convert-btn {
-      background: var(--text-primary);
-      color: white;
-      border: 2px solid var(--accent);
-      padding: 8px 24px;
-      border-radius: 40px;
-      font-size: 1rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      box-shadow: 0 6px 12px -6px #00000080;
-    }
-
-    .convert-btn i {
-      font-size: 1.1rem;
-      color: var(--accent);
-    }
-
-    .download-wrap {
-      display: flex;
-      justify-content: center;
-      margin: 8px 0 10px;
-    }
-
-    .download-btn {
-      background: #1f8b4c;
-      color: white;
-      border: none;
-      padding: 8px 32px;
-      border-radius: 40px;
-      font-size: 1rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 6px 12px -6px #0b4b26;
-      cursor: pointer;
-      border: 2px solid #ffdcaa;
-    }
-
-    .download-btn:disabled {
-      background: var(--control-bg);
-      color: var(--text-secondary);
-      opacity: 0.5;
-      pointer-events: none;
-      border-color: var(--border-light);
-    }
-
-    .rating-row {
-      background: var(--rating-bg);
-      border-radius: 40px;
-      padding: 6px 12px 6px 16px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 6px;
-    }
-
-    .stars {
-      display: flex;
-      gap: 5px;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .stars i {
-      color: var(--border-light);
-      transition: 0.1s;
-    }
-
-    .stars i.fa-solid {
-      color: var(--accent);
-    }
-
-    .stars i:hover {
-      transform: scale(1.1);
-      color: var(--accent-hover);
-    }
-
-    .rating-row button {
-      background: var(--text-primary);
-      color: white;
-      border: none;
-      padding: 5px 18px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .rating-row button:hover {
-      background: var(--accent);
-      color: var(--text-primary);
-    }
-
-    .hidden-input {
-      display: none;
-    }
-
-    /* ===== FOOTER STYLES ===== */
-    footer {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: var(--white);
-      padding: 30px 0 0;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      margin: 0;
-    }
-
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
-    }
-
-    .footer-content {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
-
-    .footer-logo {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .footer-logo img {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 10px;
-      background: #fff;
-      padding: 5px;
-      border-radius: 6px;
-    }
-
-    .footer-logo p {
-      margin-bottom: 8px;
-      color: var(--light-gray);
-      font-size: 0.8rem;
-      line-height: 1.4;
-    }
-
-    .contact-info {
-      margin-top: 5px;
-    }
-
-    .contact-info p {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-    }
-
-    .contact-info i {
-      color: var(--secondary);
-      width: 14px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links h3,
-    .footer-social h3 {
-      font-size: 1rem;
-      margin-bottom: 12px;
-      position: relative;
-      padding-bottom: 6px;
-      font-weight: 600;
-    }
-
-    .footer-links h3:after,
-    .footer-social h3:after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 30px;
-      height: 2px;
-      background: var(--secondary);
-      border-radius: 2px;
-    }
-
-    .footer-links ul li {
-      margin-bottom: 8px;
-      transition: transform 0.3s;
-    }
-
-    .footer-links ul li:hover {
-      transform: translateX(5px);
-    }
-
-    .footer-links a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.8rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--white);
-    }
-
-    .footer-links a i {
-      color: var(--secondary);
-      font-size: 0.7rem;
-    }
-
-    .footer-social ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .footer-social a {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      color: var(--light-gray);
-      transition: all 0.3s;
-      padding: 5px 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 5px;
-      font-size: 0.8rem;
-    }
-
-    .footer-social a:hover {
-      color: var(--white);
-      background: rgba(77, 168, 218, 0.3);
-      transform: translateY(-3px);
-    }
-
-    .footer-social i {
-      font-size: 0.8rem;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 15px 0;
-      text-align: center;
-      color: var(--light-gray);
-      font-size: 0.75rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-links-bottom {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 8px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links-bottom a {
-      color: var(--light-gray);
-      transition: color 0.3s;
-      position: relative;
-      font-size: 0.75rem;
-    }
-
-    .footer-links-bottom a:not(:last-child)::after {
-      content: '|';
-      position: absolute;
-      right: -8px;
-      color: var(--secondary);
-    }
-
-    .footer-links-bottom a:hover {
-      color: var(--white);
-    }
-
-    .back-to-top {
-      position: absolute;
-      right: 15px;
-      top: -30px;
-      background: var(--secondary);
-      color: var(--white);
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .back-to-top:hover {
-      background: #3a8bc2;
-      transform: translateY(-3px);
-    }
-
-    /* ===== RESPONSIVE STYLES ===== */
-    @media (max-width: 992px) {
-      .footer-content {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding-top: 90px;
-      }
-
-      .top-header {
-        display: none;
-      }
-
-      .menu-icon {
-        display: flex;
-      }
-
-      .nav {
-        flex-direction: row;
-        height: auto;
-        padding: 10px 20px;
-      }
-
-      .logo {
-        width: 100%;
-      }
-
-      .logo img {
-        height: 70px;
-      }
-
-      .menu {
         position: fixed;
-        top: 90px;
+        top: 77px;
         left: 0;
         width: 100%;
         height: calc(100vh - 90px);
         background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
@@ -970,616 +35,544 @@
         z-index: 999;
         transform: translateX(-100%);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-
-      .menu.active {
-        display: flex;
-        transform: translateX(0);
-      }
-
-      .upperNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 15px;
-        margin-bottom: 25px;
-      }
-
-      .upperNav .nav-button {
-        width: 90%;
-        text-align: center;
-        height: 48px;
-        font-size: 1rem;
-        justify-content: center;
-      }
-
-      /* ===== FIX: Login/Register btn-box on mobile ===== */
-      .btn-box {
-        width: 90%;
-        height: 44px;
-        flex-direction: row;
-        border-radius: 25px;
-        background: #f0f0f0;
-        overflow: hidden;
-        position: relative;
-        display: flex;
-        align-items: stretch;
-      }
-
-      .btn-box a {
-        width: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 1;
-        text-decoration: none;
-      }
-
-      .btn-box .toggle-btn {
-        width: 100%;
-        font-size: 0.85rem;
-        padding: 0 8px;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        white-space: nowrap;
-      }
-
-      #swap-btn {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 50%;
-        height: 100%;
-        border-radius: 25px;
-        background: #083d5d;
-        z-index: 0;
-        transition: all 0.4s ease;
-      }
-      /* ===== END FIX ===== */
-
-      .lowerNav {
-        flex-direction: column;
-        width: 100%;
-        gap: 0;
-        margin-top: 10px;
-      }
-
-      .lowerNav ul {
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-      }
-
-      .lowerNav li {
-        border-bottom: 1px solid #f0f0f0;
-      }
-
-      .menu-link {
-        padding: 16px 0;
-        width: 100%;
-      }
-
-      .converter-section {
-        padding: 20px 10px;
-        min-height: calc(100vh - 90px);
-      }
-
-      .card {
-        padding: 20px 15px 25px;
-      }
     }
-
-    @media (max-width: 600px) {
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 25px;
-      }
-
-      .footer-logo {
-        align-items: center;
-      }
-
-      .footer-logo img {
-        margin: 0 auto 10px auto;
-      }
-
-      .contact-info p {
-        justify-content: center;
-      }
-
-      .footer-links ul,
-      .footer-social ul {
-        justify-content: center;
-        align-items: center;
-      }
-
-      .footer-links h3::after,
-      .footer-social h3::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .footer-links a {
-        justify-content: center;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .preview-row {
-        flex-direction: column;
-      }
-      
-      .preview-item {
-        width: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Header -->
-  <div class="header-container">
-    <div class="top-header">
-      <div class="web-text">
-        <p><span>RID Bharat Run by TWF</span></p>
-        <p>Helpline: <span>+91- 9202707903</span></p>
-        <p>Email: <span>ridorg.in@gmail.com</span></p>
-      </div>
-      <div class="right-text">
-        <a href="#">ISO:9001:2015 Certified</a>
-        <a href="#">TWF</a>
-        <a href="#">Reg.No:048884</a>
-        <a href="#">ESTD:2020</a>
-      </div>
-    </div>
-
-    <div class="main-header">
-      <div class="nav">
-        <div class="logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <div class="menu-icon" id="menuIcon">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
-        <div class="menu" id="innerCont">
-          <div class="upperNav">
-            <a href="/RTS/public/main.html" class="nav-button" id="onlineTest1">
-              <i class="fa-brands fa-servicestack"></i> Test Series
-            </a>
-            <button class="nav-button"><i class="fa-solid fa-book"></i> Service</button>
-            <div class="certificate">
-              <a href="/Certificate-Verification/verify.html"><button class="nav-button" id="certificate"><i class="fa-solid fa-certificate"></i> Certificate</button></a>
-            </div>
-            <!-- LOGIN / REGISTER BTN-BOX -->
-            <div class="btn-box">
-              <div id="swap-btn"></div>
-              <a href="/login">
-                <button class="toggle-btn" id="logInButton"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-              </a>
-              <a href="/form">
-                <button class="toggle-btn" id="signUpBtn"><i class="fa-solid fa-user-plus"></i> Register</button>
-              </a>
-            </div>
-          </div>
-          <ul class="lowerNav">
-            <li><a class="menu-link" href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
-            <li><a class="menu-link" href="#" onclick="window.location.href='about/about.html'"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Research Papers</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> Internship</a></li>
-            <li><a class="menu-link" href="#"><i class="fa-solid fa-file-lines"></i> E-Book</a></li>
-            <li><a class="menu-link" href="/contact/contact.html"><i class="fa-solid fa-headset"></i> Tech Interview</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Image Converter Section -->
-  <section class="converter-section">
-    <div class="card">
-      <div class="card-header">
-        <div class="header-left">
-          <i class="fas fa-arrow-right-arrow-left"></i>
-          <h2>converter image </h2>
-        </div>
-        <div class="theme-toggle" id="themeToggle">
-          <i class="fas fa-sun" id="themeIcon"></i>
-          <span id="themeText">Light</span>
-        </div>
-      </div>
-
-      <input type="file" id="fileInput" class="hidden-input" accept="image/*">
-
-      <div class="upload-box" id="uploadBox">
-        <i class="fas fa-cloud-upload-alt"></i>
-        <p>click or drag image</p>
-        <small>PNG / JPG / WEBP / BMP / GIF</small>
-      </div>
-
-      <div class="preview-row">
-        <div class="preview-item">
-          <h3><i class="fas fa-image"></i> original</h3>
-          <div class="preview-img" id="originalPreview">
-            <i class="fas fa-file-image" style="font-size:2.2rem; color:var(--icon-color);"></i>
-          </div>
-          <div class="file-meta" id="originalInfo">—</div>
-        </div>
-        <div class="preview-item">
-          <h3><i class="fas fa-star"></i> converted</h3>
-          <div class="preview-img" id="jpgPreview">
-            <i class="fas fa-magic" style="font-size:2.2rem; color:var(--accent);"></i>
-          </div>
-          <div class="file-meta" id="jpgInfo">waiting</div>
-        </div>
-      </div>
-
-      <div class="action-row">
-        <div class="format-pill">
-          <label><i class="fas fa-format"></i> to</label>
-          <select id="formatSelect">
-            <option value="jpg" selected>JPG</option>
-            <option value="png">PNG</option>
-            <option value="webp">WEBP</option>
-            <option value="bmp">BMP</option>
-            <option value="gif">GIF</option>
-          </select>
-        </div>
-        <div class="quality-pill" id="qualityWrapper">
-          <label><i class="fas fa-sliders-h"></i> Q</label>
-          <select id="jpgQuality">
-            <option value="0.92">92%</option>
-            <option value="0.85" selected>85%</option>
-            <option value="0.75">75%</option>
-          </select>
-        </div>
-        <button class="convert-btn" id="convertBtn"><i class="fas fa-sync-alt"></i> convert</button>
-      </div>
-
-      <div class="download-wrap">
-        <button class="download-btn" id="downloadBtn" disabled><i class="fas fa-download"></i> download</button>
-      </div>
-
-      <div class="rating-row">
-        <div class="stars" id="starWidget">
-          <i class="fa-regular fa-star" data-value="1"></i>
-          <i class="fa-regular fa-star" data-value="2"></i>
-          <i class="fa-regular fa-star" data-value="3"></i>
-          <i class="fa-regular fa-star" data-value="4"></i>
-          <i class="fa-regular fa-star" data-value="5"></i>
-        </div>
-        <button id="rateSubmit">rate</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <img src="/assets/logo ridtech.jpeg" alt="RID Bharat Logo"
-            onerror="this.src='https://via.placeholder.com/260x70/083d5d/FFFFFF?text=RID+Bharat+Logo'">
-          <p>Mig, 72, Rajiv Nagar, A Sector, Aayodhya bypass Bhopal, Madhya Pradesh, India (462022)</p>
-          <div class="contact-info">
-            <p><i class="fas fa-envelope"></i> <a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></p>
-            <p><i class="fas fa-phone"></i> <a href="tel:+919892782728">+91- 9202707903</a></p>
-          </div>
-        </div>
-
-        <div class="footer-links">
-          <h3>Research Topics</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Computers & Technology</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> AI & Machine Learning</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Space Engineering</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Data Science</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Renewable Energy</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-links">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> About RID</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Research Papers</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Innovation Hub</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Join Community</a></li>
-            <li><a href="#"><i class="fas fa-chevron-right"></i> Events & Workshops</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-social">
-          <h3>Follow Us</h3>
-          <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-            <li><a href="https://www.linkedin.com/in/rid-bharat-9a4517324"><i class="fab fa-linkedin-in"></i> LinkedIn</a></li>
-            <li><a href="https://youtube.com/@ridbharat"><i class="fab fa-youtube"></i> YouTube</a></li>
-            <li><a href="https://github.com/RID-bharat25"><i class="fab fa-github"></i> GitHub</a></li>
-            <li><a href="https://www.instagram.com/ridbharat"><i class="fab fa-instagram"></i> Instagram</a></li>
-            <li><a href="mailto:ridorg.in@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <p>Copyright ©2024, RID | TWF (TWKSAA WELFARE FOUNDATION). All Rights Reserved.</p>
-        <div class="footer-links-bottom">
-          <a href="#">About Us</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Contact</a>
-        </div>
-      </div>
-
-      <a href="#" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-      </a>
-    </div>
-  </footer>
-
-  <!-- JavaScript -->
-  <script>
-    (function () {
-      // ===== HEADER FUNCTIONALITY =====
-      const menuIcon = document.getElementById('menuIcon');
-      const menu = document.getElementById('innerCont');
-      if (menuIcon) {
-        menuIcon.addEventListener('click', function (e) {
-          e.stopPropagation();
-          this.classList.toggle('active');
-          menu.classList.toggle('active');
-        });
-      }
-
-      // ===== LOGIN REGISTER SLIDE EFFECT =====
-      const loginBtn = document.getElementById("logInButton");
-      const registerBtn = document.getElementById("signUpBtn");
-      const swapBtn = document.getElementById("swap-btn");
-
-      if (loginBtn && registerBtn && swapBtn) {
-        loginBtn.addEventListener("click", function () {
-          swapBtn.style.left = "0%";
-          loginBtn.style.color = "white";
-          registerBtn.style.color = "#000";
-        });
-
-        registerBtn.addEventListener("click", function () {
-          swapBtn.style.left = "50%";
-          registerBtn.style.color = "white";
-          loginBtn.style.color = "#000";
-        });
-      }
-
-      // ===== IMAGE CONVERTER FUNCTIONALITY =====
-      const fileInput = document.getElementById('fileInput');
-      const uploadBox = document.getElementById('uploadBox');
-      const originalPreview = document.getElementById('originalPreview');
-      const jpgPreview = document.getElementById('jpgPreview');
-      const originalInfo = document.getElementById('originalInfo');
-      const jpgInfo = document.getElementById('jpgInfo');
-      const convertBtn = document.getElementById('convertBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const formatSelect = document.getElementById('formatSelect');
-      const qualitySelect = document.getElementById('jpgQuality');
-      const qualityWrapper = document.getElementById('qualityWrapper');
-      const stars = [...document.getElementById('starWidget').children];
-      const rateBtn = document.getElementById('rateSubmit');
-      const themeToggle = document.getElementById('themeToggle');
-      const themeIcon = document.getElementById('themeIcon');
-      const themeText = document.getElementById('themeText');
-
-      let currentFile = null;
-      let convertedBlob = null;
-      let convertedUrl = null;
-
-      // ========== THEME TOGGLE ==========
-      function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        if (theme === 'dark') {
-          themeIcon.className = 'fas fa-moon';
-          themeText.innerText = 'Dark';
-        } else {
-          themeIcon.className = 'fas fa-sun';
-          themeText.innerText = 'Light';
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-      }
 
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      setTheme(savedTheme);
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;      /* reduced top/bottom padding */
+        }
 
-      if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-          const current = document.documentElement.getAttribute('data-theme') || 'light';
-          const newTheme = current === 'light' ? 'dark' : 'light';
-          setTheme(newTheme);
-          localStorage.setItem('theme', newTheme);
-        });
-      }
+        /* ========== IMAGE CONVERTER PRO STYLES ========== */
+        .app-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-      // ========== STAR RATING ==========
-      stars.forEach(s => s.addEventListener('click', function(e) {
-        let v = parseInt(this.dataset.value);
-        stars.forEach((x, i) => {
-          if (i < v) {
-            x.classList.remove('fa-regular');
-            x.classList.add('fa-solid');
-          } else {
-            x.classList.remove('fa-solid');
-            x.classList.add('fa-regular');
-          }
-        });
-      }));
+        .two-columns {
+            display: flex;
+            gap: 1.2rem;
+            min-height: 55vh;           /* was 70vh – reduced height */
+            align-items: stretch;
+        }
 
-      if (rateBtn) {
-        rateBtn.addEventListener('click', () => {
-          let f = stars.filter(s => s.classList.contains('fa-solid')).length;
-          f ? alert(f + ' star' + (f > 1 ? 's' : '') + '! 🌟') : alert('select stars');
-        });
-      }
+        /* BOTH PANELS – same width & equal height */
+        .preview-panel,
+        .controls-panel {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-      // ========== FORMAT CHANGE HANDLER ==========
-      if (formatSelect) {
-        formatSelect.addEventListener('change', function() {
-          if (this.value === 'png' || this.value === 'bmp' || this.value === 'gif') {
-            qualityWrapper.style.display = 'none';
-          } else {
-            qualityWrapper.style.display = 'flex';
-          }
-        });
-      }
+        .controls-panel {
+            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.25);
+        }
 
-      // ========== UPLOAD HANDLERS ==========
-      if (uploadBox) {
-        uploadBox.addEventListener('click', () => fileInput.click());
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;      /* reduced margin */
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .panel-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #e2e8f0;
+        }
+        .badge {
+            background: rgba(129, 140, 248, 0.2);
+            padding: 0.15rem 0.5rem;
+            border-radius: 40px;
+            font-size: 0.6rem;
+            color: #a5b4fc;
+        }
 
-        uploadBox.addEventListener('dragover', e => {
-          e.preventDefault();
-          uploadBox.style.borderColor = '#f59e0b';
-        });
+        /* PREVIEW GRID */
+        .preview-grid {
+            flex: 1;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.8rem;
+            padding-right: 0.2rem;
+        }
+        .preview-grid::-webkit-scrollbar {
+            width: 5px;
+        }
+        .preview-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .preview-grid::-webkit-scrollbar-thumb {
+            background: rgba(129, 140, 248, 0.5);
+            border-radius: 10px;
+        }
 
-        uploadBox.addEventListener('dragleave', () => {
-          uploadBox.style.borderColor = 'var(--border-light)';
-        });
+        /* IMAGE CARD – smaller height (already 180px, fine) */
+        .image-card {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 180px;
+        }
+        .image-card:hover {
+            transform: translateY(-2px);
+            border-color: #818cf8;
+            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
+        }
+        .img-wrapper {
+            flex: 1;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-info {
+            padding: 0.3rem;
+            text-align: center;
+        }
+        .card-name {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .card-ext {
+            font-size: 0.55rem;
+            color: #a5b4fc;
+            margin-top: 0.15rem;
+            background: rgba(129, 140, 248, 0.15);
+            display: inline-block;
+            padding: 0.05rem 0.3rem;
+            border-radius: 30px;
+        }
+        .card-actions {
+            padding: 0.2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .download-single {
+            background: linear-gradient(135deg, #10b981, #059669);
+            border: none;
+            border-radius: 40px;
+            padding: 0.15rem 0.6rem;
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .download-single:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
 
-        uploadBox.addEventListener('drop', e => {
-          e.preventDefault();
-          uploadBox.style.borderColor = 'var(--border-light)';
-          if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-        });
-      }
+        .empty-state {
+            text-align: center;
+            padding: 1.2rem 1rem;      /* reduced padding */
+            color: #64748b;
+        }
+        .empty-state svg {
+            width: 30px;
+            height: 30px;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+        .empty-state p {
+            font-size: 0.7rem;
+        }
 
-      if (fileInput) {
-        fileInput.addEventListener('change', e => {
-          if (fileInput.files.length) handleFile(fileInput.files[0]);
-        });
-      }
+        /* RIGHT PANEL CONTROLS */
+        .right-header h1 {
+            font-size: 1.2rem;          /* slightly smaller */
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .right-header p {
+            color: #94a3b8;
+            font-size: 0.6rem;
+            margin-top: 0.15rem;
+        }
 
-      function handleFile(f) {
-        if (!f.type.startsWith('image/')) return alert('Please select an image file');
-        
-        currentFile = f;
-        if (convertedUrl) URL.revokeObjectURL(convertedUrl);
-        convertedBlob = null;
-        convertedUrl = null;
-        downloadBtn.disabled = true;
-        
-        jpgPreview.innerHTML = '<i class="fas fa-magic" style="font-size:2.2rem; color:var(--accent);"></i>';
-        jpgInfo.innerText = 'ready';
-        
-        const reader = new FileReader();
-        reader.onload = e => {
-          originalPreview.innerHTML = `<img src="${e.target.result}" alt="original">`;
-          originalInfo.innerText = (f.size / 1024).toFixed(1) + ' KB';
-        };
-        reader.readAsDataURL(f);
-      }
+        .upload-area {
+            background: rgba(129, 140, 248, 0.05);
+            border: 2px dashed rgba(129, 140, 248, 0.3);
+            border-radius: 20px;
+            padding: 0.6rem;            /* reduced padding */
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0.3rem 0;
+        }
+        .upload-area:hover {
+            background: rgba(129, 140, 248, 0.1);
+            border-color: #818cf8;
+            transform: translateY(-2px);
+        }
+        .upload-icon {
+            font-size: 1.4rem;
+        }
+        .upload-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.15rem;
+            color: #f1f5f9;
+        }
+        .upload-sub {
+            font-size: 0.5rem;
+            color: #94a3b8;
+            margin-top: 0.05rem;
+        }
 
-      // ========== CONVERT ==========
-      if (convertBtn) {
-        convertBtn.addEventListener('click', () => {
-          if (!currentFile) return alert('Select an image first');
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-top: 0.3rem;
+        }
+        .control-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        select, button {
+            padding: 0.35rem 0.6rem;
+            border-radius: 40px;
+            border: none;
+            font-size: 0.65rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        select {
+            flex: 1;
+            background: #1e293b;
+            color: white;
+            border: 1px solid #475569;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            color: white;
+        }
+        .add-more {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+        button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+        }
 
-          const img = new Image();
-          const reader = new FileReader();
-          reader.onload = e => { img.src = e.target.result; };
-          reader.readAsDataURL(currentFile);
+        @media (max-width: 900px) {
+            .two-columns {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .preview-panel,
+            .controls-panel {
+                flex: none;
+                width: 100%;
+            }
+            .preview-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
 
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, 0, 0);
+    <!-- HEADER (EJS include) -->
+    <%- include("common/header.ejs") %>
 
-            const format = formatSelect.value;
-            let mimeType = 'image/jpeg';
-            let quality = parseFloat(qualitySelect.value);
-            let fileExtension = 'jpg';
+    <!-- MAIN CONVERTER CONTENT -->
+    <div class="main-content">
+        <div class="app-container">
+            <div class="two-columns">
+                <!-- LEFT PANEL – preview grid -->
+                <div class="preview-panel">
+                    <div class="panel-header">
+                        <h3><span>🖼️</span> Image Gallery</h3>
+                        <div class="badge" id="imageCountBadge">0 images</div>
+                    </div>
+                    <div id="previewGrid" class="preview-grid">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18"/>
+                                <circle cx="8.5" cy="8.5" r="2.5"/>
+                                <path d="M21 15l-5-5-4 4-3-3-5 5"/>
+                            </svg>
+                            <p>No images yet</p>
+                            <p style="font-size:0.6rem">Upload images from the right panel</p>
+                        </div>
+                    </div>
+                </div>
 
-            switch(format) {
-              case 'png':
-                mimeType = 'image/png';
-                fileExtension = 'png';
-                quality = undefined;
-                break;
-              case 'webp':
-                mimeType = 'image/webp';
-                fileExtension = 'webp';
-                break;
-              case 'bmp':
-                mimeType = 'image/bmp';
-                fileExtension = 'bmp';
-                quality = undefined;
-                break;
-              case 'gif':
-                mimeType = 'image/gif';
-                fileExtension = 'gif';
-                quality = undefined;
-                break;
-              default:
-                mimeType = 'image/jpeg';
-                fileExtension = 'jpg';
+                <!-- RIGHT PANEL – controls -->
+                <div class="controls-panel">
+                    <div class="right-header">
+                        <h1>✨ Image Converter Pro</h1>
+                        <p>Convert bulk images to PNG, JPG, WEBP or BMP</p>
+                    </div>
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📸</div>
+                        <div class="upload-title">Upload Images</div>
+                        <div class="upload-sub">Click or drag & drop</div>
+                        <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+                    </div>
+                    <div class="control-group">
+                        <div class="control-row">
+                            <select id="formatSelect">
+                                <option value="image/png">PNG</option>
+                                <option value="image/jpeg">JPG</option>
+                                <option value="image/webp">WEBP</option>
+                                <option value="image/bmp">BMP</option>
+                            </select>
+                            <button id="convertBtn" class="btn-primary">🔄 Convert</button>
+                        </div>
+                        <div class="control-row">
+                            <button id="addMoreBtn" class="add-more">➕ Add More</button>
+                            <button id="clearBtn" class="btn-danger">🗑️ Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (EJS include) -->
+    <%- include("common/footer.ejs") %>
+
+    <!-- Image Converter JavaScript (unchanged) -->
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const addMoreBtn = document.getElementById('addMoreBtn');
+        const convertBtn = document.getElementById('convertBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const formatSelect = document.getElementById('formatSelect');
+        const previewGrid = document.getElementById('previewGrid');
+        const imageCountBadge = document.getElementById('imageCountBadge');
+
+        let originalImages = [];
+        let convertedImages = [];
+        let showingConverted = false;
+
+        function updateUI() {
+            const total = originalImages.length;
+            imageCountBadge.textContent = total === 1 ? '1 image' : `${total} images`;
+        }
+
+        function getExtension(filename) {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+        }
+
+        function renderGallery() {
+            if (!showingConverted && originalImages.length === 0) {
+                previewGrid.innerHTML = `<div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18"/>
+                        <circle cx="8.5" cy="8.5" r="2.5"/>
+                        <path d="M21 15l-5-5-4 4-3-3-5 5"/>
+                    </svg>
+                    <p>No images yet</p>
+                    <p style="font-size:0.6rem">Upload images from the right panel</p>
+                </div>`;
+                updateUI();
+                return;
             }
 
-            canvas.toBlob(b => {
-              if (!b) return alert('Conversion failed');
-              
-              if (convertedUrl) URL.revokeObjectURL(convertedUrl);
-              convertedBlob = b;
-              convertedUrl = URL.createObjectURL(b);
+            const source = showingConverted ? convertedImages : originalImages;
+            if (source.length === 0) {
+                previewGrid.innerHTML = `<div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="1.5">
+                        <rect x="2" y="2" width="20" height="20" rx="2.18"/>
+                        <circle cx="8.5" cy="8.5" r="2.5"/>
+                        <path d="M21 15l-5-5-4 4-3-3-5 5"/>
+                    </svg>
+                    <p>No converted images</p>
+                    <p style="font-size:0.6rem">Click "Convert" first</p>
+                </div>`;
+                updateUI();
+                return;
+            }
 
-              const previewImg = document.createElement('img');
-              previewImg.src = convertedUrl;
-              jpgPreview.innerHTML = '';
-              jpgPreview.appendChild(previewImg);
-              jpgInfo.innerText = (b.size / 1024).toFixed(1) + ' KB · ' + fileExtension.toUpperCase();
-              
-              downloadBtn.disabled = false;
-            }, mimeType, quality);
-          };
+            previewGrid.innerHTML = source.map((item, idx) => {
+                const name = item.name;
+                const ext = getExtension(name).toUpperCase();
+                const src = item.dataURL || item.imgElement?.src;
+                return `
+                    <div class="image-card">
+                        <div class="img-wrapper">
+                            <img src="${src}" alt="${name}">
+                        </div>
+                        <div class="card-info">
+                            <div class="card-name" title="${name}">${name.length > 24 ? name.slice(0,21)+'...' : name}</div>
+                            <div class="card-ext">${ext}</div>
+                        </div>
+                        ${showingConverted ? `
+                        <div class="card-actions">
+                            <button class="download-single" data-idx="${idx}">⬇️ Download</button>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            if (showingConverted) {
+                document.querySelectorAll('.download-single').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const idx = parseInt(btn.dataset.idx);
+                        downloadSingle(idx);
+                    });
+                });
+            }
+            updateUI();
+        }
+
+        function loadImages(files) {
+            const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+            if (imageFiles.length === 0) return;
+
+            let loaded = 0;
+            imageFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        originalImages.push({
+                            name: file.name,
+                            imgElement: img,
+                            originalSrc: e.target.result
+                        });
+                        loaded++;
+                        if (loaded === imageFiles.length) {
+                            showingConverted = false;
+                            convertedImages = [];
+                            renderGallery();
+                        }
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function convertAll() {
+            if (originalImages.length === 0) {
+                alert('No images to convert. Please upload first.');
+                return;
+            }
+            const targetFormat = formatSelect.value;
+            const ext = targetFormat.split('/')[1] === 'jpeg' ? 'jpg' : targetFormat.split('/')[1];
+            convertedImages = [];
+
+            let completed = 0;
+            originalImages.forEach((orig, idx) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = orig.imgElement.width;
+                canvas.height = orig.imgElement.height;
+                ctx.drawImage(orig.imgElement, 0, 0);
+                let dataURL;
+                if (targetFormat === 'image/bmp') {
+                    dataURL = canvas.toDataURL('image/png');
+                } else {
+                    dataURL = canvas.toDataURL(targetFormat, 0.92);
+                }
+                const newName = orig.name.replace(/\.[^/.]+$/, '') + '.' + ext;
+                convertedImages.push({ name: newName, dataURL: dataURL });
+                completed++;
+                if (completed === originalImages.length) {
+                    showingConverted = true;
+                    renderGallery();
+                }
+            });
+        }
+
+        function downloadSingle(index) {
+            const item = convertedImages[index];
+            if (!item) return;
+            const link = document.createElement('a');
+            link.href = item.dataURL;
+            link.download = item.name;
+            link.click();
+        }
+
+        function clearAll() {
+            originalImages = [];
+            convertedImages = [];
+            showingConverted = false;
+            renderGallery();
+        }
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            loadImages(e.target.files);
+            fileInput.value = '';
         });
-      }
+        addMoreBtn.addEventListener('click', () => fileInput.click());
+        convertBtn.addEventListener('click', convertAll);
+        clearBtn.addEventListener('click', clearAll);
 
-      // ========== DOWNLOAD ==========
-      if (downloadBtn) {
-        downloadBtn.addEventListener('click', () => {
-          if (!convertedBlob || !convertedUrl) return;
-          
-          const a = document.createElement('a');
-          a.href = convertedUrl;
-          const baseName = currentFile ? currentFile.name.replace(/\.[^/.]+$/, '') : 'image';
-          const ext = formatSelect.value;
-          a.download = baseName + '_converted.' + ext;
-          a.click();
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = 'rgba(129,140,248,0.15)';
         });
-      }
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = '';
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '';
+            loadImages(e.dataTransfer.files);
+        });
 
-      // ========== CLEANUP ==========
-      window.addEventListener('beforeunload', () => {
-        if (convertedUrl) URL.revokeObjectURL(convertedUrl);
-      });
+        renderGallery();
+    </script>
 
-      window.workshop = function() {
-        window.open("workshop/form.html", "_self");
-      }
-      
-      window.typingsoftware = function() {
-        window.location.href = "/typing-software";
-      }
-      
-      window.compress = function() {
-        window.location.href = "/com";
-      }
-    })();
-  </script>
 </body>
-
 </html>

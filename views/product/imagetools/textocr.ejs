@@ -1,1 +1,514 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>OCR Image to Text</title>
+    <link rel="stylesheet" href="/css/common/header.css">
+    <link rel="stylesheet" href="/css/common/footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/tesseract.js@5/dist/tesseract.min.js"></script>
+ <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+        /* ========== PAGE-SPECIFIC STYLES (footer at bottom, no header/footer changes) ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    @media (max-width: 768px) {
+    .menu {
+        position: fixed;
+        top: 77px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 90px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        display: none;
+        padding: 30px 20px 20px;
+        overflow-y: auto;
+        z-index: 999;
+        transform: translateX(-100%);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+}
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;    /* footer stays at bottom */
+            padding-top: 130px;        /* space for fixed header */
+        }
+
+        /* main content – grows to fill space, pushes footer down */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(71, 85, 105, 0.6);
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top {
+            padding: 20px 25px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .top h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+
+        .top p {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .content {
+            display: flex;
+            flex: 1;
+            gap: 0;
+            padding: 20px;
+        }
+
+        /* LEFT PANEL – two equal halves */
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-right: 20px;
+        }
+
+        /* Upload container (top half) */
+        .upload-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            display: flex;
+            align-items: stretch;
+        }
+        .upload-container:hover {
+            background: rgba(129, 140, 248, 0.08);
+            border-color: #818cf8;
+            transform: translateY(-2px);
+        }
+        .upload-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            margin: 12px;
+            transition: 0.2s;
+            background: transparent;
+        }
+        .upload-container:hover .upload-box {
+            border-color: #a5b4fc;
+        }
+        .upload-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 8px;
+        }
+        .upload-box h2 {
+            font-size: 18px;
+            margin-top: 8px;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .upload-box p {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* Preview container (bottom half) */
+        .preview-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            backdrop-filter: blur(8px);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+        }
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #94a3b8;
+            padding: 0 4px;
+            flex-shrink: 0;
+        }
+        .clear-icon {
+            cursor: pointer;
+            background: rgba(239, 68, 68, 0.2);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            transition: 0.2s;
+            color: #f87171;
+        }
+        .clear-icon:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: scale(1.02);
+        }
+        .preview-image-wrapper {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+        #previewImage {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        .progress-container {
+            margin-top: 8px;
+            display: none;
+            flex-shrink: 0;
+        }
+        .progress-text {
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            color: #cbd5e1;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #818cf8, #c084fc);
+            border-radius: 10px;
+            transition: width 0.2s;
+        }
+
+        /* RIGHT PANEL */
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-left: 20px;
+        }
+        #outputText {
+            width: 100%;
+            flex: 1;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(71, 85, 105, 0.5);
+            border-radius: 20px;
+            padding: 16px;
+            color: #e2e8f0;
+            font-size: 13px;
+            font-family: 'Inter', monospace;
+            resize: none;
+            outline: none;
+            min-height: 0;
+            line-height: 1.5;
+        }
+        #outputText:focus {
+            border-color: #818cf8;
+        }
+        .buttons {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .copy-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #6366f1, #818cf8);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Custom scrollbar for textarea */
+        #outputText::-webkit-scrollbar {
+            width: 5px;
+        }
+        #outputText::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        #outputText::-webkit-scrollbar-thumb {
+            background: rgba(129, 140, 248, 0.5);
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .content {
+                flex-direction: column;
+                gap: 20px;
+                padding: 15px;
+            }
+            .left-panel, .right-panel {
+                margin: 0;
+            }
+            body {
+                padding-top: 90px;  /* adjust for mobile header */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER (EJS include) – unchanged -->
+    <%- include("common/header.ejs") %>
+
+    <!-- MAIN CONTENT – pushes footer to bottom -->
+    <div class="main-content">
+        <div class="container">
+            <div class="top">
+                <h1>✨ OCR Image to Text</h1>
+                <p>Extract text from images instantly using AI OCR technology</p>
+            </div>
+
+            <div class="content">
+                <!-- LEFT PANEL: upload + preview -->
+                <div class="left-panel">
+                    <!-- upload area -->
+                    <div class="upload-container" id="uploadArea">
+                        <div class="upload-box">
+                            <svg class="upload-icon" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#a5b4fc" stroke-width="1.5">
+                                <path d="M12 16V4M8 8l4-4 4 4"></path>
+                                <path d="M20 16.5A4.5 4.5 0 0015.5 12H15A7 7 0 105 16.5"></path>
+                            </svg>
+                            <h2>Upload Image</h2>
+                            <p>Click anywhere here or drag & drop</p>
+                        </div>
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    </div>
+
+                    <!-- preview area -->
+                    <div class="preview-container">
+                        <div class="preview-header">
+                            <span>📷 Preview</span>
+                            <div style="display: flex; gap: 8px;">
+                                <span id="imageStatus">No image</span>
+                                <span id="clearBtn" class="clear-icon">🗑️ Clear</span>
+                            </div>
+                        </div>
+                        <div class="preview-image-wrapper">
+                            <img id="previewImage" src="" alt="Preview" style="display: none;">
+                        </div>
+                        <div class="progress-container" id="progressContainer">
+                            <div class="progress-text">
+                                <span>OCR Processing</span>
+                                <span id="progressPercent">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress" id="progressBar"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT PANEL: output text + buttons -->
+                <div class="right-panel">
+                    <textarea id="outputText" placeholder="Extracted text will appear here..."></textarea>
+                    <div class="buttons">
+                        <button class="copy-btn" id="copyBtn">📋 Copy Text</button>
+                        <button class="download-btn" id="downloadBtn">💾 Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER (EJS include) – unchanged -->
+    <%- include("common/footer.ejs") %>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const previewImage = document.getElementById('previewImage');
+        const imageStatus = document.getElementById('imageStatus');
+        const outputText = document.getElementById('outputText');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const clearBtn = document.getElementById('clearBtn');
+
+        let currentFile = null;
+
+        uploadArea.addEventListener('click', (e) => {
+            if (e.target !== fileInput) fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) processImage(file);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            previewImage.src = '';
+            previewImage.style.display = 'none';
+            imageStatus.innerText = 'No image';
+            progressContainer.style.display = 'none';
+            progressBar.style.width = '0%';
+            progressPercent.innerText = '0%';
+            outputText.value = '';
+            fileInput.value = '';
+            currentFile = null;
+        });
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = 'rgba(129,140,248,0.15)';
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.background = '';
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.background = '';
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processImage(file);
+            } else {
+                alert('Please drop an image file.');
+            }
+        });
+
+        async function processImage(file) {
+            currentFile = file;
+            const objectURL = URL.createObjectURL(file);
+            previewImage.src = objectURL;
+            previewImage.style.display = 'block';
+            imageStatus.innerText = 'Processing...';
+
+            outputText.value = '';
+            progressContainer.style.display = 'block';
+            progressBar.style.width = '0%';
+            progressPercent.innerText = '0%';
+
+            try {
+                const result = await Tesseract.recognize(file, 'eng', {
+                    logger: (m) => {
+                        if (m.status === 'recognizing text') {
+                            const pct = Math.round(m.progress * 100);
+                            progressBar.style.width = pct + '%';
+                            progressPercent.innerText = pct + '%';
+                        }
+                    }
+                });
+                outputText.value = result.data.text;
+                progressBar.style.width = '100%';
+                progressPercent.innerText = 'Completed';
+                imageStatus.innerText = 'OCR done';
+            } catch (err) {
+                console.error(err);
+                alert('OCR failed. Please try another image.');
+                imageStatus.innerText = 'Error';
+            } finally {
+                URL.revokeObjectURL(objectURL);
+            }
+        }
+
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            if (!outputText.value.trim()) {
+                alert('No text to copy.');
+                return;
+            }
+            navigator.clipboard.writeText(outputText.value);
+            alert('Text copied!');
+        });
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            if (!outputText.value.trim()) {
+                alert('No text to download.');
+                return;
+            }
+            const blob = new Blob([outputText.value], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'ocr-result.txt';
+            link.click();
+            URL.revokeObjectURL(link.href);
+        });
+    </script>
+</body>
+</html>
