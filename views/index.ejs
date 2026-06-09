@@ -314,7 +314,7 @@
               <button type="button" onclick="convertimage()">Convert Image to (JPG,PNG,WEBP,BMP,GIF)</button>
               <!--<button type="button" onclick="backgroundRemover()">Image Background Remover</button>-->
               <button type="button" onclick="compress()">Compress Image</button>
-             
+              <button type="button" onclick="resize()">Resize Image</button>
               <button type="button" onclick="convert()">Convert Image to PDF</button>
               <button type="button" onclick="crop()">Crop Image</button>
               <button type="button" onclick="image()">Image to Text (OCR)</button>
@@ -653,7 +653,10 @@
         function convertimage() {
           window.location.href = "/convertimage"
         }
-       
+        function resize() {
+          window.location.href = "/resize-image"
+
+        }
         function crop() {
           window.location.href = "/cropimage"
         }
