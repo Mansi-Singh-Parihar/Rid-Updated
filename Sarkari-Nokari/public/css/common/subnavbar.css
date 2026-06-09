@@ -5,7 +5,7 @@
   width: 100%;
   z-index: 999;
 
-  background: #ffffff;
+ 
   padding: 8px 10px;
   border-bottom: 1px solid #ddd;
 }
@@ -47,10 +47,11 @@
 @media (max-width: 768px) {
 
   .navbar-wrapper {
-    top: 60px;
+    top: 75px;
     padding: 7px 8px;
     z-index: 997;
     margin-top: 5px;
+    position: sticky;
   }
 
   .nav-btn {

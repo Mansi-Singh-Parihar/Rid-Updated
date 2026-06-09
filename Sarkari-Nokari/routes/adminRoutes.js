@@ -19,8 +19,8 @@ router.get("/", (req, res) => {
 });
 router.get("/create-account-Sarkarinaukari", async (req, res) => {
   try {
-    const email = "deepak@gmail.com";
-    const password = "123456";
+    const email = "asangam012@gmail.com";
+    const password = "Anil@123";
 
     let admin = await Admin.findOne({ email });
 
