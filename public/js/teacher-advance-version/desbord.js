@@ -1194,8 +1194,11 @@ async function handleAddStudent() {
     const email = studentEmailInput.value.trim();
     const className = studentClassInput.value.trim();
     const roll = studentRollInput.value.trim();
-    const parentContact = studentParentContactInput.value.trim();
-
+    const parentContact = studentParentContactInput.value.trim(); 
+if (!/^\d{10}$/.test(parentContact)) {
+    alert("Parent Contact Number must be exactly 10 digits.");
+    return;
+}
     if (!firstName || !lastName) {
         alert('Please enter student first and last name.');
         return;
@@ -2954,19 +2957,19 @@ async function loadAnalyticsCards() {
         data.forEach((test, index) => {
             const row = document.createElement("tr");
 
-            row.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${test.testName}</td>
-                <td>${test.subject || "-"}</td>
-                <td>${test.students} Students</td>
-                <td>${test.avgScore}%</td>
-                <td>${test.lastTime || "-"}</td>
-                <td>
-                    <button onclick="openAnalytics('${test.testId}')">
-                        Details
-                    </button>
-                </td>
-            `;
+          row.innerHTML = `
+<tr>
+   <td>${index + 1}</td>
+   <td>${test.name || "-"}</td>
+   <td>${test.subject || "-"}</td>
+   <td>${test.submissions || 0}</td>
+   <td>${test.avgScore ? test.avgScore.toFixed(1) : 0}%</td>
+   <td>${test.duration || 0} Min</td>
+   <td>
+      <button class="btn btn-info">Details</button>
+   </td>
+</tr>
+`;
 
             container.appendChild(row);
         });

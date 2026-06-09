@@ -497,24 +497,50 @@ window.onload = function () {
     startTimer();
     startCamera();
 };
+
+
 // ----------------- Tab Change Detection -----------------
+
 let tabChangeCount = 0;
+let isSubmitted = false;
 
 document.addEventListener("visibilitychange", function () {
+
+    // Sirf tab hide hone par count badhao
     if (document.hidden) {
+
         tabChangeCount++;
 
+        // First Warning
         if (tabChangeCount === 1) {
-            alert("⚠ Warning: Do not change tab during the test.");
-        } 
+
+            setTimeout(() => {
+                alert(
+                    "⚠ Warning!\n\nTest ke dauran dusre tab ya application me mat jaiye.\nAgli baar tab change karne par test automatically submit ho jayega."
+                );
+            }, 300);
+
+        }
+
+        // Second Time Submit
         else if (tabChangeCount >= 2) {
-            alert("❌ Tab changed again. Test is being submitted.");
 
-            if (timerInterval) {
-                clearInterval(timerInterval);
-            }
+            setTimeout(() => {
 
-            submitQuiz();
+                alert(
+                    "❌ Aap dusri baar tab change kar chuke hain.\nTest submit kiya ja raha hai."
+                );
+
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+
+                if (!isSubmitted) {
+                    isSubmitted = true;
+                    submitQuiz();
+                }
+
+            }, 300);
         }
     }
 });
@@ -545,3 +571,5 @@ window.addEventListener("beforeunload", function (e) {
     e.preventDefault();
     e.returnValue = '';
 });
+
+

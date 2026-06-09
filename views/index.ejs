@@ -72,7 +72,7 @@
     </div>
     <!-- Hero slider with BIG class names -->
     <section class="bada-hero">
-     <% if (banner && banner.fileType === "video") { %>
+     <% if (banner?.fileType === "video") { %>
 
 <video autoplay muted loop playsinline class="bada-bg-video">
   <source src="<%= banner.fileUrl %>">
@@ -94,9 +94,11 @@
 
 <% } %>
 
+
       <div class="bada-overlay">
         
       </div>
+
     </section>
     <!------line tages -->
     <div class="hero-clear"></div>
@@ -104,8 +106,6 @@
 
     <div class="live-marquee"></div>
 
-
-    <!-- ═══════════════ HERO HTML ═══════════════ -->
     <!-- ═══════════════ HERO HTML ═══════════════ -->
     <section class="rid-hero">
 
