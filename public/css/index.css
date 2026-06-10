@@ -1,75 +1,10 @@
-    /* ===== FULL CREATIVE FONT STACK – robust for all devices ===== */
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f2f2f2;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 130px;
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      margin: 0;
-      padding: 0;
-    }
-
-.bada-hero{
+/* ---------- HERO SECTION (BIG CLASS NAMES) ---------- */
+  .bada-hero {
     position: relative;
+    min-height: 450px;
     width: 100%;
     overflow: hidden;
-    line-height: 0;
-}
-
-.bada-image{
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.bada-video{
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-}
-
-@media (max-width:768px){
-
-    .bada-hero{
-        margin: 0;
-        padding: 0;
-    }
-
-    .bada-image{
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .hero-clear{
-        display:none;
-    }
-
-    .live-marquee{
-        margin-top:0 !important;
-    }
-
-    .rid-hero{
-        margin-top:0 !important;
-    }
-}
-@media (max-width:768px){
-
-    body{
-        padding-top: 0 !important;
-    }
-
-    .header-container{
-        position: relative !important;
-    }
-}
-
-
+  }
 .rh-cta{
   margin-top: 10px !important;
     display: flex !important;
@@ -160,7 +95,66 @@
     background: #75dac5;
   }
 
+  /* TABLET */
+  @media (max-width: 992px) {
+    .bada-hero {
+      height: 6vh;
+    }
+    .bada-overlay {
+      padding: 0 40px;
+    }
+    .bada-site-name {
+      font-size: 34px;
+    }
+    .bada-tagline {
+      font-size: 18px;
+    }
+    .bada-content ul li {
+      font-size: 16px;
+    }
+  }
 
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .bada-hero {
+      min-height: 300px;
+    }
+    .bada-overlay {
+      justify-content: center;
+      text-align:left;
+      padding: 15px;
+      line-height: 13px;
+    }
+    .bada-content {
+      max-width: 100%;
+    }
+    .bada-site-name {
+      font-size: 28px;
+    }
+    .bada-tagline {
+      font-size: 14px;
+    }
+    .bada-content ul li {
+      font-size: 13px;
+    }
+    .bada-btn {
+      padding: 10px 18px;
+      font-size: 13px;
+    }
+  }
+
+  /* SMALL DEVICES */
+  @media (max-width: 400px) {
+    .bada-hero {
+      height: 12vh;
+    }
+    .bada-site-name {
+      font-size: 22px;
+    }
+    .bada-tagline {
+      font-size: 13px;
+    }
+  }
  
   
 
@@ -414,7 +408,19 @@
       --transition: all 0.3s ease;
     }
 
-
+    /* ===== FULL CREATIVE FONT STACK – robust for all devices ===== */
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      line-height: 1.6;
+      padding-top: 130px;
+      overflow-x: hidden;
+      font-weight: 400;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
     /* all form elements inherit the creative font */
     input,
@@ -4842,3 +4848,36 @@
       display: none;
     }
   }
+  .rh-tab{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    line-height:1.2;
+    outline:none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rh-tab:focus,
+.rh-tab:focus-visible,
+.rh-tab:active{
+    outline:none !important;
+    box-shadow:none !important;
+    border-color:inherit !important;
+}
+@media (max-width:768px){
+    .rh-tab{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        text-align:center;
+        padding:8px 12px;
+    }
+}
+a{
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:focus{
+    outline:0 !important;
+}
