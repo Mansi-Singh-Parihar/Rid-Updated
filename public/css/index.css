@@ -1,10 +1,75 @@
-/* ---------- HERO SECTION (BIG CLASS NAMES) ---------- */
-  .bada-hero {
+/* ===== FULL CREATIVE FONT STACK – robust for all devices ===== */
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #f2f2f2;
+      color: #333;
+      line-height: 1.6;
+      padding-top: 130px;
+      overflow-x: hidden;
+      font-weight: 400;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 0;
+    }
+
+.bada-hero{
     position: relative;
-    min-height: 450px;
     width: 100%;
     overflow: hidden;
-  }
+    line-height: 0;
+}
+
+.bada-image{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.bada-video{
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+@media (max-width:768px){
+
+    .bada-hero{
+        margin: 0;
+        padding: 0;
+    }
+
+    .bada-image{
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .hero-clear{
+        display:none;
+    }
+
+    .live-marquee{
+        margin-top:0 !important;
+    }
+
+    .rid-hero{
+        margin-top:0 !important;
+    }
+}
+@media (max-width:768px){
+
+    body{
+        padding-top: 0 !important;
+    }
+
+    .header-container{
+        position: relative !important;
+    }
+}
+
+
 .rh-cta{
   margin-top: 10px !important;
     display: flex !important;
@@ -83,7 +148,7 @@
     display: inline-block;
     margin-top: 10px;
     margin-right: 12px;
-    padding: 6px 10px;
+    padding: 6px 5px;
     background:#0c416a;
     color: #fff;
     text-decoration: none;
@@ -95,66 +160,7 @@
     background: #75dac5;
   }
 
-  /* TABLET */
-  @media (max-width: 992px) {
-    .bada-hero {
-      height: 6vh;
-    }
-    .bada-overlay {
-      padding: 0 40px;
-    }
-    .bada-site-name {
-      font-size: 34px;
-    }
-    .bada-tagline {
-      font-size: 18px;
-    }
-    .bada-content ul li {
-      font-size: 16px;
-    }
-  }
 
-  /* MOBILE */
-  @media (max-width: 600px) {
-    .bada-hero {
-      min-height: 300px;
-    }
-    .bada-overlay {
-      justify-content: center;
-      text-align:left;
-      padding: 15px;
-      line-height: 13px;
-    }
-    .bada-content {
-      max-width: 100%;
-    }
-    .bada-site-name {
-      font-size: 28px;
-    }
-    .bada-tagline {
-      font-size: 14px;
-    }
-    .bada-content ul li {
-      font-size: 13px;
-    }
-    .bada-btn {
-      padding: 10px 18px;
-      font-size: 13px;
-    }
-  }
-
-  /* SMALL DEVICES */
-  @media (max-width: 400px) {
-    .bada-hero {
-      height: 12vh;
-    }
-    .bada-site-name {
-      font-size: 22px;
-    }
-    .bada-tagline {
-      font-size: 13px;
-    }
-  }
  
   
 
@@ -408,19 +414,7 @@
       --transition: all 0.3s ease;
     }
 
-    /* ===== FULL CREATIVE FONT STACK – robust for all devices ===== */
-    body {
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #f2f2f2;
-      color: #333;
-      line-height: 1.6;
-      padding-top: 130px;
-      overflow-x: hidden;
-      font-weight: 400;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+
 
     /* all form elements inherit the creative font */
     input,
@@ -1007,7 +1001,6 @@
       100% {
         opacity: 1;
       }
-
       50% {
         opacity: 0.3;
       }
@@ -2498,43 +2491,69 @@
   }
 
   /* ── SERVICE TABS ──────────────────────────────── */
-  .rh-tabs {
+ .rh-tabs{
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 17px 0 0;
-    animation: rh-up .6s .05s both;
-  }
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
 
-  .rh-tab {
-    display: inline-flex;
+.rh-tab{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 40px;
-    font-size: .8rem;
+    text-align: center;
+
+    min-height: 52px;
+    padding: 12px 24px;
+
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 600;
-    border: 1.5px solid transparent;
     text-decoration: none;
-    transition: all .22s ease;
-    white-space: nowrap;
-  }
 
-  .rh-tab:hover {
-    transform: translateY(-2px);
-  }
+    color: #fff;
+    backdrop-filter: blur(10px);
 
-  .rt-blue {
-    background: rgba(77, 168, 218, .12);
-    border-color: rgba(77, 168, 218, .35);
-    color: #7ecfef
-  }
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
 
-  .rt-orange {
-    background: rgba(255, 107, 53, .11);
-    border-color: rgba(255, 107, 53, .33);
-    color: #ffaa80
-  }
+.rh-tab:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
+
+/* Color Variants */
+.rt-blue{
+    background: linear-gradient(135deg,#0d6efd,#4da8da);
+}
+
+.rt-purple{
+    background: linear-gradient(135deg,#6f42c1,#9b59b6);
+}
+
+.rt-orange{
+    background: linear-gradient(135deg,#ff6b35,#ff9f43);
+}
+
+.rt-green{
+    background: linear-gradient(135deg,#00b894,#20c997);
+}
+
+@media (max-width:768px){
+    .rh-tabs{
+        gap: 8px;
+    }
+
+    .rh-tab{
+        flex: 1 1 calc(50% - 8px);
+        min-height: 48px;
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+}
 
   .rt-green {
     background: rgba(52, 199, 89, .11);
@@ -3317,7 +3336,6 @@
     .rh-right {
       height: 275px;
     }
-
     .rh-card-main {
       width: 126px;
       height: 126px;
@@ -4552,7 +4570,6 @@
     align-items: center;
     gap: 10px;
   }
-
   .topics-label::after {
     content: '';
     flex: 1;
