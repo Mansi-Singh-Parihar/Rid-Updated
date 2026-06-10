@@ -26,16 +26,16 @@ router.get("/forgot-password", (req, res) => {
 // =============================
 router.get("/create-admin", async (req, res) => {
   try {
-    const existing = await Admin.findOne({ email: "deepak232a@gmail.com" });
+    const existing = await Admin.findOne({ email: "saurabh231018@gmail.com" });
     if (existing) {
       return res.send("Admin already exists");
     }
 
-    const hashed = await bcrypt.hash("Ritanshu@9279554156kumar", 10);
+    const hashed = await bcrypt.hash("Saurabh@6386", 10);
 
     await Admin.create({
       name: "Super Admin",
-      email: "deepak232a@gmail.com",
+      email: "saurabh231018@gmail.com",
       password: hashed,
       role: "admin"
     });

@@ -71,31 +71,21 @@
 
     </div>
     <!-- Hero slider with BIG class names -->
-    <section class="bada-hero">
-     <% if (banner && banner.fileType === "video") { %>
+<section class="bada-hero">
+  <% if (banner && banner.fileType === "video") { %>
+    <video autoplay muted loop playsinline class="bada-video">
+      <source src="<%= banner.fileUrl %>">
+    </video>
 
-<video autoplay muted loop playsinline class="bada-bg-video">
-  <source src="<%= banner.fileUrl %>">
-</video>
+  <% } else if (banner && banner.fileType === "image") { %>
+    <img src="<%= banner.fileUrl %>" alt="Banner" class="bada-image">
 
-<% } else if (banner && banner.fileType === "image") { %>
-
-<img
-  src="<%= banner.fileUrl %>"
-  class="bada-bg-video"
-  style="width:100%;height:100%;object-fit:cover;"
->
-
-<% } else { %>
-
-<video autoplay muted loop playsinline class="bada-bg-video">
-  <source src="/assets/bg.mp4">
-</video>
-
-<% } %>
-
-     
-    </section>
+  <% } else { %>
+    <video autoplay muted loop playsinline class="bada-video">
+      <source src="/assets/bg.mp4">
+    </video>
+  <% } %>
+</section>
     <!------line tages -->
     <div class="hero-clear"></div>
     <!-----complated-->
