@@ -551,23 +551,57 @@
 
     // State
     const settingsState = {
-      account: { emailPref: true },
-      notification: { push: true, email: false, subscriptions: true, comments: true, recommendations: false },
-      playback: { autoPlay: true, volumeNorm: true, perfStats: false, ambientMode: true, videoQuality: "Auto (720p)" },
-      downloads: { smartDownloads: false, deleteAfter30: true, wifiOnly: true, downloadQuality: "Medium (480p)" },
-      privacy: { privatePlaylists: true, watchHistory: false, incognitoDefault: false, subscriptionsVisibility: "Private" },
-      connectedApps: { discord: false, spotify: "Connected", twitch: "Disconnected", playGames: "Not linked" },
-      billing: { autoRenewal: false, premiumStatus: "Inactive" },
-      monetization: {
-        enabled: false,
-        status: "Inactive",
-        paymentLinked: false,
-        paymentAccount: "Not linked",
-        estimatedEarnings: "₹0.00",
-        threshold: "₹100"
-      },
-      advanced: { devOptions: false, debugLogging: false, codecPref: "Automatic" }
-    };
+  account: { emailPref: true },
+  notification: {
+    push: true,
+    email: false,
+    subscriptions: true,
+    comments: true,
+    recommendations: false
+  },
+  playback: {
+    autoPlay: true,
+    volumeNorm: true,
+    perfStats: false,
+    ambientMode: true,
+    videoQuality: "Auto (720p)"
+  },
+  downloads: {
+    smartDownloads: false,
+    deleteAfter30: true,
+    wifiOnly: true,
+    downloadQuality: "Medium (480p)"
+  },
+  privacy: {
+    privatePlaylists: true,
+    watchHistory: false,
+    incognitoDefault: false,
+    subscriptionsVisibility: "Private"
+  },
+  connectedApps: {
+    discord: false,
+    spotify: "Connected",
+    twitch: "Disconnected",
+    playGames: "Not linked"
+  },
+  billing: {
+    autoRenewal: false,
+    premiumStatus: "Inactive"
+  },
+  monetization: {
+    enabled: false,
+    status: "Pending",
+    paymentLinked: false,
+    paymentAccount: "Not linked",
+    estimatedEarnings: "₹0.00",
+    threshold: "₹100"
+  },
+  advanced: {
+    devOptions: false,
+    debugLogging: false,
+    codecPref: "Automatic"
+  }
+};
 
     // Content map
     const contentMap = {
@@ -869,7 +903,28 @@
         if (section) setActiveSection(section);
       });
     });
+fetch("/api/monetization-status")
+  .then(res => res.json())
+  .then(data => {
 
+    if (data.status === "Approved") {
+
+      settingsState.monetization.status = "Active";
+
+    } else if (data.status === "Pending") {
+
+      settingsState.monetization.status = "Pending";
+
+    } else {
+
+      settingsState.monetization.status = "Inactive";
+
+    }
+
+  })
+  .catch(err => {
+    console.log(err);
+  });
     // Initial render
     setActiveSection('account');
   </script>

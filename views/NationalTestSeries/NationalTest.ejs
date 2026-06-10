@@ -11,30 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/Allindiatestserice/testserice.css">
     <link rel="icon" type="image/png" href="/assets/Allindiatest/nationaltesticon1.jpeg">
-    <style>
-        .thumbnail-placeholder {
-            width: 100%;
-            height: 260px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            color: #fff;
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 1.4;
-            text-transform: capitalize;
-        }
-
-        .thumbnail img {
-            width: 100%;
-            height: 260px;
-            object-fit: cover;
-            border-radius: 12px;
-        }
-    </style>
+   
 </head>
 
 <body>
@@ -156,7 +133,7 @@
                                                                     <button type="button" class="follow-btn"
                                                                         id="followBtn-<%= test.createdBy._id %>"
                                                                         onclick="event.stopPropagation(); followUser('<%= test.createdBy._id %>')">
-                                                                        👤 Follow
+                                                                        Follow
                                                                     </button>
 
                                                                     <% } else { %>
@@ -175,28 +152,35 @@
                                                 </div>
                                                 <div class="channel-name" <% if (test.createdBy && test.createdBy._id) {
                                                     %>
+
                                                     onclick="event.stopPropagation();
                                                     window.location.href='/api/profile/<%= test.createdBy._id %>'"
                                                         <% } %>
                                                             >
 
-                                                            <%= test.createdBy?.name %> • <%= test.subject %>
+                                                            <%= test.createdBy?.name %>
 
-                                                                    <% if (test.createdBy && test.createdBy._id) { %>
+                                                                <% if (test.createdBy && test.createdBy._id) { %>
 
-                                                                        • <span
-                                                                            id="followerCount-<%= test.createdBy._id %>">
-                                                                            👥 <%= test.createdBy.followers?.length || 0
-                                                                                %>
-                                                                        </span> followers
+                                                                    • <span
+                                                                        id="followerCount-<%= test.createdBy._id %>">
+                                                                        👥 <%= test.createdBy.followers?.length || 0 %>
+                                                                    </span> followers
 
-                                                                        <% } else { %>
+                                                                    <button class="follow-inline-btn"
+                                                                        id="followBtnInline-<%= test.createdBy._id %>"
+                                                                        onclick="event.stopPropagation(); followUser('<%= test.createdBy._id %>')">
+                                                                        Follow
+                                                                    </button>
 
-                                                                            • 👥 0 followers
+                                                                    <% } else { %>
 
-                                                                            <% } %>
+                                                                        • 👥 0 followers
+
+                                                                        <% } %>
 
                                                 </div>
+
                                                 <div class="video-stats">
                                                     <%= formatViews(test.views) %> views • <%= timeAgo(test.createdAt)
                                                             %>
@@ -516,14 +500,32 @@
 
                             // ✅ BUTTON CHANGE
                             const btn = document.getElementById(`followBtn-${teacherId}`);
-                            if (btn) {
-                                btn.innerText = data.following ? "❌ Unfollow" : "👤 Follow";
+                            const inlineBtn = document.getElementById(`followBtnInline-${teacherId}`);
+
+                            if (inlineBtn) {
+                                inlineBtn.innerText = data.following ? " Unfollow" : "👤 Follow";
                             }
+                            if (btn) {
+                                btn.innerText = data.following ? " Unfollow" : "👤 Follow";
+                            }
+
 
                             // ✅ 🔥 FOLLOWER COUNT LIVE UPDATE
                             const countEl = document.getElementById(`followerCount-${teacherId}`);
+
                             if (countEl) {
-                                countEl.innerText = "👥 " + data.count;
+
+                                let currentCount = parseInt(
+                                    countEl.innerText.replace(/[^\d]/g, "")
+                                ) || 0;
+
+                                if (data.following) {
+                                    currentCount++;
+                                } else {
+                                    currentCount = Math.max(currentCount - 1, 0);
+                                }
+
+                                countEl.innerText = "👥 " + currentCount;
                             }
 
                         }

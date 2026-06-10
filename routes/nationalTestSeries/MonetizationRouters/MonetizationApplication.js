@@ -8,7 +8,133 @@ const User = require("../../../models/user");
 const MonetizationApplication = require(
   "../../../models/Monetization/Application"
 );
+router.get("/api/monetization-status", async (req, res) => {
+  try {
 
+    const userId = req.session?.userId;
+
+    if (!userId) {
+      return res.json({
+        status: "Inactive"
+      });
+    }
+
+    const user =
+      await User.findById(userId) ||
+      await Teacher.findById(userId);
+
+    if (!user) {
+      return res.json({
+        status: "Inactive"
+      });
+    }
+
+    const app = await MonetizationApplication.findOne({
+      email: user.email
+    });
+
+    if (!app) {
+      return res.json({
+        status: "Inactive"
+      });
+    }
+
+    return res.json({
+      status: app.status
+    });
+
+  } catch (err) {
+
+    console.log(err);
+
+    return res.json({
+      status: "Inactive"
+    });
+
+  }
+});
+router.post(
+  "/admin/approve-monetization/:id",
+  async (req, res) => {
+    try {
+
+      await MonetizationApplication.findByIdAndUpdate(
+        req.params.id,
+        {
+          status: "Approved",
+          approvedAt: new Date()
+        }
+      );
+
+      res.json({
+        success: true
+      });
+
+    } catch (err) {
+
+      console.log(err);
+
+      res.status(500).json({
+        success: false
+      });
+
+    }
+  }
+);
+router.post(
+  "/admin/reject-monetization/:id",
+  async (req, res) => {
+    try {
+
+      await MonetizationApplication.findByIdAndUpdate(
+        req.params.id,
+        {
+          status: "Rejected"
+        }
+      );
+
+      res.json({
+        success: true
+      });
+
+    } catch (err) {
+
+      res.status(500).json({
+        success: false
+      });
+
+    }
+  }
+);
+
+router.get(
+  "/admin/approved-monetization",
+  async (req, res) => {
+
+    const data =
+      await MonetizationApplication.find({
+        status: "Approved"
+      });
+
+    res.json(data);
+
+  }
+);
+router.get(
+  "/admin/approved-monetization-page",
+  async (req, res) => {
+
+    const users =
+      await MonetizationApplication.find({
+        status: "Approved"
+      });
+
+    res.render(
+      "Admin/monetizationRequest/monetizationSeccsfully",
+      { users }
+    );
+  }
+);
 // Monetization Eligibility Check
 router.get("/api/monetization/check", async (req, res) => {
   try {
@@ -84,7 +210,11 @@ router.get("/api/monetization/check", async (req, res) => {
 router.get("/monetization/apply", (req, res) => {
   res.render("NationalTestSeries/Monetization/apply");
 });
-
+router.get("/monetization-request-submitted", (req, res) => {
+  res.render(
+    "NationalTestSeries/Monetization/Monetization-request-submitted"
+  );
+});
 // Submit Application
 router.post("/monetization/apply", async (req, res) => {
 
@@ -97,12 +227,12 @@ router.post("/monetization/apply", async (req, res) => {
         userAgent: req.headers["user-agent"]
       });
 
-    res.status(201).json({
-      success: true,
-      message:
-        "Monetization request submitted successfully",
-      applicationId: application._id
-    });
+    return res.render(
+  "NationalTestSeries/Monetization/Monetization-request-submitted",
+  {
+    applicationId: application._id
+  }
+);
 
   } catch (error) {
 

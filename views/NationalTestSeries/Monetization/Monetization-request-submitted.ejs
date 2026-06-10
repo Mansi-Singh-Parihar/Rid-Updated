@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RID TECH Success Popup</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+}
+
+/* ==========================
+   POPUP OVERLAY
+========================== */
+
+.success-popup{
+    position:fixed;
+    inset:0;
+    background:rgba(3,7,18,.75);
+    backdrop-filter:blur(12px);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+.success-popup.show{
+    display:flex;
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.success-card{
+    position:relative;
+    width:92%;
+    max-width:520px;
+    overflow:hidden;
+    border-radius:30px;
+    background:rgba(255,255,255,.98);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.35),
+        0 0 0 1px rgba(255,255,255,.3);
+
+    animation:cardShow .45s cubic-bezier(.175,.885,.32,1.275);
+}
+
+@keyframes cardShow{
+    from{
+        opacity:0;
+        transform:translateY(40px) scale(.85);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+/* ==========================
+   TOP HEADER
+========================== */
+
+.success-top{
+    height:150px;
+    background:
+    linear-gradient(
+    135deg,
+    #0f172a,
+    #1e40af,
+    #2563eb
+    );
+
+    position:relative;
+}
+
+.success-top::before{
+    content:'';
+    position:absolute;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:rgba(255,255,255,.08);
+    top:-130px;
+    right:-80px;
+}
+
+.success-top::after{
+    content:'';
+    position:absolute;
+    width:180px;
+    height:180px;
+    border-radius:50%;
+    background:rgba(255,255,255,.06);
+    left:-60px;
+    bottom:-90px;
+}
+
+/* ==========================
+   SUCCESS ICON
+========================== */
+
+.success-icon{
+    position:absolute;
+    left:50%;
+    bottom:-48px;
+    transform:translateX(-50%);
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+    0 15px 40px rgba(37,99,235,.35);
+}
+
+.success-icon i{
+    font-size:56px;
+    color:#22c55e;
+}
+
+/* ==========================
+   BODY
+========================== */
+
+.success-body{
+    padding:75px 35px 35px;
+    text-align:center;
+}
+
+.company-badge{
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+
+    margin-bottom:18px;
+}
+
+.success-body h2{
+    font-size:32px;
+    color:#111827;
+    margin-bottom:12px;
+    font-weight:800;
+}
+
+.success-body p{
+    color:#6b7280;
+    font-size:15px;
+    line-height:1.8;
+}
+
+/* ==========================
+   REVIEW BOX
+========================== */
+
+.review-box{
+    margin-top:22px;
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:18px;
+}
+
+.review-box strong{
+    display:block;
+    color:#111827;
+    margin-bottom:8px;
+}
+
+.review-box p{
+    color:#64748b;
+    font-size:14px;
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.continue-btn{
+    width:100%;
+    border:none;
+    margin-top:25px;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    font-size:16px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    color:white;
+
+    background:
+    linear-gradient(
+    135deg,
+    #2563eb,
+    #1d4ed8
+    );
+
+    transition:.3s;
+}
+
+.continue-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 15px 30px rgba(37,99,235,.35);
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media(max-width:600px){
+
+.success-card{
+    max-width:95%;
+}
+
+.success-body{
+    padding:70px 22px 25px;
+}
+
+.success-body h2{
+    font-size:26px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<button onclick="openSuccessPopup()"
+style="padding:12px 20px;margin:40px;">
+Show Popup
+</button>
+
+<!-- ==========================
+     SUCCESS POPUP
+========================== -->
+
+<div id="successPopup" class="success-popup">
+
+    <div class="success-card">
+
+        <div class="success-top">
+
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+
+        </div>
+
+        <div class="success-body">
+
+            <div class="company-badge">
+                RID TECH MONETIZATION
+            </div>
+
+            <h2>
+                Request Submitted
+            </h2>
+
+            <p>
+                Your monetization request has been submitted successfully.
+                Our review team will verify your account and notify you
+                once the approval process is completed.
+            </p>
+
+            <div class="review-box">
+
+                <strong>
+                    Application Under Review
+                </strong>
+
+                <p>
+                    Verification usually takes
+                    24–72 hours. You will receive
+                    an update after successful review.
+                </p>
+
+            </div>
+
+            <button
+            class="continue-btn"
+            onclick="closeSuccessPopup()">
+
+                Continue To Dashboard
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function openSuccessPopup(){
+    document
+    .getElementById("successPopup")
+    .classList.add("show");
+}
+
+function closeSuccessPopup(){
+    document
+    .getElementById("successPopup")
+    .classList.remove("show");
+}
+
+
+</script>
+
+</body>
+</html>

@@ -498,21 +498,53 @@
   };
 
   async function loadRequests() {
-    const container = document.getElementById("requests");
-    container.innerHTML = `<div class="loading-spinner"><div class="spinner"></div><p>Fetching latest requests...</p></div>`;
-    try {
-      const res = await fetch("/admin/monetization-requests");
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      cachedRequests = data;
-      const countSpan = document.getElementById("requestCountSpan");
-      if (countSpan) countSpan.innerText = cachedRequests.length;
-      renderFilteredCards();
-    } catch (err) {
-      console.error(err);
-      container.innerHTML = `<div class="empty-state"><i class="fas fa-satellite-dish" style="font-size: 2rem; color:#a0bbdd;"></i><h3>Connection error</h3><p>Unable to load requests. Check network.</p><button onclick="loadRequests()" style="margin-top:1rem; padding:0.5rem 1.5rem; border-radius:60px; border:none; background:#fff; cursor:pointer;">Retry <i class="fas fa-redo-alt"></i></button></div>`;
+  const container = document.getElementById("requests");
+
+  container.innerHTML = `
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Fetching latest requests...</p>
+    </div>
+  `;
+
+  try {
+
+    const res = await fetch("/admin/monetization-requests");
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
     }
+
+    const data = await res.json();
+
+    // Sirf Pending Requests
+    cachedRequests = data.filter(
+      item => item.status === "Pending"
+    );
+
+    const countSpan =
+      document.getElementById(
+        "requestCountSpan"
+      );
+
+    if (countSpan) {
+      countSpan.innerText =
+        cachedRequests.length;
+    }
+
+    renderFilteredCards();
+
+  } catch (err) {
+
+    console.error(err);
+
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Connection Error</h3>
+      </div>
+    `;
   }
+}
 
   // filtering + search logic
   function filterRequests() {
