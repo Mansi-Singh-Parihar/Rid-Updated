@@ -72,7 +72,7 @@
     </div>
     <!-- Hero slider with BIG class names -->
     <section class="bada-hero">
-     <% if (banner?.fileType === "video") { %>
+     <% if (banner && banner.fileType === "video") { %>
 
 <video autoplay muted loop playsinline class="bada-bg-video">
   <source src="<%= banner.fileUrl %>">
@@ -94,11 +94,7 @@
 
 <% } %>
 
-
-      <div class="bada-overlay">
-        
-      </div>
-
+     
     </section>
     <!------line tages -->
     <div class="hero-clear"></div>
@@ -654,7 +650,7 @@
           window.location.href = "/convertimage"
         }
         function resize() {
-          window.location.href = "/resize-image"
+          window.location.href = "/resize"
 
         }
         function crop() {
