@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Code Arena | Solve Problem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
+  <link rel="stylesheet" href="/css/problem.css">
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo"><i class="fas fa-laptop-code"></i> Code Arena</div>
+    <div class="problem-nav">
+      <button class="problem-list-btn" id="problemListBtn"><i class="fas fa-list"></i> Problem List</button>
+      <div class="nav-buttons">
+        <button class="nav-arrow" id="prevProblem"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-arrow" id="nextProblem"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <div class="timer-header-container" id="headerTimerContainer">
+        <div class="timer-mode-selector" id="timerModeSelector">
+          <button class="timer-mode-btn active" data-mode="stopwatch">⏱️</button>
+          <button class="timer-mode-btn" data-mode="timer">⏲️</button>
+        </div>
+        <span class="timer-display-header" id="headerTimerDisplay">00:00:00</span>
+        <div class="timer-control-header">
+          <button id="headerTimerStartPause" title="Start/Pause"><i class="fas fa-play"></i></button>
+          <button id="headerTimerReset" title="Reset"><i class="fas fa-undo-alt"></i></button>
+        </div>
+        <div class="timer-minutes-input" id="timerMinutesContainer" style="display: none;">
+          <input type="number" id="headerTimerMinutes" min="1" max="60" value="1" style="width: 45px;"> min
+        </div>
+      </div>
+      <button class="dark-toggle" id="darkToggle"><i class="fas fa-moon"></i></button>
+    </div>
+  </div>
+
+  <!-- Overlay and Sidebar (unchanged) -->
+  <div class="overlay" id="overlay"></div>
+  <div class="problem-sidebar" id="problemSidebar">
+    <div class="sidebar-header">
+      <h3><i class="fas fa-list"></i> Problem List</h3>
+      <button class="sidebar-close" id="sidebarClose">&times;</button>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" id="sidebarSearch" placeholder="Search questions...">
+    </div>
+    <div class="problems-list-container" id="problemsListContainer"></div>
+  </div>
+
+  <div class="main-container">
+    <div class="left-panel" id="leftPanel">
+      <div class="panel-tabs">
+        <button class="panel-tab active" data-tab="description">📖 Description</button>
+        <button class="panel-tab" data-tab="editorial">📘 Editorial</button>
+        <button class="panel-tab" data-tab="solutions">💡 Solutions</button>
+        <button class="panel-tab" data-tab="submissions">📊 Submissions</button>
+      </div>
+      <div class="panel-content" id="panelContent"><div class="loading"><i class="fas fa-spinner fa-spin"></i> Loading...</div></div>
+    </div>
+    <div class="resizer" id="resizer"></div>
+    <div class="right-panel" id="rightPanel">
+      <div class="language-tabs" id="languageTabs"></div>
+      <textarea id="codeEditor"></textarea>
+      <div class="action-buttons">
+        <button class="run-btn" id="runBtn"><i class="fas fa-play"></i> Run</button>
+        <button class="submit-btn" id="submitBtn"><i class="fas fa-check"></i> Submit</button>
+        <button class="hint-btn" id="hintBtn"><i class="fas fa-lightbulb"></i> Hint</button>
+      </div>
+      <div class="test-results" id="testResults"></div>
+      <div class="output-area" id="outputArea">▶ Output will appear here...</div>
+      <div class="hint-panel" id="hintPanel">
+        <button class="hint-level" data-level="1">Hint 1</button>
+        <button class="hint-level" data-level="2">Hint 2</button>
+        <button class="hint-level" data-level="3">Hint 3</button>
+        <div class="hint-text" id="hintText" style="margin-top: 0.8rem;">Click a hint level for AI guidance.</div>
+      </div>
+    </div>
+  </div>
+<script src="/js/data/problem.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/clike/clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/closebrackets.min.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/questions.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/basic-io.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/conditions.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/loops.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/digit-problems.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/range-problems.js"></script>
+  <script src="/js\Code Arena Questions/Problemsolving/factor-divisibility.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/special-numbers.js"></script>
+  <script src ="/js/Code Arena Questions/Problemsolving/math-logic.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/patterns.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/conversion.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/number-problems.js"></script>
+  <script src="/js/Code Arena Questions/Problemsolving/string-problems.js"></script>
+</body>
+</html>

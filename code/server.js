@@ -749,5 +749,32 @@ router.get("/", (req, res) => {
 
 });
 
+router.get('/code-arena', (req, res) => {
+  res.render('practice-hub');
+});
+// ========== PROBLEM PAGE ROUTE ==========
+router.get("/problem", (req, res) => {
+  const problemId = req.query.id;
+  
+  if (!problemId) {
+    return res.redirect("/code-arena");
+  }
+  
+  // Render problem page with the ID
+  res.render("problem", { 
+    id: problemId,
+    title: "Solve Problem | Code Arena"
+  });
+});
+
+// Alternative: If you want /problem/:id format (more common)
+router.get("/problem/:id", (req, res) => {
+  const problemId = req.params.id;
+  
+  res.render("problem", { 
+    id: problemId,
+    title: "Solve Problem | Code Arena"
+  });
+});
 // ================= EXPORT =================
 module.exports = router;
