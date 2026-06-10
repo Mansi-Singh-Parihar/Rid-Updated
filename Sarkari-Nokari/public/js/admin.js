@@ -375,7 +375,7 @@ async function addResult() {
 async function editEntry(type, id) {
   if (!token) { showAlert('Please login first!', 'error'); return; }
   try {
-    const res  = await fetch(`/admin/${type}/${id}`, { headers: { 'Authorization': 'Bearer ' + token } });
+    const res  = await fetch(`/nokari/admin/${type}/${id}`, { headers: { 'Authorization': 'Bearer ' + token } });
     if (!res.ok) throw new Error('Failed to fetch entry');
     const data = await res.json();
 
@@ -486,7 +486,7 @@ async function updateEntry(type, id) {
   const endpointMap = { job: 'job', admit: 'admit', result: 'result', exam: 'exam' };
 
   try {
-    const res  = await fetch(`/admin/${endpointMap[type]}/${id}`, {
+    const res  = await fetch(`/nokari/admin/${endpointMap[type]}/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body: JSON.stringify(body),
@@ -640,7 +640,7 @@ async function deleteEntry(type, id, reloadFn) {
   const el = document.getElementById(`entry-${id}`);
   if (el) { el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; }
   try {
-    const res = await fetch(`/admin/${type}/${id}`, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
+    const res = await fetch(`/nokari/admin/${type}/${id}`, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + token } });
     if (res.ok) { showAlert('Entry deleted successfully', 'success'); reloadFn(); }
     else {
       const data = await res.json().catch(() => ({}));
@@ -1650,7 +1650,7 @@ async function loadExamGuides() {
 async function editExamGuide(id) {
   if (!token) { showAlert('Please login first!', 'error'); return; }
   try {
-    const res  = await fetch(`/admin/examguide/${id}`, { headers: { 'Authorization': 'Bearer ' + token } });
+    const res  = await fetch(`/nokari/admin/examguide/${id}`, { headers: { 'Authorization': 'Bearer ' + token } });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
 
@@ -1707,7 +1707,7 @@ async function updateExamGuide(id) {
   catch (e) { showAlert('Invalid JSON: ' + e.message, 'error'); return; }
 
   try {
-    const res  = await fetch(`/admin/examguide/${id}`, {
+    const res  = await fetch(`/nokari/admin/examguide/${id}`, {
       method  : 'PUT',
       headers : { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
       body    : JSON.stringify(payload),
@@ -1733,7 +1733,7 @@ async function deleteExamGuide(id) {
   if (el) { el.style.opacity = '0.4'; el.style.pointerEvents = 'none'; }
 
   try {
-    const res = await fetch(`/admin/examguide/${id}`, {
+    const res = await fetch(`/nokari/admin/examguide/${id}`, {
       method  : 'DELETE',
       headers : { 'Authorization': 'Bearer ' + token },
     });

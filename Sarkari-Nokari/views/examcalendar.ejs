@@ -44,7 +44,7 @@ if (typeof totalCount === 'undefined') { var totalCount = 0; }
     <div class="filter-scroll">
       <% const categories = ["All","UPSC","SSC","Banking","Railway","Defence","Teaching","Police","State PSC"]; %>
       <% categories.forEach(cat => { %>
-        <% const qs = new URLSearchParams(); if (cat !== 'All') qs.set('category', cat); const href = '/examcalendar' + (qs.toString() ? '?' + qs.toString() : ''); %>
+        <% const qs = new URLSearchParams(); if (cat !== 'All') qs.set('category', cat); const href = '/nokari/examcalendar' + (qs.toString() ? '?' + qs.toString() : ''); %>
         <a href="<%= href %>" class="filter-pill <%= activeCategory === cat ? 'active' : '' %>">
           <%= cat %><span><%= cat === 'All' ? totalCount : (categoryCounts[cat] || 0) %></span>
         </a>
@@ -278,7 +278,7 @@ body {
 
 .filter-pill:hover:not(.active) {
   border-color: var(--th-primary);
-  transform: translateY(-1px);
+  transform: translateY(-0px);
 }
 
 /* ── Month ── */
