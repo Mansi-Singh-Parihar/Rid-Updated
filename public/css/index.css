@@ -2492,43 +2492,69 @@
   }
 
   /* ── SERVICE TABS ──────────────────────────────── */
-  .rh-tabs {
+ .rh-tabs{
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 17px 0 0;
-    animation: rh-up .6s .05s both;
-  }
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0;
+}
 
-  .rh-tab {
-    display: inline-flex;
+.rh-tab{
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border-radius: 40px;
-    font-size: .8rem;
+    text-align: center;
+
+    min-height: 52px;
+    padding: 12px 24px;
+
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 600;
-    border: 1.5px solid transparent;
     text-decoration: none;
-    transition: all .22s ease;
-    white-space: nowrap;
-  }
 
-  .rh-tab:hover {
-    transform: translateY(-2px);
-  }
+    color: #fff;
+    backdrop-filter: blur(10px);
 
-  .rt-blue {
-    background: rgba(77, 168, 218, .12);
-    border-color: rgba(77, 168, 218, .35);
-    color: #7ecfef
-  }
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
 
-  .rt-orange {
-    background: rgba(255, 107, 53, .11);
-    border-color: rgba(255, 107, 53, .33);
-    color: #ffaa80
-  }
+.rh-tab:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
+
+/* Color Variants */
+.rt-blue{
+    background: linear-gradient(135deg,#0d6efd,#4da8da);
+}
+
+.rt-purple{
+    background: linear-gradient(135deg,#6f42c1,#9b59b6);
+}
+
+.rt-orange{
+    background: linear-gradient(135deg,#ff6b35,#ff9f43);
+}
+
+.rt-green{
+    background: linear-gradient(135deg,#00b894,#20c997);
+}
+
+@media (max-width:768px){
+    .rh-tabs{
+        gap: 8px;
+    }
+
+    .rh-tab{
+        flex: 1 1 calc(50% - 8px);
+        min-height: 48px;
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+}
 
   .rt-green {
     background: rgba(52, 199, 89, .11);
