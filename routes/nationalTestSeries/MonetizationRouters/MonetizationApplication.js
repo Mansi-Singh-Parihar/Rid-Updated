@@ -175,19 +175,19 @@ router.get("/api/monetization/check", async (req, res) => {
       );
     });
 
-    if (followers < 2) {
+    if (followers < 500) {
       return res.json({
         success: false,
         message:
-          `❌ Monetization not available\n\nFollowers: ${followers}/2`
+          `❌ Monetization not available\n\nFollowers: ${followers}/500`
       });
     }
 
-    if (highestViews < 2) {
+    if (highestViews < 1000) {
       return res.json({
         success: false,
         message:
-          `❌ Monetization not available\n\nHighest Views: ${highestViews}/2`
+          `❌ Monetization not available\n\nHighest Views: ${highestViews}/1000`
       });
     }
 
