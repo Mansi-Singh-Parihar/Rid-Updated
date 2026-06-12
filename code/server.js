@@ -606,133 +606,122 @@ router.post("/ai-hint", async (req, res) => {
 
   try {
 
-    const {
-      question,
-      hint1,
-      level,
-    } = req.body;
+    const { question } = req.body;
 
-    const systemPrompt =
-      `You are a coding tutor like LeetCode.`;
+    const systemPrompt = `
+You are a coding tutor.
 
-    const userPrompt =
-      `Question: ${question}`;
+STRICT RULES:
+- Give only ONE coding hint.
+- Maximum 12 words.
+- Single line only.
+- No explanation.
+- No steps.
+- No solution.
+- No code.
+- No examples.
 
-    const body =
-      JSON.stringify({
+Good:
+"Use a loop to compare adjacent elements."
 
-        model:
-          "llama-3.3-70b-versatile",
+Bad:
+"First create a loop. Then compare values..."
+`;
 
-        max_tokens: 120,
+    const userPrompt = `Question: ${question}`;
 
-        temperature: 0.5,
+    const body = JSON.stringify({
 
-        messages: [
+      model: "llama-3.3-70b-versatile",
 
-          {
-            role: "system",
-            content: systemPrompt,
-          },
+      max_tokens: 20,
 
-          {
-            role: "user",
-            content: userPrompt,
-          },
+      temperature: 0.2,
 
-        ],
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
+        {
+          role: "user",
+          content: userPrompt,
+        },
+      ],
 
-      });
+    });
 
     const options = {
 
       hostname: "api.groq.com",
 
-      path:
-        "/openai/v1/chat/completions",
+      path: "/openai/v1/chat/completions",
 
       method: "POST",
 
       headers: {
 
-        "Content-Type":
-          "application/json",
+        "Content-Type": "application/json",
 
-        Authorization:
-          `Bearer ${process.env.GROQ_API_KEY}`,
+        Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
 
       },
 
     };
 
-    const apiReq =
-      https.request(
-        options,
-        (apiRes) => {
+    const apiReq = https.request(options, (apiRes) => {
 
-          let data = "";
+      let data = "";
 
-          apiRes.on(
-            "data",
-            (chunk) =>
-              data += chunk
-          );
+      apiRes.on("data", (chunk) => {
+        data += chunk;
+      });
 
-          apiRes.on(
-            "end",
-            () => {
+      apiRes.on("end", () => {
 
-              try {
+        try {
 
-                const parsed =
-                  JSON.parse(data);
+          const parsed = JSON.parse(data);
 
-                const hint =
-                  parsed
-                    .choices?.[0]
-                    ?.message
-                    ?.content
-                    ?.trim()
-                  ||
-                  "Try smaller steps.";
+          let hint =
+            parsed?.choices?.[0]?.message?.content?.trim() ||
+            "Think about the required logic.";
 
-                res.json({ hint });
+          // Force single line
+          hint = hint.split("\n")[0];
 
-              }
+          // Max length
+          if (hint.length > 80) {
+            hint = hint.substring(0, 80);
+          }
 
-              catch {
+          res.json({ hint });
 
-                res.status(500).json({
-                  error:
-                    "Parse error",
-                });
+        } catch (err) {
 
-              }
-
-            }
-          );
+          res.status(500).json({
+            error: "Parse error",
+          });
 
         }
-      );
 
-    apiReq.on(
-      "error",
-      () => {
+      });
 
-        res.status(500).json({
-          error: "API error",
-        });
+    });
 
-      }
-    );
+    apiReq.on("error", () => {
+
+      res.status(500).json({
+        error: "API error",
+      });
+
+    });
 
     apiReq.write(body);
 
     apiReq.end();
 
-  }
-
-  catch {
+  } catch (err) {
 
     res.status(500).json({
       error: "Server error",

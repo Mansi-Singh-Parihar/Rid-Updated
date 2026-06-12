@@ -1470,3 +1470,59 @@
 .feature-card {
   cursor: pointer;
 }
+@media (max-width: 700px) {
+  .button-group {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Back button: first in row 1 */
+  .button-group .back-btn {
+    order: 1;
+    width: calc(50% - 0.25rem);
+    flex: 0 0 auto;
+  }
+
+  /* Next button: second in row 1 (moved from last position using order) */
+  .button-group .next-btn {
+    order: 2;
+    width: calc(50% - 0.25rem);
+    flex: 0 0 auto;
+  }
+
+  /* Solution, Hint, Run Code: row 2, each one‑third width */
+  .button-group .toggle-solution {
+    order: 3;
+    width: calc(33.333% - 0.34rem);
+    flex: 0 0 auto;
+  }
+  .button-group .hint-btn {
+    order: 4;
+    width: calc(33.333% - 0.34rem);
+    flex: 0 0 auto;
+  }
+  .button-group .run-code-btn {
+    order: 5;
+    width: calc(33.333% - 0.34rem);
+    flex: 0 0 auto;
+  }
+
+  /* Ensure text fits well */
+  .button-group button {
+    white-space: normal;
+    word-break: keep-all;
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.2rem;
+  }
+}
+
+/* Extra small devices (below 480px) further reduce font size */
+@media (max-width: 480px) {
+  .button-group button {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.1rem;
+  }
+}
+/* ===== END: RESPONSIVE BUTTON LAYOUT ===== */
