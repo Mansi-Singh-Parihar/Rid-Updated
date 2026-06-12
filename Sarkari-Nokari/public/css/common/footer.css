@@ -138,6 +138,7 @@ footer .container {
   position: relative;
   padding-bottom: 5px;
   font-weight: 600;
+  margin-left: 40px;
 }
 
 .footer-links h3:after,

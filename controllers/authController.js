@@ -84,9 +84,9 @@ if (user.role === "teacher") {
 
     if (user.role === "organisation") {
 
-      if (user.organisationType === "Library") {
-        return res.redirect("/library-dashboard");
-      }
+     if (user.organisationType === "Library") {
+  return res.redirect("/library/dashboard");
+}
 
       if (user.organisationType === "DCA") {
         return res.redirect("/computer");

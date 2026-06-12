@@ -123,7 +123,7 @@ function updateHintButton(btn, nextLevel) {
 // FETCH from Groq API
 // ============================================================
 async function fetchGroqHint(question, level) {
-  const response = await fetch("/tech-interview/ai-hint", {
+  const response = await fetch('/tech-interview/ai-hint', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

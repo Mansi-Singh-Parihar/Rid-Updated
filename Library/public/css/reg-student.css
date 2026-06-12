@@ -1,0 +1,254 @@
+        /* Graphics aur Fonts Setup */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ==========================================================================
+   1. DESKTOP & LARGE LAPTOPS (Base Styles)
+   ========================================================================== */
+.register-panel {
+    background-color: #e1eaf3;
+    width: 200%;
+    max-width: 950px; /* Desktop par proper space ke liye width thodi badhai hai */
+    padding: 20px;
+    border-radius: 15px;
+    margin-left: 50px;
+    margin-top: 10px;
+
+}
+
+/* Header Section */
+.register-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #7a8b9e;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.register-header h1 {
+    font-family: 'Playfair Display', serif;
+    color: #2c3e50;
+    font-size: 24px;
+}
+
+/* Cancel Button */
+.btn-cancel {
+    background-color: #f17373;
+    color: white;
+    text-decoration: none;
+    padding: 10px 35px;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: background 0.3s ease;
+    white-space: nowrap; /* Text break na ho */
+}
+
+.btn-cancel:hover {
+    background-color: #e05c5c;
+}
+
+/* Grid Layout (Standard 2 Columns for Desktop/Laptop) */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 60px; /* Desktop par accha gap */
+    row-gap: 6px;
+    margin-bottom: 20px;
+}
+
+/* Form Group Layout */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+/* Input aur Select Fields Styling */
+.form-group input, 
+.form-group select {
+    background-color: #fffafb;
+    border: none;
+    outline: none;
+    padding: 8px 15px;
+    border-radius: 30px; /* Pill-shaped design */
+    font-size: 16px;
+    color: #4a4a4a;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    width: 100%;
+}
+
+.form-group input::placeholder {
+    color: #555;
+    opacity: 0.8;
+}
+
+/* Custom Dropdown Arrow */
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%234a4a4a' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+}
+
+/* Submit Button */
+.submit-btn {
+    /* background-color: #788eff; */
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    border-radius: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(120, 142, 255, 0.25);
+    transition: background 0.3s, transform 0.1s;
+}
+
+.submit-btn:hover {
+    background-color: #6177f2;
+}
+
+.submit-btn:active {
+    transform: scale(0.99);
+}
+
+/* Toast/Alert Message */
+.form-toast {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    border: 1px solid #c3e6cb;
+}
+
+
+/* ==========================================================================
+   2. TABLETS & SMALL LAPTOPS (Screen size 1024px se choti)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .register-panel {
+        max-width: 750px;
+    }
+    .form-grid {
+        column-gap: 35px; /* Spacing thodi kam kar di taaki adjust ho sake */
+        row-gap: 20px;
+    }
+    .register-header h1 {
+        font-size: 32px;
+    }
+}
+
+
+/* ==========================================================================
+   3. SMALL TABLETS & LARGE PHONES (Screen size 768px se choti)
+   ========================================================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    /* 2 Columns se badal kar 1 Column grid kar diya */
+    .form-grid {
+        grid-template-columns: 1fr; 
+        row-gap: 18px;
+        margin-bottom: 30px;
+    }
+    .register-header {
+        margin-bottom: 25px;
+    }
+    .register-header h1 {
+        font-size: 28px;
+    }
+    .btn-cancel {
+        padding: 8px 25px;
+        font-size: 16px;
+    }
+    .submit-btn {
+        font-size: 20px;
+        padding: 14px;
+    }
+}
+
+
+/* ==========================================================================
+   4. MOBILE PHONES (Screen size 480px se choti)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .register-panel {
+        padding: 12px;
+        border-radius: 10px;
+        width: 100%;
+        margin-right: 100px;
+    }
+
+    .register-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .register-header h1 {
+        font-size: 20px;
+    }
+
+    .btn-cancel {
+        padding: 8px 20px;
+        font-size: 13px;
+        border-radius: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+        padding-left: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 14px;
+        padding: 10px 12px;
+        border-radius: 25px;
+        height: 42px;
+    }
+
+    .submit-btn {
+        font-size: 18px;
+        padding: 12px;
+        border-radius: 15px;
+    }
+
+    .form-toast {
+        font-size: 13px;
+        padding: 10px 15px;
+        border-radius: 8px;
+    }
+}

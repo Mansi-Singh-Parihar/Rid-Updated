@@ -297,39 +297,58 @@ router.get("/", async (req, res) => {
 
 router.post("/like/:id", async (req, res) => {
   try {
+
     const testId = req.params.id;
     const userId = req.session.userId;
 
-    const test = await Test.findById(testId); // ✅ FIXED
+    // 🔐 LOGIN REQUIRED
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        loginRequired: true,
+        message: "Please login first"
+      });
+    }
+
+    const test = await Test.findById(testId);
 
     if (!test) {
-      return res.status(404).json({ msg: "Test not found" });
+      return res.status(404).json({
+        msg: "Test not found"
+      });
     }
 
-    let alreadyLiked = false;
-
-    if (userId) {
-      alreadyLiked = test.likedBy.includes(userId);
-    }
+    const alreadyLiked =
+      test.likedBy.includes(userId);
 
     if (alreadyLiked) {
+
       test.likes = Math.max(0, test.likes - 1);
       test.likedBy.pull(userId);
+
     } else {
+
       test.likes += 1;
-      if (userId) test.likedBy.push(userId);
+      test.likedBy.push(userId);
+
     }
 
     await test.save();
 
     res.json({
+      success: true,
       likes: test.likes,
       liked: !alreadyLiked
     });
 
   } catch (err) {
+
     console.log(err);
-    res.status(500).json({ msg: "Server error" });
+
+    res.status(500).json({
+      msg: "Server error"
+    });
+
   }
 });
 router.get("/test/:id", async (req, res) => {

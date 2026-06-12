@@ -691,28 +691,70 @@
   white-space: nowrap;
 }
 
-/* mobile search suggustion */
+/* ===== MOBILE SEARCH SUGGESTIONS ===== */
 @media (max-width: 768px) {
-  .search-suggestions {
-    margin-left: 120px;
-    position: absolute;
-    top: 100%;
-    left: -30%;         /* Extend beyond left edge */
-    right: -30%;        /* Extend beyond right edge */
-    width: auto;        /* Let left/right control width */
-    max-height: 400px;
-    overflow-y: auto;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    z-index: 3002;
-    margin-top: -1px;
-  }
-  
-  /* Make the overlay not clip the wider suggestions */
+
   .search-overlay {
     overflow: visible;
+    position: relative;
+  }
+
+  .search-suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+
+    margin: 0 !important;
+
+    max-height: 320px;
+    overflow-y: auto;
+
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow:
+      0 10px 25px rgba(0,0,0,.12),
+      0 2px 6px rgba(0,0,0,.06);
+
+    z-index: 9999;
+  }
+
+  .suggestion-item {
+    padding: 14px 16px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .suggestion-item:hover,
+  .suggestion-item.active {
+    background: #f1f5f9;
+  }
+
+  .sug-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.45;
+  }
+
+  .sug-type {
+    font-size: 10px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .search-suggestions::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .search-suggestions::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 20px;
   }
 }
 

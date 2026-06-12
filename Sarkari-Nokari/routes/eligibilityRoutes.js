@@ -9,7 +9,7 @@ const {
 } = require("../middleware/validation");
 
 const router = express.Router();
-
+router.get('/guide/:id', eligibilityController.getExamGuidePage);
 router.get('/', eligibilityController.showForm);
 router.post('/check', validateEligibilityInput, eligibilityController.checkEligibility);
 router.get('/exam/:id', eligibilityController.getExamDetails);

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Code Arena By RID Tech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/practice.css">
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-container">
+    <div class="nav-left">
+      <div class="logo-main"><i class="fas fa-laptop-code"></i> Code Arena</div>
+      <div class="powered-by">by RID Tech </div>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" data-nav="problems">Problems</button>
+      <button class="nav-link" data-nav="leaderboard">Leaderboard</button>
+      <button class="nav-link" data-nav="contests">Contests</button>
+      <button class="nav-link" data-nav="dashboard">Coding Journey ⭐</button>
+    </div>
+    <div class="nav-right">
+      <div class="search-wrapper">
+        <i class="fas fa-search"></i>
+        <input type="text" id="globalSearchInput" placeholder="Search...">
+      </div>
+      <!-- <div class="profile-icon" id="profileIcon"><i class="fas fa-user"></i></div> -->
+      <button class="dark-toggle" id="darkModeToggle"><i class="fas fa-moon"></i> Dark</button>
+    </div>
+  </div>
+</div>
+
+<div id="profileModal" class="profile-modal">
+  <div class="modal-header">
+    <div class="modal-avatar"><i class="fas fa-user"></i></div>
+    <div class="modal-info">
+      <h4 id="modalUsername">CodeCoder</h4>
+      <p>Member since 2025</p>
+    </div>
+  </div>
+  <div class="modal-stats">
+    <div><span>✅ Solved:</span><span id="modalSolved">0</span></div>
+    <div><span>🔥 Streak:</span><span id="modalStreak">0</span></div>
+    <div><span>🏆 XP:</span><span id="modalXP">0</span></div>
+    <div><span>⭐ Level:</span><span id="modalLevel">1</span></div>
+  </div>
+  <div class="modal-footer">
+    <button id="closeProfileModal">Close</button>
+  </div>
+</div>
+
+<div class="main-container">
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboardView" style="display: none;">
+    <div class="hero-section">
+      <div class="hero-content"><h1>Sharpen Your Coding Skills</h1><p>Solve challenges, earn XP, and climb the leaderboard</p></div>
+      <div class="hero-stats"><div class="hero-stat"><div class="number" id="heroStreak">0</div><div class="label">Day Streak</div></div><div class="hero-stat"><div class="number" id="heroSolved">0</div><div class="label">Problems Solved</div></div><div class="hero-stat"><div class="number" id="heroRank">1</div><div class="label">Global Rank</div></div></div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="stat-card"><div class="stat-header"><span><i class="fas fa-fire"></i> Current Streak</span><span>+10 XP daily</span></div><div class="stat-value" id="streakValue">0</div><div class="progress-bar"><div class="progress-fill" id="streakProgress"></div></div><p style="font-size:0.7rem;" id="streakMsg">Solve a problem today to continue</p></div>
+      <div class="stat-card"><div class="stat-header"><span><i class="fas fa-check-circle"></i> Solved Problems</span><span>Total</span></div><div class="stat-value" id="totalSolved">0</div><div class="progress-bar"><div class="progress-fill" id="solvedFill"></div></div><p>Completion: <span id="completionPercent">0</span>%</p></div>
+      <div class="stat-card"><div class="stat-header"><span><i class="fas fa-chart-simple"></i> Difficulty</span><span>Progress</span></div><div><span>🟢 Easy</span> <span style="float:right;" id="easyCount">0/12</span></div><div class="progress-bar"><div class="progress-fill" id="easyFill" style="background:#10b981;"></div></div><div><span>🟠 Medium</span> <span style="float:right;" id="mediumCount">0/8</span></div><div class="progress-bar"><div class="progress-fill" id="mediumFill" style="background:#f97316;"></div></div><div><span>🔴 Hard</span> <span style="float:right;" id="hardCount">0/5</span></div><div class="progress-bar"><div class="progress-fill" id="hardFill" style="background:#ef4444;"></div></div></div>
+      <div class="stat-card"><div class="stat-header"><span><i class="fas fa-trophy"></i> Rank & XP</span><span>Level Up</span></div><div class="stat-value" id="xpValue">0</div><div class="progress-bar"><div class="progress-fill" id="xpProgressFill"></div></div><div>Level <span id="levelNum">1</span> Coder &nbsp;|&nbsp; Rank #<span id="rankNum">1</span></div></div>
+    </div>
+    <div class="badge-container" id="badgeContainer" style="display: flex; flex-wrap: wrap; gap: 10px; margin: 1rem 0; justify-content: center;"></div>
+  </div>
+
+  <!-- PROBLEMS VIEW -->
+  <div id="problemsView">
+    <div class="photo-container">
+      <div class="photo-track">
+        <img src="/assets/Interview.jpeg" class="gallery-photo">
+    <a href="/tech-interview/code-arena">
+<img src="/assets/problemsolving.png" class="gallery-photo"></a>
+       <a href="/tech-interview"><img src="/assets/tech-interview.png" class="gallery-photo"></a>
+        <img src="/assets/Javascript.jpeg" class="gallery-photo">
+        <img src="/assets/Interview.jpeg" class="gallery-photo">
+       <a href="/tech-interview/code-arena"> <img src="/assets/problemsolving.png" class="gallery-photo"></a>
+       <a href="/tech-interview"> <img src="/assets/tech-interview.png" class="gallery-photo"></a>
+        <img src="/assets/Javascript.jpeg" class="gallery-photo">
+        <img src="/assets/Interview.jpeg" class="gallery-photo">
+    <a href="/tech-interview/code-arena"> <img src="/assets/problemsolving.png" class="gallery-photo"></a>
+       <a href="/tech-interview">  <img src="/assets/tech-interview.png" class="gallery-photo"></a>
+        <img src="/assets/Javascript.jpeg" class="gallery-photo">
+      </div>
+    </div>
+
+    <div class="category-wrapper">
+      <div class="top-category-buttons">
+        <button class="category-btn active-main-category"><span class="emoji">🧠</span> Problem Solving</button>
+     <button
+  class="category-btn"
+  onclick="alert('🚧 DSA Section Coming Soon!')"
+>
+  <i class="fas fa-sitemap"></i> DSA
+</button>
+        <button class="category-btn"
+  onclick="alert('🚧 Interview Questions   Coming Soon!')"><i class="fas fa-user-tie"></i> Interview Questions</button>
+       <button class="category-btn" onclick="window.location.href='/'">
+    <i class="fas fa-code"></i> Language Practice
+</button>
+      </div>
+      <div class="subtopics-wrapper">
+        <button class="subtopic-btn active-subtopic" data-topic="all"><i class="fas fa-layer-group"></i> All Topics</button>
+        <button class="subtopic-btn" data-topic="basic-iop"><i class="fas fa-keyboard"></i> Basic</button>
+        <button class="subtopic-btn" data-topic="conditions"><i class="fas fa-code-branch"></i> Conditions</button>
+        <button class="subtopic-btn" data-topic="loops"><i class="fas fa-repeat"></i> Loops</button>
+        <button class="subtopic-btn" data-topic="patterns"><i class="fas fa-shapes"></i> Patterns</button>
+        <button class="subtopic-btn" data-topic="number-problems"><i class="fas fa-hashtag"></i> Numbers</button>
+        <button class="subtopic-btn" data-topic="digit-problems"><i class="fas fa-calculator"></i> Digits</button>
+        <button class="subtopic-btn" data-topic="factor-divisibility"><i class="fas fa-divide"></i> Factors</button>
+        <button class="subtopic-btn" data-topic="math-logic"><i class="fas fa-square-root-alt"></i> Math Logic</button>
+        <button class="subtopic-btn" data-topic="special-numbers"><i class="fas fa-star"></i> Special Numbers</button>
+        <button class="subtopic-btn" data-topic="conversion"><i class="fas fa-right-left"></i> Conversion</button>
+        <button class="subtopic-btn" data-topic="range-problems"><i class="fas fa-arrows-left-right"></i> Range Problems</button>
+        <button class="subtopic-btn" data-topic="string-problems"><i class="fas fa-font"></i> String Problems</button>
+      </div>
+    </div>
+
+    <div class="questions-container" id="questionsContainer"></div>
+  </div>
+
+  <!-- LEADERBOARD VIEW -->
+  <div id="leaderboardView" style="display: none;">
+    <div class="leaderboard-card"><h3><i class="fas fa-ranking-star"></i> Global Leaderboard</h3>
+      <table class="leaderboard-table"><thead><tr><th>Rank</th><th>User</th><th>Solved</th><th>XP</th><th>Streak</th></tr></thead>
+      <tbody>
+        <tr><td class="rank-badge">1</td><td><i class="fas fa-user-circle"></i> John Doe</td><td>142</td><td>2840</td><td>12</td></tr>
+        <tr><td class="rank-badge">2</td><td><i class="fas fa-user-circle"></i> Sarah Williams</td><td>128</td><td>2560</td><td>9</td></tr>
+        <tr><td class="rank-badge">3</td><td><i class="fas fa-user-circle"></i> Michael Kumar</td><td>115</td><td>2300</td><td>7</td></tr>
+        <tr><td class="rank-badge">4</td><td><i class="fas fa-user-circle"></i> Priya Sharma</td><td>98</td><td>1960</td><td>5</td></tr>
+        <tr><td class="rank-badge">5</td><td><i class="fas fa-user-circle"></i> Alex Rivera</td><td>87</td><td>1740</td><td>4</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <!-- CONTESTS VIEW -->
+  <div id="contestsView" style="display: none;">
+    <div class="leaderboard-card"><h3><i class="fas fa-trophy"></i> Upcoming Contests</h3><p style="margin-top:1rem;">Weekly coding challenges & leaderboard contests coming soon. Stay tuned!</p><div class="empty-placeholder" style="padding:2rem; text-align:center;"><i class="fas fa-calendar-alt"></i> Phase 2: contests & achievements</div></div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col">
+      <h3>📘 About Code Arena</h3>
+        <p>Sharpen your <strong>problem-solving mindset</strong> with daily challenges. Learn DSA naturally as you solve real-world problems.</p>
+      <div class="since-badge"><i class="fas fa-calendar-alt"></i> Empowering developers since 2025</div>
+    </div>
+    <div class="footer-col">
+      <h3>🔗 Quick Links</h3>
+      <ul><li><a href="#"><i class="fas fa-home"></i> Home</a></li><li><a href="#"><i class="fas fa-book"></i> All Tutorials</a></li><li><a href="#"><i class="fas fa-code"></i> Code Runner</a></li><li><a href="#"><i class="fas fa-blog"></i> Blog</a></li><li><a href="#"><i class="fas fa-headset"></i> Support</a></li></ul>
+    </div>
+    <div class="footer-col">
+      <h3>📞 Contact Us</h3>
+      <ul class="contact-info">
+        <li><i class="fas fa-map-marker-alt"></i><span>51-C, Indrapuri, Raisen Road, Bhopal</span></li>
+        <li><i class="fas fa-envelope"></i><a href="mailto:ridorg.in@gmail.com">ridorg.in@gmail.com</a></li>
+        <li><i class="fas fa-phone-alt"></i><a href="tel:+919202707903">+91 9202707903</a></li>
+        <li><i class="fas fa-clock"></i><span>Monday - Saturday: 10:00 AM - 8:00 PM</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>🌐 Follow Us</h3>
+      <p>Stay connected through social media</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.youtube.com/@RidBharat"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-discord"></i></a>
+        <a href="https://www.instagram.com/ridtech.in/"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="copyright"><i class="far fa-copyright"></i> 2025 Master code RID. All rights reserved.</div>
+    <div class="legal-links"><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a><span class="separator">|</span><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></div>
+    <div class="credit">Made with <i class="fas fa-heart"></i> by the RID Team</div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="/js/Code Arena Questions/Problemsolving/questions.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/basic-io.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/conditions.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/loops.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/digit-problems.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/range-problems.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/factor-divisibility.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/special-numbers.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/math-logic.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/patterns.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/conversion.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/number-problems.js"></script>
+<script src="/js/Code Arena Questions/Problemsolving/string-problems.js"></script>
+<script src="/js/data/practice.js"></script>
+</body>
+</html>

@@ -443,14 +443,14 @@ doc.fillColor('#8AACCC').font('Helvetica').fontSize(6.5)
 
 async function sendUserEmail(email, name, appId, type) {
   const mailOptions = {
-    from: `"RID Bharat" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
+    from: `"RRID Tech Private Limited" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
     to: email,
     subject: `Application Received - ${appId}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #16a34a;">Application Received Successfully!</h2>
         <p>Dear <strong>${name}</strong>,</p>
-        <p>Thank you for applying for ${type} certificate at RID Bharat.</p>
+        <p>Thank you for applying for ${type} certificate at RRID Tech Private Limited.</p>
         <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #166534;">Application Details:</h3>
           <p><strong>Application ID:</strong> ${appId}</p>
@@ -460,7 +460,7 @@ async function sendUserEmail(email, name, appId, type) {
         <p>Your application is under review. You'll receive another email once verified.</p>
         <p><strong>Keep your Application ID safe for reference.</strong></p>
         <hr>
-        <p style="color: #6b7280; font-size: 14px;">Best Regards,<br>RID Bharat Team</p>
+        <p style="color: #6b7280; font-size: 14px;">Best Regards,<br>RRID Tech Private Limited Team</p>
       </div>
     `
   };
@@ -469,7 +469,7 @@ async function sendUserEmail(email, name, appId, type) {
 
 async function sendAdminEmail(appId, name, email, phone, type, duration, unit) {
   const mailOptions = {
-    from: `"RID Bharat" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
+    from: `"RRID Tech Private Limited" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
     to: process.env.ADMIN_EMAIL || process.env.SMTP_USERNAME,
     subject: `New Application: ${appId}`,
     html: `
@@ -497,7 +497,7 @@ async function sendAdminEmail(appId, name, email, phone, type, duration, unit) {
 
 async function sendCertificateEmail(application, pdfPath) {
   const mailOptions = {
-    from: `"RID Bharat" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
+    from: `"RRID Tech Private Limited" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USERNAME}>`,
     to: application.email,
     subject: `Certificate Ready - ${application.appId}`,
     html: `
@@ -517,7 +517,7 @@ async function sendCertificateEmail(application, pdfPath) {
           </div>
         </div>
         <hr>
-        <p style="color: #6b7280; font-size: 14px;">Best Regards,<br>RID Bharat Team</p>
+        <p style="color: #6b7280; font-size: 14px;">Best Regards,<br> RRID Tech Private Limited Team</p>
       </div>
     `
   };

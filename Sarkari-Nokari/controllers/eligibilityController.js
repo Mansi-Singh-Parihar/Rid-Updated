@@ -318,3 +318,24 @@ exports.apiSearchExams = async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+exports.getExamGuidePage = async (req, res) => {
+  try {
+    const guide = await ExamGuide.findById(req.params.id).lean();
+
+    if (!guide) {
+      return res.status(404).render("404", {
+        message: "Guide not found"
+      });
+    }
+
+    res.render("examdetail", {
+      guide,
+      stats: null
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+};

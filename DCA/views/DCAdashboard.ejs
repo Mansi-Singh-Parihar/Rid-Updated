@@ -25,22 +25,31 @@
       <div class="top-actions">
         <div class="notification-wrapper">
           <div class="icon-btn" id="bellIcon"><i class="far fa-bell"></i><span class="badge" id="notifCount">3</span></div>
-          <div class="notif-dropdown" id="notifDropdown"><div class="notif-header">🔔 Notifications</div><div class="notif-list" id="notifList"></div></div>
+          <div class="notif-dropdown" id="notifDropdown"><div class="notif-head">🔔 Notifications</div><div class="notif-list" id="notifList"></div></div>
         </div>
         <div class="profile-wrap" id="profileBtn">
-          <img class="avatar-img" id="profileAvatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="avatar">
-          <div><div class="profile-name" id="topbarProfileName">Rahul Mehta</div><div class="profile-role" id="topbarProfileRole">Admin</div></div>
+          <img class="avatar-img" id="profileAvatar" src="images/image.jpeg" alt="avatar">
+          <div>
+<div class="profile-name" id="topbarProfileName">
+    <%= user.name %>
+</div>
+
+<div class="profile-role" id="topbarProfileRole">
+    <%= user.role %>
+</div>
+
+          </div>
         </div>
       </div>
     </div>
 
     <section class="page-head">
-      <div><h2>Dashboard</h2><p>Welcome back, <span id="welcomeName">Admin</span> 👋 Real-time insights</p></div>
+      <div><h2>Dashboard</h2><p>Welcome back, <span id="welcomeName">Admin</span></p></div>
       <div class="quick-actions">
-       <a href="/students"><button class="btn blue"><i class="fas fa-plus"></i> Add Student</button></a>
-        <a href="/fees"><button class="btn green"><i class=""></i> Collect Fees</button></a>
-        <a href="/test"><button class="btn purple"><i class="fas fa-pen"></i> Create Test</button></a>
-        <a href="/Attendence"><button class="btn orange"><i class="fas fa-user-check"></i> Mark Attendance</button></a>
+       <a href="/computer/students"><button class="btn blue"><i class="fas fa-plus"></i> Add Student</button></a>
+        <a href="/computer/fees"><button class="btn green"><i class=""></i> Collect Fees</button></a>
+        <a href="/computer/test"><button class="btn purple"><i class="fas fa-pen"></i> Create Test</button></a>
+        <a href="/computer/Attendence"><button class="btn orange"><i class="fas fa-user-check"></i> Mark Attendance</button></a>
       </div>
     </section>
 
@@ -66,10 +75,10 @@
     <div class="modal-body" id="profileModalBody">
       <!-- VIEW MODE -->
       <div id="profileViewMode">
-        <div class="info-row"><i class="fas fa-user"></i><div class="view-field"><strong>Full Name</strong><br><span id="profileName">Rahul Mehta</span></div></div>
-        <div class="info-row"><i class="fas fa-envelope"></i><div class="view-field"><strong>Email Address</strong><br><span id="profileEmail">rahul@ridtech.edu</span></div></div>
-        <div class="info-row"><i class="fas fa-phone"></i><div class="view-field"><strong>Phone Number</strong><br><span id="profilePhone">+91 98765 43210</span></div></div>
-        <div class="info-row"><i class="fas fa-user-tag"></i><div class="view-field"><strong>Role</strong><br><span id="profileRole">Super Admin</span></div></div>
+        <div class="info-row"><i class="fas fa-user"></i><div class="view-field"><strong>Full Name</strong><br><span id="profileName"><%= user.name %></span></div></div>
+        <div class="info-row"><i class="fas fa-envelope"></i><div class="view-field"><strong>Email Address</strong><br><span id="profileEmail"><%= user.email %></span></div></div>
+        <div class="info-row"><i class="fas fa-phone"></i><div class="view-field"><strong>Phone Number</strong><br><span id="profilePhone"><%= user.phone %></span></div></div>
+        <div class="info-row"><i class="fas fa-user-tag"></i><div class="view-field"><strong>Role</strong><br><span id="profileRole"><%= user.role %></span></div></div>
         <div class="profile-actions"><button id="editProfileBtn" class="btn blue btn-sm"><i class="fas fa-edit"></i> Edit Profile</button><button id="closeProfileBtn" class="btn btn-sm" style="background:#eef2ff;">Close</button></div>
       </div>
       <!-- EDIT MODE (hidden by default) -->
@@ -89,12 +98,12 @@
 <script>
   // ---------- DASHBOARD CORE DATA & FUNCTIONS (unchanged logic) ----------
   const statsData = [
-    { title: "Total Students", value: "256", icon: "fas fa-users", trend: "↑12 this month", bg: "#eef6ff", color: "#2f80ed" },
-    { title: "Fees Collected Today", value: "₹18,500", icon: "fas fa-rupee-sign", trend: "↑8% vs yesterday", bg: "#ecfdf3", color: "#16a34a" },
-    { title: "Pending Fees", value: "₹1200", icon: "fas fa-exclamation-triangle", trend: "23 Students", bg: "#fff7ed", color: "#f59e0b" },
-    { title: "Active Courses", value: "8", icon: "fas fa-book-open", trend: "All Running", bg: "#f5f3ff", color: "#7c5cff" },
-    { title: "Upcoming Tests", value: "3", icon: "fas fa-calendar-alt", trend: "This Week", bg: "#fff1f2", color: "#ec4899" },
-    { title: "Today Attendance", value: "86%", icon: "fas fa-chart-line", trend: "Average", bg: "#ecfeff", color: "#06b6d4" }
+    { title: "Total Students", value: "", icon: "fas fa-users", trend: "↑12 this month", bg: "#eef6ff", color: "#2f80ed" },
+    { title: "Fees Collected ", value: "₹", icon: "fas fa-rupee-sign", trend: "↑8% vs yesterday", bg: "#ecfdf3", color: "#16a34a" },
+    { title: "Pending Fees", value: "₹", icon: "fas fa-exclamation-triangle", bg: "#fff7ed", color: "#f59e0b" },
+    { title: "Active Courses", value: "", icon: "fas fa-book-open", trend: "All Running", bg: "#f5f3ff", color: "#7c5cff" },
+    { title: "Upcoming Tests", value: "", icon: "fas fa-calendar-alt", trend: "This Week", bg: "#fff1f2", color: "#ec4899" },
+    { title: "Today Attendance", value: "%", icon: "fas fa-chart-line", trend: "Average", bg: "#ecfeff", color: "#06b6d4" }
   ];
   const scheduleItems = [
     { time: "10:00 AM", title: "DCA Batch (Morning)", details: "Room 1 • Raj Sir" },
@@ -116,11 +125,11 @@
     { title: "Tests Scheduled", desc: "3 tests scheduled this week", color: "#2563eb" }
   ];
   const bottomStatsData = [
-    { icon: "fas fa-th", label: "Total Batches", value: "12" },
-    { icon: "fas fa-user-friends", label: "Total Teachers", value: "6" },
-    { icon: "fas fa-chalkboard", label: "Total Classrooms", value: "3" },
-    { icon: "fas fa-certificate", label: "Total Certificates", value: "156" },
-    { icon: "fas fa-book", label: "Library Books", value: "245" }
+    { icon: "fas fa-th", label: "Total Batches", value: "" },
+    { icon: "fas fa-user-friends", label: "Total Teachers", value: "" },
+    { icon: "fas fa-chalkboard", label: "Total Classrooms", value: "" },
+    { icon: "fas fa-certificate", label: "Total Certificates", value: "" },
+    { icon: "fas fa-book", label: "Library Books", value: "" }
   ];
   let notifications = [
     { id: 1, text: "📘 New student registration: Vikram Singh (Full Stack)", time: "2 min ago", cross: false, seen: false },
@@ -133,7 +142,43 @@
   function markAllSeen() { notifications.forEach(n => n.seen = true); updateNotifUI(); }
   function renderStats() { document.getElementById("statsSection").innerHTML = statsData.map(s => `<div class="stat-card"><div class="stat-top"><div class="stat-icon" style="background:${s.bg}; color:${s.color}"><i class="${s.icon}"></i></div><div><div class="stat-title">${s.title}</div><div class="stat-value">${s.value}</div></div></div><div class="stat-sub">${s.trend}</div></div>`).join(''); }
   function renderSchedule() { document.getElementById("scheduleList").innerHTML = scheduleItems.map(s => `<div class="schedule-item"><div><div class="time">${s.time}</div><div><strong>${s.title}</strong><div class="sub">${s.details}</div></div></div></div>`).join(''); }
-  function renderRecentTable(filter = "") { const tbody = document.getElementById("recentTbody"); let filtered = studentsList.filter(s => s.name.toLowerCase().includes(filter) || s.course.toLowerCase().includes(filter)); tbody.innerHTML = filtered.map(s => `<tr><td>${s.name}</td><td>${s.course}</td><td>${s.batch}</td><td><span class="status ${s.class}">${s.status}</span></td></tr>`).join(''); }
+  function renderRecentTable(filter = "") {
+
+    const tbody = document.getElementById("recentTbody");
+
+    filter = filter.toLowerCase().trim();
+
+    let filtered = studentsList.filter(s =>
+        (s.name || "").toLowerCase().includes(filter) ||
+        (s.course || "").toLowerCase().includes(filter) ||
+        (s.batch || "").toLowerCase().includes(filter) ||
+        (s.status || "").toLowerCase().includes(filter)
+    );
+
+    if (!filtered.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4" style="text-align:center;padding:20px;color:#888;">
+                    🔍 No Record Found
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = filtered.map(s => `
+        <tr>
+            <td>${s.name}</td>
+            <td>${s.course}</td>
+            <td>${s.batch}</td>
+            <td>
+                <span class="status ${s.class}">
+                    ${s.status}
+                </span>
+            </td>
+        </tr>
+    `).join('');
+}
   function renderAlerts() { document.getElementById("alertsList").innerHTML = alertsData.map(a => `<div class="alert-item"><div><strong style="color:${a.color}">${a.title}</strong><div class="sub">${a.desc}</div></div><i class="fas fa-arrow-right"></i></div>`).join(''); }
   function renderBottomStats() { document.getElementById("bottomStats").innerHTML = bottomStatsData.map(b => `<div class="mini-card"><div class="mini-ico"><i class="${b.icon}"></i></div><div><strong>${b.value}</strong><span> ${b.label}</span></div></div>`).join(''); }
   let enrollmentChart, feeChart, courseChart;
@@ -143,8 +188,8 @@
     const feeCtx = document.getElementById('feeChart')?.getContext('2d'); if(feeCtx) { if(feeChart) feeChart.destroy(); feeChart = new Chart(feeCtx, { type: 'bar', data: { labels: ['Week 1','Week 2','Week 3','Week 4','Week 5'], datasets: [{ label: 'Paid (₹K)', data: [35,42,37,48,39], backgroundColor: '#22c55e' }, { label: 'Pending (₹K)', data: [18,15,10,18,16], backgroundColor: '#f59e0b' }] }, options: { responsive: true } }); }
     const courseCtx = document.getElementById('courseChart')?.getContext('2d'); if(courseCtx) { if(courseChart) courseChart.destroy(); courseChart = new Chart(courseCtx, { type: 'doughnut', data: { labels: ['DCA','ADCA','Tally','Python','Web Dev'], datasets: [{ data: [30,20,15,20,15], backgroundColor: ['#3b82f6','#22c55e','#f59e0b','#8b5cf6','#f472b6'], borderWidth: 0 }] }, options: { responsive: true, cutout: '62%' } }); }
   }
-  function addCrossDashboardNotif() { notifications.unshift({ id: Date.now(), text: "🏛️ [ACCOUNTS DASHBOARD] Fee collection updated: ₹5,200 received from Web Dev batch", time: "Just now", cross: true, seen: false }); if(notifications.length>8) notifications.pop(); updateNotifUI(); showToast("🔔 New notification from Finance Dashboard"); }
-  setInterval(addCrossDashboardNotif, 14000);
+  function addCrossDashboardNotif() { notifications.unshift({ id: Date.now(), text: "🏛️ [ACCOUNTS DASHBOARD] ", time: "Just now", cross: true, seen: false }); if(notifications.length>1) notifications.pop(); updateNotifUI(); showToast("🔔 New notification from Admin "); }
+  setInterval(addCrossDashboardNotif, 1400000);
   
   // SIDEBAR LOGIC
   const sidebar = document.getElementById("sidebar"), overlay = document.getElementById("sidebarOverlay"), menuToggle = document.getElementById("menuToggleBtn");
@@ -153,20 +198,24 @@
   if(menuToggle) menuToggle.addEventListener("click", (e) => { e.stopPropagation(); sidebar.classList.contains("open") ? closeSidebar() : openSidebar(); });
   overlay?.addEventListener("click", closeSidebar);
   document.querySelectorAll(".nav-item").forEach(item => { item.addEventListener("click", () => { if(window.innerWidth <= 768) closeSidebar(); showToast(`📌 ${item.innerText} section (demo)`); }); });
-  document.getElementById("searchInput")?.addEventListener("input", (e) => renderRecentTable(e.target.value.toLowerCase().trim()));
+  document.getElementById("searchInput")?.addEventListener("input", (e) => {
+    renderRecentTable(e.target.value.toLowerCase().trim());
+});
   const bell = document.getElementById("bellIcon"), notifDrop = document.getElementById("notifDropdown"); if(bell && notifDrop) { bell.addEventListener("click", (e) => { e.stopPropagation(); notifDrop.classList.toggle("show"); markAllSeen(); }); document.addEventListener("click", (e) => { if(!bell.contains(e.target)) notifDrop.classList.remove("show"); }); }
   document.querySelectorAll(".quick-actions .btn, .view-btn").forEach(btn => btn.addEventListener("click", () => showToast(`✨ ${btn.innerText.trim()} (demo action)`)));
   
   // ---------- FULLY WORKING PROFILE SYSTEM (EDIT, SAVE, AVATAR, PERSIST) ----------
   let currentProfile = {
-    name: "Rahul Mehta",
-    email: "rahul@ridtech.edu",
-    phone: "+91 98765 43210",
-    role: "Super Admin",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg"
-  };
-  function loadProfileFromStorage() { const saved = localStorage.getItem("ridtech_profile"); if(saved) { const p = JSON.parse(saved); currentProfile = { ...currentProfile, ...p }; } applyProfileToUI(); }
-  function saveProfileToStorage() { localStorage.setItem("ridtech_profile", JSON.stringify(currentProfile)); }
+    name: "<%= user.name %>",
+    email: "<%= user.email %>",
+    phone: "<%= user.phone %>",
+    role: "<%= user.role %>",
+    avatar: "/images/imag.jpeg"
+};
+  function loadProfileFromStorage() {
+    applyProfileToUI();
+}
+  
   function applyProfileToUI() {
     document.getElementById("profileName").innerText = currentProfile.name;
     document.getElementById("profileEmail").innerText = currentProfile.email;
@@ -192,10 +241,36 @@
     const newEmail = document.getElementById("editEmail").value.trim();
     const newPhone = document.getElementById("editPhone").value.trim();
     const newRole = document.getElementById("editRole").value.trim();
-    if(!newName || !newEmail) { showToast("❌ Name and Email cannot be empty"); return; }
-    currentProfile.name = newName; currentProfile.email = newEmail; currentProfile.phone = newPhone || currentProfile.phone; currentProfile.role = newRole || currentProfile.role;
-    saveProfileToStorage(); applyProfileToUI(); closeEditMode(); showToast("✅ Profile updated successfully!");
-  }
+
+    if (!newName || !newEmail) {
+        showToast("❌ Name and Email cannot be empty");
+        return;
+    }
+
+    currentProfile.name = newName;
+    currentProfile.email = newEmail;
+    currentProfile.phone = newPhone || currentProfile.phone;
+    currentProfile.role = newRole || currentProfile.role;
+
+    applyProfileToUI();
+    closeEditMode();
+
+    showToast("✅ Profile updated successfully!");
+}
+
+function updateAvatar(imageDataUrl) {
+    currentProfile.avatar = imageDataUrl;
+    applyProfileToUI();
+
+    showToast("🖼️ Profile picture updated");
+}
+
+function resetAvatar() {
+    currentProfile.avatar = "/images/image.jpeg";
+    applyProfileToUI();
+
+    showToast("🔄 Avatar reset successfully");
+}
   function updateAvatar(imageDataUrl) { currentProfile.avatar = imageDataUrl; saveProfileToStorage(); applyProfileToUI(); showToast("🖼️ Profile picture updated"); }
   function resetAvatar() { currentProfile.avatar = "https://randomuser.me/api/portraits/men/32.jpg"; saveProfileToStorage(); applyProfileToUI(); showToast("🔄 Avatar reset to default"); }
   function handleFileUpload(file) { if(file && file.type.startsWith("image/")) { const reader = new FileReader(); reader.onload = (e) => updateAvatar(e.target.result); reader.readAsDataURL(file); } else showToast("⚠️ Please select an image file"); }
@@ -212,10 +287,66 @@
   document.getElementById("resetAvatarBtn")?.addEventListener("click", resetAvatar);
   document.getElementById("modalAvatarTrigger")?.addEventListener("click", () => { if(avatarUploadInput) avatarUploadInput.click(); });
   // sync initial load
-  loadProfileFromStorage();
-  renderStats(); renderSchedule(); renderRecentTable(""); renderAlerts(); renderBottomStats(); initCharts(); updateNotifUI();
+ loadProfileFromStorage();
+
+renderStats();
+
+
+renderSchedule();
+renderRecentTable("");
+renderAlerts();
+renderBottomStats();
+initCharts();
+updateNotifUI();
   showToast("✅ Profile fully interactive · Edit & save changes");
   setTimeout(() => addCrossDashboardNotif(), 3000);
+
+  async function loadDashboardStudentCount() {
+
+    try {
+
+        const res = await fetch("/computer/api/students");
+        const students = await res.json();
+
+        statsData[0].value = students.length;
+
+        studentsList = students.map(s => ({
+            name: s.name || "",
+            course: s.course || "",
+            batch: s.batch || "N/A",
+            status: s.fee || "Pending",
+            class: (s.fee || "Pending").toLowerCase()
+        }));
+
+        renderStats();
+        renderRecentTable("");
+
+    } catch (err) {
+
+        console.log("Student Count Error:", err);
+
+    }
+}
+loadDashboardStudentCount();
+async function loadFeeStats() {
+    try {
+        const res = await fetch("/computer/fees/all");
+        const data = await res.json();
+
+        console.log("FEE API =", data);
+
+        if (!data.success) return;
+
+        statsData[1].value = "₹" + (data.totalCollected || 0);
+        statsData[2].value = "₹" + (data.totalPending || 0);
+
+        renderStats();
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+loadFeeStats();
 </script>
 </body>
 </html>

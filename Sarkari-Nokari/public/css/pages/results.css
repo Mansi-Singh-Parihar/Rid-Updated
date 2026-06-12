@@ -287,12 +287,15 @@ body.results-page {
 
 @media (max-width: 640px) {
       .container {
-    margin-top: 100px;  
+    margin-top: 40px;  
   }
 
   .result-index-list {
     grid-template-columns: 1fr;
   }
+    .update-btn {
+   margin-top: 5px;
+}
 
   .result-index-item:nth-child(even) {
     border-left: none;

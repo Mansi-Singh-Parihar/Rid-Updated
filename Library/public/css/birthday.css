@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* ==========================================================================
+   1. MAIN CONTAINER & HEADER (Desktop/Base)
+   ========================================================================== */
+  
+.birthday-container {
+    width: 100%;
+    max-width: 1000px; /* Clean spacing on big screen width */
+    margin-top:15px;
+    background-color: #f8fafc; /* Light gray background for entire page */
+    padding: 30px 40px;
+    border-radius: 24px; /* Rounded corners for the main container */
+}
+
+/* Top Header Structure */
+.birthday-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px dashed #cbd5e1; /* Image jaisa sleek top line spacing */
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.birthday-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Close/Cancel Action Button */
+.btn-close {
+    background-color: #f17373; /* Red/coral theme tone */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 6px 24px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.btn-close:hover {
+    background-color: #e05c5c;
+}
+
+/* ==========================================================================
+   2. INDIVIDUAL CARD ROWS DESIGN (Image Matching)
+   ========================================================================== */
+.birthdays-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between white rows */
+}
+
+/* White card blocks matching image view */
+.birthday-card {
+    background-color: #ffffff;
+    border-radius: 24px; /* Highly curved outer look as shown */
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+}
+
+/* Yellow circular profile avatar icon */
+.avatar-circle {
+    width: 55px;
+    height: 54px;
+    background-color: #fecdd3; /* Light orange/yellow-ish pink variant */
+    background: #3170d440; /* Match image exact bright profile container background */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatar-icon {
+    font-size: 28px;
+    color: #ffffff;
+}
+
+/* Internal text alignments */
+.student-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Container for Name and inline action text buttons */
+.name-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.student-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* Course metadata styling rules */
+.student-course {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* Bold month info dates signature look */
+.student-date {
+    font-size: 13px;
+    color: #3b82f6; /* Soft professional blue highlighting dates */
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Custom interactive wish sender button link */
+.btn-send-wishes {
+    background-color: #0f5976;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-radius: 27px;
+    transition: background 0.2s;
+}
+
+.btn-send-wishes:hover {
+    background-color: #2563eb;
+}
+
+/* Empty placeholder display */
+.no-birthdays {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 50px 30px;
+    text-align: center;
+    color: #64748b;
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.no-birthdays h2 {
+    font-size: 20px;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+
+
+/* ==========================================================================
+   3. RESPONSIVE LAYOUT CONTEXTS (Laptops, Tablets, Mobiles)
+   ========================================================================== */
+
+/* --- LAPTOPS DISPLAY SCALING (Under 1024px) --- */
+@media (max-width: 1024px) {
+    .birthday-container {
+        max-width: 90%;
+    }
+    .birthday-card {
+        padding: 20px 25px;
+    }
+}
+
+/* --- TABLETS ADJUSTMENTS (Under 768px) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 25px 15px;
+    }
+    .birthday-header h1 {
+        font-size: 22px;
+    }
+    .birthday-card {
+        gap: 20px;
+        padding: 18px 20px;
+    }
+    .avatar-circle {
+        width: 54px;
+        height: 54px;
+    }
+    .avatar-icon {
+        font-size: 24px;
+    }
+}
+
+/* --- SMARTPHONES COMPACT SYSTEM (Under 480px) --- */
+@media (max-width: 480px) {
+    body {
+        padding: 15px 10px;
+    }
+    .birthday-header {
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+    .birthday-header h1 {
+        font-size: 19px;
+    }
+    .btn-close {
+        padding: 4px 16px;
+        font-size: 13px;
+    }
+    /* Horizontal flow shifts into stacking block inside mobile views */
+    .birthday-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+        border-radius: 18px;
+    }
+    .name-button-container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 8px;
+    }
+    .btn-send-wishes {
+        width: 100%;
+        text-align: center;
+        padding: 8px;
+    }
+}

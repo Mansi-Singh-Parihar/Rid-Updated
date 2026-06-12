@@ -121,21 +121,25 @@ ensureUploadDirs();
 const configureViews = () => {
   app.set("view engine", "ejs");
 
-  // ✅ ALL VIEWS (main + code folder)
+  // ✅ ALL VIEWS
   app.set("views", [
     path.join(__dirname, "views", "ebook"),
     path.join(__dirname, "views"),
-    path.join(__dirname, "code", "views"),   // 🔥 ADD THIS
-    path.join(__dirname,"DCA","views"),
-    path.join(__dirname, "Sarkari-Nokari", "views") // 👈 ADD THIS
-
+    path.join(__dirname, "Library", "views"), // 🔥 ADD THIS
+    path.join(__dirname, "code", "views"),
+    path.join(__dirname, "DCA", "views"),
+    path.join(__dirname, "Sarkari-Nokari", "views")
   ]);
 
-  // ✅ STATIC FILES (CSS, JS, images)
-  app.use(express.static(path.join(__dirname, "public")));        // main public
-  app.use(express.static(path.join(__dirname, "code", "public"))); // 🔥 code/public
-  app.use(express.static(path.join(__dirname,"DCA","public")))
-  app.use("/nokari",express.static(path.join(__dirname, "Sarkari-Nokari", "public")));
+  // ✅ STATIC FILES
+  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, "code", "public")));
+  app.use(express.static(path.join(__dirname, "DCA", "public")));
+
+  // 🔥 Library Public Folder
+  app.use("/library", express.static(path.join(__dirname, "Library", "public")));
+
+  app.use("/nokari", express.static(path.join(__dirname, "Sarkari-Nokari", "public")));
 };
 //=========================RTS MIDDLEWIRE=====================
 const rtsApp = require("./RTS/rtsmiddlewire");
@@ -490,11 +494,12 @@ app.use("/uploads", express.static("uploads"));
 const researchRoutes = require("./routes/researchRoutes");
 app.use("/api/research", researchRoutes);
 //===role by login pages origanition pages ===========================
-app.get("/library-dashboard",(req,res)=>{
-  res.render("organisation/library-dashboard.ejs")
+// app.get("/library-dashboard",(req,res)=>{
+//   res.render("organisation/library-dashboard.ejs")
 
-})
-
+// })
+const libraryApp = require("./Library/server");
+app.use("/library", libraryApp);
 //DCA Class Routes this parts 
 const computerClassRouters = require("./DCA/server.js");
 app.use("/computer", computerClassRouters);

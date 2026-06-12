@@ -3,13 +3,27 @@ const Student = require("../models/Student");
 // ➤ GET ALL
 const getStudents = async (req, res) => {
   try {
-    const students = await Student.find().sort({ createdAt: -1 });
+
+
+    if (!req.session?.userId) {
+      return res.status(401).json({
+        success: false,
+       message: "Please login first"
+      });
+    }
+
+    const students = await Student.find({
+      organisationId: req.session.userId
+    }).sort({ createdAt: -1 });
 
     res.json(students);
 
   } catch (error) {
 
+    console.log(error);
+
     res.status(500).json({
+      success: false,
       message: error.message
     });
 
@@ -29,25 +43,59 @@ const addStudent = async (req, res) => {
       fee
     } = req.body;
 
-    const exist = await Student.findOne({ mobile });
 
-    if (exist) {
-      return res.send("Mobile already exists");
+    if (!req.session?.userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Login required"
+      });
     }
 
-    await Student.create({
+if (!name || !course || !amount) {
+  return res.status(400).json({
+    success: false,
+    message: "Name, Course and Amount are required"
+  });
+}
+if (mobile) {
+
+  const exist = await Student.findOne({
+    mobile,
+    organisationId: req.session.userId
+  });
+
+  if (exist) {
+    return res.status(400).json({
+      success: false,
+      message: "Mobile already exists"
+    });
+  }
+
+}
+
+    const student = await Student.create({
       name,
       course,
       mobile,
-      amount,
-      fee
+      amount: Number(amount),
+      fee,
+      organisationId: req.session.userId
     });
 
-    res.redirect("/students");
+    res.status(201).json({
+      success: true,
+      message: "Student Added Successfully",
+      data: student
+    });
 
   } catch (error) {
 
-    res.status(500).send(error.message);
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
 
   }
 
@@ -60,8 +108,11 @@ const updateStudent = async (req, res) => {
 
     const { id } = req.params;
 
-    const updated = await Student.findByIdAndUpdate(
-      id,
+    const updated = await Student.findOneAndUpdate(
+      {
+        _id: id,
+        organisationId: req.session.userId
+      },
       req.body,
       {
         new: true
@@ -69,11 +120,10 @@ const updateStudent = async (req, res) => {
     );
 
     if (!updated) {
-
       return res.status(404).json({
+        success: false,
         message: "Student not found"
       });
-
     }
 
     res.json(updated);
@@ -81,6 +131,7 @@ const updateStudent = async (req, res) => {
   } catch (error) {
 
     res.status(500).json({
+      success: false,
       message: error.message
     });
 
@@ -95,23 +146,27 @@ const deleteStudent = async (req, res) => {
 
     const { id } = req.params;
 
-    const deleted = await Student.findByIdAndDelete(id);
+    const deleted = await Student.findOneAndDelete({
+      _id: id,
+      organisationId: req.session.userId
+    });
 
     if (!deleted) {
-
       return res.status(404).json({
+        success: false,
         message: "Student not found"
       });
-
     }
 
     res.json({
+      success: true,
       message: "Student deleted successfully"
     });
 
   } catch (error) {
 
     res.status(500).json({
+      success: false,
       message: error.message
     });
 

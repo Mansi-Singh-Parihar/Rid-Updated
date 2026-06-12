@@ -437,7 +437,15 @@
     const closeSearch = document.getElementById("closeSearchOverlay");
 
     searchIcon?.addEventListener("click", () => {
+
         searchOverlay.classList.add("open");
+
+        setTimeout(() => {
+
+            document.getElementById("overlaySearchInput")?.focus();
+
+        }, 200);
+
     });
 
     closeSearch?.addEventListener("click", () => {
@@ -478,14 +486,38 @@
 
         // 🎯 RESULT (SINGLE — duplicate hata diya)
         recognition.onresult = (event) => {
-            const transcript = event.results[0][0].transcript;
 
-            // check kaha type karna hai
-            if (document.activeElement === overlayInput) {
+            const transcript = event.results[0][0].transcript
+                .toLowerCase()
+                .replace(/[.,!?;:"']/g, "")
+                .trim();
+
+            if (searchOverlay.classList.contains("open")) {
+
                 overlayInput.value = transcript;
+
+                currentSearchQuery = transcript;
+
+                if (typeof filterVideos === "function") {
+                    filterVideos();
+                }
+
+                saveSearchHistory(transcript);
+
+                searchOverlay.classList.remove("open");
+
             } else {
+
                 searchInput.value = transcript;
+
+                currentSearchQuery = transcript;
+
+                if (typeof filterVideos === "function") {
+                    filterVideos();
+                }
+
             }
+
         };
 
         // ❌ ERROR
@@ -515,15 +547,7 @@
         }
     });
 
-    // 🔍 SEARCH FUNCTION
-    function runMobileSearch() {
-        const query = overlayInputField.value.trim();
 
-        if (!query) return;
-
-        // redirect same as desktop
-        window.location.href = "/National-Test-Series?search=" + encodeURIComponent(query);
-    }
 
 
     // setting parts code redirect to the  Rid-Bharat-main/views/NationalTestSeries/settings/setting.ejs
@@ -604,8 +628,13 @@
 
         overlayInputField.value = query;
 
-        window.location.href =
-            "/National-Test-Series?search=" + encodeURIComponent(query);
+        currentSearchQuery = query;
+
+        if (typeof filterVideos === "function") {
+            filterVideos();
+        }
+
+        searchOverlay.classList.remove("open");
     }
 
 
@@ -622,18 +651,21 @@
     }
 
 
-    // search function
     function runMobileSearch() {
 
         const query = overlayInputField.value.trim();
 
         if (!query) return;
 
-        // save history
         saveSearchHistory(query);
 
-        window.location.href =
-            "/National-Test-Series?search=" + encodeURIComponent(query);
+        currentSearchQuery = query;
+
+        if (typeof filterVideos === "function") {
+            filterVideos();
+        }
+
+        searchOverlay.classList.remove("open");
     }
 
 
@@ -698,58 +730,58 @@
 
     // ================= LOGOUT =================
 
-document.getElementById("signOutBtn")?.addEventListener("click", async () => {
+    document.getElementById("signOutBtn")?.addEventListener("click", async () => {
 
-    try {
+        try {
 
-        await fetch("/logout", {
-            method: "GET",
-            credentials: "same-origin"
-        });
+            await fetch("/logout", {
+                method: "GET",
+                credentials: "same-origin"
+            });
 
-        localStorage.clear();
-        sessionStorage.clear();
+            localStorage.clear();
+            sessionStorage.clear();
 
-        window.location.replace("/login");
+            window.location.replace("/login");
 
-    } catch (err) {
+        } catch (err) {
 
-        console.log(err);
+            console.log(err);
 
+        }
+
+    });
+
+
+    document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+
+        try {
+
+            await fetch("/logout", {
+                method: "GET",
+                credentials: "same-origin"
+            });
+
+            localStorage.clear();
+            sessionStorage.clear();
+
+            window.location.replace("/login");
+
+        } catch (err) {
+
+            console.log(err);
+
+        }
+
+    });
+
+    function BirthdaySoftware() {
+        window.location.href = "/rts/birthday-software";
     }
-
-});
-
-
-document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-
-    try {
-
-        await fetch("/logout", {
-            method: "GET",
-            credentials: "same-origin"
-        });
-
-        localStorage.clear();
-        sessionStorage.clear();
-
-        window.location.replace("/login");
-
-    } catch (err) {
-
-        console.log(err);
-
+    function TechInterview() {
+        window.location.href = "/tech-interview"
     }
-
-});
-
-function BirthdaySoftware() {
-    window.location.href = "/rts/birthday-software";
-}
-function TechInterview(){
-    window.location.href="/tech-interview"
-}
-function TestSeries(){
-    window.location.href="/rts/dashboard"
-}
+    function TestSeries() {
+        window.location.href = "/rts/dashboard"
+    }
 </script>
