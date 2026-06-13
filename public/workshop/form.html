@@ -666,7 +666,7 @@
             console.error("Submit error:", error);
             let friendlyMsg = "⚠️ Submission failed. ";
             if (error.message.includes("Failed to fetch") || error.message.includes("NetworkError")) {
-                friendlyMsg += "Unable to reach server. Make sure backend is running on http://localhost:9191.";
+                friendlyMsg += "Unable to reach server. Make sure backend is running on http://api.ridtech.in";
             } else {
                 friendlyMsg += error.message;
             }
