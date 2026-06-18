@@ -9,12 +9,46 @@
     <link rel="stylesheet" href="/css/teacher-advance.css">
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <link rel="icon" type="image/png" href="/assets/signup.png">
+    <style>
+  .modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 99999;
+
+    overflow-y: auto;   /* scroll yahan hoga */
+}
+
+.modal-box{
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+
+    margin: 30px auto;  /* center */
+    padding: 20px;
+    border-radius: 10px;
+}
+/* Optional: Better scrollbar */
+.modal-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-box::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+    </style>
 </head>
+
 <body>
-    <script>
-        const TEACHER_ID = "<%= teacher._id %>";
-        const initialStudents = <%- JSON.stringify(students || []) %>;
-    </script>
+   <script>
+window.TEACHER_ID = "<%= teacher._id %>";
+window.initialStudents = <%- JSON.stringify(students || []) %>;
+
+</script>
     <div class="main-container">
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
         <!-- Fixed Header -->
@@ -108,13 +142,13 @@
 
                     </a>
                 </li>
-                 <li class="nav-item" id="nav-ebooks">
-                        <a href="/ebook">
-                            <i class="fas fa-book"></i>
-                            <span>E-Book Library</span>
+                <li class="nav-item" id="nav-ebooks">
+                    <a href="/ebook">
+                        <i class="fas fa-book"></i>
+                        <span>E-Book Library</span>
 
-                        </a>
-                    </li>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -419,8 +453,8 @@
                                 </div>
 
                                 <button class="btn btn-success" onclick="openInviteModal()">
-    <i class="fas fa-link"></i> Add Students via Link
-</button>
+                                    <i class="fas fa-link"></i> Add Students via Link
+                                </button>
                                 <button class="btn btn-primary" id="add-student-btn">
                                     <i class="fas fa-user-plus"></i> Add Student
                                 </button>
@@ -586,7 +620,7 @@
                         <div id="test-services-main-dashboard">
                             <div class="services-header">
                                 <div class="page-title">
-                                    <i class="fas fa-clipboard-list"></i>
+                                    
                                     <h2>Explore Test Services</h2>
                                 </div>
                                 <div class="user-info"
@@ -1362,8 +1396,7 @@
                     </div>
                     <div class="form-group">
                         <label>Contact</label>
-                        <input type="tel" id="student-parent-contact" class="form-control"
-                            placeholder="Enter contact">
+                        <input type="tel" id="student-parent-contact" class="form-control" placeholder="Enter contact">
                     </div>
                     <div class="modal-footer"
                         style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
@@ -1417,28 +1450,28 @@
     </div>
 
     <!-- MODAL -->
-   <div id="requestModal" class="modal-overlay" style="display:none;">
-  <div class="modal-box">
-    <span class="close-btn" onclick="closeRequestModal()">&times;</span>
-    <h3>Send Request For Create Test</h3>
+    <div id="requestModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeRequestModal()">&times;</span>
+            <h3>Send Request For Create Test</h3>
 
-    <label>Test Name</label>
-    <input type="text" id="testName" placeholder="Test name">
+            <label>Test Name</label>
+            <input type="text" id="testName" placeholder="Test name">
 
-    <label>Subject</label>
-    <input type="text" id="subject" placeholder="Math, Science, English...">
+            <label>Subject</label>
+            <input type="text" id="subject" placeholder="Math, Science, English...">
 
-    <label>Upload Banner</label>
-    <input type="file" id="banner" accept=".jpg,.jpeg,.png,.webp"><br><br>
+            <label>Upload Banner</label>
+            <input type="file" id="banner" accept=".jpg,.jpeg,.png,.webp"><br><br>
 
-    <label>Upload Notes (PDF)</label>
-    <input type="file" id="notes" accept=".pdf,.doc,.docx"><br><br>
+            <label>Upload Notes (PDF)</label>
+            <input type="file" id="notes" accept=".pdf,.doc,.docx"><br><br>
 
-    <textarea id="description" placeholder="Description"></textarea><br><br>
+            <textarea id="description" placeholder="Description"></textarea><br><br>
 
-    <button onclick="submitRequest()">Send</button>
-  </div>
-</div>
+            <button onclick="submitRequest()">Send</button>
+        </div>
+    </div>
 
     <div id="viewStudentModal" class="student-modal">
 
@@ -1460,52 +1493,47 @@
     </div>
 
     <!-- Invite Student Modal -->
-<div id="inviteModal" class="invite-modal" style="display:none;">
-    <div class="invite-modal-content">
-        <div class="invite-modal-header">
-            <div>
-                <h2>Invite Students</h2>
-                <p>Share this registration link with your students</p>
-            </div>
+    <div id="inviteModal" class="invite-modal" style="display:none;">
+        <div class="invite-modal-content">
+            <div class="invite-modal-header">
+                <div>
+                    <h2>Invite Students</h2>
+                    <p>Share this registration link with your students</p>
+                </div>
 
-            <button type="button" class="invite-close-btn" onclick="closeInviteModal()">
-                &times;
-            </button>
-        </div>
-
-        <div class="invite-modal-body">
-            <label for="inviteLink">Invite Link</label>
-            <div class="invite-link-box">
-                <input
-                    type="text"
-                    id="inviteLink"
-                    readonly
-                    class="invite-link-input"
-                >
-                <button type="button" class="invite-copy-btn" onclick="copyInviteLink()">
-                    Copy
+                <button type="button" class="invite-close-btn" onclick="closeInviteModal()">
+                    &times;
                 </button>
             </div>
 
-            <div class="invite-actions">
-                <button type="button" class="btn btn-primary invite-action-btn" onclick="copyInviteLink()">
-                    Copy Link
-                </button>
+            <div class="invite-modal-body">
+                <label for="inviteLink">Invite Link</label>
+                <div class="invite-link-box">
+                    <input type="text" id="inviteLink" readonly class="invite-link-input">
+                    <button type="button" class="invite-copy-btn" onclick="copyInviteLink()">
+                        Copy
+                    </button>
+                </div>
 
-                <button type="button" class="btn btn-success invite-action-btn" onclick="shareInviteLink()">
-                    Share
-                </button>
-            </div>
+                <div class="invite-actions">
+                    <button type="button" class="btn btn-primary invite-action-btn" onclick="copyInviteLink()">
+                        Copy Link
+                    </button>
 
-            <div class="invite-note">
-                Students can open this link and submit their details directly.
+                    <button type="button" class="btn btn-success invite-action-btn" onclick="shareInviteLink()">
+                        Share
+                    </button>
+                </div>
+
+                <div class="invite-note">
+                    Students can open this link and submit their details directly.
+                </div>
             </div>
         </div>
     </div>
-</div>
     <script src="js/teacher-advance-version/desbord.js"> </script>
-     
-    
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
 </body>
 

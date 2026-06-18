@@ -715,6 +715,8 @@
       return res.json();
     })
     .then(data => {
+      console.log("Analytics Data =>", data);
+console.log("Total Students =>", data.length);
       originalData = data;
       filteredData = [...originalData];
       

@@ -33,6 +33,7 @@
     object-fit: cover;
 }
 
+
 @media (max-width:768px){
 
     .bada-hero{
@@ -4863,5 +4864,21 @@
 
     .stat-card {
       display: none;
+    }
+  }
+  /* Tablet */
+@media (max-width: 768px) {
+    .bada-video {
+        width: 100%;
+        height: 350px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .bada-video {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
     }
   }

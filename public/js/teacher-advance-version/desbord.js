@@ -1,47 +1,47 @@
-  function openRequestModal() {
-  document.getElementById("requestModal").style.display = "block";
+function openRequestModal() {
+    document.getElementById("requestModal").style.display = "block";
 }
 
 
 function submitRequest() {
-  const bannerFile = document.getElementById("banner").files[0];
-  const notesFile = document.getElementById("notes").files[0];
-  const description = document.getElementById("description").value.trim();
-  const testName = document.getElementById("testName").value.trim();
-  const subject = document.getElementById("subject").value.trim();
+    const bannerFile = document.getElementById("banner").files[0];
+    const notesFile = document.getElementById("notes").files[0];
+    const description = document.getElementById("description").value.trim();
+    const testName = document.getElementById("testName").value.trim();
+    const subject = document.getElementById("subject").value.trim();
 
-  if (!bannerFile) return alert("Please upload banner.");
-  if (!notesFile) return alert("Please upload notes.");
-  if (!description) return alert("Please enter description.");
-  if (!testName) return alert("Please enter test name.");
-  if (!subject) return alert("Please enter subject.");
+    if (!bannerFile) return alert("Please upload banner.");
+    if (!notesFile) return alert("Please upload notes.");
+    if (!description) return alert("Please enter description.");
+    if (!testName) return alert("Please enter test name.");
+    if (!subject) return alert("Please enter subject.");
 
-  const formData = new FormData();
-  formData.append("banner", bannerFile);
-  formData.append("notes", notesFile);
-  formData.append("description", description);
-  formData.append("testName", testName);
-  formData.append("subject", subject);
+    const formData = new FormData();
+    formData.append("banner", bannerFile);
+    formData.append("notes", notesFile);
+    formData.append("description", description);
+    formData.append("testName", testName);
+    formData.append("subject", subject);
 
-  fetch("/teacher/send-request", {
-    method: "POST",
-    body: formData
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        alert("Request Sent Successfully!");
-        document.getElementById("banner").value = "";
-        document.getElementById("notes").value = "";
-        document.getElementById("description").value = "";
-        document.getElementById("testName").value = "";
-        document.getElementById("subject").value = "";
-        closeRequestModal();
-      } else {
-        alert(data.message || "Failed to send request");
-      }
+    fetch("/teacher/send-request", {
+        method: "POST",
+        body: formData
     })
-    .catch(() => alert("Server Error"));
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Request Sent Successfully!");
+                document.getElementById("banner").value = "";
+                document.getElementById("notes").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("testName").value = "";
+                document.getElementById("subject").value = "";
+                closeRequestModal();
+            } else {
+                alert(data.message || "Failed to send request");
+            }
+        })
+        .catch(() => alert("Server Error"));
 }
 
 
@@ -51,27 +51,27 @@ const navSendRequest = document.getElementById("nav-send-request");
 const topNavSendRequest = document.getElementById("top-nav-send-request");
 
 function handleSendRequestClick(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!state.paymentCompleted) {
-    alert("Please complete payment first.");
-    showDashboard();
-    return;
-  }
+    if (!state.paymentCompleted) {
+        alert("Please complete payment first.");
+        showDashboard();
+        return;
+    }
 
-  openRequestModal();
+    openRequestModal();
 }
 
 // Sidebar click
 if (navSendRequest) {
-  navSendRequest.addEventListener("click", handleSendRequestClick);
+    navSendRequest.addEventListener("click", handleSendRequestClick);
 }
 
 // Top navbar click
 if (topNavSendRequest) {
-  topNavSendRequest.addEventListener("click", handleSendRequestClick);
+    topNavSendRequest.addEventListener("click", handleSendRequestClick);
 }
-
+const TEACHER_ID = window.TEACHER_ID || "";
 // State management
 const state = {
     paymentCompleted: true,
@@ -260,12 +260,14 @@ function initApp() {
     }
 
     // Load students passed from server
-    if (typeof initialStudents !== 'undefined') {
-        state.students = initialStudents.map(student => ({
-            ...student,
-            className: student.class || student.className || ''
-        }));
-    }
+    if (window.initialStudents) {
+    state.students = window.initialStudents.map(student => ({
+        ...student,
+        className: student.class || student.className || ''
+    }));
+
+    console.log("Loaded Students:", state.students.length);
+}
 
     // Load profile photo
     const savedProfilePhoto = localStorage.getItem('profilePhoto');
@@ -1129,6 +1131,7 @@ function showAnalyticsSection() {
 }
 
 function showStudentsSection() {
+ 
     hideAllSections();
     studentsSection.classList.remove('hidden');
     updateActiveNav('nav-students');
@@ -1163,7 +1166,7 @@ function renderStudentsTable(filter = '') {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${student.name}</td>
-            <td>${student.className || '-'}</td>
+            <td>${student.className || student.class || '-'}</td>
             <td>${student.roll || '-'}</td>
             <td>${student.email || '-'}</td>
             <td>${student.parentContact || '-'}</td>
@@ -1194,11 +1197,11 @@ async function handleAddStudent() {
     const email = studentEmailInput.value.trim();
     const className = studentClassInput.value.trim();
     const roll = studentRollInput.value.trim();
-    const parentContact = studentParentContactInput.value.trim(); 
-if (!/^\d{10}$/.test(parentContact)) {
-    alert("Parent Contact Number must be exactly 10 digits.");
-    return;
-}
+    const parentContact = studentParentContactInput.value.trim();
+    if (!/^\d{10}$/.test(parentContact)) {
+        alert("Parent Contact Number must be exactly 10 digits.");
+        return;
+    }
     if (!firstName || !lastName) {
         alert('Please enter student first and last name.');
         return;
@@ -2394,6 +2397,13 @@ ${String(service.status || "").toLowerCase() === "published"
     <span>Published</span>
 
 </button>
+
+<button 
+        class="action-btn-modern solution-btn-modern"
+        onclick="viewSolution('${service._id || service.id}')">
+        <i class="fas fa-book-open"></i>
+        <span>Solution</span>
+    </button>
 `
                 : `
 <button 
@@ -2404,6 +2414,13 @@ ${String(service.status || "").toLowerCase() === "published"
     <span>Publish</span>
 
 </button>
+
+<button 
+        class="action-btn-modern solution-btn-modern"
+        onclick="viewSolution('${service._id || service.id}')">
+        <i class="fas fa-book-open"></i>
+        <span>Solution</span>
+    </button>
 `
             }
  
@@ -2957,7 +2974,7 @@ async function loadAnalyticsCards() {
         data.forEach((test, index) => {
             const row = document.createElement("tr");
 
-          row.innerHTML = `
+            row.innerHTML = `
 <tr>
    <td>${index + 1}</td>
    <td>${test.name || "-"}</td>
@@ -3350,8 +3367,8 @@ async function loadAnalyticsCards() {
         const response = await res.json();
 
         const tests = Array.isArray(response)
-    ? response
-    : (response.tests || []);
+            ? response
+            : (response.tests || []);
 
         const container =
             document.getElementById("analytics-cards-container");
@@ -3422,43 +3439,48 @@ async function loadAnalyticsCards() {
                 </tr>
             `;
 
-    });
-  } catch (err) {
-    console.log("Analytics Load Error:", err);
-  }
+        });
+    } catch (err) {
+        console.log("Analytics Load Error:", err);
+    }
 }
 function openInviteModal() {
-  const link = `${window.location.origin}/teacher/student-register/${TEACHER_ID}`;
+    const link = `${window.location.origin}/teacher/student-register/${TEACHER_ID}`;
 
-  document.getElementById("inviteLink").value = link;
+    document.getElementById("inviteLink").value = link;
 
-  document.getElementById("inviteModal").style.display = "flex";
+    document.getElementById("inviteModal").style.display = "flex";
 }
 
 function closeInviteModal() {
-  document.getElementById("inviteModal").style.display = "none";
+    document.getElementById("inviteModal").style.display = "none";
 }
 
 function copyInviteLink() {
-  const input = document.getElementById("inviteLink");
+    const input = document.getElementById("inviteLink");
 
-  input.select();
+    input.select();
 
-  document.execCommand("copy");
+    document.execCommand("copy");
 
-  alert("Link copied!");
+    alert("Link copied!");
 }
 
 function shareInviteLink() {
-  const link = document.getElementById("inviteLink").value;
+    const link = document.getElementById("inviteLink").value;
 
-  if (navigator.share) {
-    navigator.share({
-      title: "Student Registration",
-      text: "Fill this form to join class",
-      url: link,
-    });
-  } else {
-    window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
-  }
+    if (navigator.share) {
+        navigator.share({
+            title: "Student Registration",
+            text: "Fill this form to join class",
+            url: link,
+        });
+    } else {
+        window.open(`https://wa.me/?text=${encodeURIComponent(link)}`);
+    }
+}
+
+
+function viewSolution(id) {
+    window.location.href = `/teacher/solution/${id}`;
 }

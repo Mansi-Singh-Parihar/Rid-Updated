@@ -1,5 +1,14 @@
 /* Modern Dashboard Override */
+.action-buttons-column{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
+.solution-btn-modern{
+    background: linear-gradient(135deg,#0a1411,#79948c);
+    color: #fff;
+}
 /* FULL PROFESSIONAL DASHBOARD REDESIGN */
 body,.content-area,.page-content-wrapper{
 background:#f8fafc!important;
@@ -1562,7 +1571,7 @@ footer {
   .content-area {
     margin-left: 0;        /* 👈 sidebar space hatao */
     padding: 15px;
-    padding-top: 90px;     /* header space */
+    padding-top: 0px;     /* header space */
     width: 100%;           /* full width */
 }
 

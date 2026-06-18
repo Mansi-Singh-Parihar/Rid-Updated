@@ -395,109 +395,124 @@ function startTimer() {
 }
 
 // ----------------- Camera & Movement Detection -----------------
-let videoStream;
-let movementCount = 0;
+// let videoStream;
+// let movementCount = 0;
 
-function startCamera() {
-    const container = document.createElement("div");
-    container.id = "camera-container";
-    container.style = `
-        position:fixed; top:10px; left:10px; width:130px; height:130px;
-        border-radius:50%; overflow:hidden; border:3px solid red; z-index:9999;
-    `;
+// function startCamera() {
+//     const container = document.createElement("div");
+//     container.id = "camera-container";
+//     container.style = `
+//         position:fixed; top:10px; left:10px; width:130px; height:130px;
+//         border-radius:50%; overflow:hidden; border:3px solid red; z-index:9999;
+//     `;
 
-    document.body.appendChild(container);
+//     document.body.appendChild(container);
 
-    const video = document.createElement("video");
-    video.autoplay = true;
-    video.playsinline = true;
-    video.style = "width:100%; height:100%; object-fit:cover;";
-    container.appendChild(video);
+//     const video = document.createElement("video");
+//     video.autoplay = true;
+//     video.playsinline = true;
+//     video.style = "width:100%; height:100%; object-fit:cover;";
+//     container.appendChild(video);
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            video.srcObject = stream;
-            videoStream = stream;
-            detectMovement(video);
-        })
-        .catch(() => alert("Camera access denied!"));
-}
+//     navigator.mediaDevices.getUserMedia({ video: true })
+//         .then(stream => {
+//             video.srcObject = stream;
+//             videoStream = stream;
+//             detectMovement(video);
+//         })
+//         .catch(() => alert("Camera access denied!"));
+// }
 
-function detectMovement(video) {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = 160;
-    canvas.height = 160;
+// function detectMovement(video) {
+//     const canvas = document.createElement("canvas");
+//     const ctx = canvas.getContext("2d");
+//     canvas.width = 160;
+//     canvas.height = 160;
 
-    let lastData = null;
+//     let lastData = null;
 
-    setInterval(() => {
-        ctx.drawImage(video, 0, 0, 160, 160);
-        const data = ctx.getImageData(0, 0, 160, 160);
+//     setInterval(() => {
+//         ctx.drawImage(video, 0, 0, 160, 160);
+//         const data = ctx.getImageData(0, 0, 160, 160);
 
-        if (lastData) {
-            let diff = 0;
-            for (let i = 0; i < data.data.length; i += 4) {
-                diff += Math.abs(data.data[i] - lastData.data[i]);
-            }
+//         if (lastData) {
+//             let diff = 0;
+//             for (let i = 0; i < data.data.length; i += 4) {
+//                 diff += Math.abs(data.data[i] - lastData.data[i]);
+//             }
 
-            if (diff > 1000000) {
-                movementCount++;
+//             if (diff > 1000000) {
+//                 movementCount++;
 
-                if (movementCount === 1) alert("⚠ Alert 1: No movement detected!");
-                if (movementCount === 2) alert("⚠ Alert 2: Head not moving!");
-                if (movementCount === 3) {
-                    alert("⚠ Alert 3: Restarting test...");
-                    restartTest();
-                }
-            }
-        }
-        lastData = data;
+//                 if (movementCount === 1) alert("⚠ Alert 1: No movement detected!");
+//                 if (movementCount === 2) alert("⚠ Alert 2: Head not moving!");
+//                 if (movementCount === 3) {
+//                     alert("⚠ Alert 3: Restarting test...");
+//                     restartTest();
+//                 }
+//             }
+//         }
+//         lastData = data;
 
-    }, 2000);
-}
+//     }, 2000);
+// }
 
-function restartTest() {
-    if (videoStream) videoStream.getTracks().forEach(t => t.stop());
+// function restartTest() {
+//     if (videoStream) videoStream.getTracks().forEach(t => t.stop());
 
-    const cam = document.getElementById("camera-container");
-    if (cam) cam.remove();
+//     const cam = document.getElementById("camera-container");
+//     if (cam) cam.remove();
 
-    movementCount = 0;
-    currentQuestion = 0;
-    timeLeft = (parseInt(window.testDuration, 10) || 60) * 60;
+//     movementCount = 0;
+//     currentQuestion = 0;
+//     timeLeft = (parseInt(window.testDuration, 10) || 60) * 60;
 
-    questions.forEach(q => {
-        q.attempted = false;
-        q.selected = null;
-    });
+//     questions.forEach(q => {
+//         q.attempted = false;
+//         q.selected = null;
+//     });
 
-    // reset timer start
-    quizStartTime = Date.now();
-    localStorage.setItem("quizStartTime", quizStartTime);
+//     // reset timer start
+//     quizStartTime = Date.now();
+//     localStorage.setItem("quizStartTime", quizStartTime);
 
-    loadQuestion(0);
-    startTimer();
-    startCamera();
-}
+//     loadQuestion(0);
+//     startTimer();
+//     startCamera();
+// }
 
 
 // ----------------- Page Load -----------------
+// window.onload = function () {
+//     if (questions.length === 0) {
+//         alert("No Questions Loaded");
+//         return;
+//     }
+
+//     // ✅ Save quiz start time
+//     quizStartTime = Date.now();
+//     localStorage.setItem("quizStartTime", quizStartTime);
+
+//     loadQuestion(currentQuestion);
+//     startTimer();
+//     startCamera();
+// };
+
+// ----------------- Page Load -----------------
 window.onload = function () {
+
     if (questions.length === 0) {
         alert("No Questions Loaded");
         return;
     }
 
-    // ✅ Save quiz start time
+    // Save quiz start time
     quizStartTime = Date.now();
     localStorage.setItem("quizStartTime", quizStartTime);
 
     loadQuestion(currentQuestion);
     startTimer();
-    startCamera();
 };
-
 
 // ----------------- Tab Change Detection -----------------
 

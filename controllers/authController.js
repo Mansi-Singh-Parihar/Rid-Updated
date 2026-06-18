@@ -67,7 +67,7 @@ const redirectUrl = req.body.redirect || req.query.redirect;
 
 // 🟢 STUDENT
 if (user.role === "student") {
-  return res.redirect(redirectUrl || "/rts/dashboard");
+  return res.redirect(redirectUrl || "/National-Test-Series");
 }
 
 // 🟢 TEACHER 🔥

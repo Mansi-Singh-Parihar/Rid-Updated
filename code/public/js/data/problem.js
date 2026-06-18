@@ -1,4 +1,4 @@
-  // ========== RESIZABLE PANELS (default 30% / 70%) ==========
+// ========== RESIZABLE PANELS (default 30% / 70%) ==========
     const leftPanel = document.getElementById('leftPanel');
     const rightPanel = document.getElementById('rightPanel');
     const resizer = document.getElementById('resizer');
@@ -714,7 +714,7 @@ let examplesHtml = '';
       for (let i = 0; i < testCases.length; i++) {
         const testCase = testCases[i];
         try {
-          const response = await fetch('/tech-interview/execute', {
+          const response = await fetch('/execute', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               language: apiLanguageMap[currentLanguage] || 'python',
@@ -806,7 +806,7 @@ let examplesHtml = '';
         const firstTestCase = currentQuestion?.testCases?.[0];
         const autoInput = firstTestCase?.input || "";
         try {
-          const response = await fetch('/tech-interview/execute', {
+          const response = await fetch('/execute', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               language: apiLanguageMap[currentLanguage] || 'python',
@@ -864,7 +864,7 @@ let examplesHtml = '';
       const hintText = document.getElementById("hintText");
       hintText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
       try {
-        const response = await fetch('/tech-interview/ai-hint', {
+        const response = await fetch('/ai-hint', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             question: currentQuestion.desc || currentQuestion.title,
@@ -1108,4 +1108,3 @@ function goToNext() {
         console.log(`⚠️ Problem ${uniqueKey} already solved!`);
       }
     }
-    

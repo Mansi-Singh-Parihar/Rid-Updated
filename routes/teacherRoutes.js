@@ -10,9 +10,9 @@ const sendMail = require("../utils/sendMail");
 const Test = require("../models/Test");       // ✅ ALSO ADD
 const Question = require("../models/Question"); // ✅ ALSO ADD
 const ClassModel = require("../models/Class");
-
+const PDFDocument = require("pdfkit");
 const TeacherTest = require("../models/teacherTestModel");
-
+const TestAttempt = require("../models/TestAttempt");
 const TestRequest = require("../models/TestRequest");
 const multer = require("multer");
 
@@ -20,22 +20,40 @@ const multer = require("multer");
 // ================= DASHBOARD =================
 
 router.get("/teacher-dashboard", ensureTeacher, async (req, res) => {
-
   try {
     const token = req.cookies.token;
-    if (!token) return res.redirect("/login");
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const teacher = await Teacher.findById(decoded.userId);
-    if (!teacher) return res.redirect("/login");
 
-    const students = await Student.find({ teacherId: teacher._id });
-    
-    res.render("tracher_deshboard/advance-version/teacher-test-version", { teacher, students });
+    const students = await Student.find({
+      teacherId: teacher._id
+    }).lean();
+
+    console.log("Teacher:", teacher.name);
+    console.log("Students Found:", students.length);
+
+    const teacherTests = await Test.find({
+      teacherId: teacher._id
+    });
+
+    const testIds = teacherTests.map(t => t._id);
+
+    const totalAttempts = await TestAttempt.countDocuments({
+      testId: { $in: testIds }
+    });
+
+    res.render(
+      "tracher_deshboard/advance-version/teacher-test-version",
+      {
+        teacher,
+        students,
+        totalAttempts
+      }
+    );
 
   } catch (err) {
-    console.log("Teacher Dashboard Error:", err);
+    console.log(err);
     res.redirect("/login");
   }
 });
@@ -854,5 +872,185 @@ router.post(
 
  router.get("/main", (req, res) => {
   res.render("index.ejs")
+});
+
+
+// ================= DOWNLOAD SOLUTION PDF =================
+// ================= DOWNLOAD SOLUTION PDF =================
+router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
+
+    try {
+
+        const test = await TeacherTest.findById(req.params.testId);
+
+        if (!test) {
+            return res.status(404).send("Test Not Found");
+        }
+
+        const doc = new PDFDocument({
+            margin: 50,
+            size: "A4"
+        });
+
+        res.setHeader("Content-Type", "application/pdf");
+
+        res.setHeader(
+            "Content-Disposition",
+            `inline; filename="${(test.name || test.title || "solution")}.pdf"`
+        );
+
+        doc.pipe(res);
+
+        // ================= HEADER =================
+
+        doc
+            .fontSize(24)
+            .font("Helvetica-Bold")
+            .text("SOLUTION SHEET", {
+                align: "center"
+            });
+
+        doc.moveDown(0.5);
+
+        doc
+            .fontSize(12)
+            .font("Helvetica")
+            .fillColor("gray")
+            .text(
+                `Generated On: ${new Date().toLocaleDateString()}`,
+                {
+                    align: "right"
+                }
+            );
+
+        doc.moveDown();
+
+        doc
+            .fontSize(16)
+            .font("Helvetica-Bold")
+            .fillColor("blue")
+            .text(`Test Name: ${test.name || test.title || "Untitled Test"}`);
+
+        doc.moveDown(1.5);
+
+        // ================= QUESTIONS =================
+
+        (test.questions || []).forEach((q, index) => {
+
+            const questionText =
+                q.question ||
+                q.text ||
+                "No Question Available";
+
+            // Question
+            doc
+                .fontSize(13)
+                .font("Helvetica-Bold")
+                .fillColor("black")
+                .text(`Q${index + 1}. ${questionText}`, {
+                    width: 500
+                });
+
+            doc.moveDown(0.4);
+
+            // Options
+            (q.options || []).forEach((opt, i) => {
+
+                const optionText =
+                    typeof opt === "object"
+                        ? opt.text
+                        : opt;
+
+                const optionLetter =
+                    String.fromCharCode(65 + i);
+
+                if (opt.isCorrect) {
+
+                    doc
+                        .font("Helvetica-Bold")
+                        .fontSize(11)
+                        .fillColor("green")
+                        .text(
+                            `${optionLetter}. ${optionText}   ✓ Correct Answer`,
+                            {
+                                indent: 25
+                            }
+                        );
+
+                } else {
+
+                    doc
+                        .font("Helvetica")
+                        .fontSize(11)
+                        .fillColor("black")
+                        .text(
+                            `${optionLetter}. ${optionText}`,
+                            {
+                                indent: 25
+                            }
+                        );
+                }
+            });
+
+            doc.moveDown(0.7);
+
+            // Correct Answer Box
+            const correctOption = (q.options || []).find(
+                o => o.isCorrect
+            );
+
+            if (correctOption) {
+
+                doc
+                    .font("Helvetica-Bold")
+                    .fillColor("#006400")
+                    .text(
+                        `Correct Answer: ${correctOption.text}`,
+                        {
+                            indent: 25
+                        }
+                    );
+            }
+
+            doc.moveDown(0.8);
+
+            // Divider Line
+            doc
+                .strokeColor("#cccccc")
+                .lineWidth(1)
+                .moveTo(50, doc.y)
+                .lineTo(550, doc.y)
+                .stroke();
+
+            doc.moveDown(1);
+
+            // Auto Page Break
+            if (doc.y > 700) {
+                doc.addPage();
+            }
+        });
+
+        // ================= FOOTER =================
+
+        doc.moveDown(2);
+
+        doc
+            .fontSize(10)
+            .fillColor("gray")
+            .text(
+                "Generated by RID Bharat Test Management System",
+                {
+                    align: "center"
+                }
+            );
+
+        doc.end();
+
+    } catch (err) {
+
+        console.error("Solution PDF Error:", err);
+
+        res.status(500).send("Server Error");
+    }
 });
 module.exports = router;
