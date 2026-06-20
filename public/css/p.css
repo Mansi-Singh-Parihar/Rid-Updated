@@ -2121,7 +2121,7 @@
 /* ========================= */
 @media (max-width: 600px) {
   .hero {
-    height: 45vh; /* 🔥 MAIN FIX (pehle 75vh tha) */
+    height: 45vh;
   }
 
   .overlay {
