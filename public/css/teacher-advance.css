@@ -3252,27 +3252,29 @@ canvas {
   margin-top: 15px;
 }
 /* ===== MODAL OVERLAY ===== */
-.modal-overlay {
-    display: none;
+.modal-overlay{
     position: fixed;
     inset: 0;
-    background: rgba(15, 23, 42, 0.65); /* dark glass */
-    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,.6);
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    padding: 20px;
+    z-index: 99999;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ===== MODAL BOX ===== */
-.modal-box {
-    width: 420px;
-    max-width: 95%;
-    background: #ffffff;
+.modal-box{
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
     border-radius: 16px;
-    padding: 25px 22px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    padding: 25px;
+    max-height: 90vh;
+    overflow-y: auto;
     position: relative;
-    animation: modalPop 0.35s ease;
 }
 
 /* ===== TITLE ===== */
@@ -3285,18 +3287,21 @@ canvas {
 
 /* ===== INPUTS ===== */
 .modal-box input,
-.modal-box textarea {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    outline: none;
-    margin-top: 6px;
-    margin-bottom: 14px;
-    font-size: 14px;
-    transition: 0.2s;
+.modal-box textarea{
+    width:100%;
 }
 
+@media (max-width:768px){
+    .modal-overlay{
+        align-items:flex-start;
+        padding:10px;
+    }
+    .modal-box{
+        margin-top:20px;
+        max-width:100%;
+        padding:18px;
+    }
+}
 /* focus effect */
 .modal-box input:focus,
 .modal-box textarea:focus {
@@ -4029,4 +4034,52 @@ iframe,
     .invite-action-btn {
         width: 100%;
     }
+}
+
+/* ===== iPad Fix ===== */
+
+@media screen and (min-width:768px) and (max-width:1180px){
+
+    html,
+    body{
+        overflow-x:hidden;
+        overflow-y:auto !important;
+        height:auto !important;
+    }
+
+    .main-content{
+        overflow:visible !important;
+        min-height:auto !important;
+    }
+
+    .content-area{
+        overflow:visible !important;
+        height:auto !important;
+        min-height:auto !important;
+        padding-bottom:80px;
+    }
+
+    .page-content-wrapper{
+        overflow:visible !important;
+        height:auto !important;
+        max-height:none !important;
+    }
+
+    .modal-overlay{
+        align-items:flex-start !important;
+        overflow-y:auto !important;
+        -webkit-overflow-scrolling:touch;
+        padding:20px;
+    }
+
+    .modal-box{
+        max-height:none !important;
+        height:auto !important;
+        overflow:visible !important;
+        margin:30px auto;
+    }
+}
+#testName,#subject,#banner,#notes,#description{
+    padding:10px 12px;
+    border:1px solid #dbe3ee;   
 }
