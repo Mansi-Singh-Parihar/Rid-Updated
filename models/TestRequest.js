@@ -6,8 +6,21 @@ const testRequestSchema = new mongoose.Schema({
     ref: "Teacher"
   },
 
+  teacherName: String,
+
+  testName: {
+    type: String,
+    required: true
+  },
+
+  subject: {
+    type: String,
+    required: true
+  },
+
   banner: String,
-notesFile: String,
+  notesFile: String,
+
   description: String,
 
   questionsText: String,
