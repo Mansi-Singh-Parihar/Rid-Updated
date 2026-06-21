@@ -403,16 +403,16 @@ router.get("/teacher/view-test/:testId", ensureTeacher, async (req, res) => {
 
 }));
 
-    res.render(
-      "tracher_deshboard/advance-version/viewtest",
-      {
-        testTitle: test.title || test.testName,
-        questions: formattedQuestions,
-        duration: test.duration || 60,
-        testId: test._id,
-        sid: ""
-      }
-    );
+   res.render(
+  "tracher_deshboard/advance-version/viewtest",
+  {
+    testTitle: test.name || test.title || test.testName,
+    questions: formattedQuestions,
+    duration: test.duration || 60,
+    testId: test._id,
+    sid: ""
+  }
+);
 
   } catch (err) {
 
@@ -760,17 +760,16 @@ router.post(
       const bannerFile = req.files?.banner?.[0];
       const notesFile = req.files?.notes?.[0];
 
-      const newRequest = new TestRequest({
-        teacherId: decoded.userId,
-        teacherName: req.body.teacherName || "",
-        testName: req.body.testName || "",
-        subject: req.body.subject || "",
-        banner: bannerFile ? "/uploads/" + bannerFile.filename : "",
-        notesFile: notesFile ? "/uploads/" + notesFile.filename : "",
-        description: req.body.description || "",
-        status: "pending"
-      });
-
+        const newRequest = new TestRequest({
+          teacherId: decoded.userId,
+          teacherName: req.user?.name || "",
+          testName: req.body.testName || "",
+          subject: req.body.subject || "",
+          banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
+          notes: notesFile ? `/uploads/${notesFile.filename}` : "",
+          description: req.body.description || "",
+          status: "pending"
+        });
       await newRequest.save();
       res.json({ success: true });
     } catch (err) {
