@@ -1038,6 +1038,7 @@ header {
 }
 
 .level-intermediate {
+    display: none;
     background: #fef9e7;
     color: #f39c12;
 }
@@ -1202,7 +1203,7 @@ header {
 }
 
 .test-service-level {
-    display: inline-block;
+    display: none;
     padding: 4px 12px;
     border-radius: 15px;
     font-size: 0.8rem;
@@ -1623,7 +1624,17 @@ footer {
     }
 
     .test-service-footer {
-        grid-template-columns: repeat(2, 1fr);
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px;
+    }
+
+
+      .test-service-footer .enroll-btn,
+    .test-service-footer button {
+        width: 100%;
+        font-size: 12px;
+        padding: 10px 5px;
     }
 
     .form-actions {
@@ -1685,10 +1696,18 @@ footer {
         min-height: 380px;
     }
 
-    .test-service-footer {
-        grid-template-columns: 1fr;
+      .test-service-footer {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 8px;
     }
+       .test-service-footer .enroll-btn,
+    .test-service-footer button {
+        width: 100%;
+        font-size: 11px;
+        padding: 8px 4px;
+    }
+}
 
     .enroll-btn {
         padding: 8px;
