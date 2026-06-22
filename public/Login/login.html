@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>RID | Creative Login Portal</title>
+    <title>RID | Login Portal</title>
 
-    <!-- Google Fonts + Font Awesome Icons (Pure UI, no JS) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="icon" type="image/png" href="/assets/signup.png" />
 
     <style>
@@ -19,25 +17,44 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --ink-900: #0b2538;
+            --ink-700: #163e57;
+            --brand-600: #0c5a82;
+            --brand-700: #0a4a6b;
+            --brand-500: #1f7a9e;
+            --accent: #d98a3d;
+            --surface: #ffffff;
+            --surface-muted: #f4f7fb;
+            --border: #e1e8f0;
+            --text-muted: #5b7488;
+            --danger: #c0392b;
+            --success: #1b8a5a;
+            --radius-lg: 24px;
+            --radius-md: 14px;
+            --radius-pill: 999px;
+        }
+
         body {
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #eef2ff 0%, #d9e2f0 100%);
+            background: linear-gradient(160deg, #eef3f9 0%, #dde6f0 55%, #d6e2ee 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px;
             position: relative;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ---------- ANIMATED BACKGROUND BLOBS ---------- */
         body::before {
             content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(8, 59, 93, 0.15) 0%, rgba(8, 59, 93, 0) 70%);
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(12, 90, 130, 0.14) 0%, rgba(12, 90, 130, 0) 70%);
             border-radius: 50%;
             top: -100px;
             left: -100px;
@@ -47,10 +64,10 @@
 
         body::after {
             content: '';
-            position: absolute;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(2, 112, 152, 0.12) 0%, rgba(2, 112, 152, 0) 70%);
+            position: fixed;
+            width: 460px;
+            height: 460px;
+            background: radial-gradient(circle, rgba(217, 138, 61, 0.10) 0%, rgba(217, 138, 61, 0) 70%);
             border-radius: 50%;
             bottom: -150px;
             right: -120px;
@@ -59,24 +76,22 @@
         }
 
         @keyframes floatBlob {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(30px, 20px) scale(1.05);
-            }
-            100% {
-                transform: translate(0, 0) scale(1);
-            }
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 20px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before, body::after { animation: none; }
         }
 
         .orb-1 {
-            position: absolute;
+            position: fixed;
             top: 15%;
             right: 5%;
             width: 180px;
             height: 180px;
-            background: rgba(255, 255, 245, 0.3);
+            background: rgba(255, 255, 245, 0.35);
             filter: blur(65px);
             border-radius: 50%;
             z-index: 0;
@@ -84,12 +99,12 @@
         }
 
         .orb-2 {
-            position: absolute;
+            position: fixed;
             bottom: 10%;
             left: 3%;
             width: 240px;
             height: 240px;
-            background: rgba(8, 59, 93, 0.08);
+            background: rgba(12, 90, 130, 0.08);
             filter: blur(70px);
             border-radius: 50%;
             z-index: 0;
@@ -100,9 +115,8 @@
         .main-login-row {
             display: flex;
             width: 100%;
-            max-width: 1400px;
-            background: transparent;
-            gap: 32px;
+            max-width: 1280px;
+            gap: 28px;
             z-index: 2;
             position: relative;
             align-items: stretch;
@@ -111,91 +125,88 @@
         /* ---------- LEFT FORM SECTION ---------- */
         .container {
             flex: 1;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(2px);
-            border-radius: 42px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.02);
-            padding: 40px 36px;
-            transition: all 0.3s ease;
-            margin: 20px 0 20px 20px;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 1px 2px rgba(11, 37, 56, 0.04), 0 20px 40px -16px rgba(11, 37, 56, 0.18);
+            padding: 48px 44px;
+            border: 1px solid rgba(11, 37, 56, 0.06);
         }
 
         .left-content {
             width: 100%;
-            max-width: 520px;
+            max-width: 440px;
             margin: 0 auto;
+        }
+
+        /* ---------- BRAND MARK ---------- */
+        .brand-mark {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .brand-mark .mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(12, 90, 130, 0.3);
+        }
+
+        .brand-mark span {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--ink-900);
+            letter-spacing: 0.2px;
         }
 
         /* ---------- HEADER ---------- */
         h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #083b5d, #1b6b93);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
-            display: inline-block;
-            position: relative;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 65px;
-            height: 4px;
-            background: linear-gradient(90deg, #083b5d, #4aa3cf);
-            border-radius: 4px;
+            font-family: 'Fraunces', serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: var(--ink-900);
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+            line-height: 1.1;
         }
 
         h2 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: #2c5a7a;
-            letter-spacing: 0.3px;
-            margin-top: 10px;
-            margin-bottom: 28px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        h2 i {
-            font-size: 0.9rem;
-            color: #1f6e8c;
-            opacity: 0.8;
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-bottom: 32px;
         }
 
         hr {
             border: none;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #cbd5e1, #a0c4e2, #cbd5e1, transparent);
-            margin: 24px 0;
+            background: var(--border);
+            margin: 28px 0;
         }
 
         /* ---------- LABELS ---------- */
         label {
             display: block;
-            margin-top: 20px;
+            margin-top: 18px;
             font-weight: 600;
-            font-size: 0.85rem;
-            color: #1a3e50;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
+            font-size: 0.78rem;
+            color: var(--ink-700);
+            letter-spacing: 0.2px;
+            margin-bottom: 7px;
         }
 
-        label i {
-            margin-right: 6px;
-            font-size: 0.8rem;
-            color: #2c7da0;
+        label:first-of-type {
+            margin-top: 0;
         }
 
-        /* ---------- INPUT WRAPPER (relative container for icon) ---------- */
+        /* ---------- INPUT WRAPPER ---------- */
         .input-wrapper {
             position: relative;
             width: 100%;
@@ -203,161 +214,170 @@
 
         input {
             width: 100%;
-            padding: 14px 48px 14px 16px;
-            /* right padding makes room for the icon */
-            border: 1.5px solid #e2e8f0;
-            border-radius: 28px;
+            padding: 13px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-md);
             font-size: 0.95rem;
             font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            transition: all 0.25s ease;
+            background: var(--surface-muted);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
             outline: none;
-            color: #0f2c3b;
+            color: var(--ink-900);
             font-weight: 500;
         }
 
+        /* extra right padding only on the password field, to make room for the eye icon */
+        input#passwordInput {
+            padding-right: 46px;
+        }
+
         input:focus {
-            border-color: #1f6e8c;
-            box-shadow: 0 6px 14px rgba(8, 59, 93, 0.12);
-            transform: translateY(-1px);
+            border-color: var(--brand-500);
+            background: var(--surface);
+            box-shadow: 0 0 0 4px rgba(31, 122, 158, 0.12);
         }
 
         input::placeholder {
-            color: #adc4d6;
+            color: #9bb0c2;
             font-weight: 400;
-            font-size: 0.9rem;
         }
 
         /* ---------- PASSWORD TOGGLE ICON ---------- */
         .toggle-password {
             position: absolute;
-            right: 16px;
+            right: 6px;
             top: 50%;
             transform: translateY(-50%);
-            color: #7a9bb5;
+            color: var(--text-muted);
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: color 0.2s ease, transform 0.2s ease;
+            font-size: 1.05rem;
+            transition: color 0.2s ease, background 0.2s ease;
             background: transparent;
             border: none;
             outline: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px;
-            width: 32px;
-            height: 32px;
+            padding: 0;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 5;
+            /* ensure it's tappable on touch devices */
+            touch-action: manipulation;
         }
 
         .toggle-password:hover {
-            color: #083b5d;
-            transform: translateY(-50%) scale(1.1);
+            color: var(--brand-700);
+            background: rgba(12, 90, 130, 0.08);
         }
 
         .toggle-password:active {
-            transform: translateY(-50%) scale(0.92);
+            background: rgba(12, 90, 130, 0.14);
+        }
+
+        .toggle-password:focus-visible {
+            outline: 2px solid var(--brand-500);
+            outline-offset: 2px;
         }
 
         /* ---------- FORGOT LINK ---------- */
         .forgot-link {
             display: inline-block;
-            margin: 12px 0 20px 0;
-            color: #1f6e8c;
+            margin: 10px 0 22px 0;
+            color: var(--brand-600);
             text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.82rem;
+            font-weight: 600;
             text-align: right;
             width: 100%;
-            transition: all 0.2s;
-        }
-
-        .forgot-link i {
-            font-size: 0.7rem;
-            margin-left: 4px;
+            transition: color 0.2s;
         }
 
         .forgot-link:hover {
-            color: #083b5d;
-            transform: translateX(4px);
+            color: var(--brand-700);
+            text-decoration: underline;
         }
 
         /* ---------- BUTTON ---------- */
         button[type="submit"] {
-            background: linear-gradient(105deg, #083b5d 0%, #166b8f 100%);
+            background: linear-gradient(105deg, var(--brand-700) 0%, var(--brand-500) 100%);
             color: white;
             border: none;
             padding: 14px 20px;
-            font-size: 1rem;
+            font-size: 0.98rem;
             font-weight: 700;
-            border-radius: 44px;
+            border-radius: var(--radius-pill);
             cursor: pointer;
             width: 100%;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            box-shadow: 0 8px 18px rgba(8, 59, 93, 0.25);
-            letter-spacing: 0.3px;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+            box-shadow: 0 8px 18px rgba(12, 90, 130, 0.28);
+            letter-spacing: 0.2px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-        }
-
-        button[type="submit"] i {
-            font-size: 1rem;
-            transition: transform 0.2s;
+            gap: 9px;
         }
 
         button[type="submit"]:hover {
-            background: linear-gradient(105deg, #062d47, #0f5879);
-            transform: scale(1.01);
-            box-shadow: 0 12px 24px rgba(8, 59, 93, 0.3);
-        }
-
-        button[type="submit"]:hover i {
-            transform: translateX(4px);
+            background: linear-gradient(105deg, var(--ink-700), var(--brand-600));
+            transform: translateY(-1px);
+            box-shadow: 0 12px 22px rgba(12, 90, 130, 0.32);
         }
 
         button[type="submit"]:active {
-            transform: scale(0.98);
+            transform: translateY(0);
+        }
+
+        button[type="submit"]:focus-visible {
+            outline: 2px solid var(--brand-700);
+            outline-offset: 3px;
+        }
+
+        button[type="submit"]:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* ---------- ERROR ---------- */
         #error-message {
             display: block;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             margin-top: 10px;
-            padding-left: 8px;
             font-weight: 500;
+            color: var(--danger);
+            min-height: 1em;
         }
 
         /* ---------- SIGNUP TEXT ---------- */
-        p {
-            margin-top: 24px;
-            font-size: 0.85rem;
+        p.signup-text {
+            margin-top: 26px;
+            font-size: 0.88rem;
             text-align: center;
-            color: #2d4e6e;
+            color: var(--text-muted);
         }
 
-        p a {
-            color: #0f5b7a;
+        p.signup-text a {
+            color: var(--brand-600);
             text-decoration: none;
             font-weight: 700;
-            border-bottom: 1.5px dotted #6aaec9;
-            transition: all 0.2s;
+            transition: color 0.2s;
         }
 
-        p a:hover {
-            color: #083b5d;
-            border-bottom-color: #083b5d;
+        p.signup-text a:hover {
+            color: var(--brand-700);
+            text-decoration: underline;
         }
 
         /* ---------- FOOTER ---------- */
         .footer {
-            margin-top: 30px;
+            margin-top: 8px;
             text-align: center;
-            font-size: 0.7rem;
-            color: #5f7f96;
+            font-size: 0.74rem;
+            color: #7d96a9;
         }
 
         .footer .links {
@@ -365,40 +385,34 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
+            gap: 16px;
         }
 
         .footer a {
-            color: #2c7da0;
+            color: var(--brand-600);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.7rem;
-            transition: all 0.2s;
+            font-size: 0.74rem;
+            transition: color 0.2s;
         }
 
         .footer a:hover {
-            color: #083b5d;
+            color: var(--brand-700);
             text-decoration: underline;
         }
 
         /* ---------- RIGHT IMAGE ---------- */
         #hiddenImg {
-            flex: 1.2;
+            flex: 1;
+            position: relative;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 48px;
-            margin: 20px 20px 20px 0;
-            padding: 0;
-            box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            transition: transform 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            align-items: flex-end;
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            background: #f0f4fa;
-        }
-
-        #hiddenImg:hover {
-            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -16px rgba(11, 37, 56, 0.25);
+            border: 1px solid rgba(11, 37, 56, 0.06);
+            background: linear-gradient(160deg, var(--ink-900), var(--brand-700));
+            min-height: 520px;
         }
 
         #hiddenImg img {
@@ -406,226 +420,135 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: all 0.3s ease;
+            position: absolute;
+            inset: 0;
+        }
+
+        #hiddenImg .panel-caption {
+            position: relative;
+            z-index: 2;
+            padding: 32px;
+            color: white;
+            background: linear-gradient(to top, rgba(11,37,56,0.85) 0%, rgba(11,37,56,0) 100%);
+            width: 100%;
+        }
+
+        #hiddenImg .panel-caption h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        #hiddenImg .panel-caption p {
+            font-size: 0.88rem;
+            opacity: 0.85;
+            max-width: 320px;
         }
 
         /* ---------- AUTO-FILL FIX ---------- */
         input:-webkit-autofill,
         input:-webkit-autofill:focus {
             transition: background-color 600000s 0s, color 600000s 0s;
+            -webkit-text-fill-color: var(--ink-900);
         }
 
         /* ---------- RESPONSIVE ---------- */
         @media (max-width: 1100px) {
-            .main-login-row {
-                gap: 24px;
-            }
-            .container {
-                padding: 32px 28px;
-            }
-            h1 {
-                font-size: 2.5rem;
-            }
+            .container { padding: 40px 32px; }
+            h1 { font-size: 2.1rem; }
         }
 
         @media (max-width: 992px) {
-            .main-login-row {
-                flex-direction: column;
-            }
-            .container {
-                margin: 20px;
-                width: auto;
-            }
-            #hiddenImg {
-                margin: 0 20px 30px 20px;
-                min-height: 300px;
-                border-radius: 42px;
-            }
-            #hiddenImg img {
-                object-fit: cover;
-            }
-            body {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 12px;
-            }
-            .container {
-                margin: 12px;
-                padding: 28px 20px;
-                border-radius: 36px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            h2 {
-                font-size: 0.8rem;
-                margin-bottom: 20px;
-            }
-            input {
-                padding: 12px 44px 12px 14px;
-                font-size: 0.9rem;
-            }
-            .toggle-password {
-                right: 12px;
-                font-size: 1rem;
-                width: 28px;
-                height: 28px;
-            }
-            button[type="submit"] {
-                padding: 12px 16px;
-            }
-            .footer .links {
-                gap: 8px;
-                flex-wrap: wrap;
-            }
-            #hiddenImg {
-                display: none;
-            }
-            .container {
-                backdrop-filter: blur(8px);
-                background: rgba(255, 255, 255, 0.94);
-            }
+            .main-login-row { flex-direction: column; }
+            #hiddenImg { display: none; }
+            .container { padding: 36px 28px; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 24px 18px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            h1::after {
-                width: 45px;
-                height: 3px;
-            }
-            label {
-                font-size: 0.75rem;
-            }
-            .forgot-link {
-                font-size: 0.7rem;
-            }
-            p {
-                font-size: 0.75rem;
-            }
-            input {
-                padding: 10px 40px 10px 12px;
-                font-size: 0.85rem;
-            }
-            .toggle-password {
-                right: 10px;
-                font-size: 0.9rem;
-                width: 24px;
-                height: 24px;
-            }
-        }
-
-        @media (min-width: 1600px) {
-            .main-login-row {
-                max-width: 1600px;
-            }
-            .container {
-                padding: 56px 48px;
-            }
-            h1 {
-                font-size: 3.4rem;
-            }
-            input {
-                padding: 16px 52px 16px 20px;
-            }
-            .toggle-password {
-                right: 20px;
-                font-size: 1.3rem;
-            }
-        }
-
-        /* ---------- MISC ---------- */
-        ::selection {
-            background: #083b5d;
-            color: white;
-        }
-
-        .animate__zoomIn {
-            --animate-duration: 0.55s;
-        }
-
-        .container:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 32px 48px -20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-        }
-
-        .input-wrapper i {
-            display: none;
-        }
-
-        hr {
-            margin: 26px 0;
+            body { padding: 16px; }
+            .container { padding: 28px 20px; border-radius: 20px; }
+            h1 { font-size: 1.8rem; }
+            input { padding: 12px 14px; font-size: 0.92rem; }
+            input#passwordInput { padding-right: 44px; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- decorative floating orbs -->
     <div class="orb-1"></div>
     <div class="orb-2"></div>
 
     <div class="main-login-row">
         <!-- LOGIN FORM SECTION -->
         <div class="container">
-            <div class="left-content animate__animated animate__zoomIn animate__faster">
-                <!-- creative header with tiny icon -->
-                <h1>Login</h1>
-                <h2><i class="fas fa-flask"></i> Research Innovation & Discovery</h2>
+            <div class="left-content">
 
-                <hr />
+                <div class="brand-mark">
+                    <div class="mark"><i class="fas fa-flask"></i></div>
+                    <span>Research Innovation &amp; Discovery</span>
+                </div>
 
-                <form id="loginForm" action="/auth/login" method="POST">
+                <h1>Welcome back</h1>
+                <h2>Log in to continue to your dashboard</h2>
+
+                <form id="loginForm" action="/auth/login" method="POST" novalidate>
                     <input type="hidden" name="redirect" id="redirectInput" />
 
                     <!-- Email field -->
-                    <label for="emailInput"><i class="fas fa-envelope"></i> Enter Email Address</label>
+                    <label for="emailInput">Email address * </label>
                     <div class="input-wrapper">
-                        <input type="text" id="emailInput" name="email" placeholder="hello@research.com" autocomplete="email" />
+                        <input
+                            type="email"
+                            id="emailInput"
+                            name="email"
+                            placeholder="hello@gmail.com"
+                            autocomplete="email"
+                            inputmode="email"
+                            required
+                        />
                     </div>
 
                     <!-- Password field with toggle icon -->
-                    <label for="passwordInput"><i class="fas fa-lock"></i> Enter Password</label>
+                    <label for="passwordInput">Password * </label>
                     <div class="input-wrapper">
-                        <input type="password" id="passwordInput" name="password" placeholder="··············" required
-                        oncopy="return false" oncut="return false" onpaste="return false" />
-                        <!-- 👇 Toggle icon (eye) -->
-                        <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Toggle password visibility">
+                        <input
+                            type="password"
+                            id="passwordInput"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        />
+                        <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Show password">
                             <i class="fas fa-eye" id="toggleIcon"></i>
                         </button>
                     </div>
 
-                    <span id="error-message" style="color:#d9534f; font-size:0.75rem; display:block; margin-top:8px;"></span>
+                    <span id="error-message" role="alert"></span>
 
-                    <a href="/forgot-password" class="forgot-link">Forgot Password? <i class="fas fa-arrow-right"></i></a>
+                    <a href="/forgot-password" class="forgot-link">Forgot password?</a>
 
-                    <button type="submit"><i class="fas fa-arrow-right-to-bracket"></i> Login to Dashboard</button>
+                    <button type="submit" id="submitBtn">
+                        <span id="submitBtnText">Log in</span>
+                        <i class="fas fa-arrow-right-to-bracket" id="submitBtnIcon"></i>
+                    </button>
                 </form>
 
-                <p>
-                    Don't have account please
-                    <a href="/Signup/form.html"><i class="fas fa-user-plus"></i> Create an account</a>
+                <p class="signup-text">
+                    Don't have an account?
+                    <a href="/Signup/form.html">Create Account</a>
                 </p>
 
                 <hr />
 
                 <div class="footer">
-                    <p>
-                        <i class="far fa-copyright"></i> Copyright © <span id="currentYear"></span>, RRID Tech Private Limited
-                        All Rights Reserved.
-                    </p>
+                    <p>&copy; <span id="currentYear"></span> RRID Tech Private Limited. All rights reserved.</p>
                     <div class="links">
-                        <a href="/about"><i class="fas fa-info-circle"></i> About</a>
-                        <a href="/Terms&Conditions"><i class="fas fa-file-contract"></i> Terms & Conditions</a>
-                        <a href="/privacy-policy"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        <a href="/about">About</a>
+                        <a href="/Terms&Conditions">Terms &amp; Conditions</a>
+                        <a href="/privacy-policy">Privacy Policy</a>
                     </div>
                 </div>
             </div>
@@ -634,36 +557,64 @@
         <!-- RIGHT IMAGE SECTION -->
         <div id="hiddenImg">
             <img src="/assets/login.gif"
-            alt="Research innovation visualization"
-            onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600?text=✦+Innovation+Hub+✦';" />
+                alt="Research innovation visualization"
+                onerror="this.style.display='none';" />
+            <div class="panel-caption">
+                <h3>Built for research teams</h3>
+                <p>Secure access to your projects, data, and collaborators — all in one place.</p>
+            </div>
         </div>
     </div>
 
     <!-- ========== JAVASCRIPT ========== -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Update footer year
+        document.addEventListener("DOMContentLoaded", function () {
+            // Footer year
             document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-            // ---- PASSWORD TOGGLE ----
+            // ---- PASSWORD SHOW/HIDE TOGGLE ----
+            // Works on desktop (click) and mobile (tap) since it's a plain button with a click handler.
             const toggleBtn = document.getElementById("togglePasswordBtn");
             const passwordInput = document.getElementById("passwordInput");
             const toggleIcon = document.getElementById("toggleIcon");
 
             if (toggleBtn && passwordInput && toggleIcon) {
-                toggleBtn.addEventListener("click", function(e) {
-                    e.preventDefault(); // prevent any form action
+                toggleBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
                     const isPassword = passwordInput.getAttribute("type") === "password";
-                    // Toggle type
                     passwordInput.setAttribute("type", isPassword ? "text" : "password");
-                    // Toggle icon
                     toggleIcon.classList.toggle("fa-eye");
                     toggleIcon.classList.toggle("fa-eye-slash");
+                    toggleBtn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+                });
+            }
+
+            // ---- SIMPLE CLIENT-SIDE VALIDATION + SUBMIT STATE ----
+            const form = document.getElementById("loginForm");
+            const errorMessage = document.getElementById("error-message");
+            const submitBtn = document.getElementById("submitBtn");
+            const submitBtnText = document.getElementById("submitBtnText");
+
+            if (form) {
+                form.addEventListener("submit", function (e) {
+                    const emailVal = document.getElementById("emailInput").value.trim();
+                    const passwordVal = passwordInput.value;
+
+                    if (!emailVal || !passwordVal) {
+                        e.preventDefault();
+                        errorMessage.textContent = "Please enter both email and password.";
+                        return;
+                    }
+
+                    errorMessage.textContent = "";
+                    submitBtn.disabled = true;
+                    submitBtnText.textContent = "Logging in...";
+                    // form submits normally to /auth/login from here
                 });
             }
         });
 
-        // Redirect param handling (unchanged)
+        // Redirect param handling
         const params = new URLSearchParams(window.location.search);
         const redirect = params.get("redirect");
         if (redirect) {
@@ -672,6 +623,5 @@
     </script>
 
     <script src="../js/showToast.js"></script>
-    <!-- No other changes – only password toggle added -->
 </body>
 </html>
