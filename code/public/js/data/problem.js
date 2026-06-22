@@ -714,7 +714,7 @@ let examplesHtml = '';
       for (let i = 0; i < testCases.length; i++) {
         const testCase = testCases[i];
         try {
-          const response = await fetch('/execute', {
+          const response = await fetch('/tech-interview/execute', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               language: apiLanguageMap[currentLanguage] || 'python',
@@ -806,7 +806,7 @@ let examplesHtml = '';
         const firstTestCase = currentQuestion?.testCases?.[0];
         const autoInput = firstTestCase?.input || "";
         try {
-          const response = await fetch('/execute', {
+          const response = await fetch('/tech-interview/execute', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               language: apiLanguageMap[currentLanguage] || 'python',
@@ -864,7 +864,7 @@ let examplesHtml = '';
       const hintText = document.getElementById("hintText");
       hintText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
       try {
-        const response = await fetch('/ai-hint', {
+        const response = await fetch('/tech-interview/ai-hint', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             question: currentQuestion.desc || currentQuestion.title,
@@ -879,23 +879,66 @@ let examplesHtml = '';
       }
     }
     
-    function loadProblemById(id) {
-      if (!allQuestions.length) return;
-      currentQuestion = allQuestions.find(q => q.id == id && q.topic == currentTopic);
-      if (!currentQuestion) return;
-      currentId = id;
-      currentTopic = currentQuestion.topic;
-      currentTab = 'description';
-      document.querySelectorAll(".panel-tab").forEach(tab => {
-        if (tab.dataset.tab === "description") tab.classList.add("active");
-        else tab.classList.remove("active");
-      });
-      renderPanelContent();
-      if (editor) {
-        editor.setValue(currentQuestion.starterCode?.[currentLanguage] || languages.find(l => l.id === currentLanguage)?.template || languages[0].template);
-      }
-      window.history.pushState({}, '', `/problem?topic=${currentTopic}&id=${currentId}`);
-    }
+   function loadProblemById(id) {
+  if (!allQuestions.length) return;
+
+  currentQuestion = allQuestions.find(
+    q => q.id == id && q.topic == currentTopic
+  );
+
+  if (!currentQuestion) return;
+
+  currentId = id;
+  currentTopic = currentQuestion.topic;
+  currentTab = "description";
+
+  // LEFT PANEL REFRESH
+  document.querySelectorAll(".panel-tab").forEach(tab => {
+    tab.classList.toggle(
+      "active",
+      tab.dataset.tab === "description"
+    );
+  });
+
+  renderPanelContent();
+
+  // CODE EDITOR RESET
+  if (editor) {
+    editor.setValue(
+      currentQuestion.starterCode?.[currentLanguage] ||
+      languages.find(l => l.id === currentLanguage)?.template ||
+      languages[0].template
+    );
+
+    editor.refresh();
+  }
+
+  // ===== RIGHT PANEL RESET =====
+
+  const testResults = document.getElementById("testResults");
+  testResults.innerHTML = "";
+  testResults.classList.remove("show");
+
+  const outputArea = document.getElementById("outputArea");
+  outputArea.className = "output-area";
+  outputArea.innerHTML = "▶ Output will appear here...";
+
+  document.getElementById("hintText").innerHTML =
+    "Click a hint level for AI guidance.";
+
+  document.querySelectorAll(".hint-level").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  hintsGiven = { 1: "", 2: "", 3: "" };
+
+  // URL UPDATE
+  window.history.pushState(
+    {},
+    "",
+    `/tech-interview/problem?topic=${currentTopic}&id=${currentId}`
+  );
+}
     const TOPIC_ORDER = [
   "basic-iop",
   "conditions",

@@ -360,11 +360,28 @@ function showToast(msg) {
             });
 
           // Books button
+          // document
+          //   .getElementById("booksButton")
+          //   ?.addEventListener("click", () => {
+          //     alert(`${langName} books coming soon!`);
+          //   });
           document
-            .getElementById("booksButton")
-            ?.addEventListener("click", () => {
-              alert(`${langName} books coming soon!`);
-            });
+  .getElementById("booksButton")
+  ?.addEventListener("click", () => {
+
+    const bookLinks = {
+      py: "/ebook/?search=python&filter=all&sort=newest",
+      js: "/ebook/?search=java&filter=all&sort=newest",
+    };
+
+    const link = bookLinks[currentLanguage];
+
+    if (link) {
+      window.location.href = link;
+    } else {
+      alert("Books comming soon");
+    }
+  });
 
           // Update questionsList
           questionsList = Array.from(
@@ -903,22 +920,6 @@ function showToast(msg) {
           btn.textContent = "▲ Hide Solution";
           Prism.highlightAllUnder(panel);
         }
-
-        // ── Hint events ───────────────────────────────────────────────
-        // function attachHintEvents() {
-        //   document.querySelectorAll(".hint-btn").forEach((btn) => {
-        //     btn.removeEventListener("click", toggleHintHandler);
-        //     btn.addEventListener("click", toggleHintHandler);
-        //   });
-        // }
-
-        // function toggleHintHandler(e) {
-        //   const btn   = e.currentTarget;
-        //   const panel = document.getElementById(btn.dataset.target);
-        //   if (panel.classList.contains("show")) { closeAllPanels(); return; }
-        //   closeAllPanels();
-        //   panel.classList.add("show");
-        //   btn.textContent = "▲ Hide Hint";
         // }
         //ai hint
         function attachHintEvents() {

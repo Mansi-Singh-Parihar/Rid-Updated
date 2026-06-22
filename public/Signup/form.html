@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Register | RID Bharat</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="icon" type="image/png" href="/assets/signup.png">
 <style>
-    /* ===== ANIMATION KEYFRAMES ===== */
+    /* ===== ANIMATION KEYFRAMES (left side - unchanged) ===== */
     @keyframes float {
         0%, 100% { transform: translateY(0) rotate(0deg); }
         33% { transform: translateY(-10px) rotate(120deg); }
@@ -128,11 +129,29 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ===== ORIGINAL REGISTER STYLES (Kept as is) ===== */
+    /* ===== BASE ===== */
     *{
         margin:0;
         padding:0;
         box-sizing:border-box;
+    }
+
+    :root {
+        --ink-900: #0b2538;
+        --ink-700: #163e57;
+        --brand-600: #0c5a82;
+        --brand-700: #0a4a6b;
+        --brand-500: #1f7a9e;
+        --accent: #d98a3d;
+        --surface: #ffffff;
+        --surface-muted: #f4f7fb;
+        --border: #e1e8f0;
+        --text-muted: #5b7488;
+        --danger: #c0392b;
+        --success: #1b8a5a;
+        --radius-lg: 24px;
+        --radius-md: 14px;
+        --radius-pill: 999px;
     }
 
     body{
@@ -143,9 +162,17 @@
         min-height:100vh;
         padding:15px;
         font-family:'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== NEW CARD LAYOUT WITH LEFT ANIMATED SIDE ===== */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+        }
+    }
+
+    /* ===== CARD LAYOUT WITH LEFT ANIMATED SIDE (unchanged) ===== */
     .register-wrapper {
         width:100%;
         max-width:1200px;
@@ -158,7 +185,7 @@
         box-shadow:0 20px 40px rgba(0,0,0,.15);
     }
 
-    /* ===== LEFT SECTION - ANIMATED SIDE (NEW) ===== */
+    /* ===== LEFT SECTION - ANIMATED SIDE (unchanged) ===== */
     .left-animated {
         display: none;
         background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
@@ -444,33 +471,61 @@
         animation: textReveal 0.8s ease-out 2.4s forwards;
     }
 
-    /* ===== ORIGINAL RIGHT SECTION STYLES ===== */
+    /* ===== RIGHT SECTION — PROFESSIONAL REDESIGN ===== */
     .register-container {
         width:100%;
-        background:#fff;
-        padding:35px 30px;
+        background:var(--surface);
+        padding:48px 44px;
+    }
+
+    .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 13px;
+    }
+
+    .brand-mark .mark-sm {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--brand-700), var(--brand-500));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 10px rgba(12, 90, 130, 0.3);
+    }
+
+    .brand-mark span {
+        font-weight: 700;
+        font-size: 0.92rem;
+        color: var(--ink-900);
     }
 
     .header{
-        text-align:center;
-        margin-bottom:25px;
-        border-bottom:1px solid #eee;
-        padding-bottom:20px;
+        margin-bottom:8px;
     }
 
     .header h1{
-        font-size:28px;
-        color:#2c3e50;
+        font-family: 'Fraunces', serif;
+        font-size:2.1rem;
+        font-weight: 600;
+        color:var(--ink-900);
+        margin-bottom: 6px;
+        letter-spacing: -0.01em;
     }
 
     .header h3{
-        font-size:16px;
-        color:#7f8c8d;
+        font-size:0.94rem;
+        font-weight: 400;
+        color:var(--text-muted);
     }
 
     .form-row{
         display:flex;
-        gap:15px;
+        gap:16px;
         margin-bottom:18px;
     }
 
@@ -481,39 +536,86 @@
     }
 
     .form-group label{
-        margin-bottom:6px;
+        margin-bottom:7px;
         font-weight:600;
+        font-size: 0.78rem;
+        color: var(--ink-700);
+        letter-spacing: 0.2px;
     }
 
     .form-group input,
     .form-group select{
-        padding:14px;
-        border-radius:10px;
-        border:2px solid #e1e8ed;
-        background:#f8f9fa;
-        font-size:15px;
-        transition:.3s;
+        padding:13px 16px;
+        border-radius:var(--radius-md);
+        border:1.5px solid var(--border);
+        background:var(--surface-muted);
+        font-size:0.95rem;
+        font-family: 'Inter', sans-serif;
+        color: var(--ink-900);
+        font-weight: 500;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        outline: none;
+        width: 100%;
+    }
+
+    .form-group input::placeholder {
+        color: #9bb0c2;
+        font-weight: 400;
     }
 
     .form-group input:focus,
     .form-group select:focus{
         outline:none;
-        border-color:#4a6cf7;
-        background:#fff;
+        border-color:var(--brand-500);
+        background:var(--surface);
+        box-shadow: 0 0 0 4px rgba(31, 122, 158, 0.12);
+    }
+
+    .form-group select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b7488' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        background-size: 18px;
+        padding-right: 40px;
+    }
+
+    .field-error {
+        font-size: 0.74rem;
+        color: var(--danger);
+        margin-top: 5px;
+        display: none;
+    }
+
+    .form-group.invalid input {
+        border-color: var(--danger);
+    }
+
+    .form-group.invalid .field-error {
+        display: block;
     }
 
     .org-selection{
         display:none;
         margin-bottom:18px;
-        padding:18px;
-        background:#f1f3f5;
-        border-radius:12px;
-        border:2px solid #dee2e6;
+        padding:20px;
+        background:var(--surface-muted);
+        border-radius:var(--radius-md);
+        border:1.5px solid var(--border);
+    }
+
+    .org-selection p{
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--ink-700);
+        margin-bottom: 12px;
+        letter-spacing: 0.2px;
     }
 
     .org-buttons{
         display:flex;
-        gap:12px;
+        gap:10px;
         flex-wrap:wrap;
     }
 
@@ -521,93 +623,185 @@
         flex:1;
         min-width:120px;
         padding:12px;
-        background:#fff;
-        border:2px solid #dee2e6;
-        border-radius:10px;
+        background:var(--surface);
+        border:1.5px solid var(--border);
+        border-radius:var(--radius-md);
         cursor:pointer;
         text-align:center;
         font-weight:600;
-        transition:.3s;
+        font-size: 0.86rem;
+        color: var(--ink-700);
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .org-btn:hover {
+        border-color: var(--brand-500);
     }
 
     .org-btn.selected{
-        background:#4a6cf7;
+        background:var(--brand-600);
         color:#fff;
-        border-color:#4a6cf7;
+        border-color:var(--brand-600);
+        box-shadow: 0 4px 10px rgba(12, 90, 130, 0.25);
     }
 
     .org-validation{
         display:none;
-        margin-top:10px;
-        color:#e74c3c;
+        margin-top:12px;
+        color:var(--danger);
         text-align:center;
+        font-size: 0.8rem;
     }
 
     .password-group {
-        margin-bottom: 30px;
+        margin-bottom: 6px;
+        position: relative;
+    }
+
+    .password-group .input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .password-group input {
+        padding-right: 46px;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 1.05rem;
+        background: transparent;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        transition: color 0.2s ease, background 0.2s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        z-index: 5;
+    }
+
+    .toggle-password:hover {
+        color: var(--brand-700);
+        background: rgba(12, 90, 130, 0.08);
+    }
+
+    .toggle-password:active {
+        background: rgba(12, 90, 130, 0.14);
+    }
+
+    .toggle-password:focus-visible {
+        outline: 2px solid var(--brand-500);
+        outline-offset: 2px;
+    }
+
+    .password-strength {
+        display: flex;
+        gap: 5px;
+        margin-top: 9px;
+    }
+
+    .password-strength .bar {
+        height: 4px;
+        flex: 1;
+        border-radius: 3px;
+        background: var(--border);
+        transition: background 0.25s ease;
+    }
+
+    .password-strength-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        margin-top: 6px;
+        min-height: 1.2em;
     }
 
     .submit-btn{
         width:100%;
-        padding:16px;
-        background:#4a6cf7;
+        padding:14px 20px;
+        background:linear-gradient(105deg, var(--brand-700) 0%, var(--brand-500) 100%);
         border:none;
         color:#fff;
-        font-size:18px;
-        border-radius:12px;
+        font-size:0.98rem;
+        font-weight: 700;
+        border-radius:var(--radius-pill);
         cursor:pointer;
-        transition:.3s;
-        margin-top: 5px;
+        transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+        margin-top: 22px;
+        box-shadow: 0 8px 18px rgba(12, 90, 130, 0.28);
+        letter-spacing: 0.2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
     }
 
     .submit-btn:hover:not(:disabled){
-        background:#3954d4;
+        background:linear-gradient(105deg, var(--ink-700), var(--brand-600));
+        transform: translateY(-1px);
+        box-shadow: 0 12px 22px rgba(12, 90, 130, 0.32);
+    }
+
+    .submit-btn:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    .submit-btn:focus-visible {
+        outline: 2px solid var(--brand-700);
+        outline-offset: 3px;
     }
 
     .submit-btn:disabled{
-        background:#95a5a6;
+        background:#b9c6d2;
         cursor:not-allowed;
+        box-shadow: none;
+        opacity: 0.85;
     }
 
     .login-link{
         text-align:center;
         margin-top:22px;
-        border-top:1px solid #eee;
+        border-top:1px solid var(--border);
         padding-top:18px;
+        font-size: 0.88rem;
+        color: var(--text-muted);
     }
 
     .login-text{
-        color:#4a6cf7;
-        font-weight:600;
+        color:var(--brand-600);
+        font-weight:700;
         cursor:pointer;
-        margin-left:6px;
+        margin-left:4px;
         position:relative;
-        transition:.3s;
-    }
-
-    .login-text::after{
-        content:"";
-        position:absolute;
-        width:0%;
-        height:2px;
-        left:0;
-        bottom:-3px;
-        background:#4a6cf7;
-        transition:.3s;
+        transition:color 0.2s;
+        background: none;
+        border: none;
+        font-size: inherit;
+        font-family: inherit;
+        padding: 0;
     }
 
     .login-text:hover{
-        color:#2f4de0;
-    }
-
-    .login-text:hover::after{
-        width:100%;
+        color:var(--brand-700);
+        text-decoration: underline;
     }
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:768px){
         .form-row{
             flex-direction:column;
+            gap: 18px;
         }
     }
 
@@ -629,13 +823,25 @@
             display: none;
         }
     }
+
+    @media (max-width: 1100px) {
+        .register-container { padding: 40px 32px; }
+        .header h1 { font-size: 1.9rem; }
+    }
+
+    @media (max-width: 480px) {
+        body { padding: 12px; }
+        .register-container { padding: 28px 20px; }
+        .header h1 { font-size: 1.7rem; }
+        .form-group input, .form-group select { padding: 12px 14px; font-size: 0.92rem; }
+    }
     
 </style>
 </head>
 <body>
 
 <div class="register-wrapper">
-    <!-- LEFT ANIMATED SIDE - NEW -->
+    <!-- LEFT ANIMATED SIDE - UNCHANGED -->
     <div class="left-animated">
         <div class="animated-bg"></div>
         <div class="floating-element floating-1"></div>
@@ -660,7 +866,7 @@
                 <h1 class="logo-title">DISCOVERY</h1>
                 <div class="logo-acronym">RID</div>
                 <div class="logo-subtitle">TECH</div>
-                <h2 class="logo-subtitle">BHARAT</h2>
+                
             </div>
         </div>
 
@@ -670,34 +876,38 @@
         </div>
     </div>
 
-    <!-- RIGHT SECTION - ORIGINAL REGISTER FORM -->
+    <!-- RIGHT SECTION - PROFESSIONAL FORM -->
     <div class="register-container">
         <div class="header">
-            <h1>Register</h1>
-            <h3>Research Innovation & Discovery</h3>
+            <div class="brand-mark">
+                <div class="mark-sm"><i class="fas fa-flask"></i></div>
+                <span>Research Innovation &amp; Discovery</span>
+            </div>
+            <h1>Create your account</h1>
+            
         </div>
 
-        <form id="registerForm">
+        <form id="registerForm" novalidate>
             <div class="form-row">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="fullName" name="name" placeholder="Enter the name " required>
+                <div class="form-group" id="fullNameGroup">
+                    <label for="fullName">Full name * </label>
+                    <input type="text" id="fullName" name="name" placeholder="Enter your name" autocomplete="name" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="email" name="email" autocomplete="new-password" placeholder="xyz@gmail.com" required>
+                <div class="form-group" id="emailGroup">
+                    <label for="email">Email Address * </label>
+                    <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="form-group">
-                    <label>Mobile</label>
-                    <input type="tel" id="mobile" name="phone" placeholder="Mobile number " maxlength="10" required>
+                <div class="form-group" id="mobileGroup">
+                    <label for="mobile">Mobile number * </label>
+                    <input type="tel" id="mobile" name="phone" placeholder="10-digit mobile number" inputmode="numeric" maxlength="10" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Register As</label> 
+                    <label for="role">Register as</label>
                     <select id="role" name="role" required>
                         <option value="student">Student</option>
                         <option value="teacher">Teacher</option>
@@ -707,37 +917,41 @@
             </div>
 
             <div id="orgSelection" class="org-selection">
-                <p><b>Select Organization Type:</b></p>
+                <p>Select organisation type</p>
                 <div class="org-buttons">
                     <div class="org-btn" data-type="Library" onclick="selectOrg(this)">Library</div>
                     <div class="org-btn" data-type="DCA" onclick="selectOrg(this)">Computer Class</div>
                     <div class="org-btn" data-type="Coaching Centre" onclick="selectOrg(this)">Coaching Centre</div>
                 </div>
-                <div id="orgValidation" class="org-validation">
-                    Please select organization type
-                </div>
+                <div id="orgValidation" class="org-validation">Please select an organisation type</div>
             </div>
 
             <input type="hidden" id="organisationType" name="organisationType">
 
-           <div class="form-group password-group" style="position:relative;">
-    <label>Password</label>
-    
-    <input type="password" id="password" name="password" placeholder="Create Password" required>
-
-    <span onclick="togglePassword()" 
-          style="position:absolute; right:15px; top:45px; cursor:pointer;">
-        👁️
-    </span>
-</div>
+            <div class="form-group password-group" id="passwordGroup">
+                <label for="password">Password * </label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+                    <button type="button" class="toggle-password" id="togglePasswordBtn" aria-label="Show password">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
+                <div class="password-strength">
+                    <div class="bar" id="bar1"></div>
+                    <div class="bar" id="bar2"></div>
+                    <div class="bar" id="bar3"></div>
+                </div>
+                <div class="password-strength-label" id="strengthLabel">Use 6+ characters</div>
+            </div>
 
             <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                Submit
+                <span id="submitBtnText">Create account</span>
+                <i class="fas fa-arrow-right" id="submitBtnIcon"></i>
             </button>
 
             <div class="login-link">
-                Already have an account? 
-                <span class="login-text" onclick="goToLogin()">Login</span>
+                Already have an account?
+                <button type="button" class="login-text" onclick="goToLogin()">Log in</button>
             </div>
         </form>
     </div>
@@ -751,6 +965,7 @@ const form = document.getElementById("registerForm");
 const role = document.getElementById("role");
 const orgBox = document.getElementById("orgSelection");
 const submitBtn = document.getElementById("submitBtn");
+const submitBtnText = document.getElementById("submitBtnText");
 const orgValidation = document.getElementById("orgValidation");
 
 const fullName = document.getElementById("fullName");
@@ -758,7 +973,7 @@ const email = document.getElementById("email");
 const mobile = document.getElementById("mobile");
 const password = document.getElementById("password");
 
-// ===== LEFT SIDE ANIMATIONS =====
+// ===== LEFT SIDE ANIMATIONS (unchanged) =====
 function initAnimations() {
     createParticles();
     addLogoInteractions();
@@ -826,7 +1041,7 @@ function addLogoInteractions() {
     });
 }
 
-// ===== ORIGINAL FORM FUNCTIONS =====
+// ===== ROLE -> ORG SELECTION =====
 role.addEventListener("change", () => {
     if (role.value === "organisation") {
         orgBox.style.display = "block";
@@ -848,6 +1063,52 @@ function selectOrg(el) {
     validateForm();
 }
 
+// ===== PASSWORD SHOW/HIDE TOGGLE =====
+const toggleBtn = document.getElementById("togglePasswordBtn");
+const toggleIcon = document.getElementById("toggleIcon");
+
+toggleBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    const isPassword = password.getAttribute("type") === "password";
+    password.setAttribute("type", isPassword ? "text" : "password");
+    toggleIcon.classList.toggle("fa-eye");
+    toggleIcon.classList.toggle("fa-eye-slash");
+    toggleBtn.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+});
+
+// ===== PASSWORD STRENGTH METER =====
+const bar1 = document.getElementById("bar1");
+const bar2 = document.getElementById("bar2");
+const bar3 = document.getElementById("bar3");
+const strengthLabel = document.getElementById("strengthLabel");
+
+function updatePasswordStrength() {
+    const val = password.value;
+    const bars = [bar1, bar2, bar3];
+    bars.forEach(b => b.style.background = "var(--border)");
+
+    if (!val) {
+        strengthLabel.textContent = "Use 6+ characters";
+        return;
+    }
+
+    let score = 0;
+    if (val.length >= 6) score++;
+    if (val.length >= 10 && /[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+    if (val.length >= 10 && /[^A-Za-z0-9]/.test(val)) score++;
+
+    const colors = ["#c0392b", "#d98a3d", "#1b8a5a"];
+    const labels = ["Weak — add more characters", "Good — could be stronger", "Strong password"];
+
+    for (let i = 0; i < score; i++) {
+        bars[i].style.background = colors[Math.max(score - 1, 0)];
+    }
+    strengthLabel.textContent = val.length < 6 ? "Use 6+ characters" : labels[Math.max(score - 1, 0)];
+}
+
+password.addEventListener("input", updatePasswordStrength);
+
+// ===== VALIDATION =====
 function validateForm() {
     const nameValid = fullName.value.trim().length > 0;
     const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
@@ -864,6 +1125,7 @@ function validateForm() {
     submitBtn.disabled = !filled;
 }
 
+// ===== SUBMIT =====
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -881,6 +1143,9 @@ form.addEventListener("submit", async (e) => {
         organisationType: role.value === "organisation" ? selectedOrgType : ""
     };
 
+    submitBtn.disabled = true;
+    submitBtnText.textContent = "Creating account...";
+
     try {
         const res = await fetch("/user/register", {
             method: "POST",
@@ -893,10 +1158,15 @@ form.addEventListener("submit", async (e) => {
 
         if (result.success) {
             window.location.href = "/login";
+        } else {
+            submitBtn.disabled = false;
+            submitBtnText.textContent = "Create account";
         }
 
     } catch (err) {
         alert("Server error");
+        submitBtn.disabled = false;
+        submitBtnText.textContent = "Create account";
     }
 });
 
@@ -917,11 +1187,10 @@ window.addEventListener("load", () => {
     const roleParam = params.get("role");
 
     if(roleParam){
-        const roleSelect = document.getElementById("role");
-        roleSelect.value = roleParam;
+        role.value = roleParam;
 
         if(roleParam === "organisation"){
-            document.getElementById("orgSelection").style.display = "block";
+            orgBox.style.display = "block";
             isOrgSelected = false;
         }
         validateForm();
@@ -936,15 +1205,6 @@ window.addEventListener('resize', function() {
         }
     }
 });
-function togglePassword() {
-    const pass = document.getElementById("password");
-
-    if (pass.type === "password") {
-        pass.type = "text";
-    } else {
-        pass.type = "password";
-    }
-}
 </script>
 
 </body>
