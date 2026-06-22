@@ -3295,14 +3295,14 @@ canvas {
 
 /* ===== MODAL BOX ===== */
 .modal-box{
-    width: 100%;
-    max-width: 600px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 25px;
-    max-height: 90vh;
-    overflow-y: auto;
     position: relative;
+    background: #fff;
+    width: 90%;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    padding-top: 50px; /* close button ke liye space */
+    border-radius: 10px;
 }
 
 /* ===== TITLE ===== */
@@ -3324,10 +3324,21 @@ canvas {
         align-items:flex-start;
         padding:10px;
     }
-    .modal-box{
-        margin-top:20px;
-        max-width:100%;
-        padding:18px;
+     .modal-box{
+        width: 95%;
+        margin: 15px auto;
+        padding-top: 55px;
+    }
+
+     .close-btn{
+        top: 10px;
+        right: 12px;
+        font-size: 30px;
+    }
+
+    .modal-box h3{
+        margin-top: 0;
+        padding-right: 35px;
     }
 }
 /* focus effect */
@@ -3370,18 +3381,21 @@ canvas {
 }
 
 /* ===== CLOSE BUTTON ===== */
-.close-btn {
+.close-btn{
     position: absolute;
-    right: 12px;
-    top: 10px;
-    font-size: 22px;
+    top: 12px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
     cursor: pointer;
-    color: #64748b;
-    transition: 0.2s;
+    color: #333;
+    line-height: 1;
+    z-index: 10;
 }
 
-.close-btn:hover {
-    color: #ef4444;
+
+.close-btn:hover{
+    color: red;
 }
 
 /* ===== FILE INPUT STYLE ===== */
