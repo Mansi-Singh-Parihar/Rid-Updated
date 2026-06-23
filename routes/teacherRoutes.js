@@ -607,57 +607,7 @@ router.get("/teacher/channel", ensureTeacher, async (req, res) => {
   try {
 
 
-    router.post("/teacher/send-request", async (req, res) => {
-      try {
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-        const requestStorage = multer.diskStorage({
-          destination: "public/uploads/",
-          filename: (req, file, cb) => {
-            cb(null, Date.now() + "-" + file.originalname);
-          }
-        });
-
-        const requestUpload = multer({ storage: requestStorage });
-
-        requestUpload.fields([
-          { name: "banner", maxCount: 1 },
-          { name: "notes", maxCount: 1 }
-        ])(req, res, async (err) => {
-          try {
-            if (err) {
-              console.log("Multer Error:", err);
-              return res.status(400).json({ success: false, message: err.message });
-            }
-
-            const bannerFile = req.files?.banner?.[0];
-            const notesFile = req.files?.notes?.[0];
-
-            const newRequest = new TestRequest({
-              teacherId: decoded.userId,
-              teacherName: req.user?.name || "",
-              testName: req.body.testName || "",
-              subject: req.body.subject || "",
-              banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
-              notes: notesFile ? `/uploads/${notesFile.filename}` : "",
-              description: req.body.description || "",
-              status: "pending"
-            });
-
-            await newRequest.save();
-
-            res.json({ success: true, request: newRequest });
-          } catch (saveErr) {
-            console.log("Send Request Save Error:", saveErr);
-            res.status(500).json({ success: false, message: saveErr.message });
-          }
-        });
-      } catch (err) {
-        console.log("Send Request Error:", err);
-        res.status(500).json({ success: false, message: err.message });
-      }
-    });
+   
 
     const storage = multer.diskStorage({
       destination: "public/uploads/",
@@ -753,7 +703,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// ✅ route ko router.get("/teacher/channel") ke bahar rakho
 router.post(
   "/teacher/send-request",
   upload.fields([
@@ -763,26 +712,28 @@ router.post(
   async (req, res) => {
     try {
       const token = req.cookies.token;
-      const decoded = require("jsonwebtoken").verify(token, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       const bannerFile = req.files?.banner?.[0];
       const notesFile = req.files?.notes?.[0];
 
-        const newRequest = new TestRequest({
-          teacherId: decoded.userId,
-          teacherName: req.user?.name || "",
-          testName: req.body.testName || "",
-          subject: req.body.subject || "",
-          banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
-          notes: notesFile ? `/uploads/${notesFile.filename}` : "",
-          description: req.body.description || "",
-          status: "pending"
-        });
+      const newRequest = new TestRequest({
+        teacherId: decoded.userId,
+        teacherName: req.user?.name || "",
+        testName: req.body.testName || "",
+        subject: req.body.subject || "",
+        banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
+        notesFile: notesFile ? `/uploads/${notesFile.filename}` : "",
+        description: req.body.description || "",
+        status: "pending"
+      });
+
       await newRequest.save();
+
       res.json({ success: true });
     } catch (err) {
-      console.log("Send Request Error:", err);
-      res.status(500).json({ success: false, error: err.message });
+      console.log(err);
+      res.status(500).json({ success: false });
     }
   }
 );
