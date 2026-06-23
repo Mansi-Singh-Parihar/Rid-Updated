@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>RID Tech | Exam Portal - MongoDB Ready</title>
+    <title>Test Create</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/slidebar.css">
@@ -30,7 +30,7 @@
             <!-- CREATE TAB -->
             <div id="createTab" style="display:block;">
                 <div class="card">
-                    <div class="card-header"><i class="fas fa-plus-circle"></i> ✨ Add New Question to Bank</div>
+                    <div class="card-header"><i class=""></i> Add New All Question</div>
                     <div class="card-body">
                         <form id="addBankForm" method="POST" action="/api/questions">
                             <div class="form-group">
@@ -44,11 +44,11 @@
                                 <div class="opt-box"><input type="text" name="optD" placeholder="Option D" required></div>
                             </div>
                             <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
-                                <span><strong>✅ Correct:</strong></span>
+                                <span><strong> Correct:</strong></span>
                                 <select name="correctAnswer" style="width:auto;">
                                     <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
                                 </select>
-                                <span><strong>📚 Category:</strong></span>
+                                <span><strong> Category:</strong></span>
                                 <select name="category" style="width:auto;">
                                     <option>Computer Fundamentals</option><option>ADCA/DCA</option><option>CCC</option><option>Tally</option><option>O Level</option><option>Other</option>
                                 </select>
@@ -67,7 +67,7 @@
                         <div class="search-box"><input type="text" id="bankSearch" placeholder="🔍 Search by category or question..."></div>
                         <div id="bankListContainer" class="question-list"></div>
                         <div class="bank-test-creator">
-                            <h4><i class="fas fa-file-alt"></i> 📋 Create Test from Selected Questions</h4>
+                            <h4><i class="fas fa-file-alt"></i>  Create Test from Selected Questions</h4>
                             <form id="createTestFromBankForm" method="POST" action="/api/tests">
                                 <div class="form-group"><label>Test Title</label><input type="text" name="testTitle" placeholder="Exam title" required></div>
                                 <div class="form-group"><label>Time Limit (minutes)</label><input type="number" name="timeLimit" value="15" min="1" required></div>
@@ -82,7 +82,7 @@
             <!-- TESTS TAB -->
             <div id="testsTab" style="display:none;">
                 <div class="card">
-                    <div class="card-header">📋 All Tests (Manage, Share via Link)</div>
+                    <div class="card-header">All Tests (Manage, Share via Link)</div>
                     <div class="card-body">
                         <div class="search-box"><input type="text" id="testSearch" placeholder="🔍 Search test Title..."></div>
                         <div id="testsCardsContainer" class="test-cards-grid"></div>
@@ -167,7 +167,7 @@
 function loadLocal() {
     questionBank = JSON.parse(localStorage.getItem("questionBank")) || [];
 }
-    // ✅ MongoDB से Tests लाने का function
+    //  MongoDB से Tests लाने का function
 async function loadTests() {
     try {
         const res = await fetch('/computer/api/tests');
@@ -267,7 +267,7 @@ function renderAllTestCards() {
     document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.onclick = () => {
             navigator.clipboard.writeText(btn.dataset.url);
-            showToast("✅ Student Link Copied");
+            showToast(" Student Link Copied");
         };
     });
 
@@ -353,7 +353,7 @@ const newQ = {
         saveLocal();
         renderBankList();
         e.target.reset();
-        showToast("✅ Question saved locally | Ready for MongoDB POST");
+        showToast(" Question saved locally | Ready for MongoDB POST");
     });
     
 document.getElementById('createTestFromBankForm').addEventListener('submit', async (e) => {
@@ -391,7 +391,7 @@ document.getElementById('createTestFromBankForm').addEventListener('submit', asy
 
         if (!res.ok) throw new Error(data.message);
 
-        showToast("✅ Test Published");
+        showToast(" Test Published");
 
         await loadTests();   // 👈 VERY IMPORTANT
         switchTab('tests');  // 👈 अब ये काम करेगा
@@ -412,7 +412,8 @@ document.getElementById('createTestFromBankForm').addEventListener('submit', asy
         showToast("Question updated");
     });
     
-    document.getElementById('editTestFormSubmit').addEventListener('submit', (e) => {
+    document.getElementById('editTestFormSubmit')
+    .addEventListener('submit', async (e) => {
         e.preventDefault();
        const testId = document.getElementById('editTestId').value;
         const newTitle = document.getElementById('editTestTitle').value.trim();
@@ -490,7 +491,7 @@ document.getElementById('createTestFromBankForm').addEventListener('submit', asy
             throw new Error(data.message);
         }
 
-        showToast("✅ Test Updated");
+        showToast(" Test Updated");
 
         document.getElementById('editTestModal').style.display = 'none';
 
@@ -538,22 +539,32 @@ document.getElementById('modalTitle').innerHTML = `<i class="fas fa-graduation-c
         document.getElementById('quizModal').style.display = 'flex';
         document.getElementById('quizResult').innerHTML = '';
     };
- document.getElementById('studentQuizForm').addEventListener('submit', async (e) => {
+document.getElementById('studentQuizForm')
+.addEventListener('submit', async (e) => {
+
     e.preventDefault();
 
     if(studentTimer) clearInterval(studentTimer);
 
-    const studentName = document.getElementById('studentName').value.trim();
-    if(!studentName) return showToast("Enter student name");
+    const studentName =
+        document.getElementById('studentName').value.trim();
+
+    if(!studentName){
+        showToast("Enter student name");
+        return;
+    }
 
     let score = 0;
 
     currentStudentTest.questions.forEach((q, idx) => {
-        if(studentAnswers[idx] === q.correctIndex) score++;
+        if(studentAnswers[idx] === q.correctIndex){
+            score++;
+        }
     });
 
     try {
-        const res = await fetch('http://localhost:9192/computer/api/submissions', {
+
+        const res = await fetch('/computer/api/submissions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -567,49 +578,22 @@ document.getElementById('modalTitle').innerHTML = `<i class="fas fa-graduation-c
 
         const data = await res.json();
 
-        if(!res.ok) throw new Error(data.message);
+        if(!res.ok){
+            throw new Error(data.message);
+        }
 
-        showToast("✅ Test Submitted");
-        // ✅ Mark as submitted
-localStorage.setItem(
-    `submitted_${currentStudentTest._id}`,
-    'true'
-);
+        showToast("Test Submitted Successfully");
 
-        loadTests();
-        // Close quiz modal
-document.getElementById('quizModal').style.display = 'none';
-
-// Reset form
-document.getElementById('studentQuizForm').reset();
-
-// Clear answers
-studentAnswers = [];
-
-// Clear timer
-if(studentTimer) clearInterval(studentTimer);
-
-// Open beautiful success modal
-document.getElementById('successModal').style.display = 'flex';
-
-    // Modal close
-document.getElementById('quizModal').style.display = 'none';
-
-// Form reset
-document.getElementById('studentQuizForm').reset();
-
-// Answers reset
-studentAnswers = [];
-
-// Timer clear
-if(studentTimer) clearInterval(studentTimer);
-
-
+        document.getElementById('quizModal').style.display = 'none';
+        document.getElementById('successModal').style.display = 'flex';
 
     } catch(err) {
+
         console.error(err);
-        showToast("❌ Submit Failed");
+        showToast(err.message);
+
     }
+
 });
     // IMPROVED SWITCH TAB FUNCTION - Smooth and reliable
     function switchTab(tab) {

@@ -2,181 +2,154 @@ const Franchise = require("../models/Franchise");
 
 const transporter = require("../config/mail");
 
+// console.log("Controller Loaded");
+
 
 // ======================================
 // REGISTER FRANCHISE
 // ======================================
-
 const registerFranchise = async (req, res) => {
-
   try {
+
+    // console.log("BODY =", req.body);
 
     // Save Franchise
     const franchise = await Franchise.create({
-      ...req.body,
+      franchiseName: req.body.franchiseName,
+      location: req.body.location,
+      ownerName: req.body.ownerName,
+      contact: req.body.contact,
+      email: req.body.email,
+      establishedYear: req.body.establishedYear,
+      licenseType: req.body.licenseType,
+      licenseCategory: req.body.licenseCategory,
+      selectedCourses: req.body.selectedCourses,
+      remarks: req.body.remarks,
       status: "pending"
     });
 
+    console.log("Franchise Saved");
+
     // Approve Link
     const approveLink =
-      `http://localhost:3000/franchise/approve/${franchise._id}`;
+      `http://localhost:9191/computer/franchise/approve/${franchise._id}`;
 
+    // =========================
+    // USER MAIL
+    // =========================
+try { await transporter.sendMail({ from: process.env.SMTP_FROM_EMAIL, to: franchise.email, subject:
+   "RID Tech Franchise Registration Received", html: ` <div style="font-family: Arial, sans-serif; padding: 20px;"> <h2 style="color: green;"> Registration Successful ✅ 
+   
+   </h2> <p>Hello <b>${franchise.ownerName}</b>,</p> <p> Your franchise registration request has been received successfully. 
+   </p> <p>  Our team will review your application and get back to you within 24 hours. </p> <hr> <p> 
+   <b> Franchise:</b> ${franchise.franchiseName} </p> <p> <b> Status:</b> Pending Approval </p> <br> <p> Best Regards,<br> <b>RIDTECH Team</b> </p> </div> ` });
 
-    // ======================================
-    // 1. MAIL TO USER
-    // ======================================
+      console.log("User mail sent");
 
-    await transporter.sendMail({
+    } catch (mailErr) {
 
-      from: "anishkumar639421@gmail.com",
+      console.log("User Mail Error =", mailErr);
 
-      to: franchise.email,
+    }
 
-      subject: "RID Tech Franchise Registration Received",
+    // =========================
+    // ADMIN MAIL
+    // =========================
+    try {
 
-      html: `
+      await transporter.sendMail({
+        from: process.env.SMTP_FROM_EMAIL,
+        to: process.env.ADMIN_EMAIL,
+        subject: "New Franchise Registration",
 
-      <div style="font-family: Arial; padding:20px;">
+        html: `
+        <div style="font-family:Arial;padding:20px">
 
-        <h2 style="color:green;">
-          Registration Successful ✅
-        </h2>
-
-        <p>Hello <b>${franchise.ownerName}</b>,</p>
+        <h2>New Franchise Registration</h2>
 
         <p>
-          Your franchise registration request has been received.
+        <b>Franchise Name :</b>
+        ${franchise.franchiseName}
         </p>
 
         <p>
-          Admin approval ke baad confirmation mail bheja jayega.
-        </p>
-
-        <hr>
-
-        <p>
-          <b>Franchise:</b>
-          ${franchise.franchiseName}
+        <b>Owner Name :</b>
+        ${franchise.ownerName}
         </p>
 
         <p>
-          <b>Status:</b>
-          Pending Approval
-        </p>
-
-      </div>
-
-      `
-    });
-
-
-    // ======================================
-    // 2. MAIL TO ADMIN
-    // ======================================
-
-    await transporter.sendMail({
-
-      from: "anishkumar639421@gmail.com",
-
-      to: "ridinternanishkumar2550@gmail.com",
-
-      subject: "New Franchise Registration",
-
-      html: `
-
-      <div style="font-family: Arial; padding:20px;">
-
-        <h1>New Franchise Registration</h1>
-
-        <p>
-          <b>Franchise Name:</b>
-          ${franchise.franchiseName}
+        <b>Email :</b>
+        ${franchise.email}
         </p>
 
         <p>
-          <b>Owner Name:</b>
-          ${franchise.ownerName}
+        <b>Contact :</b>
+        ${franchise.contact}
         </p>
 
         <p>
-          <b>Email:</b>
-          ${franchise.email}
+        <b>Location :</b>
+        ${franchise.location}
         </p>
 
         <p>
-          <b>Contact:</b>
-          ${franchise.contact}
-        </p>
-
-        <p>
-          <b>Location:</b>
-          ${franchise.location}
-        </p>
-
-        <p>
-          <b>License Type:</b>
-          ${franchise.licenseType}
+        <b>License Type :</b>
+        ${franchise.licenseType}
         </p>
 
         <br>
 
         <a href="${approveLink}"
-          style="
-            background:green;
-            color:white;
-            padding:12px 20px;
-            text-decoration:none;
-            border-radius:5px;
-            display:inline-block;
-          ">
-          APPROVE FRANCHISE
+        style="
+        background:green;
+        color:white;
+        padding:12px 20px;
+        text-decoration:none;
+        border-radius:5px;
+        display:inline-block;
+        ">
+        APPROVE FRANCHISE
         </a>
 
-      </div>
+        </div>
+        `
+      });
 
-      `
-    });
+      console.log("Admin mail sent");
 
+    } catch (mailErr) {
 
-    // ======================================
-    // RESPONSE
-    // ======================================
+      console.log("Admin Mail Error =", mailErr);
 
-    res.json({
+    }
+
+    return res.status(200).json({
       success: true,
       message: "Franchise Request Sent Successfully"
     });
 
   } catch (err) {
 
-    console.log(err);
+    console.log("REGISTER ERROR =", err);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Server Error"
+      message: err.message
     });
 
   }
 };
-
-
-
 
 // ======================================
 // APPROVE FRANCHISE
 // ======================================
 
 const approveFranchise = async (req, res) => {
-
   try {
-
-    const franchise =
-      await Franchise.findById(req.params.id);
+    const franchise = await Franchise.findById(req.params.id);
 
     if (!franchise) {
-
       return res.send("Franchise Not Found");
-
     }
 
     // Update Status
@@ -184,62 +157,50 @@ const approveFranchise = async (req, res) => {
 
     await franchise.save();
 
-
     // ======================================
     // 3. APPROVED MAIL TO USER
     // ======================================
+await transporter.sendMail({
+  from: 'kumaranwnish@gmail.com',
+  to: franchise.email,
+  subject: " Franchise Approved",
+  html: `
+    <div style="font-family: Arial, sans-serif; padding:20px; max-width:600px;">
+      <h2 style="color:green;">🎉 Congratulations!</h2>
 
-    await transporter.sendMail({
+      <p>Hello <b>${franchise.ownerName}</b>,</p>
 
-      from: "anishkumar639421@gmail.com",
+      <p>Your franchise has been approved successfully.</p>
 
-      to: franchise.email,
+      <hr>
 
-      subject: "Franchise Approved",
+      <p><b> Franchise:</b> ${franchise.franchiseName}</p>
 
-      html: `
+      <p><b>✅ Status:</b> Approved</p>
 
-      <div style="font-family: Arial; padding:20px;">
+      <p>
+        Welcome to the RIDTECH Family. We look forward to a successful partnership.
+      </p>
 
-        <h2 style="color:green;">
-          Franchise Approved 🎉
-        </h2>
+      <br>
 
-        <p>Hello <b>${franchise.ownerName}</b>,</p>
-
-        <p>
-          Your franchise has been approved successfully.
-        </p>
-
-        <hr>
-
-        <p>
-          <b>Franchise:</b>
-          ${franchise.franchiseName}
-        </p>
-
-        <p>
-          <b>Status:</b>
-          Approved
-        </p>
-
-      </div>
-
-      `
-    });
+      <p>
+        Best Regards,<br>
+        <b>RIDTECH Team</b>
+      </p>
+    </div>
+  `,
+});
 
     res.send("Approved Successfully");
-
   } catch (err) {
-
     console.log(err);
 
     res.send("Server Error");
-
   }
 };
 
 module.exports = {
   registerFranchise,
-  approveFranchise
+  approveFranchise,
 };
