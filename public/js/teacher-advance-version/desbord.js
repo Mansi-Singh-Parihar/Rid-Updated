@@ -31,21 +31,21 @@ function submitRequest() {
         method: "POST",
         body: formData
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            alert("Request Sent Successfully!");
-            document.getElementById("banner").value = "";
-            document.getElementById("notes").value = "";
-            document.getElementById("description").value = "";
-            document.getElementById("testName").value = "";
-            document.getElementById("subject").value = "";
-            closeRequestModal();
-        } else {
-            alert(data.message || "Failed to send request");
-        }
-    })
-    .catch(() => alert("Server Error"));
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Request Sent Successfully!");
+                document.getElementById("banner").value = "";
+                document.getElementById("notes").value = "";
+                document.getElementById("description").value = "";
+                document.getElementById("testName").value = "";
+                document.getElementById("subject").value = "";
+                closeRequestModal();
+            } else {
+                alert(data.message || "Failed to send request");
+            }
+        })
+        .catch(() => alert("Server Error"));
 }
 
 
@@ -263,14 +263,22 @@ function initApp() {
     }
 
     // Load students passed from server
+    // Load students passed from server
     if (window.initialStudents) {
-    state.students = window.initialStudents.map(student => ({
-        ...student,
-        className: student.class || student.className || ''
-    }));
 
-    console.log("Loaded Students:", state.students.length);
-}
+        state.students = window.initialStudents.map(student => ({
+            ...student,
+            className: student.class || student.className || ''
+        }));
+
+        console.log("Loaded Students:", state.students.length);
+
+        // Table render
+        renderStudentsTable();
+
+        // Dashboard update
+        updateDashboard();
+    }
 
     // Load profile photo
     const savedProfilePhoto = localStorage.getItem('profilePhoto');
@@ -1134,7 +1142,7 @@ function showAnalyticsSection() {
 }
 
 function showStudentsSection() {
- 
+
     hideAllSections();
     studentsSection.classList.remove('hidden');
     updateActiveNav('nav-students');
@@ -1522,7 +1530,13 @@ function animateDashboard() {
 
     // Animate stat numbers
     animateCounter(totalTestsElement, testsCount);
-    animateCounter(totalQuestionsElement, questionsCount);
+
+    // ✅ Total Students
+    const studentsCount =
+        Number(window.totalStudents || state.students.length || 0);
+
+    animateCounter(totalQuestionsElement, studentsCount);
+
     animateCounter(activeTemplatesElement, templatesCount);
 }
 
@@ -1679,7 +1693,7 @@ function addQuestion() {
 
     const questionText = questionTextElement.value.trim();
     const questionType = questionTypeElement.value;
-    const points = parseInt(questionPointsElement.value);
+    const points = parseInt(questionPointsElement.value) || 1;
     const difficulty = questionDifficultyElement.value;
 
     if (!questionText) {
@@ -1687,34 +1701,40 @@ function addQuestion() {
         return;
     }
 
-    // 🔥 MongoDB type fix
     let mongoType = "MCQ";
 
     if (questionType === "true-false") {
         mongoType = "TF";
     }
 
-    // 🔴 IMPORTANT: keep same ID while editing
-    let questionId = state.editingQuestionId
-        ? state.editingQuestionId
-        : Date.now();
+    // 🔥 Keep same ID while editing
+    const questionId =
+        state.editingQuestionId !== null
+            ? state.editingQuestionId
+            : Date.now();
 
-    let question = {
+    const question = {
         id: questionId,
         text: questionText,
         type: mongoType,
         points,
-        difficulty
+        difficulty,
+        options: [],
+        correctAnswer: null
     };
 
-    // ===== MCQ =====
+    // ================= MCQ =================
     if (questionType === 'multiple-choice') {
 
         const options = [];
-        const optionInputs = optionsList.querySelectorAll('input[type="text"]');
+
+        const optionInputs =
+            optionsList.querySelectorAll('input[type="text"]');
 
         const correctOption =
-            document.querySelector('input[name="correctOption"]:checked');
+            document.querySelector(
+                'input[name="correctOption"]:checked'
+            );
 
         if (!correctOption) {
             alert('Please select the correct answer.');
@@ -1728,10 +1748,12 @@ function addQuestion() {
                 options.push({
                     id: index,
                     text: input.value.trim(),
-                    isCorrect: index === parseInt(correctOption.value)
+                    isCorrect:
+                        index === parseInt(correctOption.value)
                 });
 
             }
+
         });
 
         if (options.length < 2) {
@@ -1740,57 +1762,78 @@ function addQuestion() {
         }
 
         question.options = options;
-        question.correctAnswer = parseInt(correctOption.value);
+        question.correctAnswer =
+            parseInt(correctOption.value);
     }
 
-    // ===== TRUE/FALSE =====
+    // ================= TRUE FALSE =================
     else if (questionType === 'true-false') {
 
         const correctOption =
-            document.querySelector('input[name="correctOption"]:checked');
+            document.querySelector(
+                'input[name="correctOption"]:checked'
+            );
 
         if (!correctOption) {
-            alert('Select True or False.');
+            alert('Please select True or False.');
             return;
         }
 
-        question.correctAnswer = correctOption.value === 'true';
+        question.correctAnswer =
+            correctOption.value === "true";
 
         question.options = [
             {
                 id: 0,
-                text: 'True',
-                isCorrect: correctOption.value === 'true'
+                text: "True",
+                isCorrect:
+                    correctOption.value === "true"
             },
             {
                 id: 1,
-                text: 'False',
-                isCorrect: correctOption.value === 'false'
+                text: "False",
+                isCorrect:
+                    correctOption.value === "false"
             }
         ];
     }
 
-    // ===== UPDATE or ADD =====
-    if (state.editingQuestionId) {
+    // ================= UPDATE QUESTION =================
+    if (state.editingQuestionId !== null) {
 
-        const index = state.currentTestQuestions.findIndex(
-            q => String(q.id) === String(state.editingQuestionId)
-        );
+        const index =
+            state.currentTestQuestions.findIndex(
+                q =>
+                    String(q.id) ===
+                    String(state.editingQuestionId)
+            );
 
         if (index !== -1) {
+
             state.currentTestQuestions[index] = question;
+
+            showNotification(
+                'Question updated successfully!',
+                'success'
+            );
+
         }
 
-        showNotification('Question updated successfully!', 'success');
+    }
 
-    } else {
+    // ================= ADD NEW QUESTION =================
+    else {
 
         state.currentTestQuestions.push(question);
 
-        showNotification('Question added successfully!', 'success');
+        showNotification(
+            'Question added successfully!',
+            'success'
+        );
+
     }
 
-    // RESET
+    // ================= RESET =================
     state.editingQuestionId = null;
 
     addQuestionBtn.innerHTML =
@@ -1805,7 +1848,6 @@ function addQuestion() {
 
     handleQuestionTypeChange();
 }
-
 // Render question list
 function renderQuestionList() {
     if (state.currentTestQuestions.length === 0) {
@@ -2216,26 +2258,40 @@ function resetTestForm() {
 
     updateQuestionPreview();
 }
-
 // Update dashboard
 function updateDashboard() {
-    // Update statistics
-    const totalTests = Array.isArray(state.tests) && state.tests.length > 0
-        ? state.tests.length
-        : Object.values(testServicesData).reduce((sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0), 0);
 
-    totalTestsElement.textContent = totalTests;
+    // Total Tests
+    const totalTests =
+        Array.isArray(state.tests) && state.tests.length > 0
+            ? state.tests.length
+            : Object.values(testServicesData).reduce(
+                (sum, arr) => sum + (Array.isArray(arr) ? arr.length : 0),
+                0
+            );
 
-    const totalQuestions = Array.isArray(state.tests)
-        ? state.tests.reduce((total, test) => total + (test.questions ? test.questions.length : 0), 0)
-        : 0;
+    if (totalTestsElement) {
+        totalTestsElement.textContent = totalTests;
+    }
 
-    totalQuestionsElement.textContent = totalQuestions;
+    // ✅ Total Students (Always from server)
+    const totalStudents =
+        Number(window.totalStudents || 0);
 
-    const activeTemplates = state.templates.filter(t => t && t.active).length || Object.keys(testServicesData).length;
-    activeTemplatesElement.textContent = activeTemplates;
+    if (totalQuestionsElement) {
+        totalQuestionsElement.textContent = totalStudents;
+    }
 
-    // Update dashboard animations if dashboard is visible
+    // Active Templates
+    const activeTemplates =
+        state.templates.filter(t => t && t.active).length ||
+        Object.keys(testServicesData).length;
+
+    if (activeTemplatesElement) {
+        activeTemplatesElement.textContent = activeTemplates;
+    }
+
+    // Dashboard Animation
     if (state.currentSection === 'dashboard-section') {
         animateDashboard();
     }

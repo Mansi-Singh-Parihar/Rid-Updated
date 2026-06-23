@@ -4,6 +4,53 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Default hide */
+.phone-login-btn{
+    display: none;
+}
+
+/* Mobile View */
+@media (max-width:768px){
+
+    .logo{
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .phone-login-btn{
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: auto;
+        margin-right: 15px;
+
+        padding: 8px 14px;
+        border-radius: 30px;
+
+        background: linear-gradient(135deg,#083d5d,#0a5d8f);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+
+        box-shadow: 0 4px 12px rgba(8,61,93,0.25);
+        transition: all .3s ease;
+    }
+
+    .phone-login-btn:hover{
+        transform: translateY(-2px);
+    }
+
+    .phone-login-btn i{
+        font-size: 14px;
+    }
+
+    /* Desktop login pill hide nahi hoga */
+    .menu-icon{
+        margin-left: 0;
+    }
+}
 
         :root {
             --primary: #083d5d;

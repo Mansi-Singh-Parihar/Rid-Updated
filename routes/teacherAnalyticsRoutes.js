@@ -36,7 +36,7 @@ router.get(
         rank: index + 1,
         name: a.studentId?.name || "N/A",
         email: a.studentId?.email || "-",
-        roll: a.studentId?.roll || "-",
+
         parentContact: a.studentId?.parentContact || "-",
         marks: a.score || 0,
         status: a.score >= 33 ? "Pass" : "Fail"
@@ -78,7 +78,7 @@ router.get(
         { header: "Rank", key: "rank", width: 10 },
         { header: "Name", key: "name", width: 25 },
         { header: "Email", key: "email", width: 30 },
-        { header: "Roll", key: "roll", width: 15 },
+
         { header: "Parent", key: "parent", width: 20 },
         { header: "Marks", key: "marks", width: 10 },
         { header: "Status", key: "status", width: 10 }
@@ -93,7 +93,7 @@ router.get(
           rank: index + 1,
           name: a.studentId?.name || "",
           email: a.studentId?.email || "",
-          roll: a.studentId?.roll || "",
+
           parent: a.studentId?.parentContact || "",
           marks: a.score || 0,
           status: a.score >= 33 ? "Pass" : "Fail"
@@ -184,10 +184,9 @@ router.get(
       const cols = {
         rank: 30,
         name: 80,
-        roll: 210,
-        email: 280,
-        marks: 470,
-        status: 530
+        email: 220,
+        marks: 420,
+        status: 490
       };
 
       doc.font("Helvetica-Bold");
@@ -195,7 +194,7 @@ router.get(
 
       doc.text("Rank", cols.rank, y);
       doc.text("Name", cols.name, y);
-      doc.text("Roll", cols.roll, y);
+
       doc.text("Email", cols.email, y);
       doc.text("Marks", cols.marks, y);
       doc.text("Status", cols.status, y);
@@ -223,7 +222,7 @@ router.get(
 
           doc.text("Rank", cols.rank, y);
           doc.text("Name", cols.name, y);
-          doc.text("Roll", cols.roll, y);
+
           doc.text("Email", cols.email, y);
           doc.text("Marks", cols.marks, y);
           doc.text("Status", cols.status, y);
@@ -254,15 +253,9 @@ router.get(
           cols.name,
           y,
           {
-            width: 120,
-            lineBreak: false
+            width: 110,
+            ellipsis: true
           }
-        );
-
-        doc.text(
-          student?.roll || "-",
-          cols.roll,
-          y
         );
 
         doc.text(
@@ -270,8 +263,8 @@ router.get(
           cols.email,
           y,
           {
-            width: 160,
-            lineBreak: false
+            width: 180,
+            ellipsis: true
           }
         );
 

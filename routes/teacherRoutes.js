@@ -27,26 +27,34 @@ router.get("/teacher-dashboard", ensureTeacher, async (req, res) => {
     const teacher = await Teacher.findById(decoded.userId);
 
     const students = await Student.find({
-      teacherId: teacher._id
-    }).lean();
-    const teacherTests = await Test.find({
-      teacherId: teacher._id
-    });
+  teacherId: teacher._id
+}).lean();
 
-    const testIds = teacherTests.map(t => t._id);
+// Total Students
+const totalStudents = students.length;
 
-    const totalAttempts = await TestAttempt.countDocuments({
-      testId: { $in: testIds }
-    });
+// Teacher Tests
+const teacherTests = await Test.find({
+  teacherId: teacher._id
+}).select("_id");
 
-    res.render(
-      "tracher_deshboard/advance-version/teacher-test-version",
-      {
-        teacher,
-        students,
-        totalAttempts
-      }
-    );
+// Test IDs
+const testIds = teacherTests.map(t => t._id);
+
+// Students who actually attempted tests
+const totalAttempts = await TestAttempt.countDocuments({
+  testId: { $in: testIds }
+});
+
+res.render(
+  "tracher_deshboard/advance-version/teacher-test-version",
+  {
+    teacher,
+    students,
+    totalAttempts,
+    totalStudents
+  }
+);
 
   } catch (err) {
     console.log(err);
@@ -126,13 +134,13 @@ router.put("/teacher/update-student/:id", async (req, res) => {
       { new: true }
     );
 
-    if(!updated) return res.json({ success:false });
+    if (!updated) return res.json({ success: false });
 
-    res.json({ success:true, student: updated });
+    res.json({ success: true, student: updated });
 
   } catch (err) {
     console.log("Update Student Error:", err);
-    res.json({ success:false });
+    res.json({ success: false });
   }
 });
 
@@ -230,20 +238,20 @@ router.get("/teacher/conversations", async (req, res) => {
 router.get("/teacher/send-test-link/:testId", ensureTeacher, async (req, res) => {
   const test = await Test.findById(req.params.testId);
   const publicLink = `${req.protocol}://${req.get("host")}/student/start-test/${test._id}`;
-  res.json({ success:true, link: publicLink });
+  res.json({ success: true, link: publicLink });
 });
 
 // ================= SEND TEST PAGE =================
-router.get("/teacher/send-test-page/:testId", ensureTeacher, async (req,res)=>{
+router.get("/teacher/send-test-page/:testId", ensureTeacher, async (req, res) => {
   const test = await Test.findById(req.params.testId);
-  if(!test) return res.send("Test Not Found");
+  if (!test) return res.send("Test Not Found");
 
   // ✅ Correct public link
   const publicLink = `${req.protocol}://${req.get("host")}/student/start-test/${test._id}`;
 
   res.render("tracher_deshboard/sendTestPage", {
-     test,
-     publicLink
+    test,
+    publicLink
   });
 });
 
@@ -298,7 +306,7 @@ router.get("/teacher/my-tests", ensureTeacher, async (req, res) => {
   }
 });
 
-router.get("/teacher/fix-test/:testId", async (req,res)=>{
+router.get("/teacher/fix-test/:testId", async (req, res) => {
   const decoded = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
   await Test.findByIdAndUpdate(req.params.testId, {
@@ -316,34 +324,34 @@ router.post("/teacher/create-test", ensureTeacher, async (req, res) => {
 
     // 1️⃣ Save Test
     const newTest = new Test({
-  title,
-  subject,
-  className,
-  duration,
-  totalMarks,
-  instructions,
-  startDate,
-  endDate,
-  teacherId: req.user._id   
-  
-});
+      title,
+      subject,
+      className,
+      duration,
+      totalMarks,
+      instructions,
+      startDate,
+      endDate,
+      teacherId: req.user._id
+
+    });
 
 
 
     await newTest.save();
 
     // 2️⃣ Save all Questions
-   const questionDocs = questions.map(q => ({
-  testId: req.params.testId,
-  type: q.type || "mcq",
-  text: q.text,
-  points: q.points || 1,
+    const questionDocs = questions.map(q => ({
+      testId: req.params.testId,
+      type: q.type || "mcq",
+      text: q.text,
+      points: q.points || 1,
 
-  options: (q.options || []).map(opt => ({
-    text: opt.text || opt,
-    isCorrect: opt.isCorrect || false
-  }))
-}));
+      options: (q.options || []).map(opt => ({
+        text: opt.text || opt,
+        isCorrect: opt.isCorrect || false
+      }))
+    }));
 
     await Question.insertMany(questionDocs);
 
@@ -373,46 +381,46 @@ router.get("/teacher/view-test/:testId", ensureTeacher, async (req, res) => {
 
     const formattedQuestions = dbQuestions.map((q, index) => ({
 
-  num: index + 1,
+      num: index + 1,
 
-  question_en: q.question || q.text || "",
-  question_hi: q.question || q.text || "",
+      question_en: q.question || q.text || "",
+      question_hi: q.question || q.text || "",
 
-  options_en:
-    (q.options || []).map(o => ({
-      text: o.text || o,
-      isCorrect: o.isCorrect || false
-    })),
+      options_en:
+        (q.options || []).map(o => ({
+          text: o.text || o,
+          isCorrect: o.isCorrect || false
+        })),
 
-  options_hi:
-    (q.options || []).map(o => ({
-      text: o.text || o,
-      isCorrect: o.isCorrect || false
-    })),
+      options_hi:
+        (q.options || []).map(o => ({
+          text: o.text || o,
+          isCorrect: o.isCorrect || false
+        })),
 
-  answer_en:
-    (q.options || []).find(o => o.isCorrect)?.text || "",
+      answer_en:
+        (q.options || []).find(o => o.isCorrect)?.text || "",
 
-  answer_hi:
-    (q.options || []).find(o => o.isCorrect)?.text || "",
+      answer_hi:
+        (q.options || []).find(o => o.isCorrect)?.text || "",
 
-  points: q.points || 1,
+      points: q.points || 1,
 
-  attempted: false,
-  selected: null
+      attempted: false,
+      selected: null
 
-}));
+    }));
 
-    res.render(
-      "tracher_deshboard/advance-version/viewtest",
-      {
-        testTitle: test.title || test.testName,
-        questions: formattedQuestions,
-        duration: test.duration || 60,
-        testId: test._id,
-        sid: ""
-      }
-    );
+   res.render(
+  "tracher_deshboard/advance-version/viewtest",
+  {
+    testTitle: test.name || test.title || test.testName,
+    questions: formattedQuestions,
+    duration: test.duration || 60,
+    testId: test._id,
+    sid: ""
+  }
+);
 
   } catch (err) {
 
@@ -458,17 +466,17 @@ router.put("/teacher/update-test/:testId", ensureTeacher, async (req, res) => {
     await Question.deleteMany({ testId: req.params.testId });
 
     // Insert new questions
-   const questionDocs = questions.map(q => ({
-  testId: req.params.testId,
-  type: q.type || "mcq",
-  text: q.text,
-  points: q.points || 1,
+    const questionDocs = questions.map(q => ({
+      testId: req.params.testId,
+      type: q.type || "mcq",
+      text: q.text,
+      points: q.points || 1,
 
-  options: (q.options || []).map(opt => ({
-    text: opt.text || opt,
-    isCorrect: opt.isCorrect || false
-  }))
-}));
+      options: (q.options || []).map(opt => ({
+        text: opt.text || opt,
+        isCorrect: opt.isCorrect || false
+      }))
+    }));
 
     await Question.insertMany(questionDocs);
 
@@ -480,8 +488,8 @@ router.put("/teacher/update-test/:testId", ensureTeacher, async (req, res) => {
 });
 
 // create class routes 
-router.post("/teacher/create-class", ensureTeacher, async (req,res)=>{
-  try{
+router.post("/teacher/create-class", ensureTeacher, async (req, res) => {
+  try {
     // console.log("Logged Teacher:", req.user._id); // 👈 test log
 
     const newClass = new ClassModel({
@@ -490,18 +498,18 @@ router.post("/teacher/create-class", ensureTeacher, async (req,res)=>{
     });
 
     await newClass.save();
-    res.json({success:true});
+    res.json({ success: true });
 
-  }catch(err){
+  } catch (err) {
     console.log("Create Class Error:", err);
-    res.json({success:false});
+    res.json({ success: false });
   }
 });
-router.get("/teacher/classes", ensureTeacher, async (req,res)=>{
+router.get("/teacher/classes", ensureTeacher, async (req, res) => {
   try {
     const classes = await ClassModel.find({ teacherId: req.user._id });
     res.json(classes);
-  } catch(err){
+  } catch (err) {
     res.json([]);
   }
 });
@@ -522,10 +530,10 @@ router.put("/teacher/update-class/:id", ensureTeacher, async (req, res) => {
     if (!oldClass) return res.json({ success: false });
 
     // 🔥 update students also
-   await Student.updateMany(
-  { teacherId: req.user._id, class: oldClass.name },
-  { $set: { class: "Unassigned" } }
-);
+    await Student.updateMany(
+      { teacherId: req.user._id, class: oldClass.name },
+      { $set: { class: "Unassigned" } }
+    );
 
     oldClass.name = req.body.name;
     await oldClass.save();
@@ -599,106 +607,106 @@ router.get("/teacher/channel", ensureTeacher, async (req, res) => {
   try {
 
 
-router.post("/teacher/send-request", async (req, res) => {
-  try {
-    const token = req.cookies.token;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    router.post("/teacher/send-request", async (req, res) => {
+      try {
+        const token = req.cookies.token;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const requestStorage = multer.diskStorage({
+        const requestStorage = multer.diskStorage({
+          destination: "public/uploads/",
+          filename: (req, file, cb) => {
+            cb(null, Date.now() + "-" + file.originalname);
+          }
+        });
+
+        const requestUpload = multer({ storage: requestStorage });
+
+        requestUpload.fields([
+          { name: "banner", maxCount: 1 },
+          { name: "notes", maxCount: 1 }
+        ])(req, res, async (err) => {
+          try {
+            if (err) {
+              console.log("Multer Error:", err);
+              return res.status(400).json({ success: false, message: err.message });
+            }
+
+            const bannerFile = req.files?.banner?.[0];
+            const notesFile = req.files?.notes?.[0];
+
+            const newRequest = new TestRequest({
+              teacherId: decoded.userId,
+              teacherName: req.user?.name || "",
+              testName: req.body.testName || "",
+              subject: req.body.subject || "",
+              banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
+              notes: notesFile ? `/uploads/${notesFile.filename}` : "",
+              description: req.body.description || "",
+              status: "pending"
+            });
+
+            await newRequest.save();
+
+            res.json({ success: true, request: newRequest });
+          } catch (saveErr) {
+            console.log("Send Request Save Error:", saveErr);
+            res.status(500).json({ success: false, message: saveErr.message });
+          }
+        });
+      } catch (err) {
+        console.log("Send Request Error:", err);
+        res.status(500).json({ success: false, message: err.message });
+      }
+    });
+
+    const storage = multer.diskStorage({
       destination: "public/uploads/",
       filename: (req, file, cb) => {
         cb(null, Date.now() + "-" + file.originalname);
       }
     });
 
-    const requestUpload = multer({ storage: requestStorage });
+    const upload = multer({ storage });
 
-    requestUpload.fields([
-      { name: "banner", maxCount: 1 },
-      { name: "notes", maxCount: 1 }
-    ])(req, res, async (err) => {
+    router.post("/send-request", upload.single("notes"), async (req, res) => {
       try {
-        if (err) {
-          console.log("Multer Error:", err);
-          return res.status(400).json({ success: false, message: err.message });
-        }
+        const teacherId = req.user?.id || req.teacher?._id || req.body.teacherId;
 
-        const bannerFile = req.files?.banner?.[0];
-        const notesFile = req.files?.notes?.[0];
-
-        const newRequest = new TestRequest({
-          teacherId: decoded.userId,
-          teacherName: req.user?.name || "",
-          testName: req.body.testName || "",
-          subject: req.body.subject || "",
-          banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
-          notes: notesFile ? `/uploads/${notesFile.filename}` : "",
-          description: req.body.description || "",
-          status: "pending"
+        const request = await TestRequest.create({
+          teacherId,
+          notesFile: req.file ? `/uploads/${req.file.filename}` : "",
+          description: req.body.description,
+          status: "pending",
+          banner: req.body.banner || ""
         });
 
-        await newRequest.save();
-
-        res.json({ success: true, request: newRequest });
-      } catch (saveErr) {
-        console.log("Send Request Save Error:", saveErr);
-        res.status(500).json({ success: false, message: saveErr.message });
+        res.json({ success: true, request });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: err.message });
       }
     });
-  } catch (err) {
-    console.log("Send Request Error:", err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
 
-const storage = multer.diskStorage({ 
-  destination: "public/uploads/",
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-
-const upload = multer({ storage });
-
-router.post("/send-request", upload.single("notes"), async (req, res) => {
-  try {
-    const teacherId = req.user?.id || req.teacher?._id || req.body.teacherId;
-
-    const request = await TestRequest.create({
-      teacherId,
-      notesFile: req.file ? `/uploads/${req.file.filename}` : "",
-      description: req.body.description,
-      status: "pending",
-      banner: req.body.banner || ""
-    });
-
-    res.json({ success: true, request });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: err.message });
-  }
-});
-
-router.put("/api/update-test/:id", async (req, res) => {
-    try {
+    router.put("/api/update-test/:id", async (req, res) => {
+      try {
         const updated = await Test.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
+          req.params.id,
+          req.body,
+          { new: true }
         );
 
         res.json({ success: true, test: updated });
-    } catch (err) {
+      } catch (err) {
         res.json({ success: false });
-    }
-});
+      }
+    });
 
 
 
 
-   const tests = await TeacherTest.find({
-  teacher: req.user._id
-}).sort({ createdAt: -1 });
+    const tests = await TeacherTest.find({
+      teacher: req.user._id
+    }).sort({ createdAt: -1 });
 
     res.render("NationalTestSeries/teacher/channel", { tests });
 
@@ -709,33 +717,33 @@ router.put("/api/update-test/:id", async (req, res) => {
 });
 router.get("/teacher/:id", async (req, res) => {
 
-    const questions = await Question.aggregate([
-        {
-            $lookup: {
-                from: "tests",
-                localField: "testId",
-                foreignField: "_id",
-                as: "test"
-            }
-        },
-        { $unwind: "$test" },
+  const questions = await Question.aggregate([
+    {
+      $lookup: {
+        from: "tests",
+        localField: "testId",
+        foreignField: "_id",
+        as: "test"
+      }
+    },
+    { $unwind: "$test" },
 
-        {
-            $lookup: {
-                from: "teachers",
-                localField: "test.teacherId",
-                foreignField: "_id",
-                as: "teacher"
-            }
-        },
-        { $unwind: "$teacher" },
+    {
+      $lookup: {
+        from: "teachers",
+        localField: "test.teacherId",
+        foreignField: "_id",
+        as: "teacher"
+      }
+    },
+    { $unwind: "$teacher" },
 
-        {
-            $match: { "teacher._id": new mongoose.Types.ObjectId(req.params.id) }
-        }
-    ]);
+    {
+      $match: { "teacher._id": new mongoose.Types.ObjectId(req.params.id) }
+    }
+  ]);
 
-    res.render("teacherProfile", { questions });
+  res.render("teacherProfile", { questions });
 });
 
 // ✅ multer setup top-level pe rakho
@@ -760,17 +768,16 @@ router.post(
       const bannerFile = req.files?.banner?.[0];
       const notesFile = req.files?.notes?.[0];
 
-      const newRequest = new TestRequest({
-        teacherId: decoded.userId,
-        teacherName: req.body.teacherName || "",
-        testName: req.body.testName || "",
-        subject: req.body.subject || "",
-        banner: bannerFile ? "/uploads/" + bannerFile.filename : "",
-        notesFile: notesFile ? "/uploads/" + notesFile.filename : "",
-        description: req.body.description || "",
-        status: "pending"
-      });
-
+        const newRequest = new TestRequest({
+          teacherId: decoded.userId,
+          teacherName: req.user?.name || "",
+          testName: req.body.testName || "",
+          subject: req.body.subject || "",
+          banner: bannerFile ? `/uploads/${bannerFile.filename}` : "",
+          notes: notesFile ? `/uploads/${notesFile.filename}` : "",
+          description: req.body.description || "",
+          status: "pending"
+        });
       await newRequest.save();
       res.json({ success: true });
     } catch (err) {
@@ -866,7 +873,7 @@ router.post(
 );
 
 
- router.get("/main", (req, res) => {
+router.get("/main", (req, res) => {
   res.render("index.ejs")
 });
 
@@ -875,178 +882,178 @@ router.post(
 // ================= DOWNLOAD SOLUTION PDF =================
 router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
 
-    try {
+  try {
 
-        const test = await TeacherTest.findById(req.params.testId);
+    const test = await TeacherTest.findById(req.params.testId);
 
-        if (!test) {
-            return res.status(404).send("Test Not Found");
-        }
-
-        const doc = new PDFDocument({
-            margin: 50,
-            size: "A4"
-        });
-
-        res.setHeader("Content-Type", "application/pdf");
-
-        res.setHeader(
-            "Content-Disposition",
-            `inline; filename="${(test.name || test.title || "solution")}.pdf"`
-        );
-
-        doc.pipe(res);
-
-        // ================= HEADER =================
-
-        doc
-            .fontSize(24)
-            .font("Helvetica-Bold")
-            .text("SOLUTION SHEET", {
-                align: "center"
-            });
-
-        doc.moveDown(0.5);
-
-        doc
-            .fontSize(12)
-            .font("Helvetica")
-            .fillColor("gray")
-            .text(
-                `Generated On: ${new Date().toLocaleDateString()}`,
-                {
-                    align: "right"
-                }
-            );
-
-        doc.moveDown();
-
-        doc
-            .fontSize(16)
-            .font("Helvetica-Bold")
-            .fillColor("blue")
-            .text(`Test Name: ${test.name || test.title || "Untitled Test"}`);
-
-        doc.moveDown(1.5);
-
-        // ================= QUESTIONS =================
-
-        (test.questions || []).forEach((q, index) => {
-
-            const questionText =
-                q.question ||
-                q.text ||
-                "No Question Available";
-
-            // Question
-            doc
-                .fontSize(13)
-                .font("Helvetica-Bold")
-                .fillColor("black")
-                .text(`Q${index + 1}. ${questionText}`, {
-                    width: 500
-                });
-
-            doc.moveDown(0.4);
-
-            // Options
-            (q.options || []).forEach((opt, i) => {
-
-                const optionText =
-                    typeof opt === "object"
-                        ? opt.text
-                        : opt;
-
-                const optionLetter =
-                    String.fromCharCode(65 + i);
-
-                if (opt.isCorrect) {
-
-                    doc
-                        .font("Helvetica-Bold")
-                        .fontSize(11)
-                        .fillColor("green")
-                        .text(
-                            `${optionLetter}. ${optionText}   ✓ Correct Answer`,
-                            {
-                                indent: 25
-                            }
-                        );
-
-                } else {
-
-                    doc
-                        .font("Helvetica")
-                        .fontSize(11)
-                        .fillColor("black")
-                        .text(
-                            `${optionLetter}. ${optionText}`,
-                            {
-                                indent: 25
-                            }
-                        );
-                }
-            });
-
-            doc.moveDown(0.7);
-
-            // Correct Answer Box
-            const correctOption = (q.options || []).find(
-                o => o.isCorrect
-            );
-
-            if (correctOption) {
-
-                doc
-                    .font("Helvetica-Bold")
-                    .fillColor("#006400")
-                    .text(
-                        `Correct Answer: ${correctOption.text}`,
-                        {
-                            indent: 25
-                        }
-                    );
-            }
-
-            doc.moveDown(0.8);
-
-            // Divider Line
-            doc
-                .strokeColor("#cccccc")
-                .lineWidth(1)
-                .moveTo(50, doc.y)
-                .lineTo(550, doc.y)
-                .stroke();
-
-            doc.moveDown(1);
-
-            // Auto Page Break
-            if (doc.y > 700) {
-                doc.addPage();
-            }
-        });
-
-        // ================= FOOTER =================
-
-        doc.moveDown(2);
-
-        doc
-            .fontSize(10)
-            .fillColor("gray")
-            .text(
-                "Generated by RID Bharat Test Management System",
-                {
-                    align: "center"
-                }
-            );
-
-        doc.end();
-
-    } catch (err) {
-
-        console.error("Solution PDF Error:", err);
-
-        res.status(500).send("Server Error");
+    if (!test) {
+      return res.status(404).send("Test Not Found");
     }
+
+    const doc = new PDFDocument({
+      margin: 50,
+      size: "A4"
+    });
+
+    res.setHeader("Content-Type", "application/pdf");
+
+    res.setHeader(
+      "Content-Disposition",
+      `inline; filename="${(test.name || test.title || "solution")}.pdf"`
+    );
+
+    doc.pipe(res);
+
+    // ================= HEADER =================
+
+    doc
+      .fontSize(24)
+      .font("Helvetica-Bold")
+      .text("SOLUTION SHEET", {
+        align: "center"
+      });
+
+    doc.moveDown(0.5);
+
+    doc
+      .fontSize(12)
+      .font("Helvetica")
+      .fillColor("gray")
+      .text(
+        `Generated On: ${new Date().toLocaleDateString()}`,
+        {
+          align: "right"
+        }
+      );
+
+    doc.moveDown();
+
+    doc
+      .fontSize(16)
+      .font("Helvetica-Bold")
+      .fillColor("blue")
+      .text(`Test Name: ${test.name || test.title || "Untitled Test"}`);
+
+    doc.moveDown(1.5);
+
+    // ================= QUESTIONS =================
+
+    (test.questions || []).forEach((q, index) => {
+
+      const questionText =
+        q.question ||
+        q.text ||
+        "No Question Available";
+
+      // Question
+      doc
+        .fontSize(13)
+        .font("Helvetica-Bold")
+        .fillColor("black")
+        .text(`Q${index + 1}. ${questionText}`, {
+          width: 500
+        });
+
+      doc.moveDown(0.4);
+
+      // Options
+      (q.options || []).forEach((opt, i) => {
+
+        const optionText =
+          typeof opt === "object"
+            ? opt.text
+            : opt;
+
+        const optionLetter =
+          String.fromCharCode(65 + i);
+
+        if (opt.isCorrect) {
+
+          doc
+            .font("Helvetica-Bold")
+            .fontSize(11)
+            .fillColor("green")
+            .text(
+              `${optionLetter}. ${optionText}   ✓ Correct Answer`,
+              {
+                indent: 25
+              }
+            );
+
+        } else {
+
+          doc
+            .font("Helvetica")
+            .fontSize(11)
+            .fillColor("black")
+            .text(
+              `${optionLetter}. ${optionText}`,
+              {
+                indent: 25
+              }
+            );
+        }
+      });
+
+      doc.moveDown(0.7);
+
+      // Correct Answer Box
+      const correctOption = (q.options || []).find(
+        o => o.isCorrect
+      );
+
+      if (correctOption) {
+
+        doc
+          .font("Helvetica-Bold")
+          .fillColor("#006400")
+          .text(
+            `Correct Answer: ${correctOption.text}`,
+            {
+              indent: 25
+            }
+          );
+      }
+
+      doc.moveDown(0.8);
+
+      // Divider Line
+      doc
+        .strokeColor("#cccccc")
+        .lineWidth(1)
+        .moveTo(50, doc.y)
+        .lineTo(550, doc.y)
+        .stroke();
+
+      doc.moveDown(1);
+
+      // Auto Page Break
+      if (doc.y > 700) {
+        doc.addPage();
+      }
+    });
+
+    // ================= FOOTER =================
+
+    doc.moveDown(2);
+
+    doc
+      .fontSize(10)
+      .fillColor("gray")
+      .text(
+        "Generated by RID Bharat Test Management System",
+        {
+          align: "center"
+        }
+      );
+
+    doc.end();
+
+  } catch (err) {
+
+    console.error("Solution PDF Error:", err);
+
+    res.status(500).send("Server Error");
+  }
 });
 module.exports = router;

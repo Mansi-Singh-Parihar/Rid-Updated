@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
-  <title>NEBULA QUIZ · CREATIVE DASHBOARD</title>
+  <title>RESULT DASHBOARD</title>
 
   <!-- CHART.js (unchanged) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -164,11 +166,11 @@
     }
 
     /* ---------- KPI GRID – 4 cards (creative) ---------- */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-      margin-bottom: 40px;
+    .kpi-grid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:20px;
+      margin-bottom:40px;
     }
 
     .kpi-item {
@@ -458,13 +460,31 @@
       </div>
     </div>
     <!-- Accuracy (extra KPI) -->
-    <div class="kpi-item" style="background: radial-gradient(145% 140% at 20% 20%, rgba(255, 80, 200, 0.2), rgba(100, 20, 80, 0.4));">
-      <div class="kpi-icon"><i class="fas fa-bullseye"></i></div>
+    <div class="kpi-item" style="display: none;" style="background: radial-gradient(145% 140% at 20% 20%, rgba(255, 80, 200, 0.2), rgba(100, 20, 80, 0.4));">
+      <div class="kpi-icon"><i class="fas fa-bullseye" ></i></div>
       <div class="kpi-content">
         <div class="kpi-label"><i class="fas fa-percent"></i> ACCURACY</div>
         <div class="kpi-value" id="accuracyKPI">0%</div>
       </div>
     </div>
+    <!-- Correct Questions -->
+    <div class="kpi-item" style="background: radial-gradient(145% 140% at 20% 20%, rgba(0,255,120,0.2), rgba(0,120,60,0.4));">
+      <div class="kpi-icon"><i class="fas fa-circle-check"></i></div>
+      <div class="kpi-content">
+        <div class="kpi-label">CORRECT</div>
+        <div class="kpi-value" id="correctKPI">0</div>
+      </div>
+    </div>
+
+    <!-- Wrong Questions -->
+    <div class="kpi-item" style="background: radial-gradient(145% 140% at 20% 20%, rgba(255,80,80,0.2), rgba(120,20,20,0.4));">
+      <div class="kpi-icon"><i class="fas fa-circle-xmark"></i></div>
+      <div class="kpi-content">
+        <div class="kpi-label">WRONG</div>
+        <div class="kpi-value" id="wrongKPI">0</div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ===== CHARTS GRID – bar, line, pie (original IDs untouched) ===== -->
@@ -698,6 +718,39 @@ questions.forEach((q, i) => {
 
     </tr>`;
 });
+
+
+let correctCount = 0;
+let wrongCount = 0;
+
+questions.forEach((q) => {
+    const options = q.options || q.options_en || q.options_hi || [];
+
+    if (q.selected !== undefined && q.selected !== null) {
+        const selectedOption = options[q.selected];
+
+        let isCorrect = false;
+
+        if (typeof selectedOption === "object" && selectedOption?.isCorrect) {
+            isCorrect = true;
+        } else {
+            const correctOption = options.find(o => typeof o === "object" && o.isCorrect);
+            if (correctOption && selectedOption?.text === correctOption.text) {
+                isCorrect = true;
+            }
+        }
+
+        if (isCorrect) correctCount++;
+        else wrongCount++;
+    }
+});
+
+const correctElm = document.getElementById("correctKPI");
+const wrongElm = document.getElementById("wrongKPI");
+
+if (correctElm) correctElm.innerText = correctCount;
+if (wrongElm) wrongElm.innerText = wrongCount;
+
 
 // ==============================
 // CHART DATA

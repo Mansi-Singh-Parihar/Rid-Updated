@@ -65,7 +65,7 @@ router.post("/student/check-email", async (req,res)=>{
 // STEP 2 → REGISTER NEW STUDENT + START
 router.post("/student/register-and-start", async (req,res)=>{
   try {
-    const { name, email, className, roll, parentContact, testId } = req.body;
+    const { name, email, className, parentContact, testId } = req.body;
 
     // 🔎 Find test
     const test = await Test.findById(testId);
@@ -84,7 +84,7 @@ router.post("/student/register-and-start", async (req,res)=>{
       name,
       email,
       class: className,
-      roll,
+      // roll,
       parentContact
     });
 

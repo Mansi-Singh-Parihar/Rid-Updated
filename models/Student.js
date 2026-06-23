@@ -21,7 +21,7 @@ const studentSchema = new mongoose.Schema({
     },
 
     class: String,
-    roll: String,
+    // roll: String,
     parentContact: String,
 
     assignedTests: [{

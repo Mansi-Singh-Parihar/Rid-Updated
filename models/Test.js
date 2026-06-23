@@ -14,6 +14,11 @@ const testSchema = new mongoose.Schema({
   totalMarks: Number,
   instructions: String,
 
+   score: Number,
+   correctAnswers: Number,
+   wrongAnswers: Number,
+   attemptedQuestions: Number,
+
   // ✅ ADD THESE TWO FIELDS
   startDate: { type: Date },
   endDate: { type: Date },
