@@ -892,9 +892,11 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
     (test.questions || []).forEach((q, index) => {
 
       const questionText =
-        q.question ||
-        q.text ||
-        "No Question Available";
+  q.question_en ||
+  q.question_hi ||
+  q.question ||
+  q.text ||
+  "";
 
       // Question
       doc
