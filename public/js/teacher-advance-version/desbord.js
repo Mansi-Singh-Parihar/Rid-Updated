@@ -1918,6 +1918,7 @@ function renderQuestionList() {
 
 // edit question
 function editQuestion(questionId) {
+
     const question = state.currentTestQuestions.find(
         q => String(q.id) === String(questionId)
     );
@@ -1927,25 +1928,40 @@ function editQuestion(questionId) {
     state.editingQuestionId = question.id;
 
     questionTextElement.value = question.text;
-    questionTypeElement.value = question.type;
+
+    questionTypeElement.value =
+        question.type === "MCQ"
+            ? "multiple-choice"
+            : "true-false";
+
     questionPointsElement.value = question.points;
     questionDifficultyElement.value = question.difficulty;
 
     handleQuestionTypeChange();
 
-    if (question.options && question.type === 'multiple-choice') {
-        optionsList.innerHTML = '';
+    if (question.options && question.type === "MCQ") {
+
+        optionsList.innerHTML = "";
+
         question.options.forEach((opt, index) => {
+
             optionsList.innerHTML += `
                 <div class="question-option-input">
-                    <input type="radio" name="correctOption" value="${index}" ${opt.isCorrect ? 'checked' : ''}>
-                    <input type="text" class="form-control" value="${opt.text}">
+                    <input type="radio"
+                           name="correctOption"
+                           value="${index}"
+                           ${opt.isCorrect ? "checked" : ""}>
+
+                    <input type="text"
+                           class="form-control"
+                           value="${opt.text}">
                 </div>
             `;
         });
     }
 
-    addQuestionBtn.innerHTML = '<i class="fas fa-save"></i> Update Question';
+    addQuestionBtn.innerHTML =
+        '<i class="fas fa-save"></i> Update Question';
 }
 
 
@@ -2859,7 +2875,10 @@ function openTestForEdit(test) {
     document.getElementById("test-description").value = test.description || "";
 
     // ✅ QUESTIONS LOAD
-    state.currentTestQuestions = test.questions || [];
+    state.currentTestQuestions = (test.questions || []).map((q, index) => ({
+        ...q,
+        id: q.id || q._id || `q_${index}_${Date.now()}`
+    }));
 
     initializeQuestionManagement(true);
     updateQuestionPreview();

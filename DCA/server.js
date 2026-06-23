@@ -1,14 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-
-const studentRoutes = require("./routes/studentRoutes");
-const questionRoutes = require("./routes/questionRoutes");
-const testRoutes = require("./routes/testRoutes");
-const submissionRoutes = require("./routes/submissionRoutes");
-const franchiseRoutes = require("./routes/franchiseRoutes");
-const feeRoutes = require("./routes/feeRoutes");
 const bcrypt = require("bcryptjs");
-const applicationRoutes = require("./routes/applicationRoutes");
+
+const routes = require("./routes");
+
 const Organisation = require("../models/Organisation");
 
 const connectDB = require("./config/db");
@@ -39,7 +34,7 @@ router.get("/courses", (req, res) => {
 router.get("/test", (req, res) => {
     res.render("Create_Test.ejs");
 });
-router.use("/fees", feeRoutes);
+
 router.get("/", async (req, res) => {
     try {
 
@@ -205,18 +200,7 @@ router.get("/p", (req, res) => {
    API ROUTES
 ========================================================= */
 
-router.use("/api/students", studentRoutes);
-router.use("/api/questions", questionRoutes);
-router.use("/api/tests", testRoutes);
-router.use("/api/submissions", submissionRoutes);
-router.use("/franchise", franchiseRoutes);
-router.use("/fees", feeRoutes);
-const courseRoutes = require("./routes/courseRoutes");
 
-router.use("/api/courses", courseRoutes);
-router.use("/api/application", applicationRoutes);
-/* =========================================================
+router.use("/", routes);
 
-   EXPORT
-========================================================= */
 module.exports = router;
