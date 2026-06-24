@@ -18,6 +18,8 @@ function loadQuestion(index) {
 
     if (!q) return;
 
+    q.visited = true;
+
     // ✅ Question Text Support
     const questionText =
         q.question_en ||
@@ -102,9 +104,20 @@ function loadQuestion(index) {
 
     });
 
-    updateNavigation();
+
+  const nextBtn = document.getElementById("nextBtn");
+if(nextBtn){
+    if(index === questions.length - 1){
+        nextBtn.textContent = "Submit Test";
+        nextBtn.onclick = submitQuiz;
+    }else{
+        nextBtn.textContent = "Next";
+        nextBtn.onclick = nextQuestion;
+    }
 }
 
+    updateNavigation();
+}
 
 // ----------------- Attempt Mark -----------------
 function markAttempted(index, selectedOptionIndex) {
@@ -113,7 +126,14 @@ function markAttempted(index, selectedOptionIndex) {
 }
 
 
+
+function markQuestion() {
+    questions[currentQuestion].marked = true;
+    updateNavigation();
+}
+
 // ----------------- Next / Previous -----------------
+
 function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
         currentQuestion++;
@@ -345,14 +365,24 @@ function updateNavigation() {
     nav.innerHTML = "";
 
     questions.forEach((q, i) => {
-        let color = "gray";
-        if (i === currentQuestion) color = "blue";
-        else if (q.attempted) color = "green";
+        let className = "circle";
+
+        if (i === currentQuestion) {
+            className += " active";
+        } else if (q.marked) {
+            className += " marked";
+        } else if (q.attempted) {
+            className += " answered";
+        } else if (q.visited) {
+            className += " visited";
+        } else {
+            className += " not-attempted";
+        }
 
         nav.innerHTML += `
-            <div class="circle" style="background:${color};"
-            onclick="jumpToQuestion(${i})">${i + 1}</div>
-        `;
+        <div class="${className}" onclick="jumpToQuestion(${i})">
+            ${i + 1}
+        </div>`;
     });
 }
 
@@ -507,6 +537,11 @@ window.onload = function () {
         alert("No Questions Loaded");
         return;
     }
+
+    questions.forEach(q => {
+        q.visited = false;
+        q.marked = false;
+    });
 
     // Save quiz start time
     quizStartTime = Date.now();
