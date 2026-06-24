@@ -21,10 +21,16 @@
             cursor: pointer;
         }
 
-        .circle.answered { background-color: green; color: white; }
+       .circle.answered{
+    background:#28a745;
+    color:#fff;
+}
         .circle.visited { background-color: white; color: black; border: 1px solid gray; }
         .circle.active { border: 2px solid blue; }
-        .circle.not-attempted { background-color: gray; color: white; }
+        .circle.not-attempted{
+    background:#6c757d;
+    color:#fff;
+}
 
         header {
             background-color: #1a237e;
@@ -443,3 +449,25 @@ body.dark-mode #questionMarks {
     color: white !important;
 }
 
+
+.circle.answered{
+ background:#28a745!important;
+ color:#fff!important;
+}
+.circle.not-attempted{
+ background:#6c757d!important;
+ color:#fff!important;
+}
+.circle.marked{
+ background:#6f42c1!important;
+ color:#fff!important;
+}
+.circle.visited{
+ background:#fff!important;
+ color:#000!important;
+ border:2px solid #999!important;
+}
+.circle.active{
+ background:#007bff!important;
+ color:#fff!important;
+}
