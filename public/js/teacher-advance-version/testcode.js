@@ -56,10 +56,10 @@ function loadQuestion(index) {
             typeof opt === "string"
                 ? opt
                 : (opt.text || "");
-                const optionValue =
-    typeof opt === "string"
-        ? opt
-        : opt.text;
+        const optionValue =
+            typeof opt === "string"
+                ? opt
+                : opt.text;
 
         const isSelected =
             q.selected === i;
@@ -167,7 +167,8 @@ function submitQuiz() {
 
     const studentId =
         document.getElementById("studentId")?.value || "";
-
+    const sendSessionId =
+        document.getElementById("sendSessionId")?.value || "";
     let attempted = 0;
     let notAttempted = 0;
     let score = 0;
@@ -301,7 +302,7 @@ function submitQuiz() {
         );
 
     if (!confirmation) return;
-
+    console.log("SEND SESSION =", sendSessionId);
     fetch("/student/submit-test", {
 
         method: "POST",
@@ -313,7 +314,8 @@ function submitQuiz() {
         body: JSON.stringify({
             studentId,
             testId,
-            score
+            score,
+            sendSessionId
         })
 
     })

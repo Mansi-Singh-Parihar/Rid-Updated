@@ -15,8 +15,8 @@ const TeacherTest = require("../models/teacherTestModel");
 const TestAttempt = require("../models/TestAttempt");
 const TestRequest = require("../models/TestRequest");
 const multer = require("multer");
-
-
+const path = require("path");
+const crypto = require("crypto");
 // ================= DASHBOARD =================
 
 router.get("/teacher-dashboard", ensureTeacher, async (req, res) => {
@@ -27,34 +27,34 @@ router.get("/teacher-dashboard", ensureTeacher, async (req, res) => {
     const teacher = await Teacher.findById(decoded.userId);
 
     const students = await Student.find({
-  teacherId: teacher._id
-}).lean();
+      teacherId: teacher._id
+    }).lean();
 
-// Total Students
-const totalStudents = students.length;
+    // Total Students
+    const totalStudents = students.length;
 
-// Teacher Tests
-const teacherTests = await Test.find({
-  teacherId: teacher._id
-}).select("_id");
+    // Teacher Tests
+    const teacherTests = await Test.find({
+      teacherId: teacher._id
+    }).select("_id");
 
-// Test IDs
-const testIds = teacherTests.map(t => t._id);
+    // Test IDs
+    const testIds = teacherTests.map(t => t._id);
 
-// Students who actually attempted tests
-const totalAttempts = await TestAttempt.countDocuments({
-  testId: { $in: testIds }
-});
+    // Students who actually attempted tests
+    const totalAttempts = await TestAttempt.countDocuments({
+      testId: { $in: testIds }
+    });
 
-res.render(
-  "tracher_deshboard/advance-version/teacher-test-version",
-  {
-    teacher,
-    students,
-    totalAttempts,
-    totalStudents
-  }
-);
+    res.render(
+      "tracher_deshboard/advance-version/teacher-test-version",
+      {
+        teacher,
+        students,
+        totalAttempts,
+        totalStudents
+      }
+    );
 
   } catch (err) {
     console.log(err);
@@ -237,22 +237,40 @@ router.get("/teacher/conversations", async (req, res) => {
 // ================= SEND TEST PAGE =================
 router.get("/teacher/send-test-link/:testId", ensureTeacher, async (req, res) => {
   const test = await Test.findById(req.params.testId);
-  const publicLink = `${req.protocol}://${req.get("host")}/student/start-test/${test._id}`;
+
+
+  const sendSessionId =
+    crypto.randomBytes(8).toString("hex");
+
+  const publicLink =
+    `${req.protocol}://${req.get("host")}/student/start-test/${test._id}?session=${sendSessionId}`;
   res.json({ success: true, link: publicLink });
 });
 
 // ================= SEND TEST PAGE =================
 router.get("/teacher/send-test-page/:testId", ensureTeacher, async (req, res) => {
+
   const test = await Test.findById(req.params.testId);
-  if (!test) return res.send("Test Not Found");
 
-  // ✅ Correct public link
-  const publicLink = `${req.protocol}://${req.get("host")}/student/start-test/${test._id}`;
+  if (!test) {
+    return res.send("Test Not Found");
+  }
 
-  res.render("tracher_deshboard/sendTestPage", {
-    test,
-    publicLink
-  });
+  const sendSessionId =
+    crypto.randomBytes(8).toString("hex");
+
+  const publicLink =
+    `${req.protocol}://${req.get("host")}/student/start-test/${test._id}?session=${sendSessionId}`;
+
+  res.render(
+    "tracher_deshboard/sendTestPage",
+    {
+      test,
+      publicLink,
+      sendSessionId
+    }
+  );
+
 });
 
 router.get("/teacher/my-tests", ensureTeacher, async (req, res) => {
@@ -411,16 +429,16 @@ router.get("/teacher/view-test/:testId", ensureTeacher, async (req, res) => {
 
     }));
 
-   res.render(
-  "tracher_deshboard/advance-version/viewtest",
-  {
-    testTitle: test.name || test.title || test.testName,
-    questions: formattedQuestions,
-    duration: test.duration || 60,
-    testId: test._id,
-    sid: ""
-  }
-);
+    res.render(
+      "tracher_deshboard/advance-version/viewtest",
+      {
+        testTitle: test.name || test.title || test.testName,
+        questions: formattedQuestions,
+        duration: test.duration || 60,
+        testId: test._id,
+        sid: ""
+      }
+    );
 
   } catch (err) {
 
@@ -607,7 +625,7 @@ router.get("/teacher/channel", ensureTeacher, async (req, res) => {
   try {
 
 
-   
+
 
     const storage = multer.diskStorage({
       destination: "public/uploads/",
@@ -845,6 +863,18 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
       margin: 50,
       size: "A4"
     });
+    const regularFont = path.join(
+      __dirname,
+      "../public/fonts/NotoSansDevanagari-Regular.ttf"
+    );
+
+    const boldFont = path.join(
+      __dirname,
+      "../public/fonts/NotoSansDevanagari-Bold.ttf"
+    );
+
+    doc.registerFont("Hindi", regularFont);
+    doc.registerFont("HindiBold", boldFont);
 
     res.setHeader("Content-Type", "application/pdf");
 
@@ -859,7 +889,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
 
     doc
       .fontSize(24)
-      .font("Helvetica-Bold")
+      .font("HindiBold")
       .text("SOLUTION SHEET", {
         align: "center"
       });
@@ -868,7 +898,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
 
     doc
       .fontSize(12)
-      .font("Helvetica")
+      .font("Hindi")
       .fillColor("gray")
       .text(
         `Generated On: ${new Date().toLocaleDateString()}`,
@@ -881,7 +911,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
 
     doc
       .fontSize(16)
-      .font("Helvetica-Bold")
+      .font("HindiBold")
       .fillColor("blue")
       .text(`Test Name: ${test.name || test.title || "Untitled Test"}`);
 
@@ -892,16 +922,16 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
     (test.questions || []).forEach((q, index) => {
 
       const questionText =
-  q.question_en ||
-  q.question_hi ||
-  q.question ||
-  q.text ||
-  "";
+        q.question_hi ||
+        q.question_en ||
+        q.question ||
+        q.text ||
+        "";
 
       // Question
       doc
         .fontSize(13)
-        .font("Helvetica-Bold")
+        .font("HindiBold")
         .fillColor("black")
         .text(`Q${index + 1}. ${questionText}`, {
           width: 500
@@ -923,7 +953,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
         if (opt.isCorrect) {
 
           doc
-            .font("Helvetica-Bold")
+            .font("HindiBold")
             .fontSize(11)
             .fillColor("green")
             .text(
@@ -936,7 +966,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
         } else {
 
           doc
-            .font("Helvetica")
+            .font("Hindi")
             .fontSize(11)
             .fillColor("black")
             .text(
@@ -958,7 +988,7 @@ router.get("/teacher/solution/:testId", ensureTeacher, async (req, res) => {
       if (correctOption) {
 
         doc
-          .font("Helvetica-Bold")
+          .font("HindiBold")
           .fillColor("#006400")
           .text(
             `Correct Answer: ${correctOption.text}`,

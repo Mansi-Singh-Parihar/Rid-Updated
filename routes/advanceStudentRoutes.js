@@ -8,18 +8,18 @@ const TestAttempt = require("../models/TestAttempt");
 // =================================================
 // OPEN EMAIL PAGE
 // =================================================
-router.get("/open/:testId", async (req, res) => {
-    try {
-        const testId = req.params.testId;
+router.get("/open/:testId", async (req,res)=>{
 
-        res.render(
-            "tracher_deshboard/advance-version/sendtestprocess/enterEmail",
-            { testId }
-        );
-    } catch (err) {
-        console.error(err);
-        res.send("Error opening test");
-    }
+    const sessionId =
+    req.query.session;
+
+    res.render(
+      "tracher_deshboard/advance-version/sendtestprocess/enterEmail",
+      {
+        testId:req.params.testId,
+        sessionId
+      }
+    );
 });
 
 // =================================================
@@ -27,7 +27,11 @@ router.get("/open/:testId", async (req, res) => {
 // =================================================
 router.post("/check-email", async (req, res) => {
     try {
-        const { email, testId } = req.body;
+        const {
+ email,
+ testId,
+ sessionId
+} = req.body;
 
         const test = await TeacherTest.findById(testId);
         if (!test) return res.send("Test not found");
@@ -45,15 +49,20 @@ router.post("/check-email", async (req, res) => {
         });
 
         if (student) {
-            return res.redirect(
-                `/advance-student/check-attempt/${student._id}/${testId}`
-            );
+           return res.redirect(
+`/advance-student/check-attempt/${student._id}/${testId}?session=${sessionId}`
+);
         }
 
-        res.render(
-            "tracher_deshboard/advance-version/sendtestprocess/registerStudent",
-            { testId, email, teacherId }
-        );
+       res.render(
+"tracher_deshboard/advance-version/sendtestprocess/registerStudent",
+{
+ testId,
+ email,
+ teacherId,
+ sessionId
+}
+);
     } catch (err) {
         console.error("Email check error:", err);
         res.send("Server error");
@@ -65,7 +74,16 @@ router.post("/check-email", async (req, res) => {
 // =================================================
 router.post("/register-and-start", async (req, res) => {
     try {
-        const { name, email, className, roll, parentContact, testId, teacherId } = req.body;
+       const {
+ name,
+ email,
+ className,
+ roll,
+ parentContact,
+ testId,
+ teacherId,
+ sessionId
+} = req.body;
 
         const test = await TeacherTest.findById(testId);
         if (!test) return res.send("Test not found");
@@ -95,7 +113,9 @@ router.post("/register-and-start", async (req, res) => {
             await student.save();
         }
 
-        res.redirect(`/advance-student/check-attempt/${student._id}/${testId}`);
+        res.redirect(
+`/advance-student/check-attempt/${student._id}/${testId}?session=${sessionId}`
+);
     } catch (err) {
         console.error("Register error:", err);
         res.send("Registration failed");
@@ -109,7 +129,13 @@ router.get("/check-attempt/:studentId/:testId", async (req, res) => {
     try {
         const { studentId, testId } = req.params;
 
-        const already = await TestAttempt.findOne({ studentId, testId });
+       const sessionId = req.query.session;
+
+const already = await TestAttempt.findOne({
+    studentId,
+    testId,
+    sendSessionId: sessionId
+});
 
         if (already) {
             return res.send(
@@ -117,7 +143,9 @@ router.get("/check-attempt/:studentId/:testId", async (req, res) => {
             );
         }
 
-        res.redirect(`/advance-student/start/${testId}?sid=${studentId}`);
+        res.redirect(
+`/advance-student/start/${testId}?sid=${studentId}&session=${sessionId}`
+);
     } catch (err) {
         console.error(err);
         res.send("Error");
@@ -131,28 +159,34 @@ router.get("/start/:testId", async (req, res) => {
     try {
         const testId = req.params.testId;
         const studentId = req.query.sid;
-
+const sessionId = req.query.session;
         const test = await TeacherTest.findById(testId);
         if (!test) return res.send("Test not found");
 
-        const existingAttempt = await TestAttempt.findOne({ studentId, testId });
+        const existingAttempt = await TestAttempt.findOne({
+    studentId,
+    testId,
+    sendSessionId: sessionId
+});
 
         if (!existingAttempt) {
             await TestAttempt.create({
-                studentId,
-                testId,
-                score: 0,
-                startedAt: new Date()
-            });
+    studentId,
+    testId,
+    score: 0,
+    sendSessionId: sessionId,
+    startedAt: new Date()
+});
         }
 
-        res.render("tracher_deshboard/advance-version/viewtest", {
-            testTitle: test.name,
-            questions: test.questions,
-            duration: test.duration,
-            testId: test._id,
-            sid: studentId
-        });
+       res.render("tracher_deshboard/advance-version/viewtest", {
+    testTitle: test.name,
+    questions: test.questions,
+    duration: test.duration,
+    testId: test._id,
+    sid: studentId,
+    sessionId
+});
     } catch (err) {
         console.error("Start test error:", err);
         res.send("Server error");

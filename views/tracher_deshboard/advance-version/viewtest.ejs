@@ -5,83 +5,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Application</title>
+
     <link rel="stylesheet" href="/css/Testserice-css/viewtest.css">
 </head>
 
 <body>
 
-    <!-- ✅ Always available Test ID -->
-    <input type="hidden" id="testId" value="<%= typeof testId !== 'undefined' ? testId : '' %>">
+    <!-- TEST ID -->
+    <input
+        type="hidden"
+        id="testId"
+        value="<%= testId || '' %>"
+    >
 
-    <!-- ✅ StudentId only in student mode, blank in teacher preview -->
-    <input type="hidden" id="studentId" value="<%= typeof sid !== 'undefined' ? sid : '' %>">
+    <!-- SESSION ID -->
+    <input
+        type="hidden"
+        id="sendSessionId"
+        value="<%= sessionId || '' %>"
+    >
+
+    <!-- STUDENT ID -->
+    <input
+        type="hidden"
+        id="studentId"
+        value="<%= sid || '' %>"
+    >
 
     <div class="main-container">
+
         <div class="quiz-container">
+
             <div class="question-header">
                 <h2><%= testTitle %></h2>
-                <div class="timer"><span id="timer"></span></div>
+                <div class="timer">
+                    <span id="timer"></span>
+                </div>
             </div>
 
-            <select id="languageSelect" onchange="changeLanguage()" class="language-select">
+            <select
+                id="languageSelect"
+                onchange="changeLanguage()"
+                class="language-select"
+            >
                 <option value="en">English</option>
                 <option value="hi">Hindi</option>
             </select>
 
             <p id="questionCounter"></p>
 
-            <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div
+                style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            "
+            >
                 <div id="question"></div>
-                <div id="questionMarks" style="
+
+                <div
+                    id="questionMarks"
+                    style="
                     background:#4a6fa5;
                     color:white;
                     padding:4px 10px;
                     border-radius:6px;
-                    font-size:14px;">
-                </div>
+                    font-size:14px;
+                "
+                ></div>
             </div>
 
-            <ul class="options" id="options"></ul>
+            <ul
+                class="options"
+                id="options"
+            ></ul>
 
             <div class="buttons">
-                <button class="btn" onclick="prevQuestion()">Previous</button>
-                <button class="btn btn-next" onclick="nextQuestion()">Next</button>
+                <button
+                    class="btn"
+                    onclick="prevQuestion()"
+                >
+                    Previous
+                </button>
+
+                <button
+                    class="btn btn-next"
+                    onclick="nextQuestion()"
+                >
+                    Next
+                </button>
             </div>
 
-           <button class="btn submit-btn" onclick="submitQuiz()">Submit Test</button>
+            <button
+                class="btn submit-btn"
+                onclick="submitQuiz()"
+            >
+                Submit Test
+            </button>
+
         </div>
 
         <div class="sidebar">
-            <div class="sidebar-content">
-                <div class="status-indicator">
-                    <p class="answered"><span></span> Answered</p>
-                    <p class="not-attempted"><span></span> Not Attempted</p>
-                    <p class="marked"><span></span> Marked</p>
-                    <p class="visited"><span></span> Visited</p>
-                    <div class="circles-container" id="circleContainer"></div>
 
-                    <!-- ✅ Submit Button -->
-                    <button class="btn submit-btn" onclick="submitQuiz()">Submit Test</button>
+            <div class="sidebar-content">
+
+                <div class="status-indicator">
+
+                    <p class="answered">
+                        <span></span>
+                        Answered
+                    </p>
+
+                    <p class="not-attempted">
+                        <span></span>
+                        Not Attempted
+                    </p>
+
+                    <p class="marked">
+                        <span></span>
+                        Marked
+                    </p>
+
+                    <p class="visited">
+                        <span></span>
+                        Visited
+                    </p>
+
+                    <div
+                        class="circles-container"
+                        id="circleContainer"
+                    ></div>
+
+                    <button
+                        class="btn submit-btn"
+                        onclick="submitQuiz()"
+                    >
+                        Submit Test
+                    </button>
+
                 </div>
+
             </div>
+
         </div>
+
     </div>
 
-    <!-- ✅ Inject questions + duration -->
     <script>
-    window.questions = <%- JSON.stringify(questions || []) %>;
-    window.testDuration = <%= duration %>;
 
-    console.log("Injected TestId:", document.getElementById("testId").value);
-    console.log("Injected StudentId:", document.getElementById("studentId").value);
-    console.log("Questions:", window.questions);
-</script>
+        window.questions =
+            <%- JSON.stringify(questions || []) %>;
 
+        window.testDuration =
+            <%= duration || 0 %>;
 
-    <!-- ✅ External JS -->
-    <script src="/js/teacher-advance-version/testcode.js">
-        
+        console.log(
+            "TEST ID =",
+            document.getElementById("testId").value
+        );
+
+        console.log(
+            "STUDENT ID =",
+            document.getElementById("studentId").value
+        );
+
+        console.log(
+            "SESSION ID =",
+            document.getElementById("sendSessionId").value
+        );
+
     </script>
 
+    <script src="/js/teacher-advance-version/testcode.js"></script>
+
 </body>
+
 </html>

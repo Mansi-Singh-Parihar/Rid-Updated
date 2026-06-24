@@ -312,6 +312,31 @@ function initApp() {
     loadSavedTheme();
     setupThemeControls();
     attachTranslatorEvents();
+    // Dashboard Card Click Events
+const totalTestsCard = document.getElementById("total-tests-card");
+const totalStudentsCard = document.getElementById("total-students-card");
+const activeTemplatesCard = document.getElementById("active-templates-card");
+
+// Total Tests Created
+if (totalTestsCard) {
+    totalTestsCard.addEventListener("click", () => {
+        showTestServicesSection(); // Test Category Open
+    });
+}
+
+// Active Templates
+if (activeTemplatesCard) {
+    activeTemplatesCard.addEventListener("click", () => {
+        showTestServicesSection(); // Test Category Open
+    });
+}
+
+// Total Student Attend Test
+if (totalStudentsCard) {
+    totalStudentsCard.addEventListener("click", () => {
+        showStudentsSection(); // Add Students Open
+    });
+}
 }
 
 

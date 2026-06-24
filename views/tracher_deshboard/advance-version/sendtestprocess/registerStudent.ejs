@@ -416,6 +416,7 @@ button{height:46px!important;padding:0 20px!important;}
 
 </head>
 <body>
+ 
     <!-- floating background shapes (keep but very subtle) -->
     <div class="bg-shapes">
         <div class="shape"></div>
@@ -438,7 +439,11 @@ button{height:46px!important;padding:0 20px!important;}
             <!-- exactly the same form, same fields, same EJS placeholders -->
            <form action="/advance-student/register-and-start" method="POST">
     <input type="hidden" name="testId" value="<%= testId %>">
-    
+    <input
+        type="hidden"
+        name="sessionId"
+        value="<%= sessionId %>"
+    >
     <div class="form-group">
         <label for="email"><i class="fas fa-envelope"></i> E-Mail Id</label>
         <div class="input-icon"><i class="fas fa-at"></i></div>

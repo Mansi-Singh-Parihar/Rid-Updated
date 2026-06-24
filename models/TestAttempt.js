@@ -23,6 +23,10 @@ const attemptSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    sendSessionId: {
+        type: String,
+        required: true
+    },
 
     completedAt: Date
 

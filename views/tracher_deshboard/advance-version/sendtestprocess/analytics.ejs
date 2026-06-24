@@ -667,6 +667,25 @@
         <p>Test ID: <span id="testIdDisplay">Loading...</span></p>
       </div>
     </div>
+   <select id="batchSelect">
+
+    <option value="">
+        All Batches
+    </option>
+
+    <% if (batches && batches.length) { %>
+
+   <% batches.forEach(batch => { %>
+
+      <option value="<%= batch %>">
+         Batch - <%= batch %>
+      </option>
+
+   <% }) %>
+
+<% } %>
+
+</select>
     <!-- Export Section -->
     <div class="export-section">
       <h3><i class="fas fa-file-export"></i> Export All Student Rank Data</h3>
@@ -738,56 +757,29 @@
     }
 
     // ✅ LOAD ANALYTICS DATA
-    function loadAnalytics(testId) {
-      fetch(`/api/teacher/analytics/test/${testId}/details`, {
-        credentials: "include"
-      })
-        .then(res => {
-          if (!res.ok) throw new Error('Network response was not ok');
-          return res.json();
-        })
-        .then(data => {
-          console.log("Analytics Data =>", data);
-          console.log("Total Students =>", data.length);
-          originalData = data;
-          filteredData = [...originalData];
+    function loadAnalytics(testId, batch = "") {
 
-          if (!data || data.length === 0) {
-            document.getElementById("detailsBody").innerHTML = `
-          <tr>
-            <td colspan="7" class="no-results">
-              <i class="fas fa-inbox"></i>
-              <h3>No Student Data Found</h3>
-              <p>No analytics data available for this test.</p>
-            </td>
-          </tr>
-        `;
-            updateSearchResultsCount(0);
-            return;
-          }
+ let url =
+ `/api/teacher/analytics/test/${testId}/details`;
 
-          // Sort data by marks (descending) for ranking
+ if(batch){
+   url += `?sessionId=${batch}`;
+ }
 
+ fetch(url,{
+   credentials:"include"
+ })
+ .then(res=>res.json())
+ .then(data=>{
 
-          renderTable(data);
-          updateSearchResultsCount(data.length);
+   originalData = data;
+   filteredData = [...data];
 
-          // Initialize search functionality
-          initializeSearch();
-        })
-        .catch(err => {
-          console.error(err);
-          document.getElementById("detailsBody").innerHTML = `
-        <tr>
-          <td colspan="7" class="no-results">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h3>Error Loading Data</h3>
-            <p>Failed to load analytics data. Please try again later.</p>
-          </td>
-        </tr>
-      `;
-        });
-    }
+   renderTable(data);
+   updateSearchResultsCount(data.length);
+
+ });
+}
 
     // Render table with data
     function renderTable(data) {
@@ -1080,6 +1072,17 @@
       });
     });
 
+document
+.getElementById("batchSelect")
+.addEventListener("change", function(){
+
+   const batch = this.value;
+
+   console.log("Selected Batch =", batch);
+
+   loadAnalytics(testId, batch);
+
+});
   </script>
 </body>
 

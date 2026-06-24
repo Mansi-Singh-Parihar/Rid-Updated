@@ -59,7 +59,7 @@
         <header>
             <button id="toggleSidebar" class="toggle-btn">
                 <i class="fas fa-bars"></i>
-                
+                 
             </button>
             <div class="logo">
                 <i class="fas fa-chalkboard-teacher"></i>
@@ -68,7 +68,9 @@
             <div class="user-info">
                 <div class="user-avatar" id="userAvatar">
                     <i class="fas fa-user" id="avatarIcon"></i>
+                    
                 </div>
+                
                 <div>
                     <div>Welcome, <strong>
                             <%= teacher.name %>
@@ -370,7 +372,7 @@
 
                         <!-- Animated Stats Cards -->
                         <div class="animated-stats-grid">
-                            <div class="animated-stat-card">
+                            <div class="animated-stat-card" id="total-tests-card">
                                 <i class="fas fa-file-alt" style="color: #3498db; font-size: 1.3rem;"></i>
                                 <div class="animated-stat-number" id="total-tests">0</div>
                                 <div class="animated-stat-label">Total Tests Created</div>
@@ -387,7 +389,7 @@
                                 </div>
                             </div>
 
-                            <div class="animated-stat-card">
+                            <div class="animated-stat-card" id="total-students-card">
                                 <i class="fas fa-question-circle" style="color: #2ecc71; font-size: 1.3rem;"></i>
                                 <div class="animated-stat-number" id="total-questions">0</div>
                                 <div class="animated-stat-label">Total Student Attend Test</div>
@@ -404,7 +406,7 @@
                                 </div>
                             </div>
 
-                            <div class="animated-stat-card">
+                            <div class="animated-stat-card" id="active-templates-card">
                                 <i class="fas fa-layer-group" style="color: #9b59b6; font-size: 1.3rem;"></i>
                                 <div class="animated-stat-number" id="active-templates">0</div>
                                 <div class="animated-stat-label">Active Templates</div>

@@ -18,11 +18,14 @@ router.get("/student/start-test/:testId", async (req,res)=>{
     const test = await Test.findById(req.params.testId);
     if(!test) return res.send("Test Not Found");
 
-    res.render("student/testPage", {
-      testTitle: test.title,
-      duration: test.duration,
-      testId: test._id
-    });
+   const sessionId = req.query.session || "";
+
+res.render("student/testPage", {
+  testTitle: test.title,
+  duration: test.duration,
+  testId: test._id,
+  sessionId
+});
 
   } catch(err){
     console.log("Start Page Error:", err);
@@ -35,7 +38,7 @@ router.get("/student/start-test/:testId", async (req,res)=>{
 // STEP 1 → CHECK EMAIL
 router.post("/student/check-email", async (req,res)=>{
   try{
-    const { email, testId } = req.body;
+   
 
     const test = await Test.findById(testId);
     if(!test) return res.send("Test not found");
@@ -46,13 +49,19 @@ router.post("/student/check-email", async (req,res)=>{
       teacherId: test.teacherId
     });
 
-    // ✅ agar mila → direct test
-    if(student){
-      return res.redirect(`/student/check-attempt/${student._id}/${testId}`);
-    }
+    const { email, testId, sessionId } = req.body;
 
-    // ❌ nahi mila → registration form
-    res.render("student/registerStudent", { testId, email });
+if(student){
+  return res.redirect(
+    `/student/check-attempt/${student._id}/${testId}?session=${sessionId}`
+  );
+}
+
+res.render("student/registerStudent", {
+  testId,
+  email,
+  sessionId
+});
 
   }catch(err){
     console.log("Email Check Error:", err);
@@ -65,7 +74,14 @@ router.post("/student/check-email", async (req,res)=>{
 // STEP 2 → REGISTER NEW STUDENT + START
 router.post("/student/register-and-start", async (req,res)=>{
   try {
-    const { name, email, className, parentContact, testId } = req.body;
+    const {
+  name,
+  email,
+  className,
+  parentContact,
+  testId,
+  sessionId
+} = req.body;
 
     // 🔎 Find test
     const test = await Test.findById(testId);
@@ -97,7 +113,9 @@ router.post("/student/register-and-start", async (req,res)=>{
     });
 
     // ✅ Redirect to test
-    res.redirect(`/student/check-attempt/${newStudent._id}/${testId}`);
+   res.redirect(
+  `/student/check-attempt/${newStudent._id}/${testId}?session=${sessionId}`
+);
 
   } catch(err){
     console.log("Student Register Error:", err);
@@ -114,13 +132,22 @@ router.post("/student/register-and-start", async (req,res)=>{
 router.get("/student/check-attempt/:studentId/:testId", async (req,res)=>{
   const { studentId, testId } = req.params;
 
-  const already = await TestAttempt.findOne({ studentId, testId });
+  const sessionId = req.query.session;
+
+const already =
+await TestAttempt.findOne({
+  studentId,
+  testId,
+  sendSessionId: sessionId
+});
 
   if(already){
     return res.send(`<script>alert("You already attempted this test");</script>`);
   }
 
-  res.redirect(`/student/do-test/${testId}?sid=${studentId}`);
+  res.redirect(
+`/student/do-test/${testId}?sid=${studentId}&session=${sessionId}`
+);
 });
 
 
@@ -130,20 +157,26 @@ router.get("/student/do-test/:testId", async (req,res)=>{
   try {
     const testId = req.params.testId;
     const studentId = req.query.sid;  // sid already tum bhej rahe ho
-
+const sessionId = req.query.session;
     const test = await Test.findById(testId);
     if(!test) return res.send("Test Not Found");
 
     // ✅ AUTO CREATE ATTEMPT WHEN TEST STARTS
-    const existingAttempt = await TestAttempt.findOne({ studentId, testId });
+    const existingAttempt =
+await TestAttempt.findOne({
+  studentId,
+  testId,
+  sendSessionId: sessionId
+});
 
     if(!existingAttempt){
-      await TestAttempt.create({
-        studentId,
-        testId,
-        score: 0,
-        startedAt: new Date()
-      });
+     await TestAttempt.create({
+   studentId,
+   testId,
+   score:0,
+   sendSessionId: sessionId,
+   startedAt:new Date()
+});
     }
 
     const dbQuestions = await Question.find({ testId });
@@ -161,12 +194,15 @@ router.get("/student/do-test/:testId", async (req,res)=>{
       selected: ""
     }));
 
-   res.render("tracher_deshboard/viewtext", {
-  testTitle: test.title,
-  questions: formattedQuestions,
-  duration: test.duration,
-  testId: test._id,
-  sid: studentId
+  res.render(
+"tracher_deshboard/viewtext",
+{
+ testTitle:test.title,
+ questions:formattedQuestions,
+ duration:test.duration,
+ testId:test._id,
+ sid:studentId,
+ sessionId
 });
 
 
@@ -182,11 +218,16 @@ router.get("/student/do-test/:testId", async (req,res)=>{
 // =================================================
 router.post("/student/submit-test", async (req, res) => {
   try {
-     const { studentId, testId, score } = req.body;
+     const {
+ studentId,
+ testId,
+ score,
+ sendSessionId
+} = req.body;
 
     // 1️⃣ Update / Create TestAttempt
     await TestAttempt.findOneAndUpdate(
-      { studentId, testId },
+      { studentId, testId, sendSessionId},
       {
         score,
         completedAt: new Date()

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const TeacherTest = require("../models/teacherTestModel");
 const ensureTeacher = require("../middleware/authMiddleware");
 const TestAttempt = require("../models/TestAttempt");
-
+const crypto = require("crypto");
 // ================= CREATE TEST =================
 router.post("/api/create-test", ensureTeacher, async (req, res) => {
   try {
@@ -130,6 +130,7 @@ router.get("/view/:id", ensureTeacher, async (req, res) => {
 // ================= OPEN TEST (STUDENT LINK) =================
 router.get("/open/:id", async (req, res) => {
     try {
+
         const testId = req.params.id;
 
         const test = await TeacherTest.findById(testId);
@@ -138,16 +139,26 @@ router.get("/open/:id", async (req, res) => {
             return res.send("Test not found");
         }
 
-        res.render("tracher_deshboard/advance-version/sendtestprocess/opentestverify.ejs", {
-            testId: test._id,
-            testTitle: test.name,
-            questions: test.questions,
-            duration: test.duration,
-            sid: ""
-        });
+        const sessionId =
+            req.query.session ||
+            crypto.randomBytes(8).toString("hex");
+
+        res.render(
+            "tracher_deshboard/advance-version/sendtestprocess/opentestverify.ejs",
+            {
+                testId: test._id,
+                testTitle: test.name,
+                questions: test.questions,
+                duration: test.duration,
+                sid: "",
+                sessionId
+            }
+        );
 
     } catch (err) {
+
         console.error("Open test error:", err);
+
         res.send("Server error");
     }
 });

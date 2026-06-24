@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ensureTeacher = require("../middleware/authMiddleware");
-
+const mongoose = require("mongoose");
 const TestAttempt = require("../models/TestAttempt");
 const Student = require("../models/Student");
 const TeacherTest = require("../models/teacherTestModel");
@@ -16,10 +16,13 @@ router.get(
   "/api/teacher/analytics/test/:testId/details",
   ensureTeacher,
   async (req, res) => {
-    try {
-      const { testId } = req.params;
 
-      // ✅ Check test belongs to teacher
+    try {
+
+      const { testId } = req.params;
+      const sessionId = req.query.sessionId || "";
+
+      // ✅ Test ownership check
       const test = await TeacherTest.findOne({
         _id: testId,
         createdBy: req.user._id
@@ -29,24 +32,83 @@ router.get(
         return res.json([]);
       }
 
-      const attempts = await TestAttempt.find({ testId })
-        .populate("studentId", "name email roll parentContact")
-        .sort({ score: -1 });
-      const result = attempts.map((a, index) => ({
-        rank: index + 1,
-        name: a.studentId?.name || "N/A",
-        email: a.studentId?.email || "-",
+      // ✅ Build filter
+      const filter = {
+        testId: test._id
+      };
 
-        parentContact: a.studentId?.parentContact || "-",
-        marks: a.score || 0,
-        status: a.score >= 33 ? "Pass" : "Fail"
+      // Batch selected
+      if (
+        sessionId &&
+        sessionId !== "" &&
+        sessionId !== "undefined" &&
+        sessionId !== "null"
+      ) {
+        filter.sendSessionId = sessionId;
+      }
+
+      console.log("=================================");
+      console.log("TEST ID :", testId);
+      console.log("SESSION :", sessionId);
+      console.log("FILTER  :", filter);
+      console.log("=================================");
+
+      const attempts = await TestAttempt.find(filter)
+        .populate(
+          "studentId",
+          "name email roll parentContact"
+        )
+        .lean()
+        .sort({ score: -1 });
+
+      console.log(
+        "FOUND ATTEMPTS =>",
+        attempts.length
+      );
+
+      const result = attempts.map((a, index) => ({
+
+        rank: index + 1,
+
+        studentId:
+          a.studentId?._id || "",
+
+        name:
+          a.studentId?.name || "N/A",
+
+        email:
+          a.studentId?.email || "-",
+
+        roll:
+          a.studentId?.roll || "-",
+
+        parentContact:
+          a.studentId?.parentContact || "-",
+
+        marks:
+          a.score || 0,
+
+        batch:
+          a.sendSessionId || "-",
+
+        status:
+          "completed"
+
       }));
 
       res.json(result);
+
     } catch (err) {
-      console.error("Analytics Details Error:", err);
+
+      console.error(
+        "Analytics Details Error:",
+        err
+      );
+
       res.json([]);
+
     }
+
   }
 );
 
@@ -387,17 +449,23 @@ router.get(
 
       const test = await TeacherTest.findById(testId);
 
-      if (!test) {
-        return res.send("Test not found");
-      }
+const batches = await TestAttempt.distinct(
+  "sendSessionId",
+  {
+    testId: test._id
+  }
+);
 
-      res.render(
-        "tracher_deshboard/advance-version/sendtestprocess/analytics",
-        {
-          testId,
-          testName: test.name || "Untitled Test"
-        }
-      );
+console.log("BATCHES =>", batches);
+
+res.render(
+  "tracher_deshboard/advance-version/sendtestprocess/analytics",
+  {
+    testId,
+    testName: test.name,
+    batches
+  }
+);
 
     } catch (err) {
 
@@ -408,4 +476,44 @@ router.get(
     }
   }
 );
+
+router.get(
+  "/api/teacher/test/:testId/sessions",
+  ensureTeacher,
+  async (req, res) => {
+
+    try {
+
+      const sessions =
+        await TestAttempt.aggregate([
+          {
+            $match: {
+              testId: new mongoose.Types.ObjectId(
+                req.params.testId
+              )
+            }
+          },
+          {
+            $group: {
+              _id: "$sendSessionId",
+              createdAt: {
+                $first: "$createdAt"
+              }
+            }
+          },
+          {
+            $sort: {
+              createdAt: -1
+            }
+          }
+        ]);
+
+      res.json(sessions);
+
+    } catch (err) {
+      console.log(err);
+      res.json([]);
+    }
+
+  });
 module.exports = router;
