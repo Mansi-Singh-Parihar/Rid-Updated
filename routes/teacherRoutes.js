@@ -429,16 +429,18 @@ router.get("/teacher/view-test/:testId", ensureTeacher, async (req, res) => {
 
     }));
 
-    res.render(
-      "tracher_deshboard/advance-version/viewtest",
-      {
-        testTitle: test.name || test.title || test.testName,
-        questions: formattedQuestions,
-        duration: test.duration || 60,
-        testId: test._id,
-        sid: ""
-      }
-    );
+   res.render(
+  "tracher_deshboard/advance-version/viewtest",
+  {
+    testTitle: test.name || test.title || test.testName,
+    questions: formattedQuestions,
+    duration: test.duration || 60,
+    testId: test._id,
+
+    sessionId: "",   // ✅ ADD
+    sid: ""          // ✅ ADD
+  }
+);
 
   } catch (err) {
 
